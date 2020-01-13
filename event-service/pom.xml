@@ -8,7 +8,7 @@
 	<packaging>jar</packaging>
 
 	<parent>
-		<groupId>com.rossotti.basketball</groupId>
+		<groupId>com.rossotti.tournament</groupId>
 		<artifactId>tournament-parent</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>

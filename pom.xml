@@ -3,8 +3,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <name>accumulator-parent</name>
-    <groupId>com.rossotti.basketball</groupId>
+    <name>tournament-parent</name>
+    <groupId>com.rossotti.tournament</groupId>
     <artifactId>tournament-parent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
