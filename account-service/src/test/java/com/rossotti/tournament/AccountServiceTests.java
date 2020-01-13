@@ -1,10 +1,10 @@
-package com.rossotti.tournament.eventservice;
+package com.rossotti.tournament;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class EventServiceApplicationTests {
+class AccountServiceTests {
 
 	@Test
 	void contextLoads() {
