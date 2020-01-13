@@ -66,6 +66,7 @@
     </build>
 
     <modules>
+        <module>common-service</module>
         <module>account-service</module>
         <module>event-service</module>
     </modules>
