@@ -25,34 +25,34 @@ public class PersistenceConfig {
 		this.env = env;
 	}
 
-//	@Bean
-//    DataSource dataSource() {
-//		DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
-//		dataSourceBuilder.driverClassName(env.getRequiredProperty("db.driver"));
-//		dataSourceBuilder.url(env.getRequiredProperty("db.url"));
-//		dataSourceBuilder.username(env.getRequiredProperty("db.username"));
-//		dataSourceBuilder.password(env.getRequiredProperty("db.password"));
-//		return dataSourceBuilder.build();
-//	}
-//
-//	@Bean
-//    LocalContainerEntityManagerFactoryBean entityManagerFactory() {
-//		LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
-//		entityManagerFactoryBean.setDataSource(dataSource());
-//		entityManagerFactoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
-//		entityManagerFactoryBean.setPackagesToScan("com.rossotti.basketball.jpa.model");
-//
-//		Properties jpaProperties = new Properties();
-//		jpaProperties.put("hibernate.dialect", env.getRequiredProperty("hibernate.dialect"));
-//		jpaProperties.put("hibernate.hbm2ddl.auto", env.getRequiredProperty("hibernate.hbm2ddl.auto"));
-//		jpaProperties.put("hibernate.ejb.naming_strategy", env.getRequiredProperty("hibernate.ejb.naming_strategy"));
-//		jpaProperties.put("hibernate.show_sql", env.getRequiredProperty("hibernate.show_sql"));
-//		jpaProperties.put("hibernate.enable_lazy_load_no_trans", true);
-//
-//		entityManagerFactoryBean.setJpaProperties(jpaProperties);
-//		return entityManagerFactoryBean;
-//	}
-//
+	@Bean
+    DataSource dataSource() {
+		DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
+		dataSourceBuilder.driverClassName(env.getRequiredProperty("db.driver"));
+		dataSourceBuilder.url(env.getRequiredProperty("db.url"));
+		dataSourceBuilder.username(env.getRequiredProperty("db.username"));
+		dataSourceBuilder.password(env.getRequiredProperty("db.password"));
+		return dataSourceBuilder.build();
+	}
+
+	@Bean
+    LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+		LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
+		entityManagerFactoryBean.setDataSource(dataSource());
+		entityManagerFactoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
+		entityManagerFactoryBean.setPackagesToScan("com.rossotti.basketball.jpa.model");
+
+		Properties jpaProperties = new Properties();
+		jpaProperties.put("hibernate.dialect", env.getRequiredProperty("hibernate.dialect"));
+		jpaProperties.put("hibernate.hbm2ddl.auto", env.getRequiredProperty("hibernate.hbm2ddl.auto"));
+		jpaProperties.put("hibernate.ejb.naming_strategy", env.getRequiredProperty("hibernate.ejb.naming_strategy"));
+		jpaProperties.put("hibernate.show_sql", env.getRequiredProperty("hibernate.show_sql"));
+		jpaProperties.put("hibernate.enable_lazy_load_no_trans", true);
+
+		entityManagerFactoryBean.setJpaProperties(jpaProperties);
+		return entityManagerFactoryBean;
+	}
+
 //	@Bean
 //	public PlatformTransactionManager transactionManager() {
 //		JpaTransactionManager transactionManager = new JpaTransactionManager();

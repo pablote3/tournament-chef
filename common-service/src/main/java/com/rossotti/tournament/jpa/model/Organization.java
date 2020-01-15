@@ -9,6 +9,12 @@ public class Organization extends BaseEntity {
 	private String organizationName;
 	private OrganizationStatus organizationStatus;
 
+	public String getOrganizationName() {
+		return organizationName;
+	}
+	public void setOrganizationName(String organizationName) {
+		this.organizationName = organizationName;
+	}
 
 	@Enumerated(EnumType.STRING)
 	public OrganizationStatus getOrganizationStatus() {

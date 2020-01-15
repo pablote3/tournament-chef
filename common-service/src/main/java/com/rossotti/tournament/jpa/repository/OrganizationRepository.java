@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface OrganizationRepository extends Repository<Organization, Long> {
 
-	List<Organization> findAll();
-
 	Organization findById(Long id);
+
+	List<Organization> findAll();
 
 	void save(Organization team);
 
