@@ -7,7 +7,8 @@ import javax.persistence.Enumerated;
 @Entity
 public class Organization extends BaseEntity {
 	private String organizationName;
-	private OrganizationStatus organizationStatus;
+//	private OrganizationStatus organizationStatus;
+	private String address1;
 
 	public String getOrganizationName() {
 		return organizationName;
@@ -16,25 +17,33 @@ public class Organization extends BaseEntity {
 		this.organizationName = organizationName;
 	}
 
-	@Enumerated(EnumType.STRING)
-	public OrganizationStatus getOrganizationStatus() {
-		return organizationStatus;
+	public String getAddress1() {
+		return address1;
 	}
-	public void setOrganizationStatus(OrganizationStatus organizationStatus) {
-		this.organizationStatus = organizationStatus;
+	public void setAddress1(String address1) {
+		this.address1 = address1;
 	}
-	public Boolean isPending() {
-		return organizationStatus == OrganizationStatus.Pending;
-	}
-	public Boolean isActive() {
-		return organizationStatus == OrganizationStatus.Active;
-	}
-	public Boolean isInactive() {
-		return organizationStatus == OrganizationStatus.Inactive;
-	}
-	public enum OrganizationStatus {
-		Pending,
-		Active,
-		Inactive
-	}
+
+//	@Enumerated(EnumType.STRING)
+//	public OrganizationStatus getOrganizationStatus() {
+//		return organizationStatus;
+//	}
+//	public void setOrganizationStatus(OrganizationStatus organizationStatus) {
+//		this.organizationStatus = organizationStatus;
+//	}
+//	public Boolean isPending() {
+//		return organizationStatus == OrganizationStatus.Pending;
+//	}
+//	public Boolean isActive() {
+//		return organizationStatus == OrganizationStatus.Active;
+//	}
+//	public Boolean isInactive() {
+//		return organizationStatus == OrganizationStatus.Inactive;
+//	}
+//	public enum OrganizationStatus {
+//		Pending,
+//		Active,
+//		Inactive
+//	}
+
 }
