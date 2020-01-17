@@ -1,6 +1,7 @@
 package com.rossotti.tournament.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,17 +15,18 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
+@EnableConfigurationProperties(PersistenceProperties.class)
 @EnableJpaRepositories(basePackages = {"com.rossotti.tournament.jpa.repository"})
 public class PersistenceConfig {
 
-//@Autowired
-//private YAMLConfig myConfig;
+	@Autowired
+	private PersistenceProperties config;
 
 	@Bean
     DataSource dataSource() {
 		DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
-		dataSourceBuilder.driverClassName("org.h2.Driver");
-		dataSourceBuilder.url("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE");
+		dataSourceBuilder.driverClassName(config.getApp().getDriver());
+		dataSourceBuilder.url(config.getApp().getUrl());
 		dataSourceBuilder.username("sa");
 		dataSourceBuilder.password("");
 		return dataSourceBuilder.build();

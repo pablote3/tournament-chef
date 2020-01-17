@@ -23,6 +23,7 @@ public class OrganizationRepositoryTest {
 	public void findById() {
 		Organization organization = organizationRepository.findById(1L);
 		Assert.assertEquals("Washington Redskins", organization.getOrganizationName());
+		Assert.assertEquals("123 Main Street", organization.getAddress1());
 //		Assert.assertEquals(Organization.OrganizationStatus.Active, organization.getOrganizationStatus());
 //		Assert.assertTrue(team.getStandings().size() >= 1);
 	}
