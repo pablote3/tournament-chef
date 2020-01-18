@@ -15,18 +15,25 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
-@EnableConfigurationProperties(PersistenceProperties.class)
+@EnableConfigurationProperties(YAMLConfig.class)
 @EnableJpaRepositories(basePackages = {"com.rossotti.tournament.jpa.repository"})
 public class PersistenceConfig {
 
+	private final YAMLConfig config;
+
 	@Autowired
-	private PersistenceProperties config;
+	public PersistenceConfig(YAMLConfig config) {
+		this.config = config;
+	}
 
 	@Bean
     DataSource dataSource() {
 		DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
-		dataSourceBuilder.driverClassName(config.getApp().getDriver());
-		dataSourceBuilder.url(config.getApp().getUrl());
+
+		System.out.println("Pablote2 " +config.getDriver());
+
+		dataSourceBuilder.driverClassName(config.getDriver());
+		dataSourceBuilder.url(config.getUrl());
 		dataSourceBuilder.username("sa");
 		dataSourceBuilder.password("");
 		return dataSourceBuilder.build();

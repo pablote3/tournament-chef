@@ -1,18 +1,19 @@
 package com.rossotti.tournament.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.boot.context.properties.ConstructorBinding;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
-@ConfigurationProperties("datasource")
-public class PersistenceProperties {
+@ConstructorBinding
+@ConfigurationProperties("spring")
 
-	private final App app = new App();
+public class YAMLConfig {
 
-	public App getApp() {
-		return app;
-	}
-
-	public static class App {
+//	public App app() {
+//		return new App();
+//	}
+//
+//	public static class App {
 		private String driver;
 		private String url;
 
@@ -28,5 +29,5 @@ public class PersistenceProperties {
 		public void setUrl(String url) {
 			this.url = url;
 		}
-	}
+//	}
 }

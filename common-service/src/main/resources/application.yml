@@ -4,23 +4,14 @@ spring:
 ---
 spring:
   profiles: development
-  jpa:
-    show_sql: false
-    database: H2
-datasource:
-  app:
-    driver: org.h2.Driver
-    url: jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-    username: sa
-    password:
+  driver: org.h2.Driver
+  url: jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+  username: sa
+  password:
 ---
 spring:
   profiles: test
-  jpa:
-    show_sql: false
-    database: MYSQL
-    generate-ddl: true
-  datasource:
-    url: jdbc:mysql://localhost:3306/tournament_test?characterEncoding=UTF-8&amp;useUnicode=true&useSSL=false
-    username: root
-    password: dbpass
+  driver: org.h2.Driver
+  url: jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+  username: sa
+  password:
