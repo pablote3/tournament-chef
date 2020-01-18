@@ -28,13 +28,10 @@ public class PersistenceConfig {
 	@Bean
     DataSource dataSource() {
 		DataSourceBuilder<?> dataSourceBuilder = DataSourceBuilder.create();
-
-		System.out.println("Pablote2 " +config.getDriver());
-
-		dataSourceBuilder.driverClassName(config.getDriver());
-		dataSourceBuilder.url(config.getUrl());
-		dataSourceBuilder.username("sa");
-		dataSourceBuilder.password("");
+		dataSourceBuilder.driverClassName(config.getDb().getDriver());
+		dataSourceBuilder.url(config.getDb().getUrl());
+		dataSourceBuilder.username(config.getDb().getUsername());
+		dataSourceBuilder.password(config.getDb().getPassword());
 		return dataSourceBuilder.build();
 	}
 
@@ -46,10 +43,10 @@ public class PersistenceConfig {
 		entityManagerFactoryBean.setPackagesToScan("com.rossotti.tournament.jpa.model");
 
 		Properties jpaProperties = new Properties();
-		jpaProperties.put("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
-		jpaProperties.put("hibernate.hbm2ddl.auto", "create-drop");
+		jpaProperties.put("hibernate.dialect", config.getHibernate().getDialect());
+		jpaProperties.put("hibernate.hbm2ddl.auto", config.getHibernate().getHbm2ddlAuto());
 		jpaProperties.put("hibernate.ejb.naming_strategy", "org.hibernate.cfg.ImprovedNamingStrategy");
-		jpaProperties.put("hibernate.show_sql", "true");
+		jpaProperties.put("hibernate.show_sql", config.getHibernate().getShowSql());
 		jpaProperties.put("hibernate.enable_lazy_load_no_trans", true);
 
 		entityManagerFactoryBean.setJpaProperties(jpaProperties);

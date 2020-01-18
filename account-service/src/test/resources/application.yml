@@ -4,14 +4,24 @@ spring:
 ---
 spring:
   profiles: development
-  driver: org.h2.Driver
-  url: jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-  username: sa
-  password:
+  db:
+    driver: org.h2.Driver
+    url: jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password:
+  hibernate:
+    dialect: org.hibernate.dialect.H2Dialect
+    hbm2ddlAuto: create-drop
+    show_sql: true
 ---
 spring:
-  profiles: test
-  driver: org.h2.Driver
-  url: jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-  username: sa
-  password:
+  db:
+    profiles: test
+    driver: org.h2.Driver
+    url: jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password:
+  hibernate:
+    dialect: org.hibernate.dialect.H2Dialect
+    hbm2ddlAuto: create-drop
+    show_sql: true
