@@ -10,7 +10,6 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
-
 import javax.sql.DataSource;
 import java.util.Properties;
 
@@ -28,7 +27,7 @@ public class PersistenceConfig {
 
 	@Bean
     DataSource dataSource() {
-		DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
+		DataSourceBuilder<?> dataSourceBuilder = DataSourceBuilder.create();
 
 		System.out.println("Pablote2 " +config.getDriver());
 
