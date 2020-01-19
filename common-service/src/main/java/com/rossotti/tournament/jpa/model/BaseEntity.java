@@ -9,10 +9,6 @@ public class BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
-	@LastModifiedDate
-	private LocalDateTime lastModified;
-
 	public Long getId() {
 		return this.id;
 	}
@@ -20,10 +16,12 @@ public class BaseEntity {
 		this.id = id;
 	}
 
-	public LocalDateTime getLastModified() {
-		return lastModified;
+	@LastModifiedDate
+	private LocalDateTime updateTs;
+	public LocalDateTime getUpdateTs() {
+		return updateTs;
 	}
-	public void setLastModified(LocalDateTime lastModified) {
-		this.lastModified = lastModified;
+	public void setUpdateTs(LocalDateTime updateTs) {
+		this.updateTs = updateTs;
 	}
 }

@@ -1,1 +1,1 @@
-insert into organization VALUES(1, '2015-10-27 20:00:00.0', '123 Main Street', 'Washington Redskins');
+insert into organization VALUES(1, '2020-01-18 20:00:00.0', '123 Main Street', 'Suite 456', 'San Bernardino', 'cristiana.girelli@gmail.com', 'Cristiana', 'Girelli', '9093381808', '2015-10-27 20:00:00.0', '9999-12-31', 'FC Juventes', 'Active', '2016-02-21', 'CA', '92408');
