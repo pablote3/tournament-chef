@@ -1,13 +1,12 @@
 package com.rossotti.tournament.jpa.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+@SuppressWarnings("ALL")
 @Entity
+@Table(uniqueConstraints=@UniqueConstraint(columnNames={"organizationName", "startDate", "endDate"}))
 public class Organization extends BaseEntity {
 	@Column(length=50, nullable=false)
 	private String organizationName;
@@ -38,6 +37,24 @@ public class Organization extends BaseEntity {
 	}
 	public enum OrganizationStatus {
 		Pending, Active, Inactive
+	}
+
+	@Column(nullable=false)
+	private LocalDate startDate;
+	public LocalDate getStartDate() {
+		return startDate;
+	}
+	public void setStartDate(LocalDate startDate) {
+		this.startDate = startDate;
+	}
+
+	@Column(nullable=false)
+	private LocalDate endDate;
+	public LocalDate getEndDate() {
+		return endDate;
+	}
+	public void setEndDate(LocalDate endDate) {
+		this.endDate = endDate;
 	}
 
 	@Column(length=25, nullable=false)
@@ -119,24 +136,6 @@ public class Organization extends BaseEntity {
 	}
 	public void setContactPhone(String contactPhone) {
 		this.contactPhone = contactPhone;
-	}
-
-	@Column(nullable = false)
-	private LocalDate startDate;
-	public LocalDate getStartDate() {
-		return startDate;
-	}
-	public void setStartDate(LocalDate startDate) {
-		this.startDate = startDate;
-	}
-
-	@Column(nullable = false)
-	private LocalDate endDate;
-	public LocalDate getEndDate() {
-		return endDate;
-	}
-	public void setEndDate(LocalDate endDate) {
-		this.endDate = endDate;
 	}
 
 	@Column(nullable = false)
