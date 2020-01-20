@@ -104,9 +104,9 @@ public class OrganizationRepositoryTest {
 	@Test
 	public void create() {
 		organizationRepository.save(createMockOrganization("AS Roma", LocalDate.of(2010, 1, 11), LocalDate.of(9999, 12, 31), "Giugliano"));
-		Organization findOrganization = organizationRepository.findByOrganizationNameAndAsOfDate("AS Roma", LocalDate.of(2010, 1, 21));
-		Assert.assertEquals("Giugliano", findOrganization.getContactLastName());
-		Assert.assertEquals("Manuela", findOrganization.getContactFirstName());
+		Organization organization = organizationRepository.findByOrganizationNameAndAsOfDate("AS Roma", LocalDate.of(2010, 1, 21));
+		Assert.assertEquals("Giugliano", organization.getContactLastName());
+		Assert.assertEquals("Manuela", organization.getContactFirstName());
 	}
 
 	@Test(expected= DataIntegrityViolationException.class)
@@ -117,14 +117,27 @@ public class OrganizationRepositoryTest {
 	@Test
 	public void update() {
 		organizationRepository.save(updateMockOrganization("Fiorentina FC", LocalDate.of(2012, 1, 15), "Mauro"));
-		Organization findOrg = organizationRepository.findByOrganizationNameAndAsOfDate("Fiorentina FC", LocalDate.of(2012, 1, 15));
-		Assert.assertEquals("Mauro", findOrg.getContactLastName());
-		Assert.assertEquals("Ilaria", findOrg.getContactFirstName());
+		Organization organization = organizationRepository.findByOrganizationNameAndAsOfDate("Fiorentina FC", LocalDate.of(2012, 1, 15));
+		Assert.assertEquals("Mauro", organization.getContactLastName());
+		Assert.assertEquals("Ilaria", organization.getContactFirstName());
 	}
 
 	@Test(expected= DataIntegrityViolationException.class)
 	public void update_MissingRequiredData() {
 		organizationRepository.save(updateMockOrganization("Fiorentina FC", LocalDate.of(2012, 1, 15), null));
+	}
+
+	@Test
+	public void delete() {
+		Organization organization = organizationRepository.findByOrganizationNameAndAsOfDate("US Sassuolo", LocalDate.of(2012, 1, 15));
+		if (organization != null) {
+			organizationRepository.deleteById(organization.getId());
+		}
+		else {
+			Assert.fail("Unable to find record to delete");
+		}
+		Organization findOrg = organizationRepository.findByOrganizationNameAndAsOfDate("US Sassuolo", LocalDate.of(2012, 1, 15));
+		Assert.assertNull(findOrg);
 	}
 
 	private Organization createMockOrganization(String orgName, LocalDate startDate, LocalDate endDate, String contactLastName) {
