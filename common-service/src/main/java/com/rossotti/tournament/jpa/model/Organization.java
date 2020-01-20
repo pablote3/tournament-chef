@@ -84,7 +84,7 @@ public class Organization extends BaseEntity {
 		this.city = city;
 	}
 
-	@Column(length=2, nullable=false)
+	@Column(length=25, nullable=false)
 	private String state;
 	public String getState() {
 		return state;
@@ -100,6 +100,15 @@ public class Organization extends BaseEntity {
 	}
 	public void setZipCode(String zipCode) {
 		this.zipCode = zipCode;
+	}
+
+	@Column(length=25, nullable=false)
+	private String country;
+	public String getCountry() {
+		return country;
+	}
+	public void setCountry(String country) {
+		this.country = country;
 	}
 
 	@Column(length=25, nullable=false)
