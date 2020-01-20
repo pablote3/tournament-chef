@@ -50,7 +50,7 @@ public class OrganizationRepositoryTest {
 	@Test
 	public void findAll() {
 		List<Organization> organizations = organizationRepository.findAll();
-		Assert.assertEquals(3, organizations.size());
+		Assert.assertTrue(organizations.size() >= 4);
 	}
 
 	@Test
@@ -102,18 +102,32 @@ public class OrganizationRepositoryTest {
 	}
 
 	@Test
-	public void create_Created() {
-		organizationRepository.save(createMockOrganization("AS Roma", LocalDate.of(2010, 1, 11), LocalDate.of(9999, 12, 31)));
+	public void create() {
+		organizationRepository.save(createMockOrganization("AS Roma", LocalDate.of(2010, 1, 11), LocalDate.of(9999, 12, 31), "Giugliano"));
 		Organization findOrganization = organizationRepository.findByOrganizationNameAndAsOfDate("AS Roma", LocalDate.of(2010, 1, 21));
 		Assert.assertEquals("Giugliano", findOrganization.getContactLastName());
+		Assert.assertEquals("Manuela", findOrganization.getContactFirstName());
 	}
 
 	@Test(expected= DataIntegrityViolationException.class)
 	public void create_MissingRequiredData() {
-		organizationRepository.save(createMockOrganization(null, LocalDate.of(2010, 1, 11), LocalDate.of(9999, 12, 31)));
+		organizationRepository.save(createMockOrganization("AS Roma", LocalDate.of(2010, 1, 11), LocalDate.of(9999, 12, 31), null));
 	}
 
-	private Organization createMockOrganization(String orgName, LocalDate startDate, LocalDate endDate) {
+	@Test
+	public void update() {
+		organizationRepository.save(updateMockOrganization("Fiorentina FC", LocalDate.of(2012, 1, 15), "Mauro"));
+		Organization findOrg = organizationRepository.findByOrganizationNameAndAsOfDate("Fiorentina FC", LocalDate.of(2012, 1, 15));
+		Assert.assertEquals("Mauro", findOrg.getContactLastName());
+		Assert.assertEquals("Ilaria", findOrg.getContactFirstName());
+	}
+
+	@Test(expected= DataIntegrityViolationException.class)
+	public void update_MissingRequiredData() {
+		organizationRepository.save(updateMockOrganization("Fiorentina FC", LocalDate.of(2012, 1, 15), null));
+	}
+
+	private Organization createMockOrganization(String orgName, LocalDate startDate, LocalDate endDate, String contactLastName) {
 		Organization organization = new Organization();
 		organization.setOrganizationName(orgName);
 		organization.setOrganizationStatus(OrganizationStatus.Active);
@@ -125,12 +139,19 @@ public class OrganizationRepositoryTest {
 		organization.setState("Lazio");
 		organization.setZipCode("00144");
 		organization.setCountry("Italy");
-		organization.setContactLastName("Giugliano");
+		organization.setContactLastName(contactLastName);
 		organization.setContactFirstName("Manuela");
 		organization.setContactEmail("manuela.giugliano@gmail.com");
 		organization.setContactPhone("390665951");
 		organization.setCreateTs(LocalDateTime.of(2015, 10, 27, 20, 30));
 		organization.setUpdateTs(LocalDateTime.of(2015, 10, 27, 20, 30));
+		return organization;
+	}
+
+	private Organization updateMockOrganization(String orgName, LocalDate asOfDate, String contactLastName) {
+		Organization organization = organizationRepository.findByOrganizationNameAndAsOfDate(orgName, asOfDate);
+		organization.setContactLastName(contactLastName);
+		organization.setContactFirstName("Ilaria");
 		return organization;
 	}
 }
