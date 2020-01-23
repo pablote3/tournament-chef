@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(uniqueConstraints=@UniqueConstraint(columnNames={"organizationId", "email"}))
+@Table(uniqueConstraints=@UniqueConstraint(columnNames={"email"}))
 public class User extends BaseEntity {
 
 //	@ManyToOne
