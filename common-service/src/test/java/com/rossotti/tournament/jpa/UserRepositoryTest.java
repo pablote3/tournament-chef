@@ -60,6 +60,18 @@ public class UserRepositoryTest {
 	}
 
 	@Test
+	public void findByOrganizationNameAndEmail_Found() {
+		User user = userRepository.findByOrganizationNameAndUserEmail("valentina.giacinti@telecomitalia.com", "FC Juventes");
+		Assert.assertEquals("Giacinti", user.getLastName());
+	}
+
+	@Test
+	public void findByOrganizationNameAndEmail_NotFound() {
+		User user = userRepository.findByOrganizationNameAndUserEmail("saratamborini@euro.com", "FC Juventes");
+		Assert.assertNull(user);
+	}
+
+	@Test
 	public void create() {
 		userRepository.save(createMockUser(2L, "amserturini@gmail.com", "Serturini"));
 		User user = userRepository.findByEmail("amserturini@gmail.com");

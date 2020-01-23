@@ -18,11 +18,11 @@ public interface UserRepository extends Repository<User, Long> {
 
 	User findByEmail(String email);
 
-//	String findByOrganizationNameAndUserEmail =
-//			"select u from User u " +
-//			"inner join u.organization o " +
-//			"where u.email = :email " +
-//			"and o.OrganizationName >= :organizationName";
-//	@Query(findByOrganizationNameAndUserEmail)
-//	List<User> findByOrganizationNameAndUserEmail(@Param("email") String email, @Param("organizationName") String organizationName);
+	String findByOrganizationNameAndUserEmail =
+			"select u from User u " +
+			"inner join u.organization o " +
+			"where u.email = :email " +
+			"and o.organizationName = :organizationName";
+	@Query(findByOrganizationNameAndUserEmail)
+	User findByOrganizationNameAndUserEmail(@Param("email") String email, @Param("organizationName") String organizationName);
 }
