@@ -4,7 +4,6 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@SuppressWarnings("ALL")
 @Entity
 @Table(uniqueConstraints=@UniqueConstraint(columnNames={"organizationName", "startDate", "endDate"}))
 public class Organization extends BaseEntity {
