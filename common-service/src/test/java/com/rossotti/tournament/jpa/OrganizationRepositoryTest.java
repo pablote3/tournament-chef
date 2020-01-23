@@ -114,6 +114,11 @@ public class OrganizationRepositoryTest {
 		organizationRepository.save(createMockOrganization("AS Roma", LocalDate.of(2010, 1, 11), LocalDate.of(9999, 12, 31), null));
 	}
 
+	@Test(expected= DataIntegrityViolationException.class)
+	public void create_Duplicate() {
+		organizationRepository.save(createMockOrganization("FC Juventes", LocalDate.of(2010, 1, 15), LocalDate.of(2010, 10, 27), null));
+	}
+
 	@Test
 	public void update() {
 		organizationRepository.save(updateMockOrganization("Fiorentina FC", LocalDate.of(2012, 1, 15), "Mauro"));

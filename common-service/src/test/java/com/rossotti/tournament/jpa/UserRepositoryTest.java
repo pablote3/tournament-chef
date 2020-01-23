@@ -59,19 +59,23 @@ public class UserRepositoryTest {
 		Assert.assertNull(user);
 	}
 
-//	@Test
-//	public void create() {
-//		userRepository.save(createMockUser("AS Roma", LocalDate.of(2010, 1, 11), LocalDate.of(9999, 12, 31), "Giugliano"));
-//		User user = userRepository.findByUserNameAndAsOfDate("AS Roma", LocalDate.of(2010, 1, 21));
-//		Assert.assertEquals("Giugliano", user.getContactLastName());
-//		Assert.assertEquals("Manuela", user.getContactFirstName());
-//	}
-//
-//	@Test(expected= DataIntegrityViolationException.class)
-//	public void create_MissingRequiredData() {
-//		userRepository.save(createMockUser("AS Roma", LocalDate.of(2010, 1, 11), LocalDate.of(9999, 12, 31), null));
-//	}
-//
+	@Test
+	public void create() {
+		userRepository.save(createMockUser("amserturini@gmail.com", "Serturini"));
+		User user = userRepository.findByEmail("amserturini@gmail.com");
+		Assert.assertEquals("Serturini", user.getLastName());
+	}
+
+	@Test(expected= DataIntegrityViolationException.class)
+	public void create_MissingRequiredData() {
+		userRepository.save(createMockUser("claudia.ciccotti@hotmailcom", null));
+	}
+
+	@Test(expected= DataIntegrityViolationException.class)
+	public void create_Duplicate() {
+		userRepository.save(createMockUser("valentina.giacinti@telecomitalia.com", "Giacinti"));
+	}
+
 //	@Test
 //	public void update() {
 //		userRepository.save(updateMockUser("Fiorentina FC", LocalDate.of(2012, 1, 15), "Mauro"));
@@ -97,28 +101,20 @@ public class UserRepositoryTest {
 //		User findOrg = userRepository.findByUserNameAndAsOfDate("US Sassuolo", LocalDate.of(2012, 1, 15));
 //		Assert.assertNull(findOrg);
 //	}
-//
-//	private User createMockUser(String orgName, LocalDate startDate, LocalDate endDate, String contactLastName) {
-//		User user = new User();
-//		user.setUserName(orgName);
-//		user.setUserStatus(UserStatus.Active);
-//		user.setStartDate(startDate);
-//		user.setEndDate(endDate);
-//		user.setAddress1("Via delle Tre Fontane 5");
-//		user.setAddress2("Suite 789");
-//		user.setCity("Roma");
-//		user.setState("Lazio");
-//		user.setZipCode("00144");
-//		user.setCountry("Italy");
-//		user.setContactLastName(contactLastName);
-//		user.setContactFirstName("Manuela");
-//		user.setContactEmail("manuela.giugliano@gmail.com");
-//		user.setContactPhone("390665951");
-//		user.setCreateTs(LocalDateTime.of(2015, 10, 27, 20, 30));
-//		user.setUpdateTs(LocalDateTime.of(2015, 10, 27, 20, 30));
-//		return user;
-//	}
-//
+
+	private User createMockUser(String email, String lastName) {
+		User user = new User();
+		user.setEmail(email);
+		user.setUserType(UserType.Administrator);
+		user.setUserStatus(UserStatus.Active);
+		user.setLastName(lastName);
+		user.setFirstName("Annamaria");
+		user.setPassword("superpass");
+		user.setCreateTs(LocalDateTime.of(2019, 10, 27, 20, 30));
+		user.setUpdateTs(LocalDateTime.of(2019, 10, 27, 20, 30));
+		return user;
+	}
+
 //	private User updateMockUser(String orgName, LocalDate asOfDate, String contactLastName) {
 //		User user = userRepository.findByUserNameAndAsOfDate(orgName, asOfDate);
 //		user.setContactLastName(contactLastName);
