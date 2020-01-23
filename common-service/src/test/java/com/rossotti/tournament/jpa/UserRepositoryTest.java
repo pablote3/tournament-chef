@@ -73,7 +73,7 @@ public class UserRepositoryTest {
 
 	@Test(expected= DataIntegrityViolationException.class)
 	public void create_Duplicate() {
-		userRepository.save(createMockUser(2L, "valentina.giacinti@telecomitalia.com", "Giacinti"));
+		userRepository.save(createMockUser(1L, "valentina.giacinti@telecomitalia.com", "Giacinti"));
 	}
 
 	@Test
