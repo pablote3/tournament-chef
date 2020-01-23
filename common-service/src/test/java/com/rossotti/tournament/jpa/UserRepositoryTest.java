@@ -76,31 +76,30 @@ public class UserRepositoryTest {
 		userRepository.save(createMockUser("valentina.giacinti@telecomitalia.com", "Giacinti"));
 	}
 
-//	@Test
-//	public void update() {
-//		userRepository.save(updateMockUser("Fiorentina FC", LocalDate.of(2012, 1, 15), "Mauro"));
-//		User user = userRepository.findByUserNameAndAsOfDate("Fiorentina FC", LocalDate.of(2012, 1, 15));
-//		Assert.assertEquals("Mauro", user.getContactLastName());
-//		Assert.assertEquals("Ilaria", user.getContactFirstName());
-//	}
-//
-//	@Test(expected= DataIntegrityViolationException.class)
-//	public void update_MissingRequiredData() {
-//		userRepository.save(updateMockUser("Fiorentina FC", LocalDate.of(2012, 1, 15), null));
-//	}
-//
-//	@Test
-//	public void delete() {
-//		User user = userRepository.findByUserNameAndAsOfDate("US Sassuolo", LocalDate.of(2012, 1, 15));
-//		if (user != null) {
-//			userRepository.deleteById(user.getId());
-//		}
-//		else {
-//			Assert.fail("Unable to find record to delete");
-//		}
-//		User findOrg = userRepository.findByUserNameAndAsOfDate("US Sassuolo", LocalDate.of(2012, 1, 15));
-//		Assert.assertNull(findOrg);
-//	}
+	@Test
+	public void update() {
+		userRepository.save(updateMockUser("valentina.bergamaschi@hotmail.com", "Valencia"));
+		User user = userRepository.findByEmail("valentina.bergamaschi@hotmail.com");
+		Assert.assertEquals("Valencia", user.getLastName());
+	}
+
+	@Test(expected= DataIntegrityViolationException.class)
+	public void update_MissingRequiredData() {
+		userRepository.save(updateMockUser("alessia.piazza@telecomitalia.com", null));
+	}
+
+	@Test
+	public void delete() {
+		User user = userRepository.findByEmail("martina.capelli@telecomitalia.com");
+		if (user != null) {
+			userRepository.deleteById(user.getId());
+		}
+		else {
+			Assert.fail("Unable to find record to delete");
+		}
+		User findUser = userRepository.findByEmail("martina.capelli@telecomitalia.com");
+		Assert.assertNull(findUser);
+	}
 
 	private User createMockUser(String email, String lastName) {
 		User user = new User();
@@ -115,10 +114,9 @@ public class UserRepositoryTest {
 		return user;
 	}
 
-//	private User updateMockUser(String orgName, LocalDate asOfDate, String contactLastName) {
-//		User user = userRepository.findByUserNameAndAsOfDate(orgName, asOfDate);
-//		user.setContactLastName(contactLastName);
-//		user.setContactFirstName("Ilaria");
-//		return user;
-//	}
+	private User updateMockUser(String email, String lastName) {
+		User user = userRepository.findByEmail(email);
+		user.setLastName(lastName);
+		return user;
+	}
 }
