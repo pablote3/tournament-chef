@@ -16,7 +16,7 @@ public interface UserRepository extends Repository<User, Long> {
 
 	void deleteById(Long id);
 
-	User findByEmail(String email);
+	List<User> findByEmail(String email);
 
 	String findByOrganizationNameAndUserEmail =
 			"select u from User u " +
@@ -24,5 +24,5 @@ public interface UserRepository extends Repository<User, Long> {
 			"where u.email = :email " +
 			"and o.organizationName = :organizationName";
 	@Query(findByOrganizationNameAndUserEmail)
-	User findByOrganizationNameAndUserEmail(@Param("email") String email, @Param("organizationName") String organizationName);
+	User findByOrganizationNameAndUserEmail(@Param("organizationName") String organizationName, @Param("email") String email);
 }
