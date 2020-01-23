@@ -6,7 +6,7 @@
     <name>tournament-parent</name>
     <groupId>com.rossotti.tournament</groupId>
     <artifactId>tournament-parent</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>${revision}</version>
     <packaging>pom</packaging>
 
     <parent>
@@ -19,6 +19,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>11</java.version>
         <spring-boot.version>2.2.2.RELEASE</spring-boot.version>
+        <revision>0.0.2-SNAPSHOT</revision>
     </properties>
 
     <dependencyManagement>
