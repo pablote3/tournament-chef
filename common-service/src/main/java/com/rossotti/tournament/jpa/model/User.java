@@ -8,15 +8,15 @@ import java.time.LocalDateTime;
 @Table(uniqueConstraints=@UniqueConstraint(columnNames={"email"}))
 public class User extends BaseEntity {
 
-//	@ManyToOne
-//	@JoinColumn(name="playerId", referencedColumnName="id", nullable=false)
-//	private Player player;
-//	public Player getPlayer() {
-//		return player;
-//	}
-//	public void setPlayer(Player player) {
-//		this.player = player;
-//	}
+	@ManyToOne
+	@JoinColumn(name="organizationId", referencedColumnName="id", nullable=false)
+	private Organization organization;
+	public Organization getOrganization() {
+		return organization;
+	}
+	public void setOrganization(Organization organization) {
+		this.organization = organization;
+	}
 
 	@Column(length=50, nullable=false)
 	private String email;

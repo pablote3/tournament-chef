@@ -1,6 +1,7 @@
 package com.rossotti.tournament.jpa;
 
 import com.rossotti.tournament.config.PersistenceConfig;
+import com.rossotti.tournament.jpa.model.Organization;
 import com.rossotti.tournament.jpa.model.User;
 import com.rossotti.tournament.jpa.model.User.UserStatus;
 import com.rossotti.tournament.jpa.model.User.UserType;
@@ -36,7 +37,8 @@ public class UserRepositoryTest {
 		Assert.assertEquals("Rossonere", user.getPassword());
 		Assert.assertEquals(LocalDateTime.of(2020, 1, 16, 20, 0), user.getCreateTs());
 		Assert.assertEquals(LocalDateTime.of(2020, 1, 19, 20, 0), user.getUpdateTs());
-//		Assert.assertTrue(team.getStandings().size() >= 1);
+		Assert.assertEquals("FC Juventes", user.getOrganization().getOrganizationName());
+		Assert.assertEquals(3, user.getOrganization().getUsers().size());
 	}
 
 	@Test
@@ -59,19 +61,19 @@ public class UserRepositoryTest {
 
 	@Test
 	public void create() {
-		userRepository.save(createMockUser("amserturini@gmail.com", "Serturini"));
+		userRepository.save(createMockUser(2L, "amserturini@gmail.com", "Serturini"));
 		User user = userRepository.findByEmail("amserturini@gmail.com");
 		Assert.assertEquals("Serturini", user.getLastName());
 	}
 
 	@Test(expected= DataIntegrityViolationException.class)
 	public void create_MissingRequiredData() {
-		userRepository.save(createMockUser("claudia.ciccotti@hotmailcom", null));
+		userRepository.save(createMockUser(2L, "claudia.ciccotti@hotmailcom", null));
 	}
 
 	@Test(expected= DataIntegrityViolationException.class)
 	public void create_Duplicate() {
-		userRepository.save(createMockUser("valentina.giacinti@telecomitalia.com", "Giacinti"));
+		userRepository.save(createMockUser(2L, "valentina.giacinti@telecomitalia.com", "Giacinti"));
 	}
 
 	@Test
@@ -99,8 +101,9 @@ public class UserRepositoryTest {
 		Assert.assertNull(findUser);
 	}
 
-	private User createMockUser(String email, String lastName) {
+	private User createMockUser(Long orgId, String email, String lastName) {
 		User user = new User();
+		user.setOrganization(createMockOrganization(orgId));
 		user.setEmail(email);
 		user.setUserType(UserType.Administrator);
 		user.setUserStatus(UserStatus.Active);
@@ -116,5 +119,11 @@ public class UserRepositoryTest {
 		User user = userRepository.findByEmail(email);
 		user.setLastName(lastName);
 		return user;
+	}
+
+	private Organization createMockOrganization(Long orgId) {
+		Organization organization = new Organization();
+		organization.setId(orgId);
+		return organization;
 	}
 }
