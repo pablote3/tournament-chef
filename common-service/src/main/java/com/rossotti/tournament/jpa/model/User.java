@@ -95,22 +95,4 @@ public class User extends BaseEntity {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-	@Column(nullable = false)
-	private LocalDateTime createTs;
-	public LocalDateTime getCreateTs() {
-		return createTs;
-	}
-	public void setCreateTs(LocalDateTime createTs) {
-		this.createTs = createTs;
-	}
-
-	@Column(nullable=false)
-	private Long lupdUserId;
-	public Long getLupdUserId() {
-		return lupdUserId;
-	}
-	public void setLupdUserId(Long lupdUserId) {
-		this.lupdUserId = lupdUserId;
-	}
 }

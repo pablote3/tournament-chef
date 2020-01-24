@@ -36,7 +36,7 @@ public class UserRepositoryTest {
 		Assert.assertEquals("valentina.giacinti@telecomitalia.com", user.getEmail());
 		Assert.assertEquals("Rossonere1", user.getPassword());
 		Assert.assertEquals(LocalDateTime.of(2020, 1, 16, 20, 0), user.getCreateTs());
-		Assert.assertEquals(LocalDateTime.of(2020, 1, 19, 20, 0), user.getUpdateTs());
+		Assert.assertEquals(LocalDateTime.of(2020, 1, 19, 20, 0), user.getLupdTs());
 		Assert.assertEquals("FC Juventes", user.getOrganization().getOrganizationName());
 		Assert.assertEquals(5, user.getOrganization().getUsers().size());
 		Assert.assertEquals(2, user.getOrganization().getTeams().size());
@@ -125,7 +125,7 @@ public class UserRepositoryTest {
 		user.setFirstName("Annamaria");
 		user.setPassword("superpass");
 		user.setCreateTs(LocalDateTime.of(2019, 10, 27, 20, 30));
-		user.setUpdateTs(LocalDateTime.of(2019, 10, 27, 20, 30));
+		user.setLupdTs(LocalDateTime.of(2019, 10, 27, 20, 30));
 		user.setLupdUserId(4L);
 		return user;
 	}

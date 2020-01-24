@@ -1,7 +1,10 @@
 package com.rossotti.tournament.jpa.model;
 
 import javax.persistence.*;
-import org.springframework.data.annotation.LastModifiedDate;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.LastModifiedBy;
 import java.time.LocalDateTime;
 
 @MappedSuperclass
@@ -16,13 +19,33 @@ public class BaseEntity {
 		this.id = id;
 	}
 
-	@Column(nullable=false)
-	@LastModifiedDate
-	private LocalDateTime updateTs;
-	public LocalDateTime getUpdateTs() {
-		return updateTs;
+	@Column(nullable = false)
+	@CreationTimestamp
+	private LocalDateTime createTs;
+	public LocalDateTime getCreateTs() {
+		return createTs;
 	}
-	public void setUpdateTs(LocalDateTime updateTs) {
-		this.updateTs = updateTs;
+	public void setCreateTs(LocalDateTime createTs) {
+		this.createTs = createTs;
+	}
+
+	@Column(nullable=false)
+	@UpdateTimestamp
+	private LocalDateTime lupdTs;
+	public LocalDateTime getLupdTs() {
+		return lupdTs;
+	}
+	public void setLupdTs(LocalDateTime lupdTs) {
+		this.lupdTs = lupdTs;
+	}
+
+	@Column(nullable=false)
+	@LastModifiedBy
+	private Long lupdUserId;
+	public Long getLupdUserId() {
+		return lupdUserId;
+	}
+	public void setLupdUserId(Long lupdUserId) {
+		this.lupdUserId = lupdUserId;
 	}
 }

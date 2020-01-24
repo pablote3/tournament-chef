@@ -42,7 +42,7 @@ public class OrganizationRepositoryTest {
 		Assert.assertEquals("cristiana.girelli@gmail.com", organization.getContactEmail());
 		Assert.assertEquals("9093381808", organization.getContactPhone());
 		Assert.assertEquals(LocalDateTime.of(2015, 10, 27, 20, 0), organization.getCreateTs());
-		Assert.assertEquals(LocalDateTime.of(2020, 1, 18, 20, 0), organization.getUpdateTs());
+		Assert.assertEquals(LocalDateTime.of(2020, 1, 18, 20, 0), organization.getLupdTs());
 		Assert.assertEquals(5, organization.getUsers().size());
 		Assert.assertEquals(2, organization.getTeams().size());
 	}
@@ -162,7 +162,7 @@ public class OrganizationRepositoryTest {
 		organization.setContactEmail("manuela.giugliano@gmail.com");
 		organization.setContactPhone("390665951");
 		organization.setCreateTs(LocalDateTime.of(2015, 10, 27, 20, 30));
-		organization.setUpdateTs(LocalDateTime.of(2015, 10, 27, 20, 30));
+		organization.setLupdTs(LocalDateTime.of(2015, 10, 27, 20, 30));
 		organization.setLupdUserId(1L);
 		return organization;
 	}
