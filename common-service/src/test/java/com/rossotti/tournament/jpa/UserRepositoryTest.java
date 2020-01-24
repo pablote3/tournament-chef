@@ -38,7 +38,8 @@ public class UserRepositoryTest {
 		Assert.assertEquals(LocalDateTime.of(2020, 1, 16, 20, 0), user.getCreateTs());
 		Assert.assertEquals(LocalDateTime.of(2020, 1, 19, 20, 0), user.getUpdateTs());
 		Assert.assertEquals("FC Juventes", user.getOrganization().getOrganizationName());
-		Assert.assertEquals(4, user.getOrganization().getUsers().size());
+		Assert.assertEquals(5, user.getOrganization().getUsers().size());
+		Assert.assertTrue(user.getLupdUserId() == 1L);
 	}
 
 	@Test
@@ -124,6 +125,7 @@ public class UserRepositoryTest {
 		user.setPassword("superpass");
 		user.setCreateTs(LocalDateTime.of(2019, 10, 27, 20, 30));
 		user.setUpdateTs(LocalDateTime.of(2019, 10, 27, 20, 30));
+		user.setLupdUserId(4L);
 		return user;
 	}
 

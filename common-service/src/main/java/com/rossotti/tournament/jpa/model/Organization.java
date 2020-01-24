@@ -18,6 +18,15 @@ public class Organization extends BaseEntity {
 		this.users = users;
 	}
 
+	@OneToMany(mappedBy="organization", fetch = FetchType.LAZY)
+	private List<OrganizationTeam> teams = new ArrayList<>();
+	public List<OrganizationTeam> getTeams()  {
+		return teams;
+	}
+	public void setTeams(List<OrganizationTeam> teams)  {
+		this.teams = teams;
+	}
+
 	@Column(length=50, nullable=false)
 	private String organizationName;
 	public String getOrganizationName() {
@@ -164,5 +173,14 @@ public class Organization extends BaseEntity {
 	}
 	public void setCreateTs(LocalDateTime createTs) {
 		this.createTs = createTs;
+	}
+
+	@Column(nullable=false)
+	private Long lupdUserId;
+	public Long getLupdUserId() {
+		return lupdUserId;
+	}
+	public void setLupdUserId(Long lupdUserId) {
+		this.lupdUserId = lupdUserId;
 	}
 }
