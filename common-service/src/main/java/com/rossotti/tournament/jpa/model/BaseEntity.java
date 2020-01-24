@@ -16,6 +16,7 @@ public class BaseEntity {
 		this.id = id;
 	}
 
+	@Column(nullable=false)
 	@LastModifiedDate
 	private LocalDateTime updateTs;
 	public LocalDateTime getUpdateTs() {
