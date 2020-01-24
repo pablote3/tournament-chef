@@ -39,6 +39,7 @@ public class UserRepositoryTest {
 		Assert.assertEquals(LocalDateTime.of(2020, 1, 19, 20, 0), user.getUpdateTs());
 		Assert.assertEquals("FC Juventes", user.getOrganization().getOrganizationName());
 		Assert.assertEquals(5, user.getOrganization().getUsers().size());
+		Assert.assertEquals(2, user.getOrganization().getTeams().size());
 		Assert.assertTrue(user.getLupdUserId() == 1L);
 	}
 

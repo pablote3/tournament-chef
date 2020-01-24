@@ -14,4 +14,4 @@ insert into user VALUES(6, '2020-01-19 20:00:00.0', '2020-01-16 20:00:00.0', 'va
 insert into organizationTeam VALUES(1, '2020-01-19 20:00:00.0', 'Naples', 'Italy', '2020-01-16 20:00:00.0', '1', 'Campania', 'Verona', '10052', 2);
 insert into organizationTeam VALUES(2, '2020-01-19 20:00:00.0', 'Milan', 'Italy', '2020-01-16 20:00:00.0', '4', 'Lombardy', 'Inter Milan', '10096', 1);
 insert into organizationTeam VALUES(3, '2020-01-19 20:00:00.0', 'Milan', 'Italy', '2020-01-16 20:00:00.0', '4', 'Lombardy', 'Milan', '10094', 1);
-insert into organizationTeam VALUES(4, '2020-01-19 20:00:00.0', 'Trento', 'Italy', '2020-01-16 20:00:00.0', '4', 'Trentino', 'Active', 'Juventes', '10036', 2);
+insert into organizationTeam VALUES(4, '2020-01-19 20:00:00.0', 'Trento', 'Italy', '2020-01-16 20:00:00.0', '4', 'Trentino', 'Juventes', '10036', 2);

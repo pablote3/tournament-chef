@@ -21,7 +21,6 @@ public interface UserRepository extends Repository<User, Long> {
 	String findByOrganizationNameAndUserEmail =
 			"select u from User u " +
 			"inner join u.organization o " +
-
 			"where u.email = :email " +
 			"and o.organizationName = :organizationName";
 	@Query(findByOrganizationNameAndUserEmail)
