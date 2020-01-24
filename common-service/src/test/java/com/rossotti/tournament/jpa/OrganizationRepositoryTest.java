@@ -45,6 +45,7 @@ public class OrganizationRepositoryTest {
 		Assert.assertEquals(LocalDateTime.of(2020, 1, 18, 20, 0), organization.getLupdTs());
 		Assert.assertEquals(5, organization.getUsers().size());
 		Assert.assertEquals(2, organization.getTeams().size());
+		Assert.assertEquals(2, organization.getLocations().size());
 	}
 
 	@Test

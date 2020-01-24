@@ -15,3 +15,8 @@ insert into organizationTeam VALUES(1, '2020-01-16 20:00:00.0', '2020-01-19 20:0
 insert into organizationTeam VALUES(2, '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 1, 'Milan', 'Italy', 'Lombardy', 'Inter Milan', '10096', 1);
 insert into organizationTeam VALUES(3, '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 1, 'Milan', 'Italy', 'Lombardy', 'Milan', '10094', 4);
 insert into organizationTeam VALUES(4, '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2, 'Trento', 'Italy', 'Trentino', 'Juventes', '10036', 4);
+
+insert into organizationLocation VALUES(1, '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2, '123 Main Street', 'Suite 1', 'Naples', 'Italy', 'Verona Arena', 'Campania', '10052', 1);
+insert into organizationLocation VALUES(2, '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 1, '456 Central Avenue', 'PO Box 16', 'Milan', 'Italy', 'San Siro', 'Lombardy', '10096', 1);
+insert into organizationLocation VALUES(3, '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 1, '890 Park Street', '', 'Milan', 'Italy', 'Giuseppe Meazza Stadium', 'Lombardy', '10094', 4);
+insert into organizationLocation VALUES(4, '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2, '321 Church Street', '2nd Floor', 'Trento', 'Italy', 'Stadio Briamasco', 'Trentino', '10036', 4);

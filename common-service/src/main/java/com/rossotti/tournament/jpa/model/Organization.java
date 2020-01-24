@@ -27,6 +27,15 @@ public class Organization extends BaseEntity {
 		this.teams = teams;
 	}
 
+	@OneToMany(mappedBy="organization", fetch = FetchType.LAZY)
+	private List<OrganizationLocation> locations = new ArrayList<>();
+	public List<OrganizationLocation> getLocations()  {
+		return locations;
+	}
+	public void setLocations(List<OrganizationLocation> locations)  {
+		this.locations = locations;
+	}
+
 	@Column(length=50, nullable=false)
 	private String organizationName;
 	public String getOrganizationName() {
