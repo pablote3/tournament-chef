@@ -5,8 +5,6 @@ import com.rossotti.tournament.jpa.enumeration.EventType;
 import com.rossotti.tournament.jpa.enumeration.Sport;
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(uniqueConstraints=@UniqueConstraint(columnNames={"organizationId", "startDate", "endDate"}))

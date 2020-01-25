@@ -25,3 +25,5 @@ insert into event VALUES(1, '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2,
 insert into event VALUES(2, '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 1, '2020-09-25', 'Lombardy Memorial Tournament', 'Scheduled', 'Tournament', 'WaterPolo', '2020-09-24', 1);
 insert into event VALUES(3, '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 1, '2020-10-25', 'Lombardy Halloween Invitational', 'InProgress', 'Tournament', 'WaterPolo', '2020-10-24', 1);
 insert into event VALUES(4, '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2, '2020-08-25', 'Trentino Sections Tournament', 'Complete', 'Tournament', 'Lacrosse', '2020-08-24', 4);
+
+insert into template VALUES(1, '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2, 4, 0, 4, 0, 'Pairing', 'Pairing', 0, 0, 8, 8, '4x4Pairing+Semis+Finals');
