@@ -1,7 +1,6 @@
 package com.rossotti.tournament.jpa.model;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(uniqueConstraints=@UniqueConstraint(columnNames={"organizationId", "email"}))

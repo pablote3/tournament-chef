@@ -2,14 +2,13 @@ package com.rossotti.tournament.jpa.model;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(uniqueConstraints=@UniqueConstraint(columnNames={"organizationName", "startDate", "endDate"}))
 public class Organization extends BaseEntity {
-	@OneToMany(mappedBy="organization", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy="organization", fetch = FetchType.LAZY, cascade= CascadeType.ALL, orphanRemoval = true)
 	private List<User> users = new ArrayList<>();
 	public List<User> getUsers()  {
 		return users;
@@ -18,7 +17,7 @@ public class Organization extends BaseEntity {
 		this.users = users;
 	}
 
-	@OneToMany(mappedBy="organization", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy="organization", fetch = FetchType.LAZY, cascade= CascadeType.ALL, orphanRemoval = true)
 	private List<OrganizationTeam> teams = new ArrayList<>();
 	public List<OrganizationTeam> getTeams()  {
 		return teams;
@@ -27,7 +26,7 @@ public class Organization extends BaseEntity {
 		this.teams = teams;
 	}
 
-	@OneToMany(mappedBy="organization", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy="organization", fetch = FetchType.LAZY, cascade= CascadeType.ALL, orphanRemoval = true)
 	private List<OrganizationLocation> locations = new ArrayList<>();
 	public List<OrganizationLocation> getLocations()  {
 		return locations;
