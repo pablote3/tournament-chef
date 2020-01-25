@@ -13,7 +13,7 @@ public interface OrganizationRepository extends Repository<Organization, Long> {
 
 	List<Organization> findAll();
 
-	void save(Organization team);
+	void save(Organization organization);
 
 	void deleteById(Long id);
 

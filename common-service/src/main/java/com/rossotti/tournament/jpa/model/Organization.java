@@ -35,6 +35,15 @@ public class Organization extends BaseEntity {
 		this.locations = locations;
 	}
 
+	@OneToMany(mappedBy="organization", fetch = FetchType.LAZY, cascade= CascadeType.ALL, orphanRemoval = true)
+	private List<Event> events = new ArrayList<>();
+	public List<Event> getEvents()  {
+		return events;
+	}
+	public void setEvents(List<Event> events)  {
+		this.events = events;
+	}
+
 	@Column(length=50, nullable=false)
 	private String organizationName;
 	public String getOrganizationName() {

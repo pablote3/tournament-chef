@@ -12,7 +12,7 @@ public interface UserRepository extends Repository<User, Long> {
 
 	List<User> findAll();
 
-	void save(User team);
+	void save(User user);
 
 	void deleteById(Long id);
 

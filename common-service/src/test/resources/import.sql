@@ -5,7 +5,7 @@ insert into organization VALUES(4, '2020-01-19 20:00:00.0', '2020-01-20 20:00:00
 insert into organization VALUES(5, '2020-01-19 20:00:00.0', '2020-01-20 20:00:00.0', 1, 'Via Giacomo Matteotti, 80', 'Suite 5', 'Reggio Emilia', 'daniela.sabatino@telecomitalia.com', 'Daniela', 'Sabatino', '9097047728', 'Italy', '9999-12-31', 'US Sassuolo', 'Active', '2012-01-15', 'Emilia-Romagna', '42122');
 
 insert into user VALUES(1, '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 1, 'valentina.giacinti@telecomitalia.com', 'Valentina', 'Giacinti', 'Rossonere1', 'Active', 'Administrator', 1);
-insert into user VALUES(2, '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 1, 'laura.fusetti@gmail.com', 'Laura', 'Fusetti', 'Vismara123', 'Inactive', 'Manager', 1);
+insert into user VALUES(2, '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 1, 'laura.fusetti@gmail.com', 'Laura', 'Fusetti', 'Giallorosse', 'Inactive', 'Manager', 1);
 insert into user VALUES(3, '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 1, 'valentina.bergamaschi@hotmail.com', 'Valentina', 'Bergamaschi', 'Calcio333', 'Active', 'Manager', 1);
 insert into user VALUES(4, '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 1, 'alessia.piazza@telecomitalia.com', 'Alessia', 'Piazza', 'Bresciaxxx', 'Inactive', 'User', 1);
 insert into user VALUES(5, '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 1, 'martina.capelli@telecomitalia.com', 'Martina', 'Capelli', 'password123', 'Active', 'Guest', 1);
@@ -20,3 +20,8 @@ insert into organizationLocation VALUES(1, '2020-01-16 20:00:00.0', '2020-01-19 
 insert into organizationLocation VALUES(2, '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 1, '456 Central Avenue', 'PO Box 16', 'Milan', 'Italy', 'San Siro', 'Lombardy', '10096', 1);
 insert into organizationLocation VALUES(3, '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 1, '890 Park Street', '', 'Milan', 'Italy', 'Giuseppe Meazza Stadium', 'Lombardy', '10094', 4);
 insert into organizationLocation VALUES(4, '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2, '321 Church Street', '2nd Floor', 'Trento', 'Italy', 'Stadio Briamasco', 'Trentino', '10036', 4);
+
+insert into event VALUES(1, '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2, '2020-09-30', 'Campania Regional Frosh Soph Tournament', 'Sandbox', 'Tournament', 'WaterPolo', '2020-09-30', 1);
+insert into event VALUES(2, '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 1, '2020-09-25', 'Lombardy Memorial Tournament', 'Scheduled', 'Tournament', 'WaterPolo', '2020-09-24', 1);
+insert into event VALUES(3, '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 1, '2020-10-25', 'Lombardy Halloween Invitational', 'InProgress', 'Tournament', 'WaterPolo', '2020-10-24', 1);
+insert into event VALUES(4, '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2, '2020-08-25', 'Trentino Sections Tournament', 'Complete', 'Tournament', 'Lacrosse', '2020-08-24', 4);

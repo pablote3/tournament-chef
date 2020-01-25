@@ -8,15 +8,16 @@ import java.util.List;
 @Entity
 @Table(uniqueConstraints=@UniqueConstraint(columnNames={"organizationId", "startDate", "endDate"}))
 public class Event extends BaseEntity {
-//	@OneToMany(mappedBy="organization", fetch = FetchType.LAZY, cascade= CascadeType.ALL, orphanRemoval = true)
-//	private List<User> users = new ArrayList<>();
-//	public List<User> getUsers()  {
-//		return users;
-//	}
-//	public void setUsers(List<User> users)  {
-//		this.users = users;
-//	}
-//
+	@ManyToOne
+	@JoinColumn(name="organizationId", referencedColumnName="id", nullable=false)
+	private Organization organization;
+	public Organization getOrganization() {
+		return organization;
+	}
+	public void setOrganization(Organization organization) {
+		this.organization = organization;
+	}
+
 //	@OneToMany(mappedBy="organization", fetch = FetchType.LAZY, cascade= CascadeType.ALL, orphanRemoval = true)
 //	private List<OrganizationTeam> teams = new ArrayList<>();
 //	public List<OrganizationTeam> getTeams()  {
@@ -34,15 +35,6 @@ public class Event extends BaseEntity {
 //	public void setLocations(List<OrganizationLocation> locations)  {
 //		this.locations = locations;
 //	}
-
-	@Column(nullable=false)
-	private Long organizationId;
-	public Long getOrganizationId() {
-		return organizationId;
-	}
-	public void setOrganizationId(Long organizationId) {
-		this.organizationId = organizationId;
-	}
 
 	@Column(nullable=false)
 	private LocalDate startDate;
@@ -63,7 +55,7 @@ public class Event extends BaseEntity {
 	}
 
 	@Enumerated(EnumType.STRING)
-	@Column(length=9, nullable=false)
+	@Column(length=10, nullable=false)
 	private EventStatus eventStatus;
 	public EventStatus getEventStatus() {
 		return eventStatus;
@@ -87,7 +79,7 @@ public class Event extends BaseEntity {
 		Sandbox, Scheduled, InProgress, Complete
 	}
 
-	@Column(length=80, nullable=false)
+	@Column(length=60, nullable=false)
 	private String eventName;
 	public String getEventName() {
 		return eventName;
@@ -97,7 +89,7 @@ public class Event extends BaseEntity {
 	}
 
 	@Enumerated(EnumType.STRING)
-	@Column(length=9, nullable=false)
+	@Column(length=15, nullable=false)
 	private Sport sport;
 	public Sport getSport() {
 		return sport;
@@ -116,7 +108,7 @@ public class Event extends BaseEntity {
 	}
 
 	@Enumerated(EnumType.STRING)
-	@Column(length=9, nullable=false)
+	@Column(length=10, nullable=false)
 	private EventType eventType;
 	public EventType getEventType() {
 		return eventType;
