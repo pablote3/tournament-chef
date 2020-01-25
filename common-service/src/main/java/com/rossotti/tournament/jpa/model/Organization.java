@@ -1,5 +1,6 @@
 package com.rossotti.tournament.jpa.model;
 
+import com.rossotti.tournament.jpa.enumeration.OrganizationStatus;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -70,9 +71,6 @@ public class Organization extends BaseEntity {
 	}
 	public Boolean isInactive() {
 		return organizationStatus == OrganizationStatus.Inactive;
-	}
-	public enum OrganizationStatus {
-		Pending, Active, Inactive
 	}
 
 	@Column(nullable=false)

@@ -1,8 +1,8 @@
 package com.rossotti.tournament.jpa;
 
 import com.rossotti.tournament.config.PersistenceConfig;
+import com.rossotti.tournament.jpa.enumeration.OrganizationStatus;
 import com.rossotti.tournament.jpa.model.Organization;
-import com.rossotti.tournament.jpa.model.Organization.OrganizationStatus;
 import com.rossotti.tournament.jpa.repository.OrganizationRepository;
 import org.junit.Assert;
 import org.junit.Test;
@@ -69,19 +69,19 @@ public class OrganizationRepositoryTest {
 	@Test
 	public void findByOrgNameAndAsOfDate_Found_EqualStartDate() {
 		Organization organization = organizationRepository.findByOrganizationNameAndAsOfDate("FC Juventes", LocalDate.of(2010, 1, 15));
-		Assert.assertEquals(Organization.OrganizationStatus.Inactive, organization.getOrganizationStatus());
+		Assert.assertEquals(OrganizationStatus.Inactive, organization.getOrganizationStatus());
 	}
 
 	@Test
 	public void findByOrgNameAndAsOfDate_Found_EqualEndDate() {
 		Organization organization = organizationRepository.findByOrganizationNameAndAsOfDate("FC Juventes", LocalDate.of(9999, 12, 31));
-		Assert.assertEquals(Organization.OrganizationStatus.Active, organization.getOrganizationStatus());
+		Assert.assertEquals(OrganizationStatus.Active, organization.getOrganizationStatus());
 	}
 
 	@Test
 	public void findByOrgNameAndAsOfDate_Found_BetweenStartAndEndDate() {
 		Organization organization = organizationRepository.findByOrganizationNameAndAsOfDate("FC Juventes", LocalDate.of(2012, 10, 29));
-		Assert.assertEquals(Organization.OrganizationStatus.Inactive, organization.getOrganizationStatus());
+		Assert.assertEquals(OrganizationStatus.Inactive, organization.getOrganizationStatus());
 	}
 
 	@Test

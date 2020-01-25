@@ -1,10 +1,10 @@
 package com.rossotti.tournament.jpa;
 
 import com.rossotti.tournament.config.PersistenceConfig;
+import com.rossotti.tournament.jpa.enumeration.EventStatus;
+import com.rossotti.tournament.jpa.enumeration.EventType;
+import com.rossotti.tournament.jpa.enumeration.Sport;
 import com.rossotti.tournament.jpa.model.Event;
-import com.rossotti.tournament.jpa.model.Event.EventStatus;
-import com.rossotti.tournament.jpa.model.Event.EventType;
-import com.rossotti.tournament.jpa.model.Event.Sport;
 import com.rossotti.tournament.jpa.repository.EventRepository;
 import org.junit.Assert;
 import org.junit.Test;
@@ -44,24 +44,24 @@ public class EventRepositoryTest {
 		Assert.assertEquals(2, event.getOrganization().getLocations().size());
 	}
 
-//	@Test
-//	public void findAll() {
-//		List<User> users = userRepository.findAll();
-//		Assert.assertTrue(users.size() >= 4);
-//	}
-//
-//	@Test
-//	public void findByEmail_Found() {
-//		List<User> users = userRepository.findByEmail("valentina.giacinti@telecomitalia.com");
-//		Assert.assertEquals(2, users.size());
-//	}
-//
-//	@Test
-//	public void findByEmail_NotFound() {
-//		List<User> users = userRepository.findByEmail("saratamborini@euro.com");
-//		Assert.assertEquals(0, users.size());
-//	}
-//
+	@Test
+	public void findAll() {
+		List<Event> events = eventRepository.findAll();
+		Assert.assertTrue(events.size() >= 4);
+	}
+
+	@Test
+	public void findByOrganizationName_Found() {
+		List<Event> events = eventRepository.findByOrganizationName("FC Juventes");
+		Assert.assertEquals(3, events.size());
+	}
+
+	@Test
+	public void findByOrganizationName_NotFound() {
+		List<Event> events = eventRepository.findByOrganizationName("Juventes");
+		Assert.assertEquals(0, events.size());
+	}
+
 //	@Test
 //	public void findByOrganizationNameAndEmail_Found() {
 //		User user = userRepository.findByOrganizationNameAndUserEmail("FC Juventes", "valentina.giacinti@telecomitalia.com");
@@ -76,11 +76,11 @@ public class EventRepositoryTest {
 
 //	@Test
 //	public void create() {
-//		userRepository.save(createMockUser(1L, "amserturini@gmail.com", "Serturini"));
-//		User user = userRepository.findByOrganizationNameAndUserEmail("FC Juventes", "amserturini@gmail.com");
+//		eventRepository.save(createMockUser(1L, "amserturini@gmail.com", "Serturini"));
+//		Event event = eventRepository.findByOrganizationNameAndUserEmail("FC Juventes", "amserturini@gmail.com");
 //		Assert.assertEquals("Serturini", user.getLastName());
 //	}
-//
+
 //	@Test(expected= DataIntegrityViolationException.class)
 //	public void create_MissingRequiredData() {
 //		userRepository.save(createMockUser(1L, "claudia.ciccotti@hotmailcom", null));

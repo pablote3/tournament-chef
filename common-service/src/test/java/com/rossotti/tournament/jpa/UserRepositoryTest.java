@@ -1,10 +1,10 @@
 package com.rossotti.tournament.jpa;
 
 import com.rossotti.tournament.config.PersistenceConfig;
+import com.rossotti.tournament.jpa.enumeration.UserStatus;
+import com.rossotti.tournament.jpa.enumeration.UserType;
 import com.rossotti.tournament.jpa.model.Organization;
 import com.rossotti.tournament.jpa.model.User;
-import com.rossotti.tournament.jpa.model.User.UserStatus;
-import com.rossotti.tournament.jpa.model.User.UserType;
 import com.rossotti.tournament.jpa.repository.UserRepository;
 import org.junit.Assert;
 import org.junit.Test;

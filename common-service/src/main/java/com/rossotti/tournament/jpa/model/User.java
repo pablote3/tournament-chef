@@ -1,5 +1,7 @@
 package com.rossotti.tournament.jpa.model;
 
+import com.rossotti.tournament.jpa.enumeration.UserStatus;
+import com.rossotti.tournament.jpa.enumeration.UserType;
 import javax.persistence.*;
 
 @Entity
@@ -45,9 +47,6 @@ public class User extends BaseEntity {
 	}
 	public Boolean isGuest() {return userType == UserType.Guest;
 	}
-	public enum UserType {
-		Administrator, Manager, User, Guest
-	}
 
 	@Enumerated(EnumType.STRING)
 	@Column(length=9, nullable=false)
@@ -63,9 +62,6 @@ public class User extends BaseEntity {
 	}
 	public Boolean isInactive() {
 		return userStatus == UserStatus.Inactive;
-	}
-	public enum UserStatus {
-		Active, Inactive
 	}
 
 	@Column(length=25, nullable=false)

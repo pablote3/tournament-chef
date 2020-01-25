@@ -1,5 +1,8 @@
 package com.rossotti.tournament.jpa.model;
 
+import com.rossotti.tournament.jpa.enumeration.EventStatus;
+import com.rossotti.tournament.jpa.enumeration.EventType;
+import com.rossotti.tournament.jpa.enumeration.Sport;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -18,22 +21,14 @@ public class Event extends BaseEntity {
 		this.organization = organization;
 	}
 
-//	@OneToMany(mappedBy="organization", fetch = FetchType.LAZY, cascade= CascadeType.ALL, orphanRemoval = true)
-//	private List<OrganizationTeam> teams = new ArrayList<>();
-//	public List<OrganizationTeam> getTeams()  {
-//		return teams;
+//	@ManyToOne
+//	@JoinColumn(name="templateId", referencedColumnName="id", nullable=false)
+//	private Template template;
+//	public Template getTemplate() {
+//		return template;
 //	}
-//	public void setTeams(List<OrganizationTeam> teams)  {
-//		this.teams = teams;
-//	}
-//
-//	@OneToMany(mappedBy="organization", fetch = FetchType.LAZY, cascade= CascadeType.ALL, orphanRemoval = true)
-//	private List<OrganizationLocation> locations = new ArrayList<>();
-//	public List<OrganizationLocation> getLocations()  {
-//		return locations;
-//	}
-//	public void setLocations(List<OrganizationLocation> locations)  {
-//		this.locations = locations;
+//	public void setTemplate(Template template) {
+//		this.template = template;
 //	}
 
 	@Column(nullable=false)
@@ -75,9 +70,6 @@ public class Event extends BaseEntity {
 	public Boolean isComplete() {
 		return eventStatus == EventStatus.Complete;
 	}
-	public enum EventStatus {
-		Sandbox, Scheduled, InProgress, Complete
-	}
 
 	@Column(length=60, nullable=false)
 	private String eventName;
@@ -103,9 +95,6 @@ public class Event extends BaseEntity {
 	public Boolean isLacrosse() {
 		return sport == Sport.Lacrosse;
 	}
-	public enum Sport {
-		WaterPolo, Lacrosse
-	}
 
 	@Enumerated(EnumType.STRING)
 	@Column(length=10, nullable=false)
@@ -118,8 +107,5 @@ public class Event extends BaseEntity {
 	}
 	public Boolean isTournament() {
 		return eventType == EventType.Tournament;
-	}
-	public enum EventType {
-		Tournament
 	}
 }
