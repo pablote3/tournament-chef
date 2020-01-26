@@ -30,7 +30,7 @@ public class EventRepositoryTest {
 	@Test
 	public void findById() {
 		Event event = eventRepository.findById(1L);
-		Assert.assertEquals(LocalDate.of(2020, 9, 30), (event.getStartDate()));
+		Assert.assertEquals(LocalDate.of(2020, 9, 30), event.getStartDate());
 		Assert.assertEquals(LocalDate.of(2020, 9, 30), event.getEndDate());
 		Assert.assertEquals("Campania Regional Frosh Soph Tournament", event.getEventName());
 		Assert.assertEquals(EventStatus.Sandbox, event.getEventStatus());
@@ -39,9 +39,9 @@ public class EventRepositoryTest {
 		Assert.assertEquals(LocalDateTime.of(2020, 1, 16, 20, 0), event.getCreateTs());
 		Assert.assertEquals(LocalDateTime.of(2020, 1, 19, 20, 0), event.getLupdTs());
 		Assert.assertTrue(event.getLupdUserId() == 2L);
-		Assert.assertEquals(5, event.getOrganization().getUsers().size());
-		Assert.assertEquals(2, event.getOrganization().getTeams().size());
-		Assert.assertEquals(2, event.getOrganization().getLocations().size());
+//		Assert.assertEquals(5, event.getOrganization().getUsers().size());
+//		Assert.assertEquals(2, event.getOrganization().getTeams().size());
+//		Assert.assertEquals(2, event.getOrganization().getLocations().size());
 	}
 
 //	@Test
@@ -49,6 +49,15 @@ public class EventRepositoryTest {
 //		List<Event> events = eventRepository.findAll();
 //		Assert.assertTrue(events.size() >= 4);
 //	}
+
+
+//	@Test
+//	public void findByTemplateName_Found() {
+//		List<Event> events = eventRepository.findByTemplateName("temps");
+//		Assert.assertEquals(1, events.size());
+//	}
+
+
 
 //	@Test
 //	public void findByOrganizationName_Found() {

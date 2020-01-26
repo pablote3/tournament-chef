@@ -8,6 +8,15 @@ import java.util.List;
 @Entity
 @Table(uniqueConstraints=@UniqueConstraint(columnNames={"templateName"}))
 public class Template {
+//	@OneToMany(mappedBy="template", fetch = FetchType.LAZY, cascade= CascadeType.ALL, orphanRemoval = true)
+//	private List<Event> events = new ArrayList<>();
+//	public List<Event> getEvents()  {
+//		return events;
+//	}
+//	public void setEvents(List<Event> events)  {
+//		this.events = events;
+//	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -16,15 +25,6 @@ public class Template {
 	}
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	@OneToMany(mappedBy="template", fetch = FetchType.LAZY, cascade= CascadeType.ALL, orphanRemoval = true)
-	private List<Event> events = new ArrayList<>();
-	public List<Event> getEvents()  {
-		return events;
-	}
-	public void setEvents(List<Event> events)  {
-		this.events = events;
 	}
 
 	@Column(length=50, nullable=false)

@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(uniqueConstraints=@UniqueConstraint(columnNames={"organizationId", "templateId", "startDate", "endDate"}))
+@Table(uniqueConstraints=@UniqueConstraint(columnNames={"startDate", "endDate"}))
 public class Event extends BaseEntity {
 	@ManyToOne
 	@JoinColumn(name="organizationId", referencedColumnName="id", nullable=false)
@@ -19,15 +19,15 @@ public class Event extends BaseEntity {
 		this.organization = organization;
 	}
 
-	@ManyToOne
-	@JoinColumn(name="templateId", referencedColumnName="id", nullable=false)
-	private Template template;
-	public Template getTemplate() {
-		return template;
-	}
-	public void setTemplate(Template template) {
-		this.template = template;
-	}
+//	@ManyToOne
+//	@JoinColumn(name="templateId", referencedColumnName="id", nullable=false)
+//	private Template template;
+//	public Template getTemplate() {
+//		return template;
+//	}
+//	public void setTemplate(Template template) {
+//		this.template = template;
+//	}
 
 	@Column(nullable=false)
 	private LocalDate startDate;
