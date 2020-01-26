@@ -44,23 +44,23 @@ public class EventRepositoryTest {
 		Assert.assertEquals(2, event.getOrganization().getLocations().size());
 	}
 
-	@Test
-	public void findAll() {
-		List<Event> events = eventRepository.findAll();
-		Assert.assertTrue(events.size() >= 4);
-	}
+//	@Test
+//	public void findAll() {
+//		List<Event> events = eventRepository.findAll();
+//		Assert.assertTrue(events.size() >= 4);
+//	}
 
-	@Test
-	public void findByOrganizationName_Found() {
-		List<Event> events = eventRepository.findByOrganizationName("FC Juventes");
-		Assert.assertEquals(3, events.size());
-	}
-
-	@Test
-	public void findByOrganizationName_NotFound() {
-		List<Event> events = eventRepository.findByOrganizationName("Juventes");
-		Assert.assertEquals(0, events.size());
-	}
+//	@Test
+//	public void findByOrganizationName_Found() {
+//		List<Event> events = eventRepository.findByOrganizationName("FC Juventes");
+//		Assert.assertEquals(3, events.size());
+//	}
+//
+//	@Test
+//	public void findByOrganizationName_NotFound() {
+//		List<Event> events = eventRepository.findByOrganizationName("Juventes");
+//		Assert.assertEquals(0, events.size());
+//	}
 
 //	@Test
 //	public void findByOrganizationNameAndEmail_Found() {
