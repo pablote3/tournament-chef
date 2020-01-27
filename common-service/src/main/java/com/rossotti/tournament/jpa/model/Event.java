@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(uniqueConstraints=@UniqueConstraint(columnNames={"startDate", "endDate"}))
+@Table(uniqueConstraints=@UniqueConstraint(columnNames={"organizationId", "startDate", "endDate"}))
 public class Event extends BaseEntity {
 	@ManyToOne
 	@JoinColumn(name="organizationId", referencedColumnName="id", nullable=false)

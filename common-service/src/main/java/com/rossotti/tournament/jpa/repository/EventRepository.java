@@ -17,12 +17,12 @@ public interface EventRepository extends Repository<Event, Long> {
 
 	void deleteById(Long id);
 
-//	String findByOrganizationName =
-//			"select e from Event e " +
-//			"inner join e.organization o " +
-//			"where o.organizationName = :organizationName";
-//	@Query(findByOrganizationName)
-//	List<Event> findByOrganizationName(@Param("organizationName") String organizationName);
+	String findByOrganizationName =
+			"select e from Event e " +
+			"inner join e.organization o " +
+			"where o.organizationName = :organizationName";
+	@Query(findByOrganizationName)
+	List<Event> findByOrganizationName(@Param("organizationName") String organizationName);
 
 //	String findByOrganizationNameAndStartDate =
 //			"select u from User u " +
