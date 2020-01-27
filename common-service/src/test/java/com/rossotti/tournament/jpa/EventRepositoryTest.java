@@ -42,6 +42,7 @@ public class EventRepositoryTest {
 		Assert.assertEquals(5, event.getOrganization().getUsers().size());
 		Assert.assertEquals(2, event.getOrganization().getTeams().size());
 		Assert.assertEquals(2, event.getOrganization().getLocations().size());
+		Assert.assertEquals(2, event.getEventTeams().size());
 	}
 
 //	@Test

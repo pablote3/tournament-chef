@@ -27,3 +27,6 @@ insert into event (id, createTs, lupdTs, lupdUserId, endDate, eventName, eventSt
 insert into event (id, createTs, lupdTs, lupdUserId, endDate, eventName, eventStatus, eventType, sport, startDate, organizationId) VALUES(4, '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2, '2020-08-25', 'Trentino Sections Tournament', 'Complete', 'Tournament', 'Lacrosse', '2020-08-24', 4);
 
 insert into template (id, templateName) VALUES(1, 'temps');
+
+insert into eventTeam (id, eventId) VALUES(1, 1)
+insert into eventTeam (id, eventId) VALUES(2, 1)

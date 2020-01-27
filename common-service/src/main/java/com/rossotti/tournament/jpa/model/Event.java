@@ -5,6 +5,8 @@ import com.rossotti.tournament.jpa.enumeration.EventType;
 import com.rossotti.tournament.jpa.enumeration.Sport;
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(uniqueConstraints=@UniqueConstraint(columnNames={"startDate", "endDate"}))
@@ -28,6 +30,15 @@ public class Event extends BaseEntity {
 //	public void setTemplate(Template template) {
 //		this.template = template;
 //	}
+
+	@OneToMany(mappedBy="event", fetch = FetchType.LAZY, cascade= CascadeType.ALL, orphanRemoval = true)
+	private List<EventTeam> eventTeams = new ArrayList<>();
+	public List<EventTeam> getEventTeams()  {
+		return eventTeams;
+	}
+	public void setEventTeams(List<EventTeam> eventTeams)  {
+		this.eventTeams = eventTeams;
+	}
 
 	@Column(nullable=false)
 	private LocalDate startDate;
