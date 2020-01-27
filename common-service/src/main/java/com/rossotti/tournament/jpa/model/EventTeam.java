@@ -24,4 +24,14 @@ public class EventTeam {
 	public void setEvent(Event event) {
 		this.event = event;
 	}
+
+	@ManyToOne
+	@JoinColumn(name="organizationTeamId", referencedColumnName="id", nullable=false)
+	private OrganizationTeam organizationTeam;
+	public OrganizationTeam getOrganizationTeam() {
+		return organizationTeam;
+	}
+	public void setOrganizationTeam(OrganizationTeam organizationTeam) {
+		this.organizationTeam = organizationTeam;
+	}
 }
