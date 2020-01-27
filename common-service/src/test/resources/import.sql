@@ -30,3 +30,8 @@ insert into event (id, organizationId, startDate, endDate, eventName, eventStatu
 
 insert into eventTeam (id, eventId, organizationTeamId) VALUES(1, 1, 2)
 insert into eventTeam (id, eventId, organizationTeamId) VALUES(2, 1, 3)
+
+insert into eventTeamRanking (id, eventTeamId, rankingType, ranking) VALUES(1, 1, 'Initial', 1)
+insert into eventTeamRanking (id, eventTeamId, rankingType, ranking) VALUES(2, 2, 'Initial', 2)
+insert into eventTeamRanking (id, eventTeamId, rankingType, ranking) VALUES(3, 1, 'End', 2)
+insert into eventTeamRanking (id, eventTeamId, rankingType, ranking) VALUES(4, 2, 'End', 1)

@@ -1,6 +1,8 @@
 package com.rossotti.tournament.jpa.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table
@@ -33,5 +35,14 @@ public class EventTeam {
 	}
 	public void setOrganizationTeam(OrganizationTeam organizationTeam) {
 		this.organizationTeam = organizationTeam;
+	}
+
+	@OneToMany(mappedBy="eventTeam", fetch = FetchType.LAZY, cascade= CascadeType.ALL, orphanRemoval = true)
+	private List<EventTeamRanking> eventTeamRankings = new ArrayList<>();
+	public List<EventTeamRanking> getEventTeamRankings()  {
+		return eventTeamRankings;
+	}
+	public void setEventTeamRankings(List<EventTeamRanking> eventTeamRankings)  {
+		this.eventTeamRankings = eventTeamRankings;
 	}
 }
