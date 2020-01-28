@@ -101,30 +101,30 @@ public class EventRepositoryTest {
 
 	// Create duplicate event test not possible.  Because of key organization id, performs an update instead.
 
-//	@Test
-//	public void update() {
-//		userRepository.save(updateMockUser("FC Juventes", "valentina.bergamaschi@hotmail.com", "Valencia"));
-//		User user = userRepository.findByOrganizationNameAndUserEmail("FC Juventes", "valentina.bergamaschi@hotmail.com");
-//		Assert.assertEquals("Valencia", user.getLastName());
-//	}
-//
-//	@Test(expected= DataIntegrityViolationException.class)
-//	public void update_MissingRequiredData() {
-//		userRepository.save(updateMockUser("FC Juventes", "alessia.piazza@telecomitalia.com", null));
-//	}
-//
-//	@Test
-//	public void delete() {
-//		User user = userRepository.findByOrganizationNameAndUserEmail("FC Juventes", "martina.capelli@telecomitalia.com");
-//		if (user != null) {
-//			userRepository.deleteById(user.getId());
-//		}
-//		else {
-//			Assert.fail("Unable to find record to delete");
-//		}
-//		User findUser = userRepository.findByOrganizationNameAndUserEmail("FC Juventes", "martina.capelli@telecomitalia.com");
-//		Assert.assertNull(findUser);
-//	}
+	@Test
+	public void update() {
+		eventRepository.save(updateMockEvent("FC Juventes", LocalDate.of(2020, 10, 25), EventStatus.Complete));
+		Event event = eventRepository.findByOrganizationNameAndAsOfDate("FC Juventes", LocalDate.of(2020, 10, 25));
+		Assert.assertEquals(EventStatus.Complete, event.getEventStatus());
+	}
+
+	@Test(expected= DataIntegrityViolationException.class)
+	public void update_MissingRequiredData() {
+		eventRepository.save(updateMockEvent("FC Juventes", LocalDate.of(2020, 10, 25), null));
+	}
+
+	@Test
+	public void delete() {
+		Event event = eventRepository.findByOrganizationNameAndAsOfDate("US Sassuolo", LocalDate.of(2020, 8, 26));
+		if (event != null) {
+			eventRepository.deleteById(event.getId());
+		}
+		else {
+			Assert.fail("Unable to find record to delete");
+		}
+		Event findEvent = eventRepository.findByOrganizationNameAndAsOfDate("US Sassuolo", LocalDate.of(2020, 8, 26));
+		Assert.assertNull(findEvent);
+	}
 
 	private Event createMockEvent(String eventName) {
 		Event event = new Event();
@@ -165,5 +165,11 @@ public class EventRepositoryTest {
 		organizationTeam.setOrganization(createMockOrganization());
 		organizationTeam.setTeamName(teamName);
 		return organizationTeam;
+	}
+
+	private Event updateMockEvent(String orgName, LocalDate asOfDate, EventStatus eventStatus) {
+		Event event = eventRepository.findByOrganizationNameAndAsOfDate("FC Juventes", asOfDate);
+		event.setEventStatus(eventStatus);;
+		return event;
 	}
 }
