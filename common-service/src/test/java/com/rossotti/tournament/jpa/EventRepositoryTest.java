@@ -65,7 +65,7 @@ public class EventRepositoryTest {
 	@Test
 	public void findByOrganizationName_Found() {
 		List<Event> events = eventRepository.findByOrganizationName("FC Juventes");
-		Assert.assertEquals(3, events.size());
+		Assert.assertEquals(4, events.size());
 	}
 
 	@Test
@@ -88,21 +88,19 @@ public class EventRepositoryTest {
 
 	@Test
 	public void create() {
-		eventRepository.save(createMockEvent(2L, "Juventes Fall Classic"));
-		Event event = eventRepository.findByOrganizationNameAndAsOfDate("FC Juventes", LocalDate.of(2010, 1, 15));
+		eventRepository.save(createMockEvent("Juventes Fall Classic"));
+		Event event = eventRepository.findByOrganizationNameAndAsOfDate("FC Juventes", LocalDate.of(2012, 9, 10));
 		Assert.assertEquals("Juventes Fall Classic", event.getEventName());
+		Assert.assertEquals(2, event.getEventTeams().size());
 	}
 
-//	@Test(expected= DataIntegrityViolationException.class)
-//	public void create_MissingRequiredData() {
-//		userRepository.save(createMockUser(1L, "claudia.ciccotti@hotmailcom", null));
-//	}
-//
-//	@Test(expected= DataIntegrityViolationException.class)
-//	public void create_Duplicate() {
-//		userRepository.save(createMockUser(1L, "valentina.giacinti@telecomitalia.com", "Giacinti"));
-//	}
-//
+	@Test(expected= DataIntegrityViolationException.class)
+	public void create_MissingRequiredData() {
+		eventRepository.save(createMockEvent(null));
+	}
+
+	// Create duplicate event test not possible.  Because of key organization id, performs an update instead.
+
 //	@Test
 //	public void update() {
 //		userRepository.save(updateMockUser("FC Juventes", "valentina.bergamaschi@hotmail.com", "Valencia"));
@@ -128,7 +126,7 @@ public class EventRepositoryTest {
 //		Assert.assertNull(findUser);
 //	}
 
-	private Event createMockEvent(Long orgId, String eventName) {
+	private Event createMockEvent(String eventName) {
 		Event event = new Event();
 		event.setOrganization(createMockOrganization());
 		event.setEventName(eventName);
@@ -137,35 +135,35 @@ public class EventRepositoryTest {
 		event.setEventStatus(EventStatus.Sandbox);
 		event.setEventType(EventType.Tournament);
 		event.setSport(Sport.WaterPolo);
-		event.setEventTeams(createMockEventTeam(3L, 1L));
+		event.getEventTeams().add(createMockEventTeam(3L, 1L, "Verona", event));
+		event.getEventTeams().add(createMockEventTeam(4L, 4L, "Juventes", event));
 		event.setCreateTs(LocalDateTime.of(2019, 10, 27, 20, 30));
 		event.setLupdTs(LocalDateTime.of(2019, 10, 27, 20, 30));
 		event.setLupdUserId(4L);
 		return event;
 	}
 
-	private List<EventTeam> createMockEventTeam(Long eventTeamId, Long organizationTeamId) {
-		List<EventTeam> eventTeams = new ArrayList<>();
-		EventTeam eventTeam = new EventTeam();
-		eventTeam.setId(eventTeamId);
-		eventTeam.setOrganizationTeam(createMockOrganizationTeam(1L, 2L, "Verona"));
-		eventTeams.add(eventTeam);
-		return eventTeams;
+	private Organization createMockOrganization() {
+		Organization organization = new Organization();
+		organization.setId(2L);
+		organization.setOrganizationName("FC Juventes");
+		organization.setStartDate(LocalDate.of(2016, 2, 21));
+		organization.setEndDate(LocalDate.of(9999, 12, 31));
+		return organization;
 	}
 
-	private OrganizationTeam createMockOrganizationTeam(Long organizationTeamId, Long organizationId, String teamName) {
+	private EventTeam createMockEventTeam(Long eventTeamId, Long organizationTeamId, String teamName, Event event) {
+		EventTeam eventTeam = new EventTeam();
+		eventTeam.setEvent(event);
+		eventTeam.setOrganizationTeam(createMockOrganizationTeam(organizationTeamId, teamName));
+		return eventTeam;
+	}
+
+	private OrganizationTeam createMockOrganizationTeam(Long organizationTeamId, String teamName) {
 		OrganizationTeam organizationTeam = new OrganizationTeam();
 		organizationTeam.setId(organizationTeamId);
 		organizationTeam.setOrganization(createMockOrganization());
 		organizationTeam.setTeamName(teamName);
 		return organizationTeam;
-	}
-
-	private Organization createMockOrganization() {
-		Organization organization = new Organization();
-		organization.setId(2L);
-		organization.setStartDate(LocalDate.of(2010, 1, 15));
-		organization.setEndDate(LocalDate.of(2016, 2, 20));
-		return organization;
 	}
 }
