@@ -5,6 +5,8 @@ import com.rossotti.tournament.jpa.model.User;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.query.Param;
+
+import java.time.LocalDate;
 import java.util.List;
 
 public interface EventRepository extends Repository<Event, Long> {
@@ -24,13 +26,14 @@ public interface EventRepository extends Repository<Event, Long> {
 	@Query(findByOrganizationName)
 	List<Event> findByOrganizationName(@Param("organizationName") String organizationName);
 
-//	String findByOrganizationNameAndStartDate =
-//			"select u from User u " +
-//			"inner join u.organization o " +
-//			"where u.email = :email " +
-//			"and o.organizationName = :organizationName";
-//	@Query(findByOrganizationNameAndUserEmail)
-//	User findByOrganizationNameAndUserEmail(@Param("organizationName") String organizationName, @Param("email") String email);
+	String findByOrganizationNameAndAsOfDate =
+			"select e from Event e " +
+			"inner join e.organization o " +
+			"where o.organizationName = :organizationName " +
+			"and e.startDate <= :asOfDate " +
+			"and e.endDate >= :asOfDate";
+	@Query(findByOrganizationNameAndAsOfDate)
+	Event findByOrganizationNameAndAsOfDate(@Param("organizationName") String organizationName, @Param("asOfDate") LocalDate asOfDate);
 
 //	String findByTemplateName =
 //			"select e from Event e " +

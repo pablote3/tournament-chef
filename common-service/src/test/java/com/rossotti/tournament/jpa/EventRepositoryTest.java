@@ -5,6 +5,9 @@ import com.rossotti.tournament.jpa.enumeration.EventStatus;
 import com.rossotti.tournament.jpa.enumeration.EventType;
 import com.rossotti.tournament.jpa.enumeration.Sport;
 import com.rossotti.tournament.jpa.model.Event;
+import com.rossotti.tournament.jpa.model.EventTeam;
+import com.rossotti.tournament.jpa.model.Organization;
+import com.rossotti.tournament.jpa.model.OrganizationTeam;
 import com.rossotti.tournament.jpa.repository.EventRepository;
 import org.junit.Assert;
 import org.junit.Test;
@@ -15,8 +18,10 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @ActiveProfiles(profiles = "development")
@@ -69,24 +74,24 @@ public class EventRepositoryTest {
 		Assert.assertEquals(0, events.size());
 	}
 
-//	@Test
-//	public void findByOrganizationNameAndEmail_Found() {
-//		User user = userRepository.findByOrganizationNameAndUserEmail("FC Juventes", "valentina.giacinti@telecomitalia.com");
-//		Assert.assertEquals("Giacinti", user.getLastName());
-//	}
-//
-//	@Test
-//	public void findByOrganizationNameAndEmail_NotFound() {
-//		User user = userRepository.findByOrganizationNameAndUserEmail("FC Juventes", "saratamborini@euro.com");
-//		Assert.assertNull(user);
-//	}
+	@Test
+	public void findByOrganizationNameAndAsOfDate_Found() {
+		Event event = eventRepository.findByOrganizationNameAndAsOfDate("FC Juventes", LocalDate.of(2020, 9, 24));
+		Assert.assertEquals("Lombardy Memorial Tournament", event.getEventName());
+	}
 
-//	@Test
-//	public void create() {
-//		eventRepository.save(createMockUser(1L, "amserturini@gmail.com", "Serturini"));
-//		Event event = eventRepository.findByOrganizationNameAndUserEmail("FC Juventes", "amserturini@gmail.com");
-//		Assert.assertEquals("Serturini", user.getLastName());
-//	}
+	@Test
+	public void findByOrganizationNameAndAsOfDate_NotFound() {
+		Event event = eventRepository.findByOrganizationNameAndAsOfDate("FC Juventes", LocalDate.of(2020, 8, 20));
+		Assert.assertNull(event);
+	}
+
+	@Test
+	public void create() {
+		eventRepository.save(createMockEvent(2L, "Juventes Fall Classic"));
+		Event event = eventRepository.findByOrganizationNameAndAsOfDate("FC Juventes", LocalDate.of(2010, 1, 15));
+		Assert.assertEquals("Juventes Fall Classic", event.getEventName());
+	}
 
 //	@Test(expected= DataIntegrityViolationException.class)
 //	public void create_MissingRequiredData() {
@@ -122,31 +127,45 @@ public class EventRepositoryTest {
 //		User findUser = userRepository.findByOrganizationNameAndUserEmail("FC Juventes", "martina.capelli@telecomitalia.com");
 //		Assert.assertNull(findUser);
 //	}
-//
-//	private User createMockUser(Long orgId, String email, String lastName) {
-//		User user = new User();
-//		user.setOrganization(createMockOrganization(orgId));
-//		user.setEmail(email);
-//		user.setUserType(UserType.Administrator);
-//		user.setUserStatus(UserStatus.Active);
-//		user.setLastName(lastName);
-//		user.setFirstName("Annamaria");
-//		user.setPassword("superpass");
-//		user.setCreateTs(LocalDateTime.of(2019, 10, 27, 20, 30));
-//		user.setLupdTs(LocalDateTime.of(2019, 10, 27, 20, 30));
-//		user.setLupdUserId(4L);
-//		return user;
-//	}
-//
-//	private User updateMockUser(String orgName, String email, String lastName) {
-//		User user = userRepository.findByOrganizationNameAndUserEmail(orgName, email);
-//		user.setLastName(lastName);
-//		return user;
-//	}
-//
-//	private Organization createMockOrganization(Long orgId) {
-//		Organization organization = new Organization();
-//		organization.setId(orgId);
-//		return organization;
-//	}
+
+	private Event createMockEvent(Long orgId, String eventName) {
+		Event event = new Event();
+		event.setOrganization(createMockOrganization());
+		event.setEventName(eventName);
+		event.setStartDate(LocalDate.of(2012, 9, 10));
+		event.setEndDate(LocalDate.of(2012, 9, 11));
+		event.setEventStatus(EventStatus.Sandbox);
+		event.setEventType(EventType.Tournament);
+		event.setSport(Sport.WaterPolo);
+		event.setEventTeams(createMockEventTeam(3L, 1L));
+		event.setCreateTs(LocalDateTime.of(2019, 10, 27, 20, 30));
+		event.setLupdTs(LocalDateTime.of(2019, 10, 27, 20, 30));
+		event.setLupdUserId(4L);
+		return event;
+	}
+
+	private List<EventTeam> createMockEventTeam(Long eventTeamId, Long organizationTeamId) {
+		List<EventTeam> eventTeams = new ArrayList<>();
+		EventTeam eventTeam = new EventTeam();
+		eventTeam.setId(eventTeamId);
+		eventTeam.setOrganizationTeam(createMockOrganizationTeam(1L, 2L, "Verona"));
+		eventTeams.add(eventTeam);
+		return eventTeams;
+	}
+
+	private OrganizationTeam createMockOrganizationTeam(Long organizationTeamId, Long organizationId, String teamName) {
+		OrganizationTeam organizationTeam = new OrganizationTeam();
+		organizationTeam.setId(organizationTeamId);
+		organizationTeam.setOrganization(createMockOrganization());
+		organizationTeam.setTeamName(teamName);
+		return organizationTeam;
+	}
+
+	private Organization createMockOrganization() {
+		Organization organization = new Organization();
+		organization.setId(2L);
+		organization.setStartDate(LocalDate.of(2010, 1, 15));
+		organization.setEndDate(LocalDate.of(2016, 2, 20));
+		return organization;
+	}
 }
