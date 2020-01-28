@@ -17,11 +17,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @ActiveProfiles(profiles = "development")
@@ -88,7 +85,7 @@ public class EventRepositoryTest {
 
 	@Test
 	public void create() {
-		eventRepository.save(createMockEvent("Juventes Fall Classic"));
+		eventRepository.save(createMockEvent("Juventes Fall Classic", LocalDate.of(2012, 9, 10), LocalDate.of(2012, 9, 11)));
 		Event event = eventRepository.findByOrganizationNameAndAsOfDate("FC Juventes", LocalDate.of(2012, 9, 10));
 		Assert.assertEquals("Juventes Fall Classic", event.getEventName());
 		Assert.assertEquals(2, event.getEventTeams().size());
@@ -96,10 +93,13 @@ public class EventRepositoryTest {
 
 	@Test(expected= DataIntegrityViolationException.class)
 	public void create_MissingRequiredData() {
-		eventRepository.save(createMockEvent(null));
+		eventRepository.save(createMockEvent(null, LocalDate.of(2012, 9, 10), LocalDate.of(2012, 9, 11)));
 	}
 
-	// Create duplicate event test not possible.  Because of key organization id, performs an update instead.
+	@Test(expected= DataIntegrityViolationException.class)
+	public void create_Duplicate() {
+		eventRepository.save(createMockEvent("Lombardy Halloween Invitational", LocalDate.of(2020, 10, 24), LocalDate.of(2020, 10, 25)));
+	}
 
 	@Test
 	public void update() {
@@ -126,12 +126,12 @@ public class EventRepositoryTest {
 		Assert.assertNull(findEvent);
 	}
 
-	private Event createMockEvent(String eventName) {
+	private Event createMockEvent(String eventName, LocalDate startDate, LocalDate endDate) {
 		Event event = new Event();
 		event.setOrganization(createMockOrganization());
 		event.setEventName(eventName);
-		event.setStartDate(LocalDate.of(2012, 9, 10));
-		event.setEndDate(LocalDate.of(2012, 9, 11));
+		event.setStartDate(startDate);
+		event.setEndDate(endDate);
 		event.setEventStatus(EventStatus.Sandbox);
 		event.setEventType(EventType.Tournament);
 		event.setSport(Sport.WaterPolo);
@@ -145,7 +145,7 @@ public class EventRepositoryTest {
 
 	private Organization createMockOrganization() {
 		Organization organization = new Organization();
-		organization.setId(2L);
+		organization.setId(1L);
 		organization.setOrganizationName("FC Juventes");
 		organization.setStartDate(LocalDate.of(2016, 2, 21));
 		organization.setEndDate(LocalDate.of(9999, 12, 31));

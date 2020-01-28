@@ -17,7 +17,7 @@ public class EventTeamRanking {
 	}
 
 	@ManyToOne
-	@JoinColumn(name="eventTeamId", referencedColumnName="id", nullable=true)
+	@JoinColumn(name="eventTeamId", referencedColumnName="id", nullable=false)
 	private EventTeam eventTeam;
 	public EventTeam getEventTeam() {
 		return eventTeam;
