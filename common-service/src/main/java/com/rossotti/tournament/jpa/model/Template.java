@@ -7,7 +7,7 @@ import java.util.List;
 
 @Entity
 @Table(uniqueConstraints=@UniqueConstraint(columnNames={"templateName"}))
-public class Template extends BaseEntity {
+public class Template {
 	@OneToMany(mappedBy="template", fetch = FetchType.LAZY, cascade= CascadeType.ALL, orphanRemoval = true)
 	private List<Event> events = new ArrayList<>();
 	public List<Event> getEvents()  {
