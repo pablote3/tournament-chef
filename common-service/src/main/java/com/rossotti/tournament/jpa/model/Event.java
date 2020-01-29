@@ -21,15 +21,15 @@ public class Event extends BaseEntity {
 		this.organization = organization;
 	}
 
-//	@ManyToOne
-//	@JoinColumn(name="templateId", referencedColumnName="id", nullable=false)
-//	private Template template;
-//	public Template getTemplate() {
-//		return template;
-//	}
-//	public void setTemplate(Template template) {
-//		this.template = template;
-//	}
+	@ManyToOne
+	@JoinColumn(name="templateId", referencedColumnName="id", nullable=false)
+	private Template template;
+	public Template getTemplate() {
+		return template;
+	}
+	public void setTemplate(Template template) {
+		this.template = template;
+	}
 
 	@OneToMany(mappedBy="event", fetch = FetchType.LAZY, cascade= CascadeType.ALL, orphanRemoval = true)
 	private List<EventTeam> eventTeams = new ArrayList<>();

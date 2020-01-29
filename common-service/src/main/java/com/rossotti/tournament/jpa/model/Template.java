@@ -8,14 +8,14 @@ import java.util.List;
 @Entity
 @Table(uniqueConstraints=@UniqueConstraint(columnNames={"templateName"}))
 public class Template {
-//	@OneToMany(mappedBy="template", fetch = FetchType.LAZY, cascade= CascadeType.ALL, orphanRemoval = true)
-//	private List<Event> events = new ArrayList<>();
-//	public List<Event> getEvents()  {
-//		return events;
-//	}
-//	public void setEvents(List<Event> events)  {
-//		this.events = events;
-//	}
+	@OneToMany(mappedBy="template", fetch = FetchType.LAZY, cascade= CascadeType.ALL, orphanRemoval = true)
+	private List<Event> events = new ArrayList<>();
+	public List<Event> getEvents()  {
+		return events;
+	}
+	public void setEvents(List<Event> events)  {
+		this.events = events;
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -4,10 +4,7 @@ import com.rossotti.tournament.config.PersistenceConfig;
 import com.rossotti.tournament.jpa.enumeration.EventStatus;
 import com.rossotti.tournament.jpa.enumeration.EventType;
 import com.rossotti.tournament.jpa.enumeration.Sport;
-import com.rossotti.tournament.jpa.model.Event;
-import com.rossotti.tournament.jpa.model.EventTeam;
-import com.rossotti.tournament.jpa.model.Organization;
-import com.rossotti.tournament.jpa.model.OrganizationTeam;
+import com.rossotti.tournament.jpa.model.*;
 import com.rossotti.tournament.jpa.repository.EventRepository;
 import org.junit.Assert;
 import org.junit.Test;
@@ -45,6 +42,7 @@ public class EventRepositoryTest {
 		Assert.assertEquals(2, event.getOrganization().getTeams().size());
 		Assert.assertEquals(2, event.getOrganization().getLocations().size());
 		Assert.assertEquals(2, event.getEventTeams().size());
+		Assert.assertEquals("temps", event.getTemplate().getTemplateName());
 	}
 
 	@Test
@@ -129,6 +127,7 @@ public class EventRepositoryTest {
 	private Event createMockEvent(String eventName, LocalDate startDate, LocalDate endDate) {
 		Event event = new Event();
 		event.setOrganization(createMockOrganization());
+		event.setTemplate(createMockTemplate());
 		event.setEventName(eventName);
 		event.setStartDate(startDate);
 		event.setEndDate(endDate);
@@ -150,6 +149,12 @@ public class EventRepositoryTest {
 		organization.setStartDate(LocalDate.of(2016, 2, 21));
 		organization.setEndDate(LocalDate.of(9999, 12, 31));
 		return organization;
+	}
+
+	private Template createMockTemplate() {
+		Template template = new Template();
+		template.setId(1L);
+		return  template;
 	}
 
 	private EventTeam createMockEventTeam(Long eventTeamId, Long organizationTeamId, String teamName, Event event) {
