@@ -29,7 +29,7 @@ public class EventRepositoryTest {
 	@Test
 	public void findById() {
 		Event event = eventRepository.findById(1L);
-		Assert.assertEquals(LocalDate.of(2020, 9, 30), event.getStartDate());
+		Assert.assertEquals(LocalDate.of(2020, 9, 29), event.getStartDate());
 		Assert.assertEquals(LocalDate.of(2020, 9, 30), event.getEndDate());
 		Assert.assertEquals("Campania Regional Frosh Soph Tournament", event.getEventName());
 		Assert.assertEquals(EventStatus.Sandbox, event.getEventStatus());
@@ -42,6 +42,7 @@ public class EventRepositoryTest {
 		Assert.assertEquals(2, event.getOrganization().getTeams().size());
 		Assert.assertEquals(2, event.getOrganization().getLocations().size());
 		Assert.assertEquals(2, event.getEventTeams().size());
+		Assert.assertEquals(2, event.getGameDates().size());
 		Assert.assertEquals("4x4Pairing+Semis+Finals", event.getTemplate().getTemplateName());
 	}
 
@@ -95,6 +96,7 @@ public class EventRepositoryTest {
 		Event event = events.get(0);
 		Assert.assertEquals("Juventes Fall Classic", event.getEventName());
 		Assert.assertEquals(2, event.getEventTeams().size());
+		Assert.assertEquals(2, event.getGameDates().size());
 	}
 
 	@Test(expected= DataIntegrityViolationException.class)
@@ -146,6 +148,8 @@ public class EventRepositoryTest {
 		event.setSport(Sport.WaterPolo);
 		event.getEventTeams().add(createMockEventTeam(3L, 1L, "Verona", event));
 		event.getEventTeams().add(createMockEventTeam(4L, 4L, "Juventes", event));
+		event.getGameDates().add(createMockGameDate(LocalDate.of(2012, 9, 10), event));
+		event.getGameDates().add(createMockGameDate(LocalDate.of(2012, 9, 11), event));
 		event.setCreateTs(LocalDateTime.of(2019, 10, 27, 20, 30));
 		event.setLupdTs(LocalDateTime.of(2019, 10, 27, 20, 30));
 		event.setLupdUserId(4L);
@@ -172,6 +176,13 @@ public class EventRepositoryTest {
 		eventTeam.setEvent(event);
 		eventTeam.setOrganizationTeam(createMockOrganizationTeam(organizationTeamId, teamName));
 		return eventTeam;
+	}
+
+	private GameDate createMockGameDate(LocalDate date, Event event) {
+		GameDate gameDate = new GameDate();
+		gameDate.setGameDate(date);
+		gameDate.setEvent(event);
+		return gameDate;
 	}
 
 	private OrganizationTeam createMockOrganizationTeam(Long organizationTeamId, String teamName) {

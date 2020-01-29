@@ -40,6 +40,15 @@ public class Event extends BaseEntity {
 		this.eventTeams = eventTeams;
 	}
 
+	@OneToMany(mappedBy="event", fetch = FetchType.LAZY, cascade= CascadeType.ALL, orphanRemoval = true)
+	private List<GameDate> gameDates = new ArrayList<>();
+	public List<GameDate> getGameDates()  {
+		return gameDates;
+	}
+	public void setGameDates(List<GameDate> gameDates)  {
+		this.gameDates = gameDates;
+	}
+
 	@Column(nullable=false)
 	private LocalDate startDate;
 	public LocalDate getStartDate() {
