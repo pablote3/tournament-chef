@@ -31,7 +31,7 @@ public interface EventRepository extends Repository<Event, Long> {
 			"and e.startDate <= :asOfDate " +
 			"and e.endDate >= :asOfDate";
 	@Query(findByOrganizationNameAndAsOfDate)
-	Event findByOrganizationNameAndAsOfDate(@Param("organizationName") String organizationName, @Param("asOfDate") LocalDate asOfDate);
+	List<Event> findByOrganizationNameAndAsOfDate(@Param("organizationName") String organizationName, @Param("asOfDate") LocalDate asOfDate);
 
 	String findByOrganizationNameAsOfDateTemplateName =
 			"select e from Event e " +

@@ -65,14 +65,15 @@ public class EventRepositoryTest {
 
 	@Test
 	public void findByOrganizationNameAndAsOfDate_Found() {
-		Event event = eventRepository.findByOrganizationNameAndAsOfDate("FC Juventes", LocalDate.of(2020, 9, 24));
+		List<Event> events = eventRepository.findByOrganizationNameAndAsOfDate("FC Juventes", LocalDate.of(2020, 9, 24));
+		Event event = events.get(0);
 		Assert.assertEquals("Lombardy Memorial Tournament", event.getEventName());
 	}
 
 	@Test
 	public void findByOrganizationNameAndAsOfDate_NotFound() {
-		Event event = eventRepository.findByOrganizationNameAndAsOfDate("FC Juventes", LocalDate.of(2020, 8, 20));
-		Assert.assertNull(event);
+		List<Event> events = eventRepository.findByOrganizationNameAndAsOfDate("FC Juventes", LocalDate.of(2020, 8, 20));
+		Assert.assertEquals(0, events.size());
 	}
 
 	@Test
@@ -82,9 +83,16 @@ public class EventRepositoryTest {
 	}
 
 	@Test
+	public void findByOrganizationNameAsOfDateTemplateName_NotFound() {
+		Event event = eventRepository.findByOrganizationNameAsOfDateTemplateName("FC Juventes", LocalDate.of(2020, 9, 23), "4x4Pairing+Semis+Finals");
+		Assert.assertNull(event);
+	}
+
+	@Test
 	public void create() {
 		eventRepository.save(createMockEvent("Juventes Fall Classic", LocalDate.of(2012, 9, 10), LocalDate.of(2012, 9, 11)));
-		Event event = eventRepository.findByOrganizationNameAndAsOfDate("FC Juventes", LocalDate.of(2012, 9, 10));
+		List<Event> events = eventRepository.findByOrganizationNameAndAsOfDate("FC Juventes", LocalDate.of(2012, 9, 10));
+		Event event = events.get(0);
 		Assert.assertEquals("Juventes Fall Classic", event.getEventName());
 		Assert.assertEquals(2, event.getEventTeams().size());
 	}
@@ -102,7 +110,8 @@ public class EventRepositoryTest {
 	@Test
 	public void update() {
 		eventRepository.save(updateMockEvent("FC Juventes", LocalDate.of(2020, 10, 25), EventStatus.Complete));
-		Event event = eventRepository.findByOrganizationNameAndAsOfDate("FC Juventes", LocalDate.of(2020, 10, 25));
+		List<Event> events = eventRepository.findByOrganizationNameAndAsOfDate("FC Juventes", LocalDate.of(2020, 10, 25));
+		Event event = events.get(0);
 		Assert.assertEquals(EventStatus.Complete, event.getEventStatus());
 	}
 
@@ -113,15 +122,16 @@ public class EventRepositoryTest {
 
 	@Test
 	public void delete() {
-		Event event = eventRepository.findByOrganizationNameAndAsOfDate("US Sassuolo", LocalDate.of(2020, 8, 26));
+		List<Event> events = eventRepository.findByOrganizationNameAndAsOfDate("US Sassuolo", LocalDate.of(2020, 8, 26));
+		Event event = events.get(0);
 		if (event != null) {
 			eventRepository.deleteById(event.getId());
 		}
 		else {
 			Assert.fail("Unable to find record to delete");
 		}
-		Event findEvent = eventRepository.findByOrganizationNameAndAsOfDate("US Sassuolo", LocalDate.of(2020, 8, 26));
-		Assert.assertNull(findEvent);
+		List<Event> findEvents = eventRepository.findByOrganizationNameAndAsOfDate("US Sassuolo", LocalDate.of(2020, 8, 26));
+		Assert.assertEquals(0, findEvents.size());
 	}
 
 	private Event createMockEvent(String eventName, LocalDate startDate, LocalDate endDate) {
@@ -173,7 +183,7 @@ public class EventRepositoryTest {
 	}
 
 	private Event updateMockEvent(String orgName, LocalDate asOfDate, EventStatus eventStatus) {
-		Event event = eventRepository.findByOrganizationNameAndAsOfDate("FC Juventes", asOfDate);
+		Event event = eventRepository.findByOrganizationNameAsOfDateTemplateName("FC Juventes", asOfDate, "4x4Pairing+Semis+Finals");
 		event.setEventStatus(eventStatus);;
 		return event;
 	}
