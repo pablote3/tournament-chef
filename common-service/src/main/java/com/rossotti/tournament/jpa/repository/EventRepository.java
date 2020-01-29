@@ -33,10 +33,14 @@ public interface EventRepository extends Repository<Event, Long> {
 	@Query(findByOrganizationNameAndAsOfDate)
 	Event findByOrganizationNameAndAsOfDate(@Param("organizationName") String organizationName, @Param("asOfDate") LocalDate asOfDate);
 
-//	String findByTemplateName =
-//			"select e from Event e " +
-//			"inner join e.template t " +
-//			"where t.templateName = :templateName";
-//	@Query(findByTemplateName)
-//	List<Event> findByTemplateName(@Param("templateName") String templateName);
+	String findByOrganizationNameAsOfDateTemplateName =
+			"select e from Event e " +
+			"inner join e.organization o " +
+			"inner join e.template t " +
+			"where o.organizationName = :organizationName " +
+			"and e.startDate <= :asOfDate " +
+			"and e.endDate >= :asOfDate " +
+			"and t.templateName = :templateName";
+	@Query(findByOrganizationNameAsOfDateTemplateName)
+	Event findByOrganizationNameAsOfDateTemplateName(@Param("organizationName") String organizationName, @Param("asOfDate") LocalDate asOfDate, @Param("templateName") String templateName);
 }

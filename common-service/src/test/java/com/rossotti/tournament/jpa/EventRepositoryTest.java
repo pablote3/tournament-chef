@@ -42,7 +42,7 @@ public class EventRepositoryTest {
 		Assert.assertEquals(2, event.getOrganization().getTeams().size());
 		Assert.assertEquals(2, event.getOrganization().getLocations().size());
 		Assert.assertEquals(2, event.getEventTeams().size());
-		Assert.assertEquals("temps", event.getTemplate().getTemplateName());
+		Assert.assertEquals("4x4Pairing+Semis+Finals", event.getTemplate().getTemplateName());
 	}
 
 	@Test
@@ -50,12 +50,6 @@ public class EventRepositoryTest {
 		List<Event> events = eventRepository.findAll();
 		Assert.assertTrue(events.size() >= 4);
 	}
-
-//	@Test
-//	public void findByTemplateName_Found() {
-//		List<Event> events = eventRepository.findByTemplateName("temps");
-//		Assert.assertEquals(1, events.size());
-//	}
 
 	@Test
 	public void findByOrganizationName_Found() {
@@ -79,6 +73,12 @@ public class EventRepositoryTest {
 	public void findByOrganizationNameAndAsOfDate_NotFound() {
 		Event event = eventRepository.findByOrganizationNameAndAsOfDate("FC Juventes", LocalDate.of(2020, 8, 20));
 		Assert.assertNull(event);
+	}
+
+	@Test
+	public void findByOrganizationNameAsOfDateTemplateName_Found() {
+		Event event = eventRepository.findByOrganizationNameAsOfDateTemplateName("FC Juventes", LocalDate.of(2020, 9, 24), "4x4Pairing+Semis+Finals");
+		Assert.assertEquals("Lombardy Memorial Tournament", event.getEventName());
 	}
 
 	@Test
