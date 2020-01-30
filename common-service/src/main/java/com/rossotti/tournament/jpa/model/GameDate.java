@@ -2,6 +2,8 @@ package com.rossotti.tournament.jpa.model;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(uniqueConstraints=@UniqueConstraint(columnNames={"gameDate"}))
@@ -14,6 +16,15 @@ public class GameDate {
 	}
 	public void setEvent(Event event) {
 		this.event = event;
+	}
+
+	@OneToMany(mappedBy="gameDate", fetch = FetchType.LAZY, cascade= CascadeType.ALL, orphanRemoval = true)
+	private List<GameLocation> gameLocations = new ArrayList<>();
+	public List<GameLocation> getGameLocations()  {
+		return gameLocations;
+	}
+	public void setGameLocations(List<GameLocation> gameLocations) {
+		this.gameLocations = gameLocations;
 	}
 
 	@Id

@@ -39,3 +39,6 @@ insert into eventTeamRanking (id, eventTeamId, rankingType, ranking) VALUES(4, 2
 
 insert into gameDate (id, eventId, gameDate) VALUES(1, 1, '2020-09-29')
 insert into gameDate (id, eventId, gameDate) VALUES(2, 1, '2020-09-30')
+
+insert into gameLocation (id, gameDateId, organizationLocationId, startTime) VALUES(1, 1, 2, '20:00:00.0')
+insert into gameLocation (id, gameDateId, organizationLocationId, startTime) VALUES(2, 1, 3, '19:30:00.0')

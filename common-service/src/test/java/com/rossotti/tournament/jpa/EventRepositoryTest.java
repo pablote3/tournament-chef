@@ -16,6 +16,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @ActiveProfiles(profiles = "development")
@@ -43,6 +44,7 @@ public class EventRepositoryTest {
 		Assert.assertEquals(2, event.getOrganization().getLocations().size());
 		Assert.assertEquals(2, event.getEventTeams().size());
 		Assert.assertEquals(2, event.getGameDates().size());
+		Assert.assertEquals(2, event.getGameDates().get(0).getGameLocations().size());
 		Assert.assertEquals("4x4Pairing+Semis+Finals", event.getTemplate().getTemplateName());
 	}
 
@@ -97,6 +99,7 @@ public class EventRepositoryTest {
 		Assert.assertEquals("Juventes Fall Classic", event.getEventName());
 		Assert.assertEquals(2, event.getEventTeams().size());
 		Assert.assertEquals(2, event.getGameDates().size());
+		Assert.assertEquals(2, event.getGameDates().get(0).getGameLocations().size());
 	}
 
 	@Test(expected= DataIntegrityViolationException.class)
@@ -148,8 +151,8 @@ public class EventRepositoryTest {
 		event.setSport(Sport.WaterPolo);
 		event.getEventTeams().add(createMockEventTeam(3L, 1L, "Verona", event));
 		event.getEventTeams().add(createMockEventTeam(4L, 4L, "Juventes", event));
-		event.getGameDates().add(createMockGameDate(LocalDate.of(2012, 9, 10), event));
-		event.getGameDates().add(createMockGameDate(LocalDate.of(2012, 9, 11), event));
+		event.getGameDates().add(createMockGameDate(LocalDate.of(2012, 9, 10), event, 1L, 2L));
+		event.getGameDates().add(createMockGameDate(LocalDate.of(2012, 9, 11), event, 1L, 3L));
 		event.setCreateTs(LocalDateTime.of(2019, 10, 27, 20, 30));
 		event.setLupdTs(LocalDateTime.of(2019, 10, 27, 20, 30));
 		event.setLupdUserId(4L);
@@ -178,19 +181,36 @@ public class EventRepositoryTest {
 		return eventTeam;
 	}
 
-	private GameDate createMockGameDate(LocalDate date, Event event) {
+	private GameDate createMockGameDate(LocalDate date, Event event, Long locationId1, Long locationId2) {
 		GameDate gameDate = new GameDate();
 		gameDate.setGameDate(date);
+		gameDate.getGameLocations().add(createMockGameLocation(locationId1, gameDate));
+		gameDate.getGameLocations().add(createMockGameLocation(locationId2, gameDate));
 		gameDate.setEvent(event);
 		return gameDate;
 	}
-
+	
 	private OrganizationTeam createMockOrganizationTeam(Long organizationTeamId, String teamName) {
 		OrganizationTeam organizationTeam = new OrganizationTeam();
 		organizationTeam.setId(organizationTeamId);
 		organizationTeam.setOrganization(createMockOrganization());
 		organizationTeam.setTeamName(teamName);
 		return organizationTeam;
+	}
+
+	private GameLocation createMockGameLocation(Long locationId, GameDate gameDate) {
+		GameLocation gameLocation = new GameLocation();
+		gameLocation.setGameDate(gameDate);
+		gameLocation.setOrganizationLocation(createMockOrganizationLocation(locationId));
+		gameLocation.setStartTime(LocalTime.of(8, 0, 0));
+		return gameLocation;
+	}
+
+	private OrganizationLocation createMockOrganizationLocation(Long organizationLocationId) {
+		OrganizationLocation organizationLocation = new OrganizationLocation();
+		organizationLocation.setId(organizationLocationId);
+		organizationLocation.setOrganization(createMockOrganization());
+		return organizationLocation;
 	}
 
 	private Event updateMockEvent(String orgName, LocalDate asOfDate, EventStatus eventStatus) {
