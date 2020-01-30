@@ -2,6 +2,8 @@ package com.rossotti.tournament.jpa.model;
 
 import javax.persistence.*;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(uniqueConstraints=@UniqueConstraint(columnNames={"gameDateId", "organizationLocationId"}))
@@ -24,6 +26,15 @@ public class GameLocation {
 	}
 	public void setOrganizationLocation(OrganizationLocation organizationLocation) {
 		this.organizationLocation = organizationLocation;
+	}
+
+	@OneToMany(mappedBy="gameLocation", fetch = FetchType.LAZY, cascade= CascadeType.ALL, orphanRemoval = true)
+	private List<GameRound> gameRounds = new ArrayList<>();
+	public List<GameRound> getGameRounds()  {
+		return gameRounds;
+	}
+	public void setGameRounds(List<GameRound> gameRounds) {
+		this.gameRounds = gameRounds;
 	}
 
 	@Id

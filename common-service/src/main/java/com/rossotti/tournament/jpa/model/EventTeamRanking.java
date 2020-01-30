@@ -44,14 +44,14 @@ public class EventTeamRanking {
 	public Boolean isRound2() {
 		return rankingType == RankingType.Round2;
 	}
-	public Boolean isQuarterFinals() {
-		return rankingType == RankingType.QuarterFinals;
+	public Boolean isQuarterFinal() {
+		return rankingType == RankingType.QuarterFinal;
 	}
-	public Boolean isSemiFinals() {
-		return rankingType == RankingType.SemiFinals;
+	public Boolean isSemiFinal() {
+		return rankingType == RankingType.SemiFinal;
 	}
-	public Boolean isFinals() {
-		return rankingType == RankingType.Finals;
+	public Boolean isFinal() {
+		return rankingType == RankingType.Final;
 	}
 	public Boolean isEnd() {
 		return rankingType == RankingType.End;

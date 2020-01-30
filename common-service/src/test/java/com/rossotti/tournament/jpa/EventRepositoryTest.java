@@ -3,6 +3,7 @@ package com.rossotti.tournament.jpa;
 import com.rossotti.tournament.config.PersistenceConfig;
 import com.rossotti.tournament.jpa.enumeration.EventStatus;
 import com.rossotti.tournament.jpa.enumeration.EventType;
+import com.rossotti.tournament.jpa.enumeration.GameType;
 import com.rossotti.tournament.jpa.enumeration.Sport;
 import com.rossotti.tournament.jpa.model.*;
 import com.rossotti.tournament.jpa.repository.EventRepository;
@@ -45,6 +46,7 @@ public class EventRepositoryTest {
 		Assert.assertEquals(2, event.getEventTeams().size());
 		Assert.assertEquals(2, event.getGameDates().size());
 		Assert.assertEquals(2, event.getGameDates().get(0).getGameLocations().size());
+		Assert.assertEquals(2, event.getGameDates().get(0).getGameLocations().get(0).getGameRounds().size());
 		Assert.assertEquals("4x4Pairing+Semis+Finals", event.getTemplate().getTemplateName());
 	}
 
@@ -100,6 +102,7 @@ public class EventRepositoryTest {
 		Assert.assertEquals(2, event.getEventTeams().size());
 		Assert.assertEquals(2, event.getGameDates().size());
 		Assert.assertEquals(2, event.getGameDates().get(0).getGameLocations().size());
+		Assert.assertEquals(2, event.getGameDates().get(0).getGameLocations().get(0).getGameRounds().size());
 	}
 
 	@Test(expected= DataIntegrityViolationException.class)
@@ -203,7 +206,17 @@ public class EventRepositoryTest {
 		gameLocation.setGameDate(gameDate);
 		gameLocation.setOrganizationLocation(createMockOrganizationLocation(locationId));
 		gameLocation.setStartTime(LocalTime.of(8, 0, 0));
+		gameLocation.getGameRounds().add(createMockGameRound(3L, GameType.GroupPlay, gameLocation));
+		gameLocation.getGameRounds().add(createMockGameRound(4L, GameType.Final, gameLocation));
 		return gameLocation;
+	}
+
+	private GameRound createMockGameRound(Long gameRoundId, GameType gameType, GameLocation gameLocation) {
+		GameRound gameRound = new GameRound();
+		gameRound.setGameLocation(gameLocation);
+		gameRound.setGameType(gameType);
+		gameRound.setGameDuration((short)45);
+		return gameRound;
 	}
 
 	private OrganizationLocation createMockOrganizationLocation(Long organizationLocationId) {
