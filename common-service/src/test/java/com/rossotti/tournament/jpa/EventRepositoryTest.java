@@ -36,7 +36,7 @@ public class EventRepositoryTest {
 		Assert.assertEquals(Sport.WaterPolo, event.getSport());
 		Assert.assertEquals(LocalDateTime.of(2020, 1, 16, 20, 0), event.getCreateTs());
 		Assert.assertEquals(LocalDateTime.of(2020, 1, 19, 20, 0), event.getLupdTs());
-		Assert.assertTrue(event.getLupdUserId() == 2L);
+		Assert.assertEquals(2, event.getLupdUserId().longValue());
 		Assert.assertEquals(5, event.getOrganization().getUsers().size());
 		Assert.assertEquals(2, event.getOrganization().getTeams().size());
 		Assert.assertEquals(2, event.getOrganization().getLocations().size());
@@ -118,7 +118,7 @@ public class EventRepositoryTest {
 
 	@Test
 	public void update() {
-		eventRepository.save(updateMockEvent("FC Juventes", LocalDate.of(2020, 10, 25), EventStatus.Complete));
+		eventRepository.save(updateMockEvent(LocalDate.of(2020, 10, 25), EventStatus.Complete));
 		List<Event> events = eventRepository.findByOrganizationNameAndAsOfDate("FC Juventes", LocalDate.of(2020, 10, 25));
 		Event event = events.get(0);
 		Assert.assertEquals(EventStatus.Complete, event.getEventStatus());
@@ -126,7 +126,7 @@ public class EventRepositoryTest {
 
 	@Test(expected= DataIntegrityViolationException.class)
 	public void update_MissingRequiredData() {
-		eventRepository.save(updateMockEvent("FC Juventes", LocalDate.of(2020, 10, 25), null));
+		eventRepository.save(updateMockEvent(LocalDate.of(2020, 10, 25), null));
 	}
 
 	@Test
@@ -153,8 +153,8 @@ public class EventRepositoryTest {
 		event.setEventStatus(EventStatus.Sandbox);
 		event.setEventType(EventType.Tournament);
 		event.setSport(Sport.WaterPolo);
-		event.getEventTeams().add(createMockEventTeam(3L, 1L, "Verona", event));
-		event.getEventTeams().add(createMockEventTeam(4L, 4L, "Juventes", event));
+		event.getEventTeams().add(createMockEventTeam(1L, "Verona", event));
+		event.getEventTeams().add(createMockEventTeam(4L, "Juventes", event));
 		event.getGameDates().add(createMockGameDate(LocalDate.of(2012, 9, 10), event, 1L, 2L));
 		event.getGameDates().add(createMockGameDate(LocalDate.of(2012, 9, 11), event, 1L, 3L));
 		event.setCreateTs(LocalDateTime.of(2019, 10, 27, 20, 30));
@@ -178,7 +178,7 @@ public class EventRepositoryTest {
 		return  template;
 	}
 
-	private EventTeam createMockEventTeam(Long eventTeamId, Long organizationTeamId, String teamName, Event event) {
+	private EventTeam createMockEventTeam(Long organizationTeamId, String teamName, Event event) {
 		EventTeam eventTeam = new EventTeam();
 		eventTeam.setEvent(event);
 		eventTeam.setOrganizationTeam(createMockOrganizationTeam(organizationTeamId, teamName));
@@ -187,10 +187,10 @@ public class EventRepositoryTest {
 
 	private GameDate createMockGameDate(LocalDate date, Event event, Long locationId1, Long locationId2) {
 		GameDate gameDate = new GameDate();
+		gameDate.setEvent(event);
 		gameDate.setGameDate(date);
 		gameDate.getGameLocations().add(createMockGameLocation(locationId1, gameDate));
 		gameDate.getGameLocations().add(createMockGameLocation(locationId2, gameDate));
-		gameDate.setEvent(event);
 		return gameDate;
 	}
 	
@@ -223,11 +223,11 @@ public class EventRepositoryTest {
 
 	private Game createMockGame(GameRound gameRound) {
 		Game game = new Game();
+		game.setGameRound(gameRound);
 		game.setStartTime(LocalTime.of(8, 0, 0));
 		game.setHomeTeamName("Rebels");
 		game.setAwayTeamName("Trubadors");
 		game.setGameStatus(GameStatus.Scheduled);
-		game.setGameRound(gameRound);
 		game.getGameTeams().add(createMockGameTeam(game));
 		game.setCreateTs(LocalDateTime.of(2019, 10, 27, 20, 30));
 		game.setLupdTs(LocalDateTime.of(2019, 10, 27, 20, 30));
@@ -237,8 +237,9 @@ public class EventRepositoryTest {
 
 	private GameTeam createMockGameTeam(Game game) {
 		GameTeam gameTeam = new GameTeam();
-		gameTeam.setPointsScored((short)12);
 		gameTeam.setGame(game);
+		gameTeam.setPointsScored((short)12);
+		gameTeam.setEventTeam(game.getGameRound().getGameLocation().getGameDate().getEvent().getEventTeams().get(0));
 		return gameTeam;
 	}
 
@@ -249,9 +250,9 @@ public class EventRepositoryTest {
 		return organizationLocation;
 	}
 
-	private Event updateMockEvent(String orgName, LocalDate asOfDate, EventStatus eventStatus) {
+	private Event updateMockEvent(LocalDate asOfDate, EventStatus eventStatus) {
 		Event event = eventRepository.findByOrganizationNameAsOfDateTemplateName("FC Juventes", asOfDate, "4x4Pairing+Semis+Finals");
-		event.setEventStatus(eventStatus);;
+		event.setEventStatus(eventStatus);
 		return event;
 	}
 }

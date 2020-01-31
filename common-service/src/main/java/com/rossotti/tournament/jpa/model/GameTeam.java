@@ -17,15 +17,15 @@ public class GameTeam {
 		this.game = game;
 	}
 
-//	@ManyToOne
-//	@JoinColumn(name="organizationTeamId", referencedColumnName="id", nullable=false)
-//	private OrganizationTeam organizationTeam;
-//	public OrganizationTeam getOrganizationTeam() {
-//		return organizationTeam;
-//	}
-//	public void setOrganizationTeam(OrganizationTeam organizationTeam) {
-//		this.organizationTeam = organizationTeam;
-//	}
+	@ManyToOne
+	@JoinColumn(name="eventTeamId", referencedColumnName="id", nullable=false)
+	private EventTeam eventTeam;
+	public EventTeam getEventTeam() {
+		return eventTeam;
+	}
+	public void setEventTeam(EventTeam eventTeam) {
+		this.eventTeam = eventTeam;
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
