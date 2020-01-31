@@ -45,6 +45,7 @@ public class EventRepositoryTest {
 		Assert.assertEquals(2, event.getGameDates().get(0).getGameLocations().size());
 		Assert.assertEquals(2, event.getGameDates().get(0).getGameLocations().get(0).getGameRounds().size());
 		Assert.assertEquals(1, event.getGameDates().get(0).getGameLocations().get(0).getGameRounds().get(0).getGames().size());
+		Assert.assertEquals(1, event.getGameDates().get(0).getGameLocations().get(0).getGameRounds().get(0).getGames().get(0).getGameTeams().size());
 		Assert.assertEquals("4x4Pairing+Semis+Finals", event.getTemplate().getTemplateName());
 	}
 
@@ -102,6 +103,7 @@ public class EventRepositoryTest {
 		Assert.assertEquals(2, event.getGameDates().get(0).getGameLocations().size());
 		Assert.assertEquals(2, event.getGameDates().get(0).getGameLocations().get(0).getGameRounds().size());
 		Assert.assertEquals(1, event.getGameDates().get(0).getGameLocations().get(0).getGameRounds().get(0).getGames().size());
+		Assert.assertEquals(1, event.getGameDates().get(0).getGameLocations().get(0).getGameRounds().get(0).getGames().get(0).getGameTeams().size());
 	}
 
 	@Test(expected= DataIntegrityViolationException.class)
@@ -226,10 +228,18 @@ public class EventRepositoryTest {
 		game.setAwayTeamName("Trubadors");
 		game.setGameStatus(GameStatus.Scheduled);
 		game.setGameRound(gameRound);
+		game.getGameTeams().add(createMockGameTeam(game));
 		game.setCreateTs(LocalDateTime.of(2019, 10, 27, 20, 30));
 		game.setLupdTs(LocalDateTime.of(2019, 10, 27, 20, 30));
 		game.setLupdUserId(4L);
 		return game;
+	}
+
+	private GameTeam createMockGameTeam(Game game) {
+		GameTeam gameTeam = new GameTeam();
+		gameTeam.setPointsScored((short)12);
+		gameTeam.setGame(game);
+		return gameTeam;
 	}
 
 	private OrganizationLocation createMockOrganizationLocation(Long organizationLocationId) {

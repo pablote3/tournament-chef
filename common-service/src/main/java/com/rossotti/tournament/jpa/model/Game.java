@@ -3,6 +3,8 @@ package com.rossotti.tournament.jpa.model;
 import com.rossotti.tournament.jpa.enumeration.GameStatus;
 import javax.persistence.*;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(uniqueConstraints=@UniqueConstraint(columnNames={"gameRoundId", "startTime", "homeTeamName"}))
@@ -13,8 +15,17 @@ public class Game extends BaseEntity {
 	public GameRound getGameRound() {
 		return gameRound;
 	}
-	public void setGameRound(GameRound gameRound) {
+	public void setGameRound(GameRound gameRound)  {
 		this.gameRound = gameRound;
+	}
+
+	@OneToMany(mappedBy="game", fetch = FetchType.LAZY, cascade= CascadeType.ALL, orphanRemoval = true)
+	private List<GameTeam> gameTeams = new ArrayList<>();
+	public List<GameTeam> getGameTeams()  {
+		return gameTeams;
+	}
+	public void setGameTeams(List<GameTeam> gameTeams) {
+		this.gameTeams = gameTeams;
 	}
 
 	@Column(nullable=false)
