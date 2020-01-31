@@ -1,10 +1,7 @@
 package com.rossotti.tournament.jpa;
 
 import com.rossotti.tournament.config.PersistenceConfig;
-import com.rossotti.tournament.jpa.enumeration.EventStatus;
-import com.rossotti.tournament.jpa.enumeration.EventType;
-import com.rossotti.tournament.jpa.enumeration.GameType;
-import com.rossotti.tournament.jpa.enumeration.Sport;
+import com.rossotti.tournament.jpa.enumeration.*;
 import com.rossotti.tournament.jpa.model.*;
 import com.rossotti.tournament.jpa.repository.EventRepository;
 import org.junit.Assert;
@@ -47,6 +44,7 @@ public class EventRepositoryTest {
 		Assert.assertEquals(2, event.getGameDates().size());
 		Assert.assertEquals(2, event.getGameDates().get(0).getGameLocations().size());
 		Assert.assertEquals(2, event.getGameDates().get(0).getGameLocations().get(0).getGameRounds().size());
+		Assert.assertEquals(1, event.getGameDates().get(0).getGameLocations().get(0).getGameRounds().get(0).getGames().size());
 		Assert.assertEquals("4x4Pairing+Semis+Finals", event.getTemplate().getTemplateName());
 	}
 
@@ -103,6 +101,7 @@ public class EventRepositoryTest {
 		Assert.assertEquals(2, event.getGameDates().size());
 		Assert.assertEquals(2, event.getGameDates().get(0).getGameLocations().size());
 		Assert.assertEquals(2, event.getGameDates().get(0).getGameLocations().get(0).getGameRounds().size());
+		Assert.assertEquals(1, event.getGameDates().get(0).getGameLocations().get(0).getGameRounds().get(0).getGames().size());
 	}
 
 	@Test(expected= DataIntegrityViolationException.class)
@@ -206,17 +205,31 @@ public class EventRepositoryTest {
 		gameLocation.setGameDate(gameDate);
 		gameLocation.setOrganizationLocation(createMockOrganizationLocation(locationId));
 		gameLocation.setStartTime(LocalTime.of(8, 0, 0));
-		gameLocation.getGameRounds().add(createMockGameRound(3L, GameType.GroupPlay, gameLocation));
-		gameLocation.getGameRounds().add(createMockGameRound(4L, GameType.Final, gameLocation));
+		gameLocation.getGameRounds().add(createMockGameRound(GameType.GroupPlay, gameLocation));
+		gameLocation.getGameRounds().add(createMockGameRound(GameType.Final, gameLocation));
 		return gameLocation;
 	}
 
-	private GameRound createMockGameRound(Long gameRoundId, GameType gameType, GameLocation gameLocation) {
+	private GameRound createMockGameRound(GameType gameType, GameLocation gameLocation) {
 		GameRound gameRound = new GameRound();
 		gameRound.setGameLocation(gameLocation);
 		gameRound.setGameType(gameType);
 		gameRound.setGameDuration((short)45);
+		gameRound.getGames().add(createMockGame(gameRound));
 		return gameRound;
+	}
+
+	private Game createMockGame(GameRound gameRound) {
+		Game game = new Game();
+		game.setStartTime(LocalTime.of(8, 0, 0));
+		game.setHomeTeamName("Rebels");
+		game.setAwayTeamName("Trubadors");
+		game.setGameStatus(GameStatus.Scheduled);
+		game.setGameRound(gameRound);
+		game.setCreateTs(LocalDateTime.of(2019, 10, 27, 20, 30));
+		game.setLupdTs(LocalDateTime.of(2019, 10, 27, 20, 30));
+		game.setLupdUserId(4L);
+		return game;
 	}
 
 	private OrganizationLocation createMockOrganizationLocation(Long organizationLocationId) {

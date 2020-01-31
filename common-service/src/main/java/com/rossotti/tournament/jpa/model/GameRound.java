@@ -1,9 +1,9 @@
 package com.rossotti.tournament.jpa.model;
 
 import com.rossotti.tournament.jpa.enumeration.GameType;
-import com.rossotti.tournament.jpa.enumeration.RankingType;
 import javax.persistence.*;
-import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(uniqueConstraints=@UniqueConstraint(columnNames={"gameLocationId", "gameType"}))
@@ -16,6 +16,15 @@ public class GameRound {
 	}
 	public void setGameLocation(GameLocation gameLocation) {
 		this.gameLocation = gameLocation;
+	}
+
+	@OneToMany(mappedBy="gameRound", fetch = FetchType.LAZY, cascade= CascadeType.ALL, orphanRemoval = true)
+	private List<Game> games = new ArrayList<>();
+	public List<Game> getGames()  {
+		return games;
+	}
+	public void setGames(List<Game> games) {
+		this.games = games;
 	}
 
 	@Id
