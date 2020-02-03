@@ -225,8 +225,6 @@ public class EventRepositoryTest {
 		Game game = new Game();
 		game.setGameRound(gameRound);
 		game.setStartTime(LocalTime.of(8, 0, 0));
-		game.setHomeTeamName("Rebels");
-		game.setAwayTeamName("Trubadors");
 		game.setGameStatus(GameStatus.Scheduled);
 		game.getGameTeams().add(createMockGameTeam(game));
 		game.setCreateTs(LocalDateTime.of(2019, 10, 27, 20, 30));
@@ -239,6 +237,7 @@ public class EventRepositoryTest {
 		GameTeam gameTeam = new GameTeam();
 		gameTeam.setGame(game);
 		gameTeam.setPointsScored((short)12);
+		gameTeam.setHomeTeam(Boolean.TRUE);
 		gameTeam.setEventTeam(game.getGameRound().getGameLocation().getGameDate().getEvent().getEventTeams().get(0));
 		return gameTeam;
 	}

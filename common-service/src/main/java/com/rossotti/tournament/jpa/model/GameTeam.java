@@ -45,4 +45,13 @@ public class GameTeam {
 	public void setPointsScored(Short pointsScored) {
 		this.pointsScored = pointsScored;
 	}
+
+	@Column(nullable=false)
+	private Boolean homeTeam;
+	public Boolean getHomeTeam() {
+		return homeTeam;
+	}
+	public void setHomeTeam(Boolean homeTeam) {
+		this.homeTeam = homeTeam;
+	}
 }

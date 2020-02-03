@@ -29,23 +29,23 @@ insert into event (id, organizationId, templateId, startDate, endDate, eventName
 insert into event (id, organizationId, templateId, startDate, endDate, eventName, eventStatus, eventType, sport, createTs, lupdTs, lupdUserId) VALUES(4, 4, 1, '2020-08-24', '2020-08-25', 'Trentino Sections Tournament', 'Complete', 'Tournament', 'Lacrosse', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
 insert into event (id, organizationId, templateId, startDate, endDate, eventName, eventStatus, eventType, sport, createTs, lupdTs, lupdUserId) VALUES(5, 5, 1, '2020-08-26', '2020-08-27', 'Trentino Sections Tournament', 'Complete', 'Tournament', 'Lacrosse', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
 
-insert into eventTeam (id, eventId, organizationTeamId) VALUES(1, 1, 2)
-insert into eventTeam (id, eventId, organizationTeamId) VALUES(2, 1, 3)
+insert into eventTeam (id, eventId, organizationTeamId) VALUES(1, 1, 2);
+insert into eventTeam (id, eventId, organizationTeamId) VALUES(2, 1, 3);
 
-insert into eventTeamRanking (id, eventTeamId, rankingType, ranking) VALUES(1, 1, 'Initial', 1)
-insert into eventTeamRanking (id, eventTeamId, rankingType, ranking) VALUES(2, 2, 'Initial', 2)
-insert into eventTeamRanking (id, eventTeamId, rankingType, ranking) VALUES(3, 1, 'End', 2)
-insert into eventTeamRanking (id, eventTeamId, rankingType, ranking) VALUES(4, 2, 'End', 1)
+insert into eventTeamRanking (id, eventTeamId, rankingType, ranking) VALUES(1, 1, 'Initial', 1);
+insert into eventTeamRanking (id, eventTeamId, rankingType, ranking) VALUES(2, 2, 'Initial', 2);
+insert into eventTeamRanking (id, eventTeamId, rankingType, ranking) VALUES(3, 1, 'End', 2);
+insert into eventTeamRanking (id, eventTeamId, rankingType, ranking) VALUES(4, 2, 'End', 1);
 
-insert into gameDate (id, eventId, gameDate) VALUES(1, 1, '2020-09-29')
-insert into gameDate (id, eventId, gameDate) VALUES(2, 1, '2020-09-30')
+insert into gameDate (id, eventId, gameDate) VALUES(1, 1, '2020-09-29');
+insert into gameDate (id, eventId, gameDate) VALUES(2, 1, '2020-09-30');
 
-insert into gameLocation (id, gameDateId, organizationLocationId, startTime) VALUES(1, 1, 2, '20:00:00.0')
-insert into gameLocation (id, gameDateId, organizationLocationId, startTime) VALUES(2, 1, 3, '19:30:00.0')
+insert into gameLocation (id, gameDateId, organizationLocationId, startTime) VALUES(1, 1, 2, '20:00:00.0');
+insert into gameLocation (id, gameDateId, organizationLocationId, startTime) VALUES(2, 1, 3, '19:30:00.0');
 
-insert into gameRound (id, gameLocationId, gameType, gameDuration) VALUES(1, 1, 'GroupPlay', 45)
-insert into gameRound (id, gameLocationId, gameType, gameDuration) VALUES(2, 1, 'Final', 50)
+insert into gameRound (id, gameLocationId, gameType, gameDuration) VALUES(1, 1, 'GroupPlay', 45);
+insert into gameRound (id, gameLocationId, gameType, gameDuration) VALUES(2, 1, 'Final', 50);
 
-insert into game (id, createTs, lupdTs, lupdUserId, gameRoundId, startTime, homeTeamName, awayTeamName, gameStatus) VALUES(1, '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2, 1, '08:00:00.0', 'Streakers', 'Samba', 'Completed')
+insert into game (id, createTs, lupdTs, lupdUserId, gameRoundId, startTime, gameStatus) VALUES(1, '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2, 1, '08:00:00.0', 'Completed');
 
-insert into gameTeam (id, gameId, eventTeamId, pointsScored) VALUES(1, 1, 1, 14)
+insert into gameTeam (id, gameId, eventTeamId, homeTeam, pointsScored) VALUES(1, 1, 1, True, 14);

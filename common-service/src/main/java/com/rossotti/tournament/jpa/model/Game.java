@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(uniqueConstraints=@UniqueConstraint(columnNames={"gameRoundId", "startTime", "homeTeamName"}))
+@Table(uniqueConstraints=@UniqueConstraint(columnNames={"gameRoundId", "startTime"}))
 public class Game extends BaseEntity {
 	@ManyToOne
 	@JoinColumn(name="gameRoundId", referencedColumnName="id", nullable=false)
@@ -35,24 +35,6 @@ public class Game extends BaseEntity {
 	}
 	public void setStartTime(LocalTime startTime) {
 		this.startTime = startTime;
-	}
-
-	@Column(length=25, nullable=false)
-	private String homeTeamName;
-	public String getHomeTeamName() {
-		return homeTeamName;
-	}
-	public void setHomeTeamName(String homeTeamName) {
-		this.homeTeamName = homeTeamName;
-	}
-
-	@Column(length=25, nullable=false)
-	private String awayTeamName;
-	public String getAwayTeamName() {
-		return awayTeamName;
-	}
-	public void setAwayTeamName(String awayTeamName) {
-		this.awayTeamName = awayTeamName;
 	}
 
 	@Enumerated(EnumType.STRING)
