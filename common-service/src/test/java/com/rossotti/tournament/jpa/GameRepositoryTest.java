@@ -84,18 +84,30 @@ public class GameRepositoryTest {
 		Assert.assertEquals(0, games.size());
 	}
 
-//	@Test
-//	public void findByOrganizationNameAsOfDateTemplateName_Found() {
-//		Event event = eventRepository.findByOrganizationNameAsOfDateTemplateName("FC Juventes", LocalDate.of(2020, 9, 24), "4x4Pairing+Semis+Finals");
-//		Assert.assertEquals("Lombardy Memorial Tournament", event.getEventName());
-//	}
-//
-//	@Test
-//	public void findByOrganizationNameAsOfDateTemplateName_NotFound() {
-//		Event event = eventRepository.findByOrganizationNameAsOfDateTemplateName("FC Juventes", LocalDate.of(2020, 9, 23), "4x4Pairing+Semis+Finals");
-//		Assert.assertNull(event);
-//	}
-//
+	@Test
+	public void findByGameDate_Found() {
+		List<Game> games = gameRepository.findByGameDate(LocalDate.of(2020, 9, 29));
+		Assert.assertEquals(1, games.size());
+	}
+
+	@Test
+	public void findByGameDate_NotFound() {
+		List<Game> games = gameRepository.findByGameDate(LocalDate.of(2016, 2, 21));
+		Assert.assertEquals(0, games.size());
+	}
+
+	@Test
+	public void findByLocationName_Found() {
+		List<Game> games = gameRepository.findByLocationName("Verona Arena");
+		Assert.assertEquals(4, games.size());
+	}
+
+	@Test
+	public void findByLocationName_NotFound() {
+		List<Game> games = gameRepository.findByLocationName("Pompeii Ampitheater");
+		Assert.assertEquals(0, games.size());
+	}
+
 //	@Test
 //	public void create() {
 //		eventRepository.save(createMockEvent("Juventes Fall Classic", LocalDate.of(2012, 9, 10), LocalDate.of(2012, 9, 11)));

@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface GameRepository extends Repository<Game, Long> {
@@ -38,4 +39,22 @@ public interface GameRepository extends Repository<Game, Long> {
 			"where e.eventName = :eventName";
 	@Query(findByEventName)
 	List<Game> findByEventName(@Param("eventName") String eventName);
+
+	String findByGameDate =
+			"select g from Game g " +
+			"inner join g.gameRound gr " +
+			"inner join gr.gameLocation gl " +
+			"inner join gl.gameDate gd " +
+			"where gd.gameDate = :gameDate";
+	@Query(findByGameDate)
+	List<Game> findByGameDate(@Param("gameDate") LocalDate gameDate);
+
+	String findByLocationName =
+			"select g from Game g " +
+			"inner join g.gameRound gr " +
+			"inner join gr.gameLocation gl " +
+			"inner join gl.organizationLocation ol " +
+			"where ol.locationName = :locationName";
+	@Query(findByLocationName)
+	List<Game> findByLocationName(@Param("locationName") String locationName);
 }
