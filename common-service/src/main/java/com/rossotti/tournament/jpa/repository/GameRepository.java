@@ -20,14 +20,14 @@ public interface GameRepository extends Repository<Game, Long> {
 
 	List<Game> findByGameStatus(GameStatus gameStatus);
 
-//	String findByTeamName =
-//			"select g from Game g " +
-//			"inner join g.gameTeam gt " +
-//			"inner join gt.eventTeam et " +
-//			"inner join et.organizationTeam ot " +
-//			"where ot.teamName = :teamName";
-//	@Query(findByTeamName)
-//	List<Game> findByTeamName(@Param("teamName") String teamName);
+	String findByTeamName =
+			"select g from Game g " +
+			"inner join g.gameTeams gt " +
+			"inner join gt.eventTeam et " +
+			"inner join et.organizationTeam ot " +
+			"where ot.teamName = :teamName";
+	@Query(findByTeamName)
+	List<Game> findByTeamName(@Param("teamName") String teamName);
 
 	String findByEventName =
 			"select g from Game g " +

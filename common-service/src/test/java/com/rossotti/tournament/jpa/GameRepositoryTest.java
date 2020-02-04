@@ -60,12 +60,17 @@ public class GameRepositoryTest {
 		Assert.assertEquals(0, games.size());
 	}
 
-//	@Test
-//	public void findByTeamName_Found() {
-//		List<Game> games = gameRepository.findByTeamName("FC Juventes");
-////		Game game = games.get(0);
-//		Assert.assertEquals(8, games.size());
-//	}
+	@Test
+	public void findByTeamName_Found() {
+		List<Game> games = gameRepository.findByTeamName("Inter Milan");
+		Assert.assertEquals(1, games.size());
+	}
+
+	@Test
+	public void findByTeamName_NotFound() {
+		List<Game> games = gameRepository.findByTeamName("FC Juventes");
+		Assert.assertEquals(0, games.size());
+	}
 
 	@Test
 	public void findByEventName_Found() {
@@ -73,13 +78,12 @@ public class GameRepositoryTest {
 		Assert.assertEquals(1, games.size());
 	}
 
+	@Test
+	public void findByEventName_NotFound() {
+		List<Game> games = gameRepository.findByEventName("Verona Invitational");
+		Assert.assertEquals(0, games.size());
+	}
 
-//	@Test
-//	public void findByOrganizationNameAndAsOfDate_NotFound() {
-//		List<Event> events = eventRepository.findByOrganizationNameAndAsOfDate("FC Juventes", LocalDate.of(2020, 8, 20));
-//		Assert.assertEquals(0, events.size());
-//	}
-//
 //	@Test
 //	public void findByOrganizationNameAsOfDateTemplateName_Found() {
 //		Event event = eventRepository.findByOrganizationNameAsOfDateTemplateName("FC Juventes", LocalDate.of(2020, 9, 24), "4x4Pairing+Semis+Finals");
