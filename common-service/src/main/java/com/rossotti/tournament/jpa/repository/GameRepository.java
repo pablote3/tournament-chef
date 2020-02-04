@@ -5,7 +5,6 @@ import com.rossotti.tournament.jpa.model.Game;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.query.Param;
-
 import java.time.LocalDate;
 import java.util.List;
 
@@ -16,8 +15,6 @@ public interface GameRepository extends Repository<Game, Long> {
 	List<Game> findAll();
 
 	void save(Game game);
-
-	void deleteById(Long id);
 
 	List<Game> findByGameStatus(GameStatus gameStatus);
 

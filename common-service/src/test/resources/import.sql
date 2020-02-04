@@ -48,4 +48,5 @@ insert into gameRound (id, gameLocationId, gameType, gameDuration) VALUES(2, 1, 
 
 insert into game (id, createTs, lupdTs, lupdUserId, gameRoundId, startTime, gameStatus) VALUES(1, '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2, 1, '08:00:00.0', 'Completed');
 
-insert into gameTeam (id, gameId, eventTeamId, homeTeam, pointsScored) VALUES(1, 1, 1, True, 14);
+insert into gameTeam (id, gameId, eventTeamId, homeTeam, pointsScored) VALUES(1, 1, 1, TRUE, 14);
+insert into gameTeam (id, gameId, eventTeamId, homeTeam, pointsScored) VALUES(2, 1, 2, FALSE , 5);
