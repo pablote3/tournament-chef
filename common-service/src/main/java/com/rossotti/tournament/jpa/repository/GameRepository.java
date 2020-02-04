@@ -1,5 +1,6 @@
 package com.rossotti.tournament.jpa.repository;
 
+import com.rossotti.tournament.jpa.enumeration.GameStatus;
 import com.rossotti.tournament.jpa.model.Game;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
@@ -17,13 +18,24 @@ public interface GameRepository extends Repository<Game, Long> {
 
 	void deleteById(Long id);
 
-	List<Game> findByGameStatus(String status);
+	List<Game> findByGameStatus(GameStatus gameStatus);
 
-//	String findByHomeTeamName =
+//	String findByTeamName =
 //			"select g from Game g " +
 //			"inner join g.gameTeam gt " +
-//			"inner join gt.eventTeamId et " +
-//			"where et.eventId = :id";
-//	@Query(findByHomeTeamName)
-//	List<Game> findByHomeTeamName(@Param("organizationName") Long id);
+//			"inner join gt.eventTeam et " +
+//			"inner join et.organizationTeam ot " +
+//			"where ot.teamName = :teamName";
+//	@Query(findByTeamName)
+//	List<Game> findByTeamName(@Param("teamName") String teamName);
+
+	String findByEventName =
+			"select g from Game g " +
+			"inner join g.gameRound gr " +
+			"inner join gr.gameLocation gl " +
+			"inner join gl.gameDate gd " +
+			"inner join gd.event e " +
+			"where e.eventName = :eventName";
+	@Query(findByEventName)
+	List<Game> findByEventName(@Param("eventName") String eventName);
 }

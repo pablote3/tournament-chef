@@ -30,48 +30,50 @@ public class GameRepositoryTest {
 		Game game = gameRepository.findById(1L);
 		Assert.assertEquals(LocalTime.of(8, 0, 0), game.getStartTime());
 		Assert.assertEquals(GameStatus.Completed, game.getGameStatus());
-//		Assert.assertEquals(EventType.Tournament, game.getEventType());
-//		Assert.assertEquals(Sport.WaterPolo, game.getSport());
-//		Assert.assertEquals(LocalDateTime.of(2020, 1, 16, 20, 0), event.getCreateTs());
-//		Assert.assertEquals(LocalDateTime.of(2020, 1, 19, 20, 0), event.getLupdTs());
-//		Assert.assertEquals(2, event.getLupdUserId().longValue());
-//		Assert.assertEquals(5, event.getOrganization().getUsers().size());
-//		Assert.assertEquals(2, event.getOrganization().getTeams().size());
-//		Assert.assertEquals(2, event.getOrganization().getLocations().size());
-//		Assert.assertEquals(2, event.getEventTeams().size());
-//		Assert.assertEquals(2, event.getGameDates().size());
-//		Assert.assertEquals(2, event.getGameDates().get(0).getGameLocations().size());
-//		Assert.assertEquals(2, event.getGameDates().get(0).getGameLocations().get(0).getGameRounds().size());
-//		Assert.assertEquals(1, event.getGameDates().get(0).getGameLocations().get(0).getGameRounds().get(0).getGames().size());
-//		Assert.assertEquals(1, event.getGameDates().get(0).getGameLocations().get(0).getGameRounds().get(0).getGames().get(0).getGameTeams().size());
-//		Assert.assertEquals("4x4Pairing+Semis+Finals", event.getTemplate().getTemplateName());
+		Assert.assertEquals(LocalDateTime.of(2020, 1, 16, 20, 0), game.getCreateTs());
+		Assert.assertEquals(LocalDateTime.of(2020, 1, 19, 20, 0), game.getLupdTs());
+		Assert.assertEquals(2, game.getLupdUserId().longValue());
+		Assert.assertEquals(Boolean.TRUE, game.getGameTeams().get(0).getHomeTeam());
+		Assert.assertEquals("Inter Milan", game.getGameTeams().get(0).getEventTeam().getOrganizationTeam().getTeamName());
+		Assert.assertEquals(1, game.getGameTeams().get(0).getEventTeam().getEventTeamRankings().get(0).getRanking().shortValue());
+		Assert.assertEquals(45, game.getGameRound().getGameDuration().shortValue());
+		Assert.assertEquals("San Siro", game.getGameRound().getGameLocation().getOrganizationLocation().getLocationName());
+		Assert.assertEquals(LocalDate.of(2020, 9, 29), game.getGameRound().getGameLocation().getGameDate().getGameDate());
+		Assert.assertEquals("Campania Regional Frosh Soph Tournament", game.getGameRound().getGameLocation().getGameDate().getEvent().getEventName());
+	}
+
+	@Test
+	public void findAll() {
+		List<Game> games = gameRepository.findAll();
+		Assert.assertTrue(games.size() >= 4);
+	}
+
+	@Test
+	public void findByGameStatus_Found() {
+		List<Game> games = gameRepository.findByGameStatus(GameStatus.Scheduled);
+		Assert.assertEquals(8, games.size());
+	}
+
+	@Test
+	public void findByGameStatus_NotFound() {
+		List<Game> games = gameRepository.findByGameStatus(GameStatus.Cancelled);
+		Assert.assertEquals(0, games.size());
 	}
 
 //	@Test
-//	public void findAll() {
-//		List<Event> events = eventRepository.findAll();
-//		Assert.assertTrue(events.size() >= 4);
+//	public void findByTeamName_Found() {
+//		List<Game> games = gameRepository.findByTeamName("FC Juventes");
+////		Game game = games.get(0);
+//		Assert.assertEquals(8, games.size());
 //	}
-//
-//	@Test
-//	public void findByOrganizationName_Found() {
-//		List<Event> events = eventRepository.findByOrganizationName("FC Juventes");
-//		Assert.assertEquals(4, events.size());
-//	}
-//
-//	@Test
-//	public void findByOrganizationName_NotFound() {
-//		List<Event> events = eventRepository.findByOrganizationName("Juventes");
-//		Assert.assertEquals(0, events.size());
-//	}
-//
-//	@Test
-//	public void findByOrganizationNameAndAsOfDate_Found() {
-//		List<Event> events = eventRepository.findByOrganizationNameAndAsOfDate("FC Juventes", LocalDate.of(2020, 9, 24));
-//		Event event = events.get(0);
-//		Assert.assertEquals("Lombardy Memorial Tournament", event.getEventName());
-//	}
-//
+
+	@Test
+	public void findByEventName_Found() {
+		List<Game> games = gameRepository.findByEventName("Campania Regional Frosh Soph Tournament");
+		Assert.assertEquals(1, games.size());
+	}
+
+
 //	@Test
 //	public void findByOrganizationNameAndAsOfDate_NotFound() {
 //		List<Event> events = eventRepository.findByOrganizationNameAndAsOfDate("FC Juventes", LocalDate.of(2020, 8, 20));
