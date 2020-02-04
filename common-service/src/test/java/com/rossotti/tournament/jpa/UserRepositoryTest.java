@@ -26,7 +26,7 @@ public class UserRepositoryTest {
 	private UserRepository userRepository;
 
 	@Test
-	public void findById() {
+	public void findById_Found() {
 		User user = userRepository.findById(1L);
 		Assert.assertEquals("valentina.giacinti@telecomitalia.com", (user.getEmail()));
 		Assert.assertEquals(UserType.Administrator, user.getUserType());
@@ -42,6 +42,11 @@ public class UserRepositoryTest {
 		Assert.assertEquals(5, user.getOrganization().getUsers().size());
 		Assert.assertEquals(2, user.getOrganization().getTeams().size());
 		Assert.assertEquals(2, user.getOrganization().getLocations().size());
+	}
+
+	@Test
+	public void findById_NotFound() {
+		Assert.assertNull(userRepository.findById(10L));
 	}
 
 	@Test
@@ -70,8 +75,7 @@ public class UserRepositoryTest {
 
 	@Test
 	public void findByOrganizationNameAndEmail_NotFound() {
-		User user = userRepository.findByOrganizationNameAndUserEmail("FC Juventes", "saratamborini@euro.com");
-		Assert.assertNull(user);
+		Assert.assertNull(userRepository.findByOrganizationNameAndUserEmail("FC Juventes", "saratamborini@euro.com"));
 	}
 
 	@Test

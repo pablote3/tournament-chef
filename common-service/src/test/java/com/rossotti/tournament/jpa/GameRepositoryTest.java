@@ -25,7 +25,7 @@ public class GameRepositoryTest {
 	private GameRepository gameRepository;
 
 	@Test
-	public void findById() {
+	public void findById_Found() {
 		Game game = gameRepository.findById(1L);
 		Assert.assertEquals(LocalTime.of(8, 0, 0), game.getStartTime());
 		Assert.assertEquals(GameStatus.Completed, game.getGameStatus());
@@ -39,6 +39,11 @@ public class GameRepositoryTest {
 		Assert.assertEquals("San Siro", game.getGameRound().getGameLocation().getOrganizationLocation().getLocationName());
 		Assert.assertEquals(LocalDate.of(2020, 9, 29), game.getGameRound().getGameLocation().getGameDate().getGameDate());
 		Assert.assertEquals("Campania Regional Frosh Soph Tournament", game.getGameRound().getGameLocation().getGameDate().getEvent().getEventName());
+	}
+
+	@Test
+	public void findById_NotFound() {
+		Assert.assertNull(gameRepository.findById(11L));
 	}
 
 	@Test

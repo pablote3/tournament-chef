@@ -26,7 +26,7 @@ public class EventRepositoryTest {
 	private EventRepository eventRepository;
 
 	@Test
-	public void findById() {
+	public void findById_Found() {
 		Event event = eventRepository.findById(1L);
 		Assert.assertEquals(LocalDate.of(2020, 9, 29), event.getStartDate());
 		Assert.assertEquals(LocalDate.of(2020, 9, 30), event.getEndDate());
@@ -47,6 +47,11 @@ public class EventRepositoryTest {
 		Assert.assertEquals(1, event.getGameDates().get(0).getGameLocations().get(0).getGameRounds().get(0).getGames().size());
 		Assert.assertEquals(1, event.getGameDates().get(0).getGameLocations().get(0).getGameRounds().get(0).getGames().get(0).getGameTeams().size());
 		Assert.assertEquals("4x4Pairing+Semis+Finals", event.getTemplate().getTemplateName());
+	}
+
+	@Test
+	public void findById_NotFound() {
+		Assert.assertNull(eventRepository.findById(11L));
 	}
 
 	@Test
@@ -88,8 +93,7 @@ public class EventRepositoryTest {
 
 	@Test
 	public void findByOrganizationNameAsOfDateTemplateName_NotFound() {
-		Event event = eventRepository.findByOrganizationNameAsOfDateTemplateName("FC Juventes", LocalDate.of(2020, 9, 23), "4x4Pairing+Semis+Finals");
-		Assert.assertNull(event);
+		Assert.assertNull(eventRepository.findByOrganizationNameAsOfDateTemplateName("FC Juventes", LocalDate.of(2020, 9, 23), "4x4Pairing+Semis+Finals"));
 	}
 
 	@Test

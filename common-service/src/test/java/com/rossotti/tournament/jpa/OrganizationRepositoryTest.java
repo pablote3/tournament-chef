@@ -25,7 +25,7 @@ public class OrganizationRepositoryTest {
 	private OrganizationRepository organizationRepository;
 
 	@Test
-	public void findById() {
+	public void findById_Found() {
 		Organization organization = organizationRepository.findById(1L);
 		Assert.assertEquals("FC Juventes", organization.getOrganizationName());
 		Assert.assertEquals(OrganizationStatus.Active, organization.getOrganizationStatus());
@@ -46,6 +46,11 @@ public class OrganizationRepositoryTest {
 		Assert.assertEquals(5, organization.getUsers().size());
 		Assert.assertEquals(2, organization.getTeams().size());
 		Assert.assertEquals(2, organization.getLocations().size());
+	}
+
+	@Test
+	public void findById_NotFound() {
+		Assert.assertNull(organizationRepository.findById(11L));
 	}
 
 	@Test
@@ -86,20 +91,17 @@ public class OrganizationRepositoryTest {
 
 	@Test
 	public void findByOrgNameAndAsOfDate_NotFound_BeforeStartDate() {
-		Organization organization = organizationRepository.findByOrganizationNameAndAsOfDate("FC Juventes", LocalDate.of(2010, 1, 14));
-		Assert.assertNull(organization);
+		Assert.assertNull(organizationRepository.findByOrganizationNameAndAsOfDate("FC Juventes", LocalDate.of(2010, 1, 14)));
 	}
 
 	@Test
 	public void findByOrgNameAndAsOfDate_NotFound_AfterEndDate() {
-		Organization organization = organizationRepository.findByOrganizationNameAndAsOfDate("FC Juventes", LocalDate.of(10000, 1, 1));
-		Assert.assertNull(organization);
+		Assert.assertNull(organizationRepository.findByOrganizationNameAndAsOfDate("FC Juventes", LocalDate.of(10000, 1, 1)));
 	}
 
 	@Test
 	public void findByOrgNameAndAsOfDate_NotFound_OrganizationName() {
-		Organization organization = organizationRepository.findByOrganizationNameAndAsOfDate("Orobica", LocalDate.of(9999, 12, 31));
-		Assert.assertNull(organization);
+		Assert.assertNull(organizationRepository.findByOrganizationNameAndAsOfDate("Orobica", LocalDate.of(9999, 12, 31)));
 	}
 
 	@Test
