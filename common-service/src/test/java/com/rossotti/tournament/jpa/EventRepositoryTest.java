@@ -12,10 +12,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.TransactionSystemException;
+import javax.validation.ConstraintViolationException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ActiveProfiles(profiles = "development")
 @RunWith(SpringRunner.class)
@@ -110,14 +113,20 @@ public class EventRepositoryTest {
 		Assert.assertEquals(1, event.getGameDates().get(0).getGameLocations().get(0).getGameRounds().get(0).getGames().get(0).getGameTeams().size());
 	}
 
-	@Test(expected= DataIntegrityViolationException.class)
-	public void create_MissingRequiredData() {
-		eventRepository.save(createMockEvent(null, LocalDate.of(2012, 9, 10), LocalDate.of(2012, 9, 11)));
+	@Test
+	public void create_ConstraintViolation_EventNameMissing() {
+		Exception exception = assertThrows(ConstraintViolationException.class, () -> {
+			eventRepository.save(createMockEvent(null, LocalDate.of(2012, 9, 10), LocalDate.of(2012, 9, 11)));
+		});
+		Assert.assertTrue(exception.getMessage().contains("EventName is mandatory"));
 	}
 
-	@Test(expected= DataIntegrityViolationException.class)
+	@Test
 	public void create_Duplicate() {
-		eventRepository.save(createMockEvent("Lombardy Halloween Invitational", LocalDate.of(2020, 10, 24), LocalDate.of(2020, 10, 25)));
+		Exception exception = assertThrows(DataIntegrityViolationException.class, () -> {
+			eventRepository.save(createMockEvent("Lombardy Halloween Invitational", LocalDate.of(2020, 10, 24), LocalDate.of(2020, 10, 25)));
+		});
+		Assert.assertTrue(exception.getMessage().contains("could not execute statement"));
 	}
 
 	@Test
@@ -128,9 +137,12 @@ public class EventRepositoryTest {
 		Assert.assertEquals(EventStatus.Complete, event.getEventStatus());
 	}
 
-	@Test(expected= DataIntegrityViolationException.class)
-	public void update_MissingRequiredData() {
-		eventRepository.save(updateMockEvent(LocalDate.of(2020, 10, 25), null));
+	@Test
+	public void update_TransactionSystemException_EventStatusMissing() {
+		Exception exception = assertThrows(TransactionSystemException.class, () -> {
+			eventRepository.save(updateMockEvent(LocalDate.of(2020, 10, 25), null));
+		});
+		Assert.assertTrue(exception.getCause().getCause().getMessage().contains("EventStatus is mandatory"));
 	}
 
 	@Test

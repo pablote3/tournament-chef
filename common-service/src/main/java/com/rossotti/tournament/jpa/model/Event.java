@@ -4,6 +4,8 @@ import com.rossotti.tournament.jpa.enumeration.EventStatus;
 import com.rossotti.tournament.jpa.enumeration.EventType;
 import com.rossotti.tournament.jpa.enumeration.Sport;
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +52,7 @@ public class Event extends BaseEntity {
 	}
 
 	@Column(nullable=false)
+	@NotNull(message="StartDate is mandatory")
 	private LocalDate startDate;
 	public LocalDate getStartDate() {
 		return startDate;
@@ -59,6 +62,7 @@ public class Event extends BaseEntity {
 	}
 
 	@Column(nullable=false)
+	@NotNull(message="EndDate is mandatory")
 	private LocalDate endDate;
 	public LocalDate getEndDate() {
 		return endDate;
@@ -69,6 +73,7 @@ public class Event extends BaseEntity {
 
 	@Enumerated(EnumType.STRING)
 	@Column(length=10, nullable=false)
+	@NotNull(message="EventStatus is mandatory")
 	private EventStatus eventStatus;
 	public EventStatus getEventStatus() {
 		return eventStatus;
@@ -90,6 +95,7 @@ public class Event extends BaseEntity {
 	}
 
 	@Column(length=60, nullable=false)
+	@NotBlank(message="EventName is mandatory")
 	private String eventName;
 	public String getEventName() {
 		return eventName;
@@ -100,6 +106,7 @@ public class Event extends BaseEntity {
 
 	@Enumerated(EnumType.STRING)
 	@Column(length=15, nullable=false)
+	@NotNull(message="Sport is mandatory")
 	private Sport sport;
 	public Sport getSport() {
 		return sport;
@@ -116,6 +123,7 @@ public class Event extends BaseEntity {
 
 	@Enumerated(EnumType.STRING)
 	@Column(length=10, nullable=false)
+	@NotNull(message="EventType is mandatory")
 	private EventType eventType;
 	public EventType getEventType() {
 		return eventType;

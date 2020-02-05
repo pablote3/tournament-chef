@@ -112,9 +112,12 @@ public class UserRepositoryTest {
 		Assert.assertTrue(exception.getMessage().contains("Password invalid format"));
 	}
 
-	@Test(expected= DataIntegrityViolationException.class)
+	@Test
 	public void create_Duplicate() {
-		userRepository.save(createMockUser(1L, "valentina.giacinti@telecomitalia.com", "Giacinti", "Brescia3"));
+		Exception exception = assertThrows(DataIntegrityViolationException.class, () -> {
+			userRepository.save(createMockUser(1L, "valentina.giacinti@telecomitalia.com", "Giacinti", "Brescia3"));
+		});
+		Assert.assertTrue(exception.getMessage().contains("could not execute statement"));
 	}
 
 	@Test
