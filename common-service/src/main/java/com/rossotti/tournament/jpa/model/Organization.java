@@ -2,6 +2,9 @@ package com.rossotti.tournament.jpa.model;
 
 import com.rossotti.tournament.jpa.enumeration.OrganizationStatus;
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +49,7 @@ public class Organization extends BaseEntity {
 	}
 
 	@Column(length=50, nullable=false)
+	@NotBlank(message="OrganizationName is mandatory")
 	private String organizationName;
 	public String getOrganizationName() {
 		return organizationName;
@@ -56,6 +60,7 @@ public class Organization extends BaseEntity {
 
 	@Enumerated(EnumType.STRING)
 	@Column(length=9, nullable=false)
+	@NotNull(message="OrganizationStatus is mandatory")
 	private OrganizationStatus organizationStatus;
 	public OrganizationStatus getOrganizationStatus() {
 		return organizationStatus;
@@ -74,6 +79,7 @@ public class Organization extends BaseEntity {
 	}
 
 	@Column(nullable=false)
+	@NotNull(message="StartDate is mandatory")
 	private LocalDate startDate;
 	public LocalDate getStartDate() {
 		return startDate;
@@ -83,6 +89,7 @@ public class Organization extends BaseEntity {
 	}
 
 	@Column(nullable=false)
+	@NotNull(message="EndDate is mandatory")
 	private LocalDate endDate;
 	public LocalDate getEndDate() {
 		return endDate;
@@ -92,6 +99,7 @@ public class Organization extends BaseEntity {
 	}
 
 	@Column(length=25, nullable=false)
+	@NotBlank(message="Address1 is mandatory")
 	private String address1;
 	public String getAddress1() {
 		return address1;
@@ -110,6 +118,7 @@ public class Organization extends BaseEntity {
 	}
 
 	@Column(length=25, nullable=false)
+	@NotBlank(message="City is mandatory")
 	private String city;
 	public String getCity() {
 		return city;
@@ -119,6 +128,7 @@ public class Organization extends BaseEntity {
 	}
 
 	@Column(length=25, nullable=false)
+	@NotBlank(message="State is mandatory")
 	private String state;
 	public String getState() {
 		return state;
@@ -128,6 +138,7 @@ public class Organization extends BaseEntity {
 	}
 
 	@Column(length=9, nullable=false)
+	@NotBlank(message="ZipCode is mandatory")
 	private String zipCode;
 	public String getZipCode() {
 		return zipCode;
@@ -137,6 +148,7 @@ public class Organization extends BaseEntity {
 	}
 
 	@Column(length=25, nullable=false)
+	@NotBlank(message="Country is mandatory")
 	private String country;
 	public String getCountry() {
 		return country;
@@ -146,6 +158,7 @@ public class Organization extends BaseEntity {
 	}
 
 	@Column(length=25, nullable=false)
+	@NotBlank(message="ContactLastName is mandatory")
 	private String contactLastName;
 	public String getContactLastName() {
 		return contactLastName;
@@ -155,6 +168,7 @@ public class Organization extends BaseEntity {
 	}
 
 	@Column(length=25, nullable=false)
+	@NotBlank(message="ContactFirstName is mandatory")
 	private String contactFirstName;
 	public String getContactFirstName() {
 		return contactFirstName;
@@ -164,6 +178,8 @@ public class Organization extends BaseEntity {
 	}
 
 	@Column(length=50, nullable=false)
+	@NotBlank(message="ContactEmail is mandatory")
+	@Email(message = "ContactEmail invalid format")
 	private String contactEmail;
 	public String getContactEmail() {
 		return contactEmail;
@@ -173,6 +189,7 @@ public class Organization extends BaseEntity {
 	}
 
 	@Column(length=10, nullable=false)
+	@NotBlank(message="ContactPhone is mandatory")
 	private String contactPhone;
 	public String getContactPhone() {
 		return contactPhone;

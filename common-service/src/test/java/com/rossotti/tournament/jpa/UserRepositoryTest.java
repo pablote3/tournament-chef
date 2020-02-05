@@ -15,11 +15,9 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.TransactionSystemException;
-
 import javax.validation.ConstraintViolationException;
 import java.time.LocalDateTime;
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ActiveProfiles(profiles = "development")

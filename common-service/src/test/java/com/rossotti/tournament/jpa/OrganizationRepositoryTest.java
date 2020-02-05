@@ -12,9 +12,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.TransactionSystemException;
+import javax.validation.ConstraintViolationException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ActiveProfiles(profiles = "development")
 @RunWith(SpringRunner.class)
@@ -112,14 +115,20 @@ public class OrganizationRepositoryTest {
 		Assert.assertEquals("Manuela", organization.getContactFirstName());
 	}
 
-	@Test(expected= DataIntegrityViolationException.class)
-	public void create_MissingRequiredData() {
-		organizationRepository.save(createMockOrganization("AS Roma", LocalDate.of(2010, 1, 11), LocalDate.of(9999, 12, 31), null));
+	@Test
+	public void create_ConstraintViolation_ContactLastNameMissing() {
+		Exception exception = assertThrows(ConstraintViolationException.class, () -> {
+			organizationRepository.save(createMockOrganization("AS Roma", LocalDate.of(2010, 1, 11), LocalDate.of(9999, 12, 31), null));
+		});
+		Assert.assertTrue(exception.getMessage().contains("ContactLastName is mandatory"));
 	}
 
-	@Test(expected= DataIntegrityViolationException.class)
+	@Test
 	public void create_Duplicate() {
-		organizationRepository.save(createMockOrganization("FC Juventes", LocalDate.of(2010, 1, 15), LocalDate.of(2010, 10, 27), null));
+		Exception exception = assertThrows(DataIntegrityViolationException.class, () -> {
+			organizationRepository.save(createMockOrganization("FC Juventes", LocalDate.of(2010, 1, 15), LocalDate.of(2016, 2, 20), "Bonansea"));
+		});
+		Assert.assertTrue(exception.getMessage().contains("could not execute statement"));
 	}
 
 	@Test
@@ -130,9 +139,12 @@ public class OrganizationRepositoryTest {
 		Assert.assertEquals("Ilaria", organization.getContactFirstName());
 	}
 
-	@Test(expected= DataIntegrityViolationException.class)
-	public void update_MissingRequiredData() {
-		organizationRepository.save(updateMockOrganization("Fiorentina FC", LocalDate.of(2012, 1, 15), null));
+	@Test
+	public void update_TransactionSystemException_ContactLastNameMissing() {
+		Exception exception = assertThrows(TransactionSystemException.class, () -> {
+			organizationRepository.save(updateMockOrganization("Fiorentina FC", LocalDate.of(2012, 1, 15), null));
+		});
+		Assert.assertTrue(exception.getCause().getCause().getMessage().contains("ContactLastName is mandatory"));
 	}
 
 	@Test
