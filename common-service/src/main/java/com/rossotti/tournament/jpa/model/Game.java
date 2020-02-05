@@ -2,6 +2,7 @@ package com.rossotti.tournament.jpa.model;
 
 import com.rossotti.tournament.jpa.enumeration.GameStatus;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,7 @@ public class Game extends BaseEntity {
 	}
 
 	@Column(nullable=false)
+	@NotNull(message="StartTime is mandatory")
 	private LocalTime startTime;
 	public LocalTime getStartTime() {
 		return startTime;
@@ -39,6 +41,7 @@ public class Game extends BaseEntity {
 
 	@Enumerated(EnumType.STRING)
 	@Column(length=9, nullable=false)
+	@NotNull(message="GameStatus is mandatory")
 	private GameStatus gameStatus;
 	public GameStatus getGameStatus() {
 		return gameStatus;

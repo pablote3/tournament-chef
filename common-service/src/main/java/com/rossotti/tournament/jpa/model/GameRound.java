@@ -2,6 +2,7 @@ package com.rossotti.tournament.jpa.model;
 
 import com.rossotti.tournament.jpa.enumeration.GameType;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +40,7 @@ public class GameRound {
 
 	@Enumerated(EnumType.STRING)
 	@Column(length=14, nullable=false)
+	@NotNull(message="GameType is mandatory")
 	private GameType gameType;
 	public GameType getGameType() {
 		return gameType;
@@ -63,6 +65,7 @@ public class GameRound {
 	}
 
 	@Column(nullable=false)
+	@NotNull(message="GameDuration is mandatory")
 	private Short gameDuration;
 	public Short getGameDuration() {
 		return gameDuration;

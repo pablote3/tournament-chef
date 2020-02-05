@@ -1,6 +1,7 @@
 package com.rossotti.tournament.jpa.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(uniqueConstraints=@UniqueConstraint(columnNames={"organizationId", "locationName"}))
@@ -17,6 +18,7 @@ public class OrganizationLocation extends BaseEntity {
 	}
 
 	@Column(length=50, nullable=false)
+	@NotBlank(message="LocationName is mandatory")
 	private String locationName;
 	public String getLocationName() {
 		return locationName;
@@ -26,6 +28,7 @@ public class OrganizationLocation extends BaseEntity {
 	}
 
 	@Column(length=25, nullable=false)
+	@NotBlank(message="Address1 is mandatory")
 	private String address1;
 	public String getAddress1() {
 		return address1;
@@ -44,6 +47,7 @@ public class OrganizationLocation extends BaseEntity {
 	}
 
 	@Column(length=25, nullable=false)
+	@NotBlank(message="City is mandatory")
 	private String city;
 	public String getCity() {
 		return city;
@@ -53,6 +57,7 @@ public class OrganizationLocation extends BaseEntity {
 	}
 
 	@Column(length=25, nullable=false)
+	@NotBlank(message="State is mandatory")
 	private String state;
 	public String getState() {
 		return state;
@@ -62,6 +67,7 @@ public class OrganizationLocation extends BaseEntity {
 	}
 
 	@Column(length=9, nullable=false)
+	@NotBlank(message="ZipCode is mandatory")
 	private String zipCode;
 	public String getZipCode() {
 		return zipCode;
@@ -71,6 +77,7 @@ public class OrganizationLocation extends BaseEntity {
 	}
 
 	@Column(length=25, nullable=false)
+	@NotBlank(message="Country is mandatory")
 	private String country;
 	public String getCountry() {
 		return country;

@@ -2,6 +2,8 @@ package com.rossotti.tournament.jpa.model;
 
 import com.rossotti.tournament.jpa.enumeration.GroupPlay;
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +30,7 @@ public class Template {
 	}
 
 	@Column(length=50, nullable=false)
+	@NotBlank(message="TemplateName is mandatory")
 	private String templateName;
 	public String getTemplateName() {
 		return templateName;
@@ -37,6 +40,7 @@ public class Template {
 	}
 
 	@Column(nullable=false)
+	@NotNull(message="GridGroupRound1 is mandatory")
 	private Short gridGroupRound1;
 	public Short getGridGroupRound1() {
 		return gridGroupRound1;
@@ -46,6 +50,7 @@ public class Template {
 	}
 
 	@Column(nullable=false)
+	@NotNull(message="GridTeamsRound1 is mandatory")
 	private Short gridTeamsRound1;
 	public Short getGridTeamsRound1() {
 		return gridTeamsRound1;
@@ -56,6 +61,7 @@ public class Template {
 
 	@Enumerated(EnumType.STRING)
 	@Column(length=10, nullable=false)
+	@NotNull(message="GroupPlay1 is mandatory")
 	private GroupPlay groupPlay1;
 	public GroupPlay getGroupPlay1() {
 		return groupPlay1;
@@ -74,6 +80,7 @@ public class Template {
 	}
 
 	@Column(nullable=false)
+	@NotNull(message="GroupPlayoffGamesRound1 is mandatory")
 	private Short groupPlayoffGamesRound1;
 	public Short getGroupPlayoffGamesRound1() {
 		return groupPlayoffGamesRound1;
@@ -83,6 +90,7 @@ public class Template {
 	}
 
 	@Column(nullable=false)
+	@NotNull(message="GridGroupRound2 is mandatory")
 	private Short gridGroupRound2;
 	public Short getGridGroupRound2() {
 		return gridGroupRound2;
@@ -92,6 +100,7 @@ public class Template {
 	}
 
 	@Column(nullable=false)
+	@NotNull(message="GridTeamsRound2 is mandatory")
 	private Short gridTeamsRound2;
 	public Short getGridTeamsRound2() {
 		return gridTeamsRound2;
@@ -102,6 +111,7 @@ public class Template {
 
 	@Enumerated(EnumType.STRING)
 	@Column(length=10)
+	@NotNull(message="GroupPlay2 is mandatory")
 	private GroupPlay groupPlay2;
 	public GroupPlay getGroupPlay2() {
 		return groupPlay2;
@@ -120,6 +130,7 @@ public class Template {
 	}
 
 	@Column(nullable=false)
+	@NotNull(message="GroupPlayoffGamesRound2 is mandatory")
 	private Short groupPlayoffGamesRound2;
 	public Short getGroupPlayoffGamesRound2() {
 		return groupPlayoffGamesRound2;
@@ -129,6 +140,7 @@ public class Template {
 	}
 
 	@Column(nullable=false)
+	@NotNull(message="QuarterFinalGames is mandatory")
 	private Short quarterFinalGames;
 	public Short getQuarterFinalGames() {
 		return quarterFinalGames;
@@ -138,6 +150,7 @@ public class Template {
 	}
 
 	@Column(nullable=false)
+	@NotNull(message="SemiFinalGames is mandatory")
 	private Short semiFinalGames;
 	public Short getSemiFinalGames() {
 		return semiFinalGames;

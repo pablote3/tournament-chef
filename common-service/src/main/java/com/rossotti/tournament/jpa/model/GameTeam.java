@@ -1,6 +1,7 @@
 package com.rossotti.tournament.jpa.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +39,7 @@ public class GameTeam {
 	}
 
 	@Column(nullable=false)
+	@NotNull(message="PointsScored is mandatory")
 	private Short pointsScored;
 	public Short getPointsScored() {
 		return pointsScored;
@@ -47,6 +49,7 @@ public class GameTeam {
 	}
 
 	@Column(nullable=false)
+	@NotNull(message="HomeTeam is mandatory")
 	private Boolean homeTeam;
 	public Boolean getHomeTeam() {
 		return homeTeam;

@@ -1,6 +1,7 @@
 package com.rossotti.tournament.jpa.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +49,7 @@ public class GameLocation {
 	}
 
 	@Column(nullable=false)
+	@NotNull(message="StartTime is mandatory")
 	private LocalTime startTime;
 	public LocalTime getStartTime() {
 		return startTime;

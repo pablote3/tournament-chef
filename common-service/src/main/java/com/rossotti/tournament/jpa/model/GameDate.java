@@ -1,6 +1,7 @@
 package com.rossotti.tournament.jpa.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +39,7 @@ public class GameDate {
 	}
 
 	@Column(nullable=false)
+	@NotNull(message="GameDate is mandatory")
 	private LocalDate gameDate;
 	public LocalDate getGameDate() {
 		return gameDate;

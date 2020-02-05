@@ -1,6 +1,7 @@
 package com.rossotti.tournament.jpa.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,7 @@ public class OrganizationTeam extends BaseEntity {
 	}
 
 	@Column(length=50, nullable=false)
+	@NotBlank(message="TeamName is mandatory")
 	private String teamName;
 	public String getTeamName() {
 		return teamName;
@@ -38,6 +40,7 @@ public class OrganizationTeam extends BaseEntity {
 	}
 
 	@Column(length=25, nullable=false)
+	@NotBlank(message="City is mandatory")
 	private String city;
 	public String getCity() {
 		return city;
@@ -47,6 +50,7 @@ public class OrganizationTeam extends BaseEntity {
 	}
 
 	@Column(length=25, nullable=false)
+	@NotBlank(message="State is mandatory")
 	private String state;
 	public String getState() {
 		return state;
@@ -56,6 +60,7 @@ public class OrganizationTeam extends BaseEntity {
 	}
 
 	@Column(length=9, nullable=false)
+	@NotBlank(message="ZipCode is mandatory")
 	private String zipCode;
 	public String getZipCode() {
 		return zipCode;
@@ -65,6 +70,7 @@ public class OrganizationTeam extends BaseEntity {
 	}
 
 	@Column(length=25, nullable=false)
+	@NotBlank(message="Country is mandatory")
 	private String country;
 	public String getCountry() {
 		return country;

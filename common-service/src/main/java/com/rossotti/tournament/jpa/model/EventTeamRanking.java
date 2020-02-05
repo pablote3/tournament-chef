@@ -2,6 +2,7 @@ package com.rossotti.tournament.jpa.model;
 
 import com.rossotti.tournament.jpa.enumeration.RankingType;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table
@@ -28,6 +29,7 @@ public class EventTeamRanking {
 
 	@Enumerated(EnumType.STRING)
 	@Column(length=14, nullable=false)
+	@NotNull(message="RankingType is mandatory")
 	private RankingType rankingType;
 	public RankingType getRankingType() {
 		return rankingType;
@@ -58,6 +60,7 @@ public class EventTeamRanking {
 	}
 
 	@Column(nullable=false)
+	@NotNull(message="Ranking is mandatory")
 	private Short ranking;
 	public Short getRanking() {
 		return ranking;
