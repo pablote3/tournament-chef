@@ -4,12 +4,12 @@ insert into organization VALUES(3, '2020-01-19 20:00:00.0', '2020-01-20 20:00:00
 insert into organization VALUES(4, '2020-01-19 20:00:00.0', '2020-01-20 20:00:00.0', 1, 'Via Ximenes 74/76', '', 'Firenze', 'tatiana.bonetti@yahoo.com', 'Tatiana', 'Bonetti', '9097047379', 'Italy', '9999-12-31', 'Fiorentina FC', 'Active', '2012-01-15', 'Tuscany', '50014');
 insert into organization VALUES(5, '2020-01-19 20:00:00.0', '2020-01-20 20:00:00.0', 1, 'Via Giacomo Matteotti, 80', 'Suite 5', 'Reggio Emilia', 'daniela.sabatino@telecomitalia.com', 'Daniela', 'Sabatino', '9097047728', 'Italy', '9999-12-31', 'US Sassuolo', 'Active', '2012-01-15', 'Emilia-Romagna', '42122');
 
-insert into user VALUES(1, '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 1, 'valentina.giacinti@telecomitalia.com', 'Valentina', 'Giacinti', 'Rossonere1', 'Active', 'Administrator', 1);
-insert into user VALUES(2, '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 1, 'laura.fusetti@gmail.com', 'Laura', 'Fusetti', 'Giallorosse', 'Inactive', 'Manager', 1);
-insert into user VALUES(3, '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 1, 'valentina.bergamaschi@hotmail.com', 'Valentina', 'Bergamaschi', 'Calcio333', 'Active', 'Manager', 1);
-insert into user VALUES(4, '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 1, 'alessia.piazza@telecomitalia.com', 'Alessia', 'Piazza', 'Bresciaxxx', 'Inactive', 'User', 1);
-insert into user VALUES(5, '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 1, 'martina.capelli@telecomitalia.com', 'Martina', 'Capelli', 'password123', 'Active', 'Guest', 1);
-insert into user VALUES(6, '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 4, 'valentina.giacinti@telecomitalia.com', 'Valentina', 'Giacinti', 'Rossonere2', 'Active', 'Administrator', 4);
+insert into user VALUES(1, '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 1, 'valentina.giacinti@telecomitalia.com', 'Valentina', 'Giacinti', 'Rosson1', 'Active', 'Administrator', 1);
+insert into user VALUES(2, '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 1, 'laura.fusetti@gmail.com', 'Laura', 'Fusetti', 'Rosse66', 'Inactive', 'Manager', 1);
+insert into user VALUES(3, '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 1, 'valentina.bergamaschi@hotmail.com', 'Valentina', 'Bergamaschi', 'Calcio33', 'Active', 'Manager', 1);
+insert into user VALUES(4, '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 1, 'alessia.piazza@telecomitalia.com', 'Alessia', 'Piazza', '9Brescia', 'Inactive', 'User', 1);
+insert into user VALUES(5, '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 1, 'martina.capelli@telecomitalia.com', 'Martina', 'Capelli', 'Pass123', 'Active', 'Guest', 1);
+insert into user VALUES(6, '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 4, 'valentina.giacinti@telecomitalia.com', 'Valentina', 'Giacinti', 'Rosson2', 'Active', 'Administrator', 4);
 
 insert into organizationTeam VALUES(1, '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2, 'Naples', 'Italy', 'Campania', 'Verona', '10052', 1);
 insert into organizationTeam VALUES(2, '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 1, 'Milan', 'Italy', 'Lombardy', 'Inter Milan', '10096', 1);

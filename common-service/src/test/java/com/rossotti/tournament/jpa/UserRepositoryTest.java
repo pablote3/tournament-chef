@@ -14,8 +14,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.TransactionSystemException;
+
+import javax.validation.ConstraintViolationException;
 import java.time.LocalDateTime;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ActiveProfiles(profiles = "development")
 @RunWith(SpringRunner.class)
@@ -34,7 +39,7 @@ public class UserRepositoryTest {
 		Assert.assertEquals("Giacinti", user.getLastName());
 		Assert.assertEquals("Valentina", user.getFirstName());
 		Assert.assertEquals("valentina.giacinti@telecomitalia.com", user.getEmail());
-		Assert.assertEquals("Rossonere1", user.getPassword());
+		Assert.assertEquals("Rosson1", user.getPassword());
 		Assert.assertEquals(LocalDateTime.of(2020, 1, 16, 20, 0), user.getCreateTs());
 		Assert.assertEquals(LocalDateTime.of(2020, 1, 19, 20, 0), user.getLupdTs());
 		Assert.assertEquals(1, user.getLupdUserId().longValue());
@@ -80,19 +85,38 @@ public class UserRepositoryTest {
 
 	@Test
 	public void create() {
-		userRepository.save(createMockUser(1L, "amserturini@gmail.com", "Serturini"));
+		userRepository.save(createMockUser(1L, "amserturini@gmail.com", "Serturini", "Brescia3"));
 		User user = userRepository.findByOrganizationNameAndUserEmail("FC Juventes", "amserturini@gmail.com");
 		Assert.assertEquals("Serturini", user.getLastName());
 	}
 
-	@Test(expected= DataIntegrityViolationException.class)
-	public void create_MissingRequiredData() {
-		userRepository.save(createMockUser(1L, "claudia.ciccotti@hotmailcom", null));
+	@Test
+	public void create_ConstraintViolation_EmailMissing() {
+		Exception exception = assertThrows(ConstraintViolationException.class, () -> {
+			userRepository.save(createMockUser(1L, "", "Bonfantini", "Brescia3"));
+		});
+		Assert.assertTrue(exception.getMessage().contains("Email is mandatory"));
+	}
+
+	@Test
+	public void create_ConstraintViolation_EmailInvalid() {
+		Exception exception = assertThrows(ConstraintViolationException.class, () -> {
+			userRepository.save(createMockUser(1L, "bonfantini.com", "Bonfantini", "Brescia3"));
+		});
+		Assert.assertTrue(exception.getMessage().contains("Email invalid format"));
+	}
+
+	@Test
+	public void create_ConstraintViolation_PasswordInvalid_Short() {
+		Exception exception = assertThrows(ConstraintViolationException.class, () -> {
+			userRepository.save(createMockUser(1L, "angelica.soffia@gmail.com", "Soffia", "Br3"));
+		});
+		Assert.assertTrue(exception.getMessage().contains("Password invalid format"));
 	}
 
 	@Test(expected= DataIntegrityViolationException.class)
 	public void create_Duplicate() {
-		userRepository.save(createMockUser(1L, "valentina.giacinti@telecomitalia.com", "Giacinti"));
+		userRepository.save(createMockUser(1L, "valentina.giacinti@telecomitalia.com", "Giacinti", "Brescia3"));
 	}
 
 	@Test
@@ -102,9 +126,12 @@ public class UserRepositoryTest {
 		Assert.assertEquals("Valencia", user.getLastName());
 	}
 
-	@Test(expected= DataIntegrityViolationException.class)
-	public void update_MissingRequiredData() {
-		userRepository.save(updateMockUser("FC Juventes", "alessia.piazza@telecomitalia.com", null));
+	@Test
+	public void update_TransactionSystemException_LastNameMissing() {
+		Exception exception = assertThrows(TransactionSystemException.class, () -> {
+			userRepository.save(updateMockUser("FC Juventes", "alessia.piazza@telecomitalia.com", null));
+		});
+		Assert.assertTrue(exception.getCause().getCause().getMessage().contains("LastName is mandatory"));
 	}
 
 	@Test
@@ -120,7 +147,7 @@ public class UserRepositoryTest {
 		Assert.assertNull(findUser);
 	}
 
-	private User createMockUser(Long orgId, String email, String lastName) {
+	private User createMockUser(Long orgId, String email, String lastName, String password) {
 		User user = new User();
 		user.setOrganization(createMockOrganization(orgId));
 		user.setEmail(email);
@@ -128,7 +155,7 @@ public class UserRepositoryTest {
 		user.setUserStatus(UserStatus.Active);
 		user.setLastName(lastName);
 		user.setFirstName("Annamaria");
-		user.setPassword("superpass");
+		user.setPassword(password);
 		user.setCreateTs(LocalDateTime.of(2019, 10, 27, 20, 30));
 		user.setLupdTs(LocalDateTime.of(2019, 10, 27, 20, 30));
 		user.setLupdUserId(4L);
