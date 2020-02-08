@@ -1,4 +1,4 @@
-package com.rossotti.tournament.jpa;
+package com.rossotti.tournament.jpa.repository;
 
 import com.rossotti.tournament.config.PersistenceConfig;
 import com.rossotti.tournament.jpa.enumeration.*;
