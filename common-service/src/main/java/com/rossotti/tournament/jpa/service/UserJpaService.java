@@ -7,5 +7,5 @@ import java.util.List;
 @Service
 public interface UserJpaService extends CrudService<User> {
 	List<User> findByEmail(String email);
-	User findByOrganizationNameAndUserEmail(String email, String organizationName);
+	User findByOrganizationNameAndUserEmail(String organizationName, String email);
 }
