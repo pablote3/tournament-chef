@@ -7,9 +7,7 @@ public interface CrudService<T> {
 
 	T getById(Long id);
 
-	T create(T domainObject);
-
-	T update(T domainObject);
+	T save(T domainObject);
 
 	T delete(Long id);
 }
