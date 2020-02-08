@@ -32,13 +32,7 @@ public class UserJpaServiceImpl implements UserJpaService {
 
 	@Override
 	public User findByOrganizationNameAndUserEmail(String email, String organizationName) {
-		User user = userRepository.findByOrganizationNameAndUserEmail(email, organizationName);
-		if (user != null) {
-			return user;
-		}
-		else {
-			throw new CustomException(ValidationMessages.MSG_VAL_0012, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+		return userRepository.findByOrganizationNameAndUserEmail(email, organizationName);
 	}
 
 	@Override

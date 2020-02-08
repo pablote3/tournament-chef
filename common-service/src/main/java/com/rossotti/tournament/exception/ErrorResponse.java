@@ -3,21 +3,9 @@ package com.rossotti.tournament.exception;
 public class ErrorResponse {
 	private String error;
 	private String description;
-	private Suspend[] details;
+	private String errorMessage;
 
 	public ErrorResponse() {
-	}
-
-	public Suspend[] getDetails() {
-		if (this.details == null) {
-			this.details = new Suspend[0];
-		}
-
-		return this.details;
-	}
-
-	public void setDetails(Suspend[] details) {
-		this.details = details;
 	}
 
 	public String getDescription() {
@@ -34,5 +22,13 @@ public class ErrorResponse {
 
 	public void setError(String error) {
 		this.error = error;
+	}
+
+	public String getErrorMessage() {
+		return this.errorMessage;
+	}
+
+	public void setErrorMessage(String errorMessage) {
+		this.errorMessage = errorMessage;
 	}
 }

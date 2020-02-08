@@ -148,7 +148,7 @@ public class UserRepositoryTest {
 		Assert.assertNull(findUser);
 	}
 
-	private User createMockUser(Long orgId, String email, String lastName, String password) {
+	public static User createMockUser(Long orgId, String email, String lastName, String password) {
 		User user = new User();
 		user.setOrganization(createMockOrganization(orgId));
 		user.setEmail(email);
@@ -169,7 +169,7 @@ public class UserRepositoryTest {
 		return user;
 	}
 
-	private Organization createMockOrganization(Long orgId) {
+	private static Organization createMockOrganization(Long orgId) {
 		Organization organization = new Organization();
 		organization.setId(orgId);
 		return organization;

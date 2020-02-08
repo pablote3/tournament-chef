@@ -2,11 +2,13 @@ package com.rossotti.tournament.jpa.service;
 
 import com.rossotti.tournament.exception.CustomException;
 import com.rossotti.tournament.jpa.model.User;
+import com.rossotti.tournament.jpa.repository.UserRepositoryTest;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit4.SpringRunner;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -44,10 +46,7 @@ public class UserJpaServiceTest {
 
 	@Test
 	public void findByOrganizationNameAndUserEmail_NotFound() {
-		Exception exception = assertThrows(CustomException.class, () -> {
-			userJpaService.findByOrganizationNameAndUserEmail("Juventes", "valentina.giacinti@telecomitalia.com");
-		});
-		Assert.assertTrue(exception.getMessage().contains("MSG_VAL_0012"));
+		Assert.assertNull(userJpaService.findByOrganizationNameAndUserEmail("Juventes", "valentina.giacinti@telecomitalia.com"));
 	}
 
 	@Test
@@ -62,33 +61,49 @@ public class UserJpaServiceTest {
 		Assert.assertEquals(0, users.size());
 	}
 
-//	@Test
-//	public void create_Created_AsOfDate() {
-//		Team createTeam = userJpaService.create(TeamRepositoryTest.createMockTeam("sacramento-hornets", LocalDate.of(2012, 7, 1), LocalDate.of(9999, 12, 31), "Sacramento Hornets"));
-//		Team findTeam = userJpaService.findByTeamKeyAndAsOfDate("sacramento-hornets", LocalDate.of(2012, 7, 1));
-//		Assert.assertTrue(createTeam.isCreated());
-//		Assert.assertEquals("Sacramento Hornets", findTeam.getFullName());
-//	}
-//
-//	@Test
-//	public void create_Created_DateRange() {
-//		Team createTeam = userJpaService.create(TeamRepositoryTest.createMockTeam("sacramento-rivercats", LocalDate.of(2006, 7, 1), LocalDate.of(2012, 7, 2), "Sacramento Rivercats"));
-//		Team findTeam = userJpaService.findByTeamKeyAndAsOfDate("sacramento-rivercats", LocalDate.of(2006, 7, 1));
-//		Assert.assertTrue(createTeam.isCreated());
-//		Assert.assertEquals("Sacramento Rivercats", findTeam.getFullName());
-//	}
-//
-//	@Test
-//	public void create_OverlappingDates() {
-//		Team createTeam = userJpaService.create(TeamRepositoryTest.createMockTeam("cleveland-rebels", LocalDate.of(2010, 7, 1), LocalDate.of(2010, 7, 1), "Cleveland Rebels"));
-//		Assert.assertTrue(createTeam.isFound());
-//	}
-//
-//	@Test(expected= DataIntegrityViolationException.class)
-//	public void create_MissingRequiredData() {
-//		userJpaService.create(TeamRepositoryTest.createMockTeam("chavo-del-ocho", LocalDate.of(2010, 7, 1), LocalDate.of(2010, 7, 1), null));
-//	}
-//
+	@Test
+	public void create_Created() {
+		userJpaService.save(UserRepositoryTest.createMockUser(1L, "bonetti.tatiana@hotmail.com", "Bonetti", "Super3"));
+		User findUser = userJpaService.findByOrganizationNameAndUserEmail("FC Juventes", "bonetti.tatiana@hotmail.com");
+		Assert.assertEquals("Super3", findUser.getPassword());
+	}
+
+	@Test
+	public void create_EmailIsMandatory() {
+		CustomException exception = assertThrows(CustomException.class, () -> {
+			userJpaService.save(UserRepositoryTest.createMockUser(1L, "", "Bonetti", "Super3"));
+		});
+		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+		Assert.assertEquals("Email is mandatory", exception.getError().getErrorMessage());
+	}
+
+	@Test
+	public void create_LastNameIsMandatory() {
+		CustomException exception = assertThrows(CustomException.class, () -> {
+			userJpaService.save(UserRepositoryTest.createMockUser(1L, "bonetti.tatiana@hotmail.com", null, "Super3"));
+		});
+		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+		Assert.assertEquals("LastName is mandatory", exception.getError().getErrorMessage());
+	}
+
+	@Test
+	public void create_EmailInvalidFormat() {
+		CustomException exception = assertThrows(CustomException.class, () -> {
+			userJpaService.save(UserRepositoryTest.createMockUser(1L, "bonetti.tatiana.hotmail.com", "Bonetti", "Super3"));
+		});
+		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+		Assert.assertEquals("Email invalid format", exception.getError().getErrorMessage());
+	}
+
+	@Test
+	public void create_PasswordInvalidFormat() {
+		CustomException exception = assertThrows(CustomException.class, () -> {
+			userJpaService.save(UserRepositoryTest.createMockUser(1L, "bonetti.tatiana@hotmail.com", "Bonetti", "Sup"));
+		});
+		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+		Assert.assertEquals("Password invalid format", exception.getError().getErrorMessage());
+	}
+
 //	@Test
 //	public void update_Updated() {
 //		Team updateTeam = userJpaService.update(TeamRepositoryTest.createMockTeam("st-louis-bomber's", LocalDate.of(2009, 7, 1), LocalDate.of(9999, 12, 31), "St. Louis Bombier's"));
