@@ -163,17 +163,19 @@ public class UserJpaServiceTest {
 		Assert.assertEquals("Email invalid format", exception.getError().getErrorMessage());
 	}
 
-//	@Test
-//	public void delete_Deleted() {
-//		Team deleteTeam = userJpaService.delete(7L);
-//		Team findTeam = userJpaService.getById(7L);
-//		Assert.assertNull(findTeam);
-//		Assert.assertTrue(deleteTeam.isDeleted());
-//	}
-//
-//	@Test
-//	public void delete_NotFound() {
-//		Team deleteTeam = userJpaService.delete(101L);
-//		Assert.assertTrue(deleteTeam.isNotFound());
-//	}
+	@Test
+	public void delete_Deleted() {
+		userJpaService.delete(7L);
+		Assert.assertNull(userJpaService.getById(7L));
+	}
+
+	@Test
+	public void delete_NotFound() {
+		CustomException exception = assertThrows(CustomException.class, () -> {
+			userJpaService.delete(21L);
+		});
+		Assert.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, exception.getStatus());
+		Assert.assertEquals("Server error when trying to find record for id of {}", exception.getError().getErrorMessage());
+		Assert.assertEquals("MSG_VAL_0012", exception.getError().getError());
+	}
 }

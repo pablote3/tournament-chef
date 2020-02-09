@@ -61,16 +61,33 @@ public class CustomException extends RuntimeException {
 		if (this.error == null) {
 			this.error = new ErrorResponse();
 			this.error.setDescription(this.getMessage());
-			this.error.setError("CustomException");
+			this.error.setError(getError(this.getMessage()));
 			this.error.setErrorMessage(getErrorMessage(this.getMessage()));
 		}
 		return this.error;
 	}
 
 	private String getErrorMessage(String message) {
-		String messageTemplate = "messageTemplate='";
-		int index = message.indexOf(messageTemplate) + messageTemplate.length();
-		return message.substring(index, message.length()-4);
+		String userError = "messageTemplate='";
+		int index = message.indexOf(userError);
+		if(index != -1) {
+			return message.substring(index + userError.length(), message.length()-4);
+		}
+		String serverError = "(MSG_VAL";
+		index = message.indexOf(serverError);
+		if(index != -1) {
+			return message.substring(0, index - 1);
+		}
+		return message;
+	}
+
+	private String getError(String message) {
+		String serverError = "(MSG_VAL";
+		int index = message.indexOf(serverError);
+		if(index != -1) {
+			return message.substring(index + 1, message.length() - 1);
+		}
+		return message;
 	}
 
 	public void setError(ErrorResponse error) {

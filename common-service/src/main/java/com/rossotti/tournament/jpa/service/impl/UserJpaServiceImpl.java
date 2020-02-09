@@ -62,10 +62,7 @@ public class UserJpaServiceImpl implements UserJpaService {
 			}
 		}
 		catch (Exception e) {
-			if (e instanceof DataIntegrityViolationException) {
-				throw new CustomException(ValidationMessages.MSG_VAL_0008, HttpStatus.INTERNAL_SERVER_ERROR);
-			}
-			else if (e instanceof TransactionSystemException) {
+			if (e instanceof TransactionSystemException) {
 				throw new CustomException(e.getCause().getCause().getMessage(), HttpStatus.BAD_REQUEST);
 			}
 			else if (e instanceof ConstraintViolationException) {
@@ -87,11 +84,14 @@ public class UserJpaServiceImpl implements UserJpaService {
 				return user;
 			}
 			else {
-				throw new CustomException(ValidationMessages.MSG_VAL_0007, HttpStatus.INTERNAL_SERVER_ERROR);
+				throw new CustomException(ValidationMessages.MSG_VAL_0012, HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 		}
+		catch(CustomException ce) {
+			throw ce;
+		}
 		catch(Exception e) {
-			throw new CustomException(ValidationMessages.MSG_VAL_0000, HttpStatus.INTERNAL_SERVER_ERROR);
+			throw new CustomException(ValidationMessages.MSG_VAL_0007, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 }

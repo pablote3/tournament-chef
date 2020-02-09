@@ -144,8 +144,7 @@ public class UserRepositoryTest {
 		else {
 			Assert.fail("Unable to find record to delete");
 		}
-		User findUser = userRepository.findByOrganizationNameAndUserEmail("FC Juventes", "martina.capelli@telecomitalia.com");
-		Assert.assertNull(findUser);
+		Assert.assertNull(userRepository.findByOrganizationNameAndUserEmail("FC Juventes", "martina.capelli@telecomitalia.com"));
 	}
 
 	public static User createMockUser(Long orgId, String email, String lastName, String password) {
