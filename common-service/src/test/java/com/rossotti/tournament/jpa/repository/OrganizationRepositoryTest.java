@@ -3,7 +3,6 @@ package com.rossotti.tournament.jpa.repository;
 import com.rossotti.tournament.config.PersistenceConfig;
 import com.rossotti.tournament.jpa.enumeration.OrganizationStatus;
 import com.rossotti.tournament.jpa.model.Organization;
-import com.rossotti.tournament.jpa.repository.OrganizationRepository;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

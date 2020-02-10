@@ -26,10 +26,15 @@ public class UserJpaServiceTest {
 	}
 
 	@Test
-	public void getById() {
+	public void getById_Found() {
 		User user = userJpaService.getById(1L);
 		Assert.assertEquals("Giacinti", user.getLastName());
 		Assert.assertEquals("FC Juventes", user.getOrganization().getOrganizationName());
+	}
+
+	@Test
+	public void getById_NotFound() {
+		Assert.assertNull(userJpaService.getById(31L));
 	}
 
 	@Test
