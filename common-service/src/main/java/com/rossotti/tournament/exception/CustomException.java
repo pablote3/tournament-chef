@@ -89,8 +89,4 @@ public class CustomException extends RuntimeException {
 		}
 		return message;
 	}
-
-	public void setError(ErrorResponse error) {
-		this.error = error;
-	}
 }

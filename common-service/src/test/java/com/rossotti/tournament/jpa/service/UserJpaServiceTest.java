@@ -2,7 +2,6 @@ package com.rossotti.tournament.jpa.service;
 
 import com.rossotti.tournament.exception.CustomException;
 import com.rossotti.tournament.jpa.enumeration.UserStatus;
-import com.rossotti.tournament.jpa.enumeration.UserType;
 import com.rossotti.tournament.jpa.model.User;
 import com.rossotti.tournament.jpa.repository.UserRepositoryTest;
 import org.junit.Assert;
@@ -35,7 +34,7 @@ public class UserJpaServiceTest {
 
 	@Test
 	public void listAll() {
-		@SuppressWarnings("unchecked") List<User> users = (List<User>) userJpaService.listAll();
+		List<User> users = (List<User>) userJpaService.listAll();
 		Assert.assertTrue(users.size() >= 4);
 	}
 
