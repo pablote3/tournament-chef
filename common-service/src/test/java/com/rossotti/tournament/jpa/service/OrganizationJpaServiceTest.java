@@ -1,7 +1,6 @@
 package com.rossotti.tournament.jpa.service;
 
 import com.rossotti.tournament.exception.CustomException;
-import com.rossotti.tournament.jpa.enumeration.OrganizationStatus;
 import com.rossotti.tournament.jpa.model.Organization;
 import com.rossotti.tournament.jpa.repository.OrganizationRepositoryTest;
 import org.junit.Assert;
@@ -48,7 +47,7 @@ public class OrganizationJpaServiceTest {
 
 	@Test
 	public void findByOrganizationNameAndAsOfDate_Found() {
-		Organization organization = organizationJpaService.findByOrganizationNameAndAsOfDate("FC Juventes", LocalDate.of(2011, 02, 15));
+		Organization organization = organizationJpaService.findByOrganizationNameAndAsOfDate("FC Juventes", LocalDate.of(2011, 2, 15));
 		Assert.assertEquals("barbara.bonansea@gmail.com", organization.getContactEmail());
 	}
 
@@ -59,7 +58,7 @@ public class OrganizationJpaServiceTest {
 
 	@Test
 	public void findByOrganizationNameStartDateEndDate_Found() {
-		Organization organization = organizationJpaService.findByOrganizationNameStartDateEndDate("FC Juventes", LocalDate.of(2011, 02, 15), LocalDate.of(2012, 02, 15));
+		Organization organization = organizationJpaService.findByOrganizationNameStartDateEndDate("FC Juventes", LocalDate.of(2011, 2, 15), LocalDate.of(2012, 2, 15));
 		Assert.assertEquals("barbara.bonansea@gmail.com", organization.getContactEmail());
 	}
 
@@ -89,9 +88,8 @@ public class OrganizationJpaServiceTest {
 
 	@Test
 	public void create_ContactEmailIsMandatory_Empty() {
-		CustomException exception = assertThrows(CustomException.class, () -> {
-			organizationJpaService.save(OrganizationRepositoryTest.createMockOrganization("Empoli FC", LocalDate.of(2011, 1, 15), LocalDate.of(2011, 1, 22), "Di Guglielmo", ""));
-		});
+		CustomException exception = assertThrows(CustomException.class, () ->
+			organizationJpaService.save(OrganizationRepositoryTest.createMockOrganization("Empoli FC", LocalDate.of(2011, 1, 15), LocalDate.of(2011, 1, 22), "Di Guglielmo", "")));
 		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
 		Assert.assertEquals("ContactEmail is mandatory", exception.getError().getErrorMessage());
 	}
@@ -114,72 +112,48 @@ public class OrganizationJpaServiceTest {
 		Assert.assertEquals("ContactEmail invalid format", exception.getError().getErrorMessage());
 	}
 
-//	@Test
-//	public void create_PasswordInvalidFormat() {
-//		CustomException exception = assertThrows(CustomException.class, () -> {
-//			organizationJpaService.save(OrganizationRepositoryTest.createMockOrganization(1L, "bonetti.tatiana@hotmail.com", "Bonetti", "Sup"));
-//		});
-//		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
-//		Assert.assertEquals("Password invalid format", exception.getError().getErrorMessage());
-//	}
+	@Test
+	public void update_Updated() {
+		Organization organization = organizationJpaService.findByOrganizationNameAndAsOfDate("AC Milan SPA", LocalDate.of(2012, 1, 15));
+		organization.setContactLastName("Fusetti");
+		organizationJpaService.save(organization);
+		Organization findOrganization = organizationJpaService.findByOrganizationNameStartDateEndDate("AC Milan SPA", LocalDate.of(2012, 1, 15), LocalDate.of(9999, 12, 31));
+		Assert.assertEquals("Fusetti", findOrganization.getContactLastName());
+	}
 
-//	@Test
-//	public void update_Updated() {
-//		Organization updateOrganization = organizationJpaService.findByOrganizationNameAndAsOfDate("AC Milan SPA", LocalDate.of(2012, 1, 15));
-//		updateOrganization.setOrganizationStatus(OrganizationStatus.Active);
-//		organizationJpaService.save(updateOrganization);
-//		Organization findOrganization = organizationJpaService.findByOrganizationNameAndOrganizationEmail("FC Juventes", "alessia.piazza@telecomitalia.com");
-//		Assert.assertEquals(OrganizationStatus.Active, findOrganization.getOrganizationStatus());
-//	}
+	@Test
+	public void update_ContactEmailIsMandatory_Empty() {
+		Organization organization = organizationJpaService.findByOrganizationNameAndAsOfDate("AC Milan SPA", LocalDate.of(2012, 1, 15));
+		organization.setContactEmail("");
+		CustomException exception = assertThrows(CustomException.class, () -> {
+			organizationJpaService.save(organization);
+		});
+		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+		Assert.assertEquals("ContactEmail is mandatory", exception.getError().getErrorMessage());
+	}
 
-//	@Test
-//	public void update_EmailIsMandatory_Empty() {
-//		Organization updateOrganization = organizationJpaService.findByOrganizationNameAndOrganizationEmail("FC Juventes", "alessia.piazza@telecomitalia.com");
-//		updateOrganization.setOrganizationStatus(OrganizationStatus.Active);
-//		updateOrganization.setEmail("");
-//		CustomException exception = assertThrows(CustomException.class, () -> {
-//			organizationJpaService.save(updateOrganization);
-//		});
-//		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
-//		Assert.assertEquals("Email is mandatory", exception.getError().getErrorMessage());
-//	}
-//
-//	@Test
-//	public void update_LastNameIsMandatory_Null() {
-//		Organization updateOrganization = organizationJpaService.findByOrganizationNameAndOrganizationEmail("FC Juventes", "alessia.piazza@telecomitalia.com");
-//		updateOrganization.setOrganizationStatus(OrganizationStatus.Active);
-//		updateOrganization.setLastName(null);
-//		CustomException exception = assertThrows(CustomException.class, () -> {
-//			organizationJpaService.save(updateOrganization);
-//		});
-//		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
-//		Assert.assertEquals("LastName is mandatory", exception.getError().getErrorMessage());
-//	}
-//
-//	@Test
-//	public void update_PasswordInvalidFormat() {
-//		Organization updateOrganization = organizationJpaService.findByOrganizationNameAndOrganizationEmail("FC Juventes", "alessia.piazza@telecomitalia.com");
-//		updateOrganization.setOrganizationStatus(OrganizationStatus.Active);
-//		updateOrganization.setPassword("Sup");
-//		CustomException exception = assertThrows(CustomException.class, () -> {
-//			organizationJpaService.save(updateOrganization);
-//		});
-//		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
-//		Assert.assertEquals("Password invalid format", exception.getError().getErrorMessage());
-//	}
-//
-//	@Test
-//	public void update_EmailInvalidFormat() {
-//		Organization updateOrganization = organizationJpaService.findByOrganizationNameAndOrganizationEmail("FC Juventes", "alessia.piazza@telecomitalia.com");
-//		updateOrganization.setEmail("alessia.piazza_telecomitalia.com");
-//		updateOrganization.setOrganizationStatus(OrganizationStatus.Active);
-//		CustomException exception = assertThrows(CustomException.class, () -> {
-//			organizationJpaService.save(updateOrganization);
-//		});
-//		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
-//		Assert.assertEquals("Email invalid format", exception.getError().getErrorMessage());
-//	}
-//
+	@Test
+	public void update_ContactEmailIsMandatory_Null() {
+		Organization organization = organizationJpaService.findByOrganizationNameAndAsOfDate("AC Milan SPA", LocalDate.of(2012, 1, 15));
+		organization.setContactEmail(null);
+		CustomException exception = assertThrows(CustomException.class, () -> {
+			organizationJpaService.save(organization);
+		});
+		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+		Assert.assertEquals("ContactEmail is mandatory", exception.getError().getErrorMessage());
+	}
+
+	@Test
+	public void update_ContactEmailInvalidFormat() {
+		Organization organization = organizationJpaService.findByOrganizationNameAndAsOfDate("AC Milan SPA", LocalDate.of(2012, 1, 15));
+		organization.setContactEmail("LauraFusetti_dada.it");
+		CustomException exception = assertThrows(CustomException.class, () -> {
+			organizationJpaService.save(organization);
+		});
+		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+		Assert.assertEquals("ContactEmail invalid format", exception.getError().getErrorMessage());
+	}
+
 //	@Test
 //	public void delete_Deleted() {
 //		organizationJpaService.delete(7L);
