@@ -114,6 +114,12 @@ public class OrganizationRepositoryTest {
 	}
 
 	@Test
+	public void findByOrgNameStartDateEndDate_Found_EqualStartDateEndDate() {
+		Organization organization = organizationRepository.findByOrganizationNameStartDateEndDate("FC Juventes", LocalDate.of(2010, 1, 15), LocalDate.of(2016, 2, 20));
+		Assert.assertEquals(OrganizationStatus.Inactive, organization.getOrganizationStatus());
+	}
+
+	@Test
 	public void findByOrgNameStateDateEndDate_Found_BetweenStartAndEndDate() {
 		Organization organization = organizationRepository.findByOrganizationNameStartDateEndDate("FC Juventes", LocalDate.of(2012, 10, 29), LocalDate.of(2012, 12, 29));
 		Assert.assertEquals(OrganizationStatus.Inactive, organization.getOrganizationStatus());
@@ -136,7 +142,7 @@ public class OrganizationRepositoryTest {
 
 	@Test
 	public void create() {
-		organizationRepository.save(createMockOrganization("AS Roma", LocalDate.of(2010, 1, 11), LocalDate.of(9999, 12, 31), "Giugliano"));
+		organizationRepository.save(createMockOrganization("AS Roma", LocalDate.of(2010, 1, 11), LocalDate.of(9999, 12, 31), "Giugliano", "manuela.giugliano@gmail.com"));
 		Organization organization = organizationRepository.findByOrganizationNameAndAsOfDate("AS Roma", LocalDate.of(2010, 1, 21));
 		Assert.assertEquals("Giugliano", organization.getContactLastName());
 		Assert.assertEquals("Manuela", organization.getContactFirstName());
@@ -145,7 +151,7 @@ public class OrganizationRepositoryTest {
 	@Test
 	public void create_ConstraintViolation_ContactLastNameMissing() {
 		Exception exception = assertThrows(ConstraintViolationException.class, () -> {
-			organizationRepository.save(createMockOrganization("AS Roma", LocalDate.of(2010, 1, 11), LocalDate.of(9999, 12, 31), null));
+			organizationRepository.save(createMockOrganization("AS Roma", LocalDate.of(2010, 1, 11), LocalDate.of(9999, 12, 31), null, "manuela.giugliano@gmail.com"));
 		});
 		Assert.assertTrue(exception.getMessage().contains("ContactLastName is mandatory"));
 	}
@@ -153,7 +159,7 @@ public class OrganizationRepositoryTest {
 	@Test
 	public void create_Duplicate() {
 		Exception exception = assertThrows(DataIntegrityViolationException.class, () -> {
-			organizationRepository.save(createMockOrganization("FC Juventes", LocalDate.of(2010, 1, 15), LocalDate.of(2016, 2, 20), "Bonansea"));
+			organizationRepository.save(createMockOrganization("FC Juventes", LocalDate.of(2010, 1, 15), LocalDate.of(2016, 2, 20), "Bonansea", "barbara.bonansea@gmail.com"));
 		});
 		Assert.assertTrue(exception.getMessage().contains("could not execute statement"));
 	}
@@ -187,7 +193,7 @@ public class OrganizationRepositoryTest {
 		Assert.assertNull(findOrg);
 	}
 
-	private Organization createMockOrganization(String orgName, LocalDate startDate, LocalDate endDate, String contactLastName) {
+	public static Organization createMockOrganization(String orgName, LocalDate startDate, LocalDate endDate, String contactLastName, String contactEmail) {
 		Organization organization = new Organization();
 		organization.setOrganizationName(orgName);
 		organization.setOrganizationStatus(OrganizationStatus.Active);
@@ -201,7 +207,7 @@ public class OrganizationRepositoryTest {
 		organization.setCountry("Italy");
 		organization.setContactLastName(contactLastName);
 		organization.setContactFirstName("Manuela");
-		organization.setContactEmail("manuela.giugliano@gmail.com");
+		organization.setContactEmail(contactEmail);
 		organization.setContactPhone("390665951");
 		organization.setCreateTs(LocalDateTime.of(2015, 10, 27, 20, 30));
 		organization.setLupdTs(LocalDateTime.of(2015, 10, 27, 20, 30));

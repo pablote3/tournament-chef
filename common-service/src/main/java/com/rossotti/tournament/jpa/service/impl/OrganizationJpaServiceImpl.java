@@ -8,8 +8,12 @@ import com.rossotti.tournament.jpa.service.OrganizationJpaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionSystemException;
 import org.springframework.web.server.ResponseStatusException;
+
+import javax.validation.ConstraintViolationException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,31 +54,39 @@ public class OrganizationJpaServiceImpl implements OrganizationJpaService {
 
 	@Override
 	public Organization save(Organization organization) throws ResponseStatusException {
-//		try {
-//			Organization findOrganization = findByOrganizationNameAndAsOfDate(organization.getOrganizationName(), organization.getStartDate(), organization.getEndDate());
-//			if (findOrganization != null) {
-//				findOrganization.setOrganizationType(organization.getOrganizationType());
-//				findOrganization.setOrganizationStatus(organization.getOrganizationStatus());
-//				findOrganization.setLastName(organization.getLastName());
-//				findOrganization.setFirstName(organization.getFirstName());
-//				findOrganization.setPassword(organization.getPassword());
-//				organizationRepository.save(findOrganization);
-//			}
-//			else {
-//				organizationRepository.save(organization);
-//			}
-//		}
-//		catch (Exception e) {
-//			if (e instanceof TransactionSystemException) {
-//				throw new CustomException(e.getCause().getCause().getMessage(), HttpStatus.BAD_REQUEST);
-//			}
-//			else if (e instanceof ConstraintViolationException) {
-//				throw new CustomException(e.getMessage(), HttpStatus.BAD_REQUEST);
-//			}
-//			else {
-//				throw new CustomException(ValidationMessages.MSG_VAL_0000, HttpStatus.INTERNAL_SERVER_ERROR);
-//			}
-//		}
+		try {
+			Organization findOrganization = findByOrganizationNameStartDateEndDate(organization.getOrganizationName(), organization.getStartDate(), organization.getEndDate());
+			if (findOrganization != null) {
+				findOrganization.setOrganizationStatus(organization.getOrganizationStatus());
+				findOrganization.setAddress1(organization.getAddress1());
+				findOrganization.setAddress2(organization.getAddress2());
+				findOrganization.setCity(organization.getCity());
+				findOrganization.setState(organization.getState());
+				findOrganization.setZipCode(organization.getZipCode());
+				findOrganization.setCountry(organization.getCountry());
+				findOrganization.setContactLastName(organization.getContactLastName());
+				findOrganization.setContactFirstName(organization.getContactFirstName());
+				findOrganization.setContactEmail(organization.getContactEmail());
+				findOrganization.setContactPhone(organization.getContactPhone());
+				findOrganization.setLupdUserId(organization.getLupdUserId());
+				findOrganization.setLupdTs(LocalDateTime.now());
+				organizationRepository.save(findOrganization);
+			}
+			else {
+				organizationRepository.save(organization);
+			}
+		}
+		catch (Exception e) {
+			if (e instanceof TransactionSystemException) {
+				throw new CustomException(e.getCause().getCause().getMessage(), HttpStatus.BAD_REQUEST);
+			}
+			else if (e instanceof ConstraintViolationException) {
+				throw new CustomException(e.getMessage(), HttpStatus.BAD_REQUEST);
+			}
+			else {
+				throw new CustomException(ValidationMessages.MSG_VAL_0000, HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		}
 		return organization;
 	}
 

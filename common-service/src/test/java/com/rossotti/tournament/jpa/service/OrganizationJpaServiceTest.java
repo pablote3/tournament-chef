@@ -80,40 +80,40 @@ public class OrganizationJpaServiceTest {
 		Assert.assertEquals(0, organizations.size());
 	}
 
-//	@Test
-//	public void create_Created() {
-//		organizationJpaService.save(OrganizationRepositoryTest.createMockOrganization(1L, "bonetti.tatiana@hotmail.com", "Bonetti", "Super3"));
-//		Organization findOrganization = organizationJpaService.findByOrganizationNameAndOrganizationEmail("FC Juventes", "bonetti.tatiana@hotmail.com");
-//		Assert.assertEquals("Super3", findOrganization.getPassword());
-//	}
-//
-//	@Test
-//	public void create_EmailIsMandatory_Empty() {
-//		CustomException exception = assertThrows(CustomException.class, () -> {
-//			organizationJpaService.save(OrganizationRepositoryTest.createMockOrganization(1L, "", "Bonetti", "Super3"));
-//		});
-//		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
-//		Assert.assertEquals("Email is mandatory", exception.getError().getErrorMessage());
-//	}
-//
-//	@Test
-//	public void create_LastNameIsMandatory_Null() {
-//		CustomException exception = assertThrows(CustomException.class, () -> {
-//			organizationJpaService.save(OrganizationRepositoryTest.createMockOrganization(1L, "bonetti.tatiana@hotmail.com", null, "Super3"));
-//		});
-//		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
-//		Assert.assertEquals("LastName is mandatory", exception.getError().getErrorMessage());
-//	}
-//
-//	@Test
-//	public void create_EmailInvalidFormat() {
-//		CustomException exception = assertThrows(CustomException.class, () -> {
-//			organizationJpaService.save(OrganizationRepositoryTest.createMockOrganization(1L, "bonetti.tatiana.hotmail.com", "Bonetti", "Super3"));
-//		});
-//		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
-//		Assert.assertEquals("Email invalid format", exception.getError().getErrorMessage());
-//	}
-//
+	@Test
+	public void create_Created() {
+		organizationJpaService.save(OrganizationRepositoryTest.createMockOrganization("Empoli FC", LocalDate.of(2012, 1, 15), LocalDate.of(2012, 1, 22), "Simonetti", "flaminia.simonetti@dada.it"));
+		Organization findOrganization = organizationJpaService.findByOrganizationNameStartDateEndDate("Empoli FC", LocalDate.of(2012, 1, 15), LocalDate.of(2012, 1, 22));
+		Assert.assertEquals("Simonetti", findOrganization.getContactLastName());
+	}
+
+	@Test
+	public void create_ContactEmailIsMandatory_Empty() {
+		CustomException exception = assertThrows(CustomException.class, () -> {
+			organizationJpaService.save(OrganizationRepositoryTest.createMockOrganization("Empoli FC", LocalDate.of(2011, 1, 15), LocalDate.of(2011, 1, 22), "Di Guglielmo", ""));
+		});
+		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+		Assert.assertEquals("ContactEmail is mandatory", exception.getError().getErrorMessage());
+	}
+
+	@Test
+	public void create_ContactEmailIsMandatory_Null() {
+		CustomException exception = assertThrows(CustomException.class, () -> {
+			organizationJpaService.save(OrganizationRepositoryTest.createMockOrganization("Empoli FC", LocalDate.of(2011, 1, 15), LocalDate.of(2011, 1, 22), "Di Guglielmo", null));
+		});
+		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+		Assert.assertEquals("ContactEmail is mandatory", exception.getError().getErrorMessage());
+	}
+
+	@Test
+	public void create_ContactEmailInvalidFormat() {
+		CustomException exception = assertThrows(CustomException.class, () -> {
+			organizationJpaService.save(OrganizationRepositoryTest.createMockOrganization("Empoli FC", LocalDate.of(2011, 1, 15), LocalDate.of(2011, 1, 22), "Di Guglielmo", "di guglielmo@dada.it"));
+		});
+		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+		Assert.assertEquals("ContactEmail invalid format", exception.getError().getErrorMessage());
+	}
+
 //	@Test
 //	public void create_PasswordInvalidFormat() {
 //		CustomException exception = assertThrows(CustomException.class, () -> {
@@ -122,16 +122,16 @@ public class OrganizationJpaServiceTest {
 //		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
 //		Assert.assertEquals("Password invalid format", exception.getError().getErrorMessage());
 //	}
-//
+
 //	@Test
 //	public void update_Updated() {
-//		Organization updateOrganization = organizationJpaService.findByOrganizationNameAndOrganizationEmail("FC Juventes", "alessia.piazza@telecomitalia.com");
+//		Organization updateOrganization = organizationJpaService.findByOrganizationNameAndAsOfDate("AC Milan SPA", LocalDate.of(2012, 1, 15));
 //		updateOrganization.setOrganizationStatus(OrganizationStatus.Active);
 //		organizationJpaService.save(updateOrganization);
 //		Organization findOrganization = organizationJpaService.findByOrganizationNameAndOrganizationEmail("FC Juventes", "alessia.piazza@telecomitalia.com");
 //		Assert.assertEquals(OrganizationStatus.Active, findOrganization.getOrganizationStatus());
 //	}
-//
+
 //	@Test
 //	public void update_EmailIsMandatory_Empty() {
 //		Organization updateOrganization = organizationJpaService.findByOrganizationNameAndOrganizationEmail("FC Juventes", "alessia.piazza@telecomitalia.com");
