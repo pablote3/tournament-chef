@@ -49,7 +49,7 @@ public class EventRepositoryTest {
 		Assert.assertEquals(2, event.getGameDates().get(0).getGameLocations().get(0).getGameRounds().size());
 		Assert.assertEquals(1, event.getGameDates().get(0).getGameLocations().get(0).getGameRounds().get(0).getGames().size());
 		Assert.assertEquals(1, event.getGameDates().get(0).getGameLocations().get(0).getGameRounds().get(0).getGames().get(0).getGameTeams().size());
-		Assert.assertEquals("4x4Pairing+Semis+Finals", event.getTemplate().getTemplateName());
+		Assert.assertEquals(TemplateType.four_x_four_pp, event.getTemplate().getTemplateType());
 	}
 
 	@Test
@@ -89,14 +89,14 @@ public class EventRepositoryTest {
 	}
 
 	@Test
-	public void findByOrganizationNameAsOfDateTemplateName_Found() {
-		Event event = eventRepository.findByOrganizationNameAsOfDateTemplateName("FC Juventes", LocalDate.of(2020, 9, 24), "4x4Pairing+Semis+Finals");
+	public void findByOrganizationNameAsOfDateTemplateType_Found() {
+		Event event = eventRepository.findByOrganizationNameAsOfDateTemplateType("FC Juventes", LocalDate.of(2020, 9, 24), TemplateType.four_x_four_pp);
 		Assert.assertEquals("Lombardy Memorial Tournament", event.getEventName());
 	}
 
 	@Test
-	public void findByOrganizationNameAsOfDateTemplateName_NotFound() {
-		Assert.assertNull(eventRepository.findByOrganizationNameAsOfDateTemplateName("FC Juventes", LocalDate.of(2020, 9, 23), "4x4Pairing+Semis+Finals"));
+	public void findByOrganizationNameAsOfDateTemplateType_NotFound() {
+		Assert.assertNull(eventRepository.findByOrganizationNameAsOfDateTemplateType("FC Juventes", LocalDate.of(2020, 9, 23), TemplateType.two_x_four_pp));
 	}
 
 	@Test
@@ -191,7 +191,7 @@ public class EventRepositoryTest {
 	private Template createMockTemplate() {
 		Template template = new Template();
 		template.setId(1L);
-		return  template;
+		return template;
 	}
 
 	private EventTeam createMockEventTeam(Long organizationTeamId, String teamName, Event event) {
@@ -266,7 +266,7 @@ public class EventRepositoryTest {
 	}
 
 	private Event updateMockEvent(LocalDate asOfDate, EventStatus eventStatus) {
-		Event event = eventRepository.findByOrganizationNameAsOfDateTemplateName("FC Juventes", asOfDate, "4x4Pairing+Semis+Finals");
+		Event event = eventRepository.findByOrganizationNameAsOfDateTemplateType("FC Juventes", asOfDate, TemplateType.four_x_four_pp);
 		event.setEventStatus(eventStatus);
 		return event;
 	}

@@ -1,5 +1,6 @@
 package com.rossotti.tournament.jpa.repository;
 
+import com.rossotti.tournament.jpa.enumeration.TemplateType;
 import com.rossotti.tournament.jpa.model.Event;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
@@ -33,14 +34,14 @@ public interface EventRepository extends Repository<Event, Long> {
 	@Query(findByOrganizationNameAndAsOfDate)
 	List<Event> findByOrganizationNameAndAsOfDate(@Param("organizationName") String organizationName, @Param("asOfDate") LocalDate asOfDate);
 
-	String findByOrganizationNameAsOfDateTemplateName =
+	String findByOrganizationNameAsOfDateTemplateType =
 			"select e from Event e " +
 			"inner join e.organization o " +
 			"inner join e.template t " +
 			"where o.organizationName = :organizationName " +
 			"and e.startDate <= :asOfDate " +
 			"and e.endDate >= :asOfDate " +
-			"and t.templateName = :templateName";
-	@Query(findByOrganizationNameAsOfDateTemplateName)
-	Event findByOrganizationNameAsOfDateTemplateName(@Param("organizationName") String organizationName, @Param("asOfDate") LocalDate asOfDate, @Param("templateName") String templateName);
+			"and t.templateType = :templateType";
+	@Query(findByOrganizationNameAsOfDateTemplateType)
+	Event findByOrganizationNameAsOfDateTemplateType(@Param("organizationName") String organizationName, @Param("asOfDate") LocalDate asOfDate, @Param("templateType") TemplateType templateType);
 }

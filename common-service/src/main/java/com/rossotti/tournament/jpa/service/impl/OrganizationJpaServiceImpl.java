@@ -22,6 +22,16 @@ public class OrganizationJpaServiceImpl implements OrganizationJpaService {
 
 	private OrganizationRepository organizationRepository;
 
+	@Override
+	public Organization getById(Long id) {
+		return organizationRepository.findById(id);
+	}
+
+	@Override
+	public List<?> listAll() {
+		return new ArrayList<>(organizationRepository.findAll());
+	}
+
 	@Autowired
 	public void setOrganizationRepository(OrganizationRepository organizationRepository) {
 		this.organizationRepository = organizationRepository;
@@ -40,16 +50,6 @@ public class OrganizationJpaServiceImpl implements OrganizationJpaService {
 	@Override
 	public Organization findByOrganizationNameStartDateEndDate(String organizationName, LocalDate startDate, LocalDate endDate) {
 		return organizationRepository.findByOrganizationNameStartDateEndDate(organizationName, startDate, endDate);
-	}
-
-	@Override
-	public List<?> listAll() {
-        return new ArrayList<>(organizationRepository.findAll());
-	}
-
-	@Override
-	public Organization getById(Long id) {
-		return organizationRepository.findById(id);
 	}
 
 	@Override

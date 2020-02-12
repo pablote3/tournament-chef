@@ -1,6 +1,8 @@
 package com.rossotti.tournament.jpa.model;
 
 import com.rossotti.tournament.jpa.enumeration.GroupPlay;
+import com.rossotti.tournament.jpa.enumeration.TemplateType;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -8,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(uniqueConstraints=@UniqueConstraint(columnNames={"templateName"}))
+@Table(uniqueConstraints=@UniqueConstraint(columnNames={"templateType"}))
 public class Template {
 	@OneToMany(mappedBy="template", fetch = FetchType.LAZY, cascade= CascadeType.ALL, orphanRemoval = true)
 	private List<Event> events = new ArrayList<>();
@@ -29,14 +31,30 @@ public class Template {
 		this.id = id;
 	}
 
-	@Column(length=50, nullable=false)
-	@NotBlank(message="TemplateName is mandatory")
-	private String templateName;
-	public String getTemplateName() {
-		return templateName;
+	@Enumerated(EnumType.STRING)
+	@Column(length=20, nullable=false)
+	@NotNull(message="TemplateType is mandatory")
+	private TemplateType templateType;
+	public TemplateType getTemplateType() {
+		return templateType;
 	}
-	public void setTemplateName(String templateName) {
-		this.templateName = templateName;
+	public void setTemplateType(TemplateType templateType) {
+		this.templateType = templateType;
+	}
+	public Boolean isTwoByFourPP() {
+		return templateType == TemplateType.two_x_four_pp;
+	}
+	public Boolean isTwoByFourRR() {
+		return templateType == TemplateType.two_x_four_rr;
+	}
+	public Boolean isFourByThreeRR() {
+		return templateType == TemplateType.four_x_three_rr;
+	}
+	public Boolean isFourByFourPP() {
+		return templateType == TemplateType.four_x_four_pp;
+	}
+	public Boolean isFourByFourRR() {
+		return templateType == TemplateType.four_x_four_rr;
 	}
 
 	@Column(nullable=false)

@@ -26,6 +26,16 @@ public class UserJpaServiceImpl implements UserJpaService {
 	}
 
 	@Override
+	public User getById(Long id) {
+		return userRepository.findById(id);
+	}
+
+	@Override
+	public List<?> listAll() {
+		return new ArrayList<>(userRepository.findAll());
+	}
+
+	@Override
 	public List<User> findByEmail(String email) {
 		return userRepository.findByEmail(email);
 	}
@@ -33,16 +43,6 @@ public class UserJpaServiceImpl implements UserJpaService {
 	@Override
 	public User findByOrganizationNameAndUserEmail(String email, String organizationName) {
 		return userRepository.findByOrganizationNameAndUserEmail(email, organizationName);
-	}
-
-	@Override
-	public List<?> listAll() {
-        return new ArrayList<>(userRepository.findAll());
-	}
-
-	@Override
-	public User getById(Long id) {
-		return userRepository.findById(id);
 	}
 
 	@Override
