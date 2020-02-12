@@ -21,6 +21,11 @@ public class EventJpaServiceImpl implements EventJpaService {
 
 	private EventRepository eventRepository;
 
+	@Autowired
+	public void setEventRepository(EventRepository eventRepository) {
+		this.eventRepository = eventRepository;
+	}
+
 	@Override
 	public Event getById(Long id) {
 		return eventRepository.findById(id);
@@ -29,11 +34,6 @@ public class EventJpaServiceImpl implements EventJpaService {
 	@Override
 	public List<?> listAll() {
 		return new ArrayList<>(eventRepository.findAll());
-	}
-
-	@Autowired
-	public void setEventRepository(EventRepository eventRepository) {
-		this.eventRepository = eventRepository;
 	}
 
 	@Override
