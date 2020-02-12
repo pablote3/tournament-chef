@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(uniqueConstraints=@UniqueConstraint(columnNames={"gameDate"}))
+@Table(uniqueConstraints=@UniqueConstraint(columnNames={"eventId", "gameDate"}))
 public class GameDate {
 	@ManyToOne
 	@JoinColumn(name="eventId", referencedColumnName="id", nullable=false)

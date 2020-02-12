@@ -82,11 +82,11 @@ public class EventJpaServiceTest {
 
 //	@Test
 //	public void create_Created() {
-//		eventJpaService.save(EventRepositoryTest.createMockEvent("Empoli FC", LocalDate.of(2012, 1, 15), LocalDate.of(2012, 1, 22), "Simonetti", "flaminia.simonetti@dada.it"));
-//		Event findEvent = eventJpaService.findByEventNameStartDateEndDate("Empoli FC", LocalDate.of(2012, 1, 15), LocalDate.of(2012, 1, 22));
-//		Assert.assertEquals("Simonetti", findEvent.getContactLastName());
+//		eventJpaService.save(EventRepositoryTest.createMockEvent(4L, "Roma Caput Mundi", LocalDate.of(2020, 1, 15), LocalDate.of(2020, 1, 16)));
+//		List<Event> findEvents = eventJpaService.findByOrganizationNameAndAsOfDate("Roma Caput Mundi", LocalDate.of(2020, 1, 15));
+//		Assert.assertEquals("Roma Caput Mundi", findEvents.get(0).getEventName());
 //	}
-//
+
 //	@Test
 //	public void create_ContactEmailIsMandatory_Empty() {
 //		CustomException exception = assertThrows(CustomException.class, () ->
