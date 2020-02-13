@@ -46,6 +46,17 @@ public class EventJpaServiceTest {
 	}
 
 	@Test
+	public void findByEventNameAsOfDateTemplateType_Found() {
+		Event event = eventJpaService.findByEventNameAsOfDateTemplateType("Lombardy Halloween Invitational", LocalDate.of(2020, 10, 24), TemplateType.four_x_four_pp);
+		Assert.assertEquals("Lombardy Halloween Invitational", event.getEventName());
+	}
+
+	@Test
+	public void findByEventNameAsOfDateTemplateType_NotFound() {
+		Assert.assertNull(eventJpaService.findByEventNameAsOfDateTemplateType("Lombardy Halloween Invitational", LocalDate.of(2020, 9, 28), TemplateType.four_x_four_pp));
+	}
+
+	@Test
 	public void findByOrganizationNameAsOfDateTemplateType_Found() {
 		Event event = eventJpaService.findByOrganizationNameAsOfDateTemplateType("FC Juventes", LocalDate.of(2020, 9, 29), TemplateType.four_x_four_pp);
 		Assert.assertEquals("Campania Regional Frosh Soph Tournament", event.getEventName());
@@ -57,21 +68,45 @@ public class EventJpaServiceTest {
 	}
 
 	@Test
-	public void findByOrganizationNameAndAsOfDate_Found() {
-		List<Event> events = eventJpaService.findByOrganizationNameAndAsOfDate("FC Juventes", LocalDate.of(2020, 9, 29));
+	public void findByEventNameAsOfDate_Found() {
+		List<Event> events = eventJpaService.findByEventNameAsOfDate("Lombardy Halloween Invitational", LocalDate.of(2020, 10, 24));
 		Assert.assertEquals(1, events.size());
 	}
 
 	@Test
-	public void findByOrganizationNameAndAsOfDate_NotFound() {
-		List<Event> events = eventJpaService.findByOrganizationNameAndAsOfDate("FC Juventes", LocalDate.of(2020, 9, 28));
+	public void findByEventNameAsOfDate_NotFound() {
+		List<Event> events = eventJpaService.findByEventNameAsOfDate("Lombardy Halloween Invitational", LocalDate.of(2020, 9, 28));
+		Assert.assertEquals(0, events.size());
+	}
+
+	@Test
+	public void findByOrganizationNameAsOfDate_Found() {
+		List<Event> events = eventJpaService.findByOrganizationNameAsOfDate("FC Juventes", LocalDate.of(2020, 9, 29));
+		Assert.assertEquals(1, events.size());
+	}
+
+	@Test
+	public void findByOrganizationNameAsOfDate_NotFound() {
+		List<Event> events = eventJpaService.findByOrganizationNameAsOfDate("FC Juventes", LocalDate.of(2020, 9, 28));
+		Assert.assertEquals(0, events.size());
+	}
+
+	@Test
+	public void findByEventName_Found() {
+		List<Event> events = eventJpaService.findByEventName("Lombardy Halloween Invitational");
+		Assert.assertEquals(2, events.size());
+	}
+
+	@Test
+	public void findByEventName_NotFound() {
+		List<Event> events = eventJpaService.findByEventName("Lombardy Halloween");
 		Assert.assertEquals(0, events.size());
 	}
 
 	@Test
 	public void findByOrganizationName_Found() {
 		List<Event> events = eventJpaService.findByOrganizationName("FC Juventes");
-		Assert.assertEquals(4, events.size());
+		Assert.assertEquals(5, events.size());
 	}
 
 	@Test
@@ -100,20 +135,21 @@ public class EventJpaServiceTest {
 	@Test
 	public void create_EventNameIsMandatory_Null() {
 		CustomException exception = assertThrows(CustomException.class, () ->
-				eventJpaService.save(EventRepositoryTest.createMockEvent(4L, null, 3L, 4L, 4L, null, LocalDate.of(2020, 1, 15), LocalDate.of(2020, 1, 15))));
+			eventJpaService.save(EventRepositoryTest.createMockEvent(4L, null, 3L, 4L, 4L, null, LocalDate.of(2020, 1, 15), LocalDate.of(2020, 1, 15))));
 		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
 		Assert.assertEquals("EventName is mandatory", exception.getError().getErrorMessage());
 	}
 
 //	@Test
 //	public void update_Updated() {
+//		Event findEvent = eventJpaService.findByOrganizationNameAsOfDateTemplateType("Fiorentina FC", LocalDate.of(2020, 1, 15), TemplateType.four_x_four_pp);
 //		Event event = eventJpaService.findByEventNameAndAsOfDate("AC Milan SPA", LocalDate.of(2012, 1, 15));
 //		event.setContactLastName("Fusetti");
 //		eventJpaService.save(event);
 //		Event findEvent = eventJpaService.findByEventNameStartDateEndDate("AC Milan SPA", LocalDate.of(2012, 1, 15), LocalDate.of(9999, 12, 31));
 //		Assert.assertEquals("Fusetti", findEvent.getContactLastName());
 //	}
-//
+
 //	@Test
 //	public void update_ContactEmailIsMandatory_Empty() {
 //		Event event = eventJpaService.findByEventNameAndAsOfDate("AC Milan SPA", LocalDate.of(2012, 1, 15));

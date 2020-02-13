@@ -18,6 +18,12 @@ public interface EventRepository extends Repository<Event, Long> {
 
 	void deleteById(Long id);
 
+	String findByEventName =
+			"select e from Event e " +
+			"where e.eventName = :eventName";
+	@Query(findByEventName)
+	List<Event> findByEventName(@Param("eventName") String eventName);
+
 	String findByOrganizationName =
 			"select e from Event e " +
 			"inner join e.organization o " +
@@ -25,14 +31,32 @@ public interface EventRepository extends Repository<Event, Long> {
 	@Query(findByOrganizationName)
 	List<Event> findByOrganizationName(@Param("organizationName") String organizationName);
 
-	String findByOrganizationNameAndAsOfDate =
+	String findByEventNameAsOfDate =
+			"select e from Event e " +
+			"where e.eventName = :eventName " +
+			"and e.startDate <= :asOfDate " +
+			"and e.endDate >= :asOfDate";
+	@Query(findByEventNameAsOfDate)
+	List<Event> findByEventNameAsOfDate(@Param("eventName") String eventName, @Param("asOfDate") LocalDate asOfDate);
+
+	String findByOrganizationNameAsOfDate =
 			"select e from Event e " +
 			"inner join e.organization o " +
 			"where o.organizationName = :organizationName " +
 			"and e.startDate <= :asOfDate " +
 			"and e.endDate >= :asOfDate";
-	@Query(findByOrganizationNameAndAsOfDate)
-	List<Event> findByOrganizationNameAndAsOfDate(@Param("organizationName") String organizationName, @Param("asOfDate") LocalDate asOfDate);
+	@Query(findByOrganizationNameAsOfDate)
+	List<Event> findByOrganizationNameAsOfDate(@Param("organizationName") String organizationName, @Param("asOfDate") LocalDate asOfDate);
+
+	String findByEventNameAsOfDateTemplateType =
+			"select e from Event e " +
+			"inner join e.template t " +
+			"where e.eventName = :eventName " +
+			"and e.startDate <= :asOfDate " +
+			"and e.endDate >= :asOfDate " +
+			"and t.templateType = :templateType";
+	@Query(findByEventNameAsOfDateTemplateType)
+	Event findByEventNameAsOfDateTemplateType(@Param("eventName") String eventName, @Param("asOfDate") LocalDate asOfDate, @Param("templateType") TemplateType templateType);
 
 	String findByOrganizationNameAsOfDateTemplateType =
 			"select e from Event e " +

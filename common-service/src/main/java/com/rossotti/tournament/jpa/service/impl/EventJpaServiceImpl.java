@@ -37,13 +37,28 @@ public class EventJpaServiceImpl implements EventJpaService {
 	}
 
 	@Override
+	public List<Event> findByEventName(String eventName) {
+		return eventRepository.findByEventName(eventName);
+	}
+
+	@Override
 	public List<Event> findByOrganizationName(String organizationName) {
 		return eventRepository.findByOrganizationName(organizationName);
 	}
 
 	@Override
-	public List<Event> findByOrganizationNameAndAsOfDate(String organizationName, LocalDate asOfDate) {
-		return eventRepository.findByOrganizationNameAndAsOfDate(organizationName, asOfDate);
+	public List<Event> findByEventNameAsOfDate(String eventName, LocalDate asOfDate) {
+		return eventRepository.findByEventNameAsOfDate(eventName, asOfDate);
+	}
+
+	@Override
+	public List<Event> findByOrganizationNameAsOfDate(String organizationName, LocalDate asOfDate) {
+		return eventRepository.findByOrganizationNameAsOfDate(organizationName, asOfDate);
+	}
+
+	@Override
+	public Event findByEventNameAsOfDateTemplateType(String eventName, LocalDate asOfDate, TemplateType templateType) {
+		return eventRepository.findByEventNameAsOfDateTemplateType(eventName, asOfDate, templateType);
 	}
 
 	@Override
