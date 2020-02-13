@@ -82,9 +82,10 @@ public class EventJpaServiceTest {
 
 //	@Test
 //	public void create_Created() {
-//		eventJpaService.save(EventRepositoryTest.createMockEvent(4L, "Roma Caput Mundi", LocalDate.of(2020, 1, 15), LocalDate.of(2020, 1, 16)));
-//		List<Event> findEvents = eventJpaService.findByOrganizationNameAndAsOfDate("Roma Caput Mundi", LocalDate.of(2020, 1, 15));
-//		Assert.assertEquals("Roma Caput Mundi", findEvents.get(0).getEventName());
+//		Event event = EventRepositoryTest.createMockEvent(4L, "Florence Caput Mundi", 3L, 4L, 4L, null, LocalDate.of(2020, 1, 15), LocalDate.of(2020, 1, 15));
+//		eventJpaService.save(event);
+//		List<Event> findEvents = eventJpaService.findByOrganizationNameAndAsOfDate("Florence Caput Mundi", LocalDate.of(2020, 1, 15));
+//		Assert.assertEquals("Florence Caput Mundi", findEvents.get(0).getEventName());
 //	}
 
 //	@Test

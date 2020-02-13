@@ -3,7 +3,6 @@ package com.rossotti.tournament.jpa.repository;
 import com.rossotti.tournament.config.PersistenceConfig;
 import com.rossotti.tournament.jpa.enumeration.*;
 import com.rossotti.tournament.jpa.model.*;
-import com.rossotti.tournament.jpa.repository.EventRepository;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,6 +16,7 @@ import javax.validation.ConstraintViolationException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.Period;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -101,7 +101,7 @@ public class EventRepositoryTest {
 
 	@Test
 	public void create() {
-		eventRepository.save(createMockEvent(1L, "Juventes Fall Classic", LocalDate.of(2012, 9, 10), LocalDate.of(2012, 9, 11)));
+		eventRepository.save(createMockEvent(1L, "Juventes Fall Classic", 1L, 4L, 1L, 2L, LocalDate.of(2012, 9, 10), LocalDate.of(2012, 9, 11)));
 		List<Event> events = eventRepository.findByOrganizationNameAndAsOfDate("FC Juventes", LocalDate.of(2012, 9, 10));
 		Event event = events.get(0);
 		Assert.assertEquals("Juventes Fall Classic", event.getEventName());
@@ -116,7 +116,7 @@ public class EventRepositoryTest {
 	@Test
 	public void create_ConstraintViolation_EventNameMissing() {
 		Exception exception = assertThrows(ConstraintViolationException.class, () -> {
-			eventRepository.save(createMockEvent(1L, null, LocalDate.of(2012, 9, 10), LocalDate.of(2012, 9, 11)));
+			eventRepository.save(createMockEvent(1L, null, 1L, 4L, 1L, 2L, LocalDate.of(2012, 9, 10), LocalDate.of(2012, 9, 11)));
 		});
 		Assert.assertTrue(exception.getMessage().contains("EventName is mandatory"));
 	}
@@ -124,7 +124,7 @@ public class EventRepositoryTest {
 	@Test
 	public void create_Duplicate() {
 		Exception exception = assertThrows(DataIntegrityViolationException.class, () -> {
-			eventRepository.save(createMockEvent(1L, "Lombardy Halloween Invitational", LocalDate.of(2020, 10, 24), LocalDate.of(2020, 10, 25)));
+			eventRepository.save(createMockEvent(1L, "Lombardy Halloween Invitational", 1L, 4L, 1L, 2L, LocalDate.of(2020, 10, 24), LocalDate.of(2020, 10, 25)));
 		});
 		Assert.assertTrue(exception.getMessage().contains("could not execute statement"));
 	}
@@ -159,7 +159,7 @@ public class EventRepositoryTest {
 		Assert.assertEquals(0, findEvents.size());
 	}
 
-	public static Event createMockEvent(Long organizationId, String eventName, LocalDate startDate, LocalDate endDate) {
+	public static Event createMockEvent(Long organizationId, String eventName, Long team1, Long team2, Long location1, Long location2, LocalDate startDate, LocalDate endDate) {
 		Event event = new Event();
 		event.setOrganization(createMockOrganization(organizationId));
 		event.setTemplate(createMockTemplate());
@@ -169,10 +169,12 @@ public class EventRepositoryTest {
 		event.setEventStatus(EventStatus.Sandbox);
 		event.setEventType(EventType.Tournament);
 		event.setSport(Sport.WaterPolo);
-		event.getEventTeams().add(createMockEventTeam(1L, "Verona", event));
-		event.getEventTeams().add(createMockEventTeam(4L, "Juventes", event));
-		event.getGameDates().add(createMockGameDate(LocalDate.of(2012, 9, 10), event, 1L, 2L));
-		event.getGameDates().add(createMockGameDate(LocalDate.of(2012, 9, 11), event, 1L, 3L));
+		event.getEventTeams().add(createMockEventTeam(team1, event));
+		event.getEventTeams().add(createMockEventTeam(team2, event));
+		event.getGameDates().add(createMockGameDate(startDate, event, location1, location2));
+		if (Period.between(startDate, endDate).getDays() != 0) {
+			event.getGameDates().add(createMockGameDate(endDate, event, location1, location2));
+		}
 		event.setCreateTs(LocalDateTime.of(2019, 10, 27, 20, 30));
 		event.setLupdTs(LocalDateTime.of(2019, 10, 27, 20, 30));
 		event.setLupdUserId(4L);
@@ -191,10 +193,10 @@ public class EventRepositoryTest {
 		return template;
 	}
 
-	private static EventTeam createMockEventTeam(Long organizationTeamId, String teamName, Event event) {
+	private static EventTeam createMockEventTeam(Long organizationTeamId, Event event) {
 		EventTeam eventTeam = new EventTeam();
 		eventTeam.setEvent(event);
-		eventTeam.setOrganizationTeam(createMockOrganizationTeam(organizationTeamId, teamName));
+		eventTeam.setOrganizationTeam(createMockOrganizationTeam(organizationTeamId));
 		return eventTeam;
 	}
 
@@ -203,15 +205,15 @@ public class EventRepositoryTest {
 		gameDate.setEvent(event);
 		gameDate.setGameDate(date);
 		gameDate.getGameLocations().add(createMockGameLocation(locationId1, gameDate));
-		gameDate.getGameLocations().add(createMockGameLocation(locationId2, gameDate));
+		if (locationId2 != null) {
+			gameDate.getGameLocations().add(createMockGameLocation(locationId2, gameDate));
+		}
 		return gameDate;
 	}
 	
-	private static OrganizationTeam createMockOrganizationTeam(Long organizationTeamId, String teamName) {
+	private static OrganizationTeam createMockOrganizationTeam(Long organizationTeamId) {
 		OrganizationTeam organizationTeam = new OrganizationTeam();
 		organizationTeam.setId(organizationTeamId);
-		organizationTeam.setOrganization(createMockOrganization(1L));
-		organizationTeam.setTeamName(teamName);
 		return organizationTeam;
 	}
 
@@ -258,7 +260,6 @@ public class EventRepositoryTest {
 	private static OrganizationLocation createMockOrganizationLocation(Long organizationLocationId) {
 		OrganizationLocation organizationLocation = new OrganizationLocation();
 		organizationLocation.setId(organizationLocationId);
-		organizationLocation.setOrganization(createMockOrganization(1L));
 		return organizationLocation;
 	}
 
