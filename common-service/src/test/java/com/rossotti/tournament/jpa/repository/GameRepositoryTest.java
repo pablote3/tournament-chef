@@ -43,7 +43,7 @@ public class GameRepositoryTest {
 
 	@Test
 	public void findById_NotFound() {
-		Assert.assertNull(gameRepository.findById(11L));
+		Assert.assertNull(gameRepository.findById(21L));
 	}
 
 	@Test
@@ -55,7 +55,7 @@ public class GameRepositoryTest {
 	@Test
 	public void findByGameStatus_Found() {
 		List<Game> games = gameRepository.findByGameStatus(GameStatus.Scheduled);
-		Assert.assertEquals(8, games.size());
+		Assert.assertEquals(10, games.size());
 	}
 
 	@Test

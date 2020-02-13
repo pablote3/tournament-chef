@@ -80,40 +80,31 @@ public class EventJpaServiceTest {
 		Assert.assertEquals(0, events.size());
 	}
 
-//	@Test
-//	public void create_Created() {
-//		Event event = EventRepositoryTest.createMockEvent(4L, "Florence Caput Mundi", 3L, 4L, 4L, null, LocalDate.of(2020, 1, 15), LocalDate.of(2020, 1, 15));
-//		eventJpaService.save(event);
-//		List<Event> findEvents = eventJpaService.findByOrganizationNameAndAsOfDate("Florence Caput Mundi", LocalDate.of(2020, 1, 15));
-//		Assert.assertEquals("Florence Caput Mundi", findEvents.get(0).getEventName());
-//	}
+	@Test
+	public void create_Created() {
+		eventJpaService.save(EventRepositoryTest.createMockEvent(4L, "Florence Caput Mundi", 3L, 4L, 4L, null, LocalDate.of(2020, 1, 15), LocalDate.of(2020, 1, 15)));
+		Event findEvent = eventJpaService.findByOrganizationNameAsOfDateTemplateType("Fiorentina FC", LocalDate.of(2020, 1, 15), TemplateType.four_x_four_pp);
+		Assert.assertEquals("Florence Caput Mundi", findEvent.getEventName());
+		Assert.assertEquals(2, findEvent.getEventTeams().size());
+		Assert.assertEquals(1, findEvent.getGameDates().size());
+	}
 
-//	@Test
-//	public void create_ContactEmailIsMandatory_Empty() {
-//		CustomException exception = assertThrows(CustomException.class, () ->
-//			eventJpaService.save(EventRepositoryTest.createMockEvent("Empoli FC", LocalDate.of(2011, 1, 15), LocalDate.of(2011, 1, 22), "Di Guglielmo", "")));
-//		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
-//		Assert.assertEquals("ContactEmail is mandatory", exception.getError().getErrorMessage());
-//	}
-//
-//	@Test
-//	public void create_ContactEmailIsMandatory_Null() {
-//		CustomException exception = assertThrows(CustomException.class, () -> {
-//			eventJpaService.save(EventRepositoryTest.createMockEvent("Empoli FC", LocalDate.of(2011, 1, 15), LocalDate.of(2011, 1, 22), "Di Guglielmo", null));
-//		});
-//		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
-//		Assert.assertEquals("ContactEmail is mandatory", exception.getError().getErrorMessage());
-//	}
-//
-//	@Test
-//	public void create_ContactEmailInvalidFormat() {
-//		CustomException exception = assertThrows(CustomException.class, () -> {
-//			eventJpaService.save(EventRepositoryTest.createMockEvent("Empoli FC", LocalDate.of(2011, 1, 15), LocalDate.of(2011, 1, 22), "Di Guglielmo", "di guglielmo@dada.it"));
-//		});
-//		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
-//		Assert.assertEquals("ContactEmail invalid format", exception.getError().getErrorMessage());
-//	}
-//
+	@Test
+	public void create_EventNameIsMandatory_Empty() {
+		CustomException exception = assertThrows(CustomException.class, () ->
+			eventJpaService.save(EventRepositoryTest.createMockEvent(4L, "", 3L, 4L, 4L, null, LocalDate.of(2020, 1, 15), LocalDate.of(2020, 1, 15))));
+		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+		Assert.assertEquals("EventName is mandatory", exception.getError().getErrorMessage());
+	}
+
+	@Test
+	public void create_EventNameIsMandatory_Null() {
+		CustomException exception = assertThrows(CustomException.class, () ->
+				eventJpaService.save(EventRepositoryTest.createMockEvent(4L, null, 3L, 4L, 4L, null, LocalDate.of(2020, 1, 15), LocalDate.of(2020, 1, 15))));
+		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+		Assert.assertEquals("EventName is mandatory", exception.getError().getErrorMessage());
+	}
+
 //	@Test
 //	public void update_Updated() {
 //		Event event = eventJpaService.findByEventNameAndAsOfDate("AC Milan SPA", LocalDate.of(2012, 1, 15));
