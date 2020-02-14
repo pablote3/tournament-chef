@@ -164,19 +164,19 @@ public class EventJpaServiceTest {
 		Assert.assertEquals("EventType is mandatory", exception.getError().getErrorMessage());
 	}
 
-//	@Test
-//	public void delete_Deleted() {
-//		eventJpaService.delete(7L);
-//		Assert.assertNull(eventJpaService.getById(7L));
-//	}
-//
-//	@Test
-//	public void delete_NotFound() {
-//		CustomException exception = assertThrows(CustomException.class, () -> {
-//			eventJpaService.delete(21L);
-//		});
-//		Assert.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, exception.getStatus());
-//		Assert.assertEquals("Server error when trying to find record for id of {}", exception.getError().getErrorMessage());
-//		Assert.assertEquals("MSG_VAL_0012", exception.getError().getError());
-//	}
+	@Test
+	public void delete_Deleted() {
+		eventJpaService.delete(7L);
+		Assert.assertNull(eventJpaService.getById(7L));
+	}
+
+	@Test
+	public void delete_NotFound() {
+		CustomException exception = assertThrows(CustomException.class, () -> {
+			eventJpaService.delete(21L);
+		});
+		Assert.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, exception.getStatus());
+		Assert.assertEquals("Server error when trying to find record for id of {}", exception.getError().getErrorMessage());
+		Assert.assertEquals("MSG_VAL_0012", exception.getError().getError());
+	}
 }

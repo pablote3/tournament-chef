@@ -33,6 +33,7 @@ insert into event (id, organizationId, templateId, startDate, endDate, eventName
 insert into event (id, organizationId, templateId, startDate, endDate, eventName, eventStatus, eventType, sport, createTs, lupdTs, lupdUserId) VALUES(4, 5, 1, '2020-08-24', '2020-08-25', 'Trentino Sections Tournament', 'Complete', 'Tournament', 'Lacrosse', '2020-01-16 20:00:00.0', '2019-01-19 20:00:00.0', 2);
 insert into event (id, organizationId, templateId, startDate, endDate, eventName, eventStatus, eventType, sport, createTs, lupdTs, lupdUserId) VALUES(5, 5, 2, '2020-08-24', '2020-08-25', 'Trentino Sections Tournament', 'Sandbox', 'Tournament', 'Lacrosse', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
 insert into event (id, organizationId, templateId, startDate, endDate, eventName, eventStatus, eventType, sport, createTs, lupdTs, lupdUserId) VALUES(6, 1, 1, '2020-10-30', '2020-10-31', 'Lombardy Halloween Invitational', 'Sandbox', 'Tournament', 'WaterPolo', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 1);
+insert into event (id, organizationId, templateId, startDate, endDate, eventName, eventStatus, eventType, sport, createTs, lupdTs, lupdUserId) VALUES(7, 2, 1, '2020-10-30', '2020-10-31', 'Pisa World Cup', 'Sandbox', 'Tournament', 'WaterPolo', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 1);
 
 insert into eventTeam (id, eventId, organizationTeamId) VALUES(1, 1, 2);
 insert into eventTeam (id, eventId, organizationTeamId) VALUES(2, 1, 3);

@@ -78,7 +78,7 @@ public class EventRepositoryTest {
 	@Test
 	public void findByOrganizationName_Found() {
 		List<Event> events = eventRepository.findByOrganizationName("FC Juventes");
-		Assert.assertEquals(5, events.size());
+		Assert.assertEquals(6, events.size());
 	}
 
 	@Test
