@@ -1,6 +1,7 @@
 package com.rossotti.tournament.jpa.service;
 
 import com.rossotti.tournament.exception.CustomException;
+import com.rossotti.tournament.jpa.enumeration.EventStatus;
 import com.rossotti.tournament.jpa.enumeration.TemplateType;
 import com.rossotti.tournament.jpa.model.Event;
 import com.rossotti.tournament.jpa.repository.EventRepositoryTest;
@@ -12,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit4.SpringRunner;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -140,49 +142,28 @@ public class EventJpaServiceTest {
 		Assert.assertEquals("EventName is mandatory", exception.getError().getErrorMessage());
 	}
 
-//	@Test
-//	public void update_Updated() {
-//		Event findEvent = eventJpaService.findByOrganizationNameAsOfDateTemplateType("Fiorentina FC", LocalDate.of(2020, 1, 15), TemplateType.four_x_four_pp);
-//		Event event = eventJpaService.findByEventNameAndAsOfDate("AC Milan SPA", LocalDate.of(2012, 1, 15));
-//		event.setContactLastName("Fusetti");
-//		eventJpaService.save(event);
-//		Event findEvent = eventJpaService.findByEventNameStartDateEndDate("AC Milan SPA", LocalDate.of(2012, 1, 15), LocalDate.of(9999, 12, 31));
-//		Assert.assertEquals("Fusetti", findEvent.getContactLastName());
-//	}
+	@Test
+	public void update_Updated() {
+		Event event = eventJpaService.findByEventNameAsOfDateTemplateType("Lombardy Memorial Tournament", LocalDate.of(2020, 9, 24), TemplateType.four_x_four_pp);
+		event.setEventStatus(EventStatus.InProgress);
+		event.setLupdUserId(3L);
+		event.setLupdTs(LocalDateTime.now());
+		eventJpaService.save(event);
+		Event findEvent = eventJpaService.findByEventNameAsOfDateTemplateType("Lombardy Memorial Tournament", LocalDate.of(2020, 9, 24), TemplateType.four_x_four_pp);
+		Assert.assertEquals(EventStatus.InProgress, findEvent.getEventStatus());
+	}
 
-//	@Test
-//	public void update_ContactEmailIsMandatory_Empty() {
-//		Event event = eventJpaService.findByEventNameAndAsOfDate("AC Milan SPA", LocalDate.of(2012, 1, 15));
-//		event.setContactEmail("");
-//		CustomException exception = assertThrows(CustomException.class, () -> {
-//			eventJpaService.save(event);
-//		});
-//		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
-//		Assert.assertEquals("ContactEmail is mandatory", exception.getError().getErrorMessage());
-//	}
-//
-//	@Test
-//	public void update_ContactEmailIsMandatory_Null() {
-//		Event event = eventJpaService.findByEventNameAndAsOfDate("AC Milan SPA", LocalDate.of(2012, 1, 15));
-//		event.setContactEmail(null);
-//		CustomException exception = assertThrows(CustomException.class, () -> {
-//			eventJpaService.save(event);
-//		});
-//		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
-//		Assert.assertEquals("ContactEmail is mandatory", exception.getError().getErrorMessage());
-//	}
-//
-//	@Test
-//	public void update_ContactEmailInvalidFormat() {
-//		Event event = eventJpaService.findByEventNameAndAsOfDate("AC Milan SPA", LocalDate.of(2012, 1, 15));
-//		event.setContactEmail("LauraFusetti_dada.it");
-//		CustomException exception = assertThrows(CustomException.class, () -> {
-//			eventJpaService.save(event);
-//		});
-//		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
-//		Assert.assertEquals("ContactEmail invalid format", exception.getError().getErrorMessage());
-//	}
-//
+	@Test
+	public void update_EventTypeIsMandatory_Empty() {
+		Event event = eventJpaService.findByEventNameAsOfDateTemplateType("Lombardy Memorial Tournament", LocalDate.of(2020, 9, 24), TemplateType.four_x_four_pp);
+		event.setEventType(null);
+		CustomException exception = assertThrows(CustomException.class, () -> {
+			eventJpaService.save(event);
+		});
+		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+		Assert.assertEquals("EventType is mandatory", exception.getError().getErrorMessage());
+	}
+
 //	@Test
 //	public void delete_Deleted() {
 //		eventJpaService.delete(7L);

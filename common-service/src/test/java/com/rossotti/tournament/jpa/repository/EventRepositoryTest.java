@@ -183,16 +183,14 @@ public class EventRepositoryTest {
 
 	@Test
 	public void delete() {
-		List<Event> events = eventRepository.findByOrganizationNameAsOfDate("US Sassuolo", LocalDate.of(2020, 8, 26));
-		Event event = events.get(0);
+		Event event = eventRepository.findByEventNameAsOfDateTemplateType("Trentino Sections Tournament", LocalDate.of(2020, 8, 24), TemplateType.four_x_four_rr);
 		if (event != null) {
 			eventRepository.deleteById(event.getId());
 		}
 		else {
 			Assert.fail("Unable to find record to delete");
 		}
-		List<Event> findEvents = eventRepository.findByOrganizationNameAsOfDate("US Sassuolo", LocalDate.of(2020, 8, 26));
-		Assert.assertEquals(0, findEvents.size());
+		Assert.assertNull(eventRepository.findByEventNameAsOfDateTemplateType("Trentino Sections Tournament", LocalDate.of(2020, 8, 24), TemplateType.four_x_four_rr));
 	}
 
 	public static Event createMockEvent(Long organizationId, String eventName, Long team1, Long team2, Long location1, Long location2, LocalDate startDate, LocalDate endDate) {
