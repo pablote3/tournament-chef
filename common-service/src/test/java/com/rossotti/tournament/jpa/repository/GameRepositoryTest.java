@@ -3,7 +3,6 @@ package com.rossotti.tournament.jpa.repository;
 import com.rossotti.tournament.config.PersistenceConfig;
 import com.rossotti.tournament.jpa.enumeration.*;
 import com.rossotti.tournament.jpa.model.*;
-import com.rossotti.tournament.jpa.repository.GameRepository;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -116,5 +115,10 @@ public class GameRepositoryTest {
 	public void findByTeamNameGameDateTime_Found() {
 		Game game = gameRepository.findByTeamNameGameDateTime("Inter Milan", LocalDate.of(2020, 9, 29), LocalTime.of(8, 00, 00, 0));
 		Assert.assertEquals(GameStatus.Completed, game.getGameStatus());
+	}
+
+	@Test
+	public void findByTeamNameGameDateTime_NotFound() {
+		Assert.assertNull(gameRepository.findByTeamNameGameDateTime("Inter Circle", LocalDate.of(2020, 9, 29), LocalTime.of(8, 00, 00, 0)));
 	}
 }
