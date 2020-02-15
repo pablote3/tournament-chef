@@ -8,13 +8,18 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import javax.validation.ConstraintViolationException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ActiveProfiles(profiles = "development")
 @RunWith(SpringRunner.class)
@@ -125,15 +130,32 @@ public class GameRepositoryTest {
 
 	@Test
 	public void create() {
-		gameRepository.save(createMockGame());
-//		Game game = gameRepository.findByTeamNameGameDateTime("FC Juventes", "amserturini@gmail.com");
-//		Assert.assertEquals("Serturini", user.getLastName());
+		gameRepository.save(createMockGame(GameStatus.Scheduled, LocalTime.of(9, 0, 0)));
+		gameRepository.findAll();
+		Game game = gameRepository.findByTeamNameGameDateTime("Inter Milan", LocalDate.of(2020, 9 , 29), LocalTime.of(9, 0, 0));
+		Assert.assertEquals(GameStatus.Scheduled, game.getGameStatus());
 	}
 
-	private static Game createMockGame() {
+	@Test
+	public void create_ConstraintViolation_GameStatusMissing() {
+		Exception exception = assertThrows(ConstraintViolationException.class, () -> {
+			gameRepository.save(createMockGame(null, LocalTime.of(9, 0, 0)));
+		});
+		Assert.assertTrue(exception.getMessage().contains("GameStatus is mandatory"));
+	}
+
+	@Test
+	public void create_Duplicate() {
+		Exception exception = assertThrows(DataIntegrityViolationException.class, () -> {
+			gameRepository.save(createMockGame(GameStatus.Scheduled, LocalTime.of(8, 0, 0)));
+		});
+		Assert.assertTrue(exception.getMessage().contains("could not execute statement"));
+	}
+
+	private static Game createMockGame(GameStatus gameStatus, LocalTime gameTime) {
 		Game game = new Game();
-		game.setStartTime(LocalTime.of(9, 0, 0));
-		game.setGameStatus(GameStatus.Scheduled);
+		game.setStartTime(gameTime);
+		game.setGameStatus(gameStatus);
 		game.setGameRound(createMockGameRound(1L, game));
 		game.getGameTeams().add(EventRepositoryTest.createMockGameTeam(game));
 		game.setCreateTs(LocalDateTime.of(2019, 10, 27, 20, 30));
@@ -189,7 +211,18 @@ public class GameRepositoryTest {
 		EventTeam eventTeam = new EventTeam();
 		eventTeam.setId(eventTeamId);
 		eventTeam.setEvent(event);
+		eventTeam.setOrganizationTeam(createMockOrganizationTeam(1L, eventTeam));
 		return eventTeam;
+	}
+
+	private static OrganizationTeam createMockOrganizationTeam(Long organizationTeamId, EventTeam eventTeam) {
+		OrganizationTeam organizationTeam = new OrganizationTeam();
+		organizationTeam.setId(organizationTeamId);
+		organizationTeam.setTeamName("Inter Milan");
+		List<EventTeam> eventTeams = new ArrayList<>();
+		eventTeams.add(eventTeam);
+		organizationTeam.setEventTeams(eventTeams);
+		return organizationTeam;
 	}
 
 	private static OrganizationLocation createMockOrganizationLocation(Long organizationLocationId) {
