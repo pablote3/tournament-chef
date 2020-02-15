@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.TransactionSystemException;
 
 import javax.validation.ConstraintViolationException;
 import java.time.LocalDate;
@@ -72,7 +73,7 @@ public class GameRepositoryTest {
 	@Test
 	public void findByTeamName_Found() {
 		List<Game> games = gameRepository.findByTeamName("Inter Milan");
-		Assert.assertEquals(2, games.size());
+		Assert.assertEquals(3, games.size());
 	}
 
 	@Test
@@ -84,7 +85,7 @@ public class GameRepositoryTest {
 	@Test
 	public void findByEventName_Found() {
 		List<Game> games = gameRepository.findByEventName("Campania Regional Frosh Soph Tournament");
-		Assert.assertEquals(2, games.size());
+		Assert.assertEquals(3, games.size());
 	}
 
 	@Test
@@ -96,7 +97,7 @@ public class GameRepositoryTest {
 	@Test
 	public void findByGameDate_Found() {
 		List<Game> games = gameRepository.findByGameDate(LocalDate.of(2020, 9, 29));
-		Assert.assertEquals(2, games.size());
+		Assert.assertEquals(3, games.size());
 	}
 
 	@Test
@@ -150,6 +151,21 @@ public class GameRepositoryTest {
 			gameRepository.save(createMockGame(GameStatus.Scheduled, LocalTime.of(8, 0, 0)));
 		});
 		Assert.assertTrue(exception.getMessage().contains("could not execute statement"));
+	}
+
+	@Test
+	public void update() {
+		gameRepository.save(updateMockGame(LocalTime.of(10, 0, 0), GameStatus.Forfeited));
+		Game game = gameRepository.findByTeamNameGameDateTime("Inter Milan", LocalDate.of(2020, 9, 29), LocalTime.of(10, 0, 0));
+		Assert.assertEquals(GameStatus.Forfeited, game.getGameStatus());
+	}
+
+	@Test
+	public void update_GameStatusMissing() {
+		Exception exception = assertThrows(TransactionSystemException.class, () -> {
+			gameRepository.save(updateMockGame(LocalTime.of(10, 0, 0), null));
+		});
+		Assert.assertTrue(exception.getCause().getCause().getMessage().contains("GameStatus is mandatory"));
 	}
 
 	private static Game createMockGame(GameStatus gameStatus, LocalTime gameTime) {
@@ -229,5 +245,12 @@ public class GameRepositoryTest {
 		OrganizationLocation organizationLocation = new OrganizationLocation();
 		organizationLocation.setId(organizationLocationId);
 		return organizationLocation;
+	}
+
+	private Game updateMockGame(LocalTime gameTime, GameStatus gameStatus) {
+		gameRepository.findAll();
+		Game game = gameRepository.findByTeamNameGameDateTime("Inter Milan", LocalDate.of(2020, 9, 29), gameTime);
+		game.setGameStatus(gameStatus);
+		return game;
 	}
 }
