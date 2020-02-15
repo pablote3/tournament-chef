@@ -111,4 +111,10 @@ public class GameRepositoryTest {
 		List<Game> games = gameRepository.findByLocationName("Pompeii Ampitheater");
 		Assert.assertEquals(0, games.size());
 	}
+
+	@Test
+	public void findByTeamNameGameDateTime_Found() {
+		Game game = gameRepository.findByTeamNameGameDateTime("Inter Milan", LocalDate.of(2020, 9, 29), LocalTime.of(8, 00, 00, 0));
+		Assert.assertEquals(GameStatus.Completed, game.getGameStatus());
+	}
 }
