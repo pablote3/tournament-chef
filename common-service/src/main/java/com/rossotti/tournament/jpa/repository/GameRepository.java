@@ -1,9 +1,6 @@
 package com.rossotti.tournament.jpa.repository;
 
 import com.rossotti.tournament.jpa.enumeration.GameStatus;
-import com.rossotti.tournament.jpa.enumeration.GameType;
-import com.rossotti.tournament.jpa.enumeration.TemplateType;
-import com.rossotti.tournament.jpa.model.Event;
 import com.rossotti.tournament.jpa.model.Game;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
@@ -19,6 +16,8 @@ public interface GameRepository extends Repository<Game, Long> {
 	List<Game> findAll();
 
 	void save(Game game);
+
+	void deleteById(Long id);
 
 	List<Game> findByGameStatus(GameStatus gameStatus);
 

@@ -168,6 +168,19 @@ public class GameRepositoryTest {
 		Assert.assertTrue(exception.getCause().getCause().getMessage().contains("GameStatus is mandatory"));
 	}
 
+	@Test
+	public void delete() {
+		gameRepository.findAll();
+		Game game = gameRepository.findByTeamNameGameDateTime("Milan", LocalDate.of(2020, 9, 29), LocalTime.of(12, 0, 0));
+		if (game != null) {
+			gameRepository.deleteById(game.getId());
+		}
+		else {
+			Assert.fail("Unable to find record to delete");
+		}
+		Assert.assertNull(gameRepository.findByTeamNameGameDateTime("Milan", LocalDate.of(2020, 9, 29), LocalTime.of(12, 0, 0)));
+	}
+
 	private static Game createMockGame(GameStatus gameStatus, LocalTime gameTime) {
 		Game game = new Game();
 		game.setStartTime(gameTime);
