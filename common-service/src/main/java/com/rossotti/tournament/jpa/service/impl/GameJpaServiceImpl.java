@@ -71,33 +71,35 @@ public class GameJpaServiceImpl implements GameJpaService {
 
 	@Override
 	public Game save(Game game) throws ResponseStatusException {
-//		try {
-//			Game findGame = findByOrganizationNameAndGameEmail(game.getOrganization().getOrganizationName(), game.getEmail());
-//			if (findGame != null) {
-//				findGame.setGameType(game.getGameType());
-//				findGame.setGameStatus(game.getGameStatus());
-//				findGame.setLastName(game.getLastName());
-//				findGame.setFirstName(game.getFirstName());
-//				findGame.setPassword(game.getPassword());
-//				gameRepository.save(findGame);
-//			}
-//			else {
-//				gameRepository.save(game);
-//			}
-//		}
-//		catch (Exception e) {
-//			if (e instanceof TransactionSystemException) {
-//				throw new CustomException(e.getCause().getCause().getMessage(), HttpStatus.BAD_REQUEST);
-//			}
-//			else if (e instanceof ConstraintViolationException) {
-//				throw new CustomException(e.getMessage(), HttpStatus.BAD_REQUEST);
-//			}
-//			else {
-//				throw new CustomException(ValidationMessages.MSG_VAL_0000, HttpStatus.INTERNAL_SERVER_ERROR);
-//			}
-//		}
-//		return game;
-		return null;
+		try {
+			String gameTeam = game.getGameTeams().get(0).getEventTeam().getOrganizationTeam().getTeamName();
+			LocalDate gameDate = game.getGameRound().getGameLocation().getGameDate().getGameDate();
+			Game findGame = findByTeamNameGameDateTime(gameTeam, gameDate, game.getStartTime());
+			if (findGame != null) {
+				findGame.setStartTime(game.getStartTime());
+				findGame.setGameStatus(game.getGameStatus());
+				findGame.setLupdTs(game.getLupdTs());
+				findGame.setLupdUserId(game.getLupdUserId());
+				findGame.setGameTeams(game.getGameTeams());
+				findGame.setGameRound(game.getGameRound());
+				gameRepository.save(findGame);
+			}
+			else {
+				gameRepository.save(game);
+			}
+		}
+		catch (Exception e) {
+			if (e instanceof TransactionSystemException) {
+				throw new CustomException(e.getCause().getCause().getMessage(), HttpStatus.BAD_REQUEST);
+			}
+			else if (e instanceof ConstraintViolationException) {
+				throw new CustomException(e.getMessage(), HttpStatus.BAD_REQUEST);
+			}
+			else {
+				throw new CustomException(ValidationMessages.MSG_VAL_0000, HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		}
+		return game;
 	}
 
 	@Override

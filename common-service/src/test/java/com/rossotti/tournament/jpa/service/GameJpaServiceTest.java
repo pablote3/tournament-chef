@@ -135,7 +135,7 @@ public class GameJpaServiceTest {
 //		Game findGame = gameJpaService.findByOrganizationNameAndGameEmail("FC Juventes", "bonetti.tatiana@hotmail.com");
 //		Assert.assertEquals("Super3", findGame.getPassword());
 //	}
-//
+
 //	@Test
 //	public void create_EmailIsMandatory_Empty() {
 //		CustomException exception = assertThrows(CustomException.class, () -> {

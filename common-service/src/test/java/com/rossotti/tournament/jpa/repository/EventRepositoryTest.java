@@ -282,7 +282,7 @@ public class EventRepositoryTest {
 		return game;
 	}
 
-	private static GameTeam createMockGameTeam(Game game) {
+	public static GameTeam createMockGameTeam(Game game) {
 		GameTeam gameTeam = new GameTeam();
 		gameTeam.setGame(game);
 		gameTeam.setPointsScored((short)12);

@@ -13,6 +13,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @ActiveProfiles(profiles = "development")
@@ -54,7 +55,7 @@ public class GameRepositoryTest {
 	@Test
 	public void findByGameStatus_Found() {
 		List<Game> games = gameRepository.findByGameStatus(GameStatus.Scheduled);
-		Assert.assertEquals(10, games.size());
+		Assert.assertEquals(11, games.size());
 	}
 
 	@Test
@@ -66,7 +67,7 @@ public class GameRepositoryTest {
 	@Test
 	public void findByTeamName_Found() {
 		List<Game> games = gameRepository.findByTeamName("Inter Milan");
-		Assert.assertEquals(1, games.size());
+		Assert.assertEquals(2, games.size());
 	}
 
 	@Test
@@ -78,7 +79,7 @@ public class GameRepositoryTest {
 	@Test
 	public void findByEventName_Found() {
 		List<Game> games = gameRepository.findByEventName("Campania Regional Frosh Soph Tournament");
-		Assert.assertEquals(1, games.size());
+		Assert.assertEquals(2, games.size());
 	}
 
 	@Test
@@ -90,7 +91,7 @@ public class GameRepositoryTest {
 	@Test
 	public void findByGameDate_Found() {
 		List<Game> games = gameRepository.findByGameDate(LocalDate.of(2020, 9, 29));
-		Assert.assertEquals(1, games.size());
+		Assert.assertEquals(2, games.size());
 	}
 
 	@Test
@@ -113,12 +114,87 @@ public class GameRepositoryTest {
 
 	@Test
 	public void findByTeamNameGameDateTime_Found() {
-		Game game = gameRepository.findByTeamNameGameDateTime("Inter Milan", LocalDate.of(2020, 9, 29), LocalTime.of(8, 00, 00, 0));
+		Game game = gameRepository.findByTeamNameGameDateTime("Inter Milan", LocalDate.of(2020, 9, 29), LocalTime.of(8, 0, 0, 0));
 		Assert.assertEquals(GameStatus.Completed, game.getGameStatus());
 	}
 
 	@Test
 	public void findByTeamNameGameDateTime_NotFound() {
-		Assert.assertNull(gameRepository.findByTeamNameGameDateTime("Inter Circle", LocalDate.of(2020, 9, 29), LocalTime.of(8, 00, 00, 0)));
+		Assert.assertNull(gameRepository.findByTeamNameGameDateTime("Inter Circle", LocalDate.of(2020, 9, 29), LocalTime.of(8, 0, 0, 0)));
+	}
+
+	@Test
+	public void create() {
+		gameRepository.save(createMockGame());
+//		Game game = gameRepository.findByTeamNameGameDateTime("FC Juventes", "amserturini@gmail.com");
+//		Assert.assertEquals("Serturini", user.getLastName());
+	}
+
+	private static Game createMockGame() {
+		Game game = new Game();
+		game.setStartTime(LocalTime.of(9, 0, 0));
+		game.setGameStatus(GameStatus.Scheduled);
+		game.setGameRound(createMockGameRound(1L, game));
+		game.getGameTeams().add(EventRepositoryTest.createMockGameTeam(game));
+		game.setCreateTs(LocalDateTime.of(2019, 10, 27, 20, 30));
+		game.setLupdTs(LocalDateTime.of(2019, 10, 27, 20, 30));
+		game.setLupdUserId(4L);
+		return game;
+	}
+
+	private static GameRound createMockGameRound(Long gameRoundId, Game game) {
+		GameRound gameRound = new GameRound();
+		gameRound.setId(gameRoundId);
+		List<Game> games = new ArrayList<>();
+		games.add(game);
+		gameRound.setGames(games);
+		gameRound.setGameLocation(createMockGameLocation(1L, gameRound));
+		return gameRound;
+	}
+
+	private static GameLocation createMockGameLocation(Long gameLocationId, GameRound gameRound) {
+		GameLocation gameLocation = new GameLocation();
+		gameLocation.setId(gameLocationId);
+		gameLocation.setOrganizationLocation(createMockOrganizationLocation(1L));
+		gameLocation.setGameDate(createMockGameDate(1L, gameLocation));
+		List<GameRound> gameRounds = new ArrayList<>();
+		gameRounds.add(gameRound);
+		gameLocation.setGameRounds(gameRounds);
+		return gameLocation;
+	}
+
+	private static GameDate createMockGameDate(Long gameDateId, GameLocation gameLocation) {
+		GameDate gameDate = new GameDate();
+		gameDate.setId(gameDateId);
+		List<GameLocation> gameLocations = new ArrayList<>();
+		gameLocations.add(gameLocation);
+		gameDate.setGameLocations(gameLocations);
+		gameDate.setEvent(createMockEvent(1L, gameDate));
+		return gameDate;
+	}
+
+	private static Event createMockEvent(Long eventId, GameDate gameDate) {
+		Event event = new Event();
+		event.setId(eventId);
+		List<GameDate> gameDates = new ArrayList<>();
+		gameDates.add(gameDate);
+		event.setGameDates(gameDates);
+		List<EventTeam> eventTeams = new ArrayList<>();
+		eventTeams.add(createMockEventTeam(1L, event));
+		event.setEventTeams(eventTeams);
+		return event;
+	}
+
+	private static EventTeam createMockEventTeam(Long eventTeamId, Event event) {
+		EventTeam eventTeam = new EventTeam();
+		eventTeam.setId(eventTeamId);
+		eventTeam.setEvent(event);
+		return eventTeam;
+	}
+
+	private static OrganizationLocation createMockOrganizationLocation(Long organizationLocationId) {
+		OrganizationLocation organizationLocation = new OrganizationLocation();
+		organizationLocation.setId(organizationLocationId);
+		return organizationLocation;
 	}
 }
