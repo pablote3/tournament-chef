@@ -120,58 +120,31 @@ public class GameJpaServiceTest {
 
 	@Test
 	public void findByTeamNameGameDateTime_Found() {
-		Game game = gameJpaService.findByTeamNameGameDateTime("Inter Milan", LocalDate.of(2020, 9, 29), LocalTime.of(8, 00, 00, 0));
+		Game game = gameJpaService.findByTeamNameGameDateTime("Inter Milan", LocalDate.of(2020, 9, 29), LocalTime.of(8, 0, 0));
 		Assert.assertEquals(GameStatus.Completed, game.getGameStatus());
 	}
 
 	@Test
 	public void findByTeamNameGameDateTime_NotFound() {
-		Assert.assertNull(gameJpaService.findByTeamNameGameDateTime("Inter Circle", LocalDate.of(2020, 9, 29), LocalTime.of(8, 00, 00, 0)));
+		Assert.assertNull(gameJpaService.findByTeamNameGameDateTime("Inter Circle", LocalDate.of(2020, 9, 29), LocalTime.of(8, 0, 0)));
 	}
 
-//	@Test
-//	public void create_Created() {
-//		gameJpaService.save(GameRepositoryTest.createMockGame(1L, "bonetti.tatiana@hotmail.com", "Bonetti", "Super3"));
-//		Game findGame = gameJpaService.findByOrganizationNameAndGameEmail("FC Juventes", "bonetti.tatiana@hotmail.com");
-//		Assert.assertEquals("Super3", findGame.getPassword());
-//	}
+	@Test
+	public void create_Created() {
+		gameJpaService.save(GameRepositoryTest.createMockGame(GameStatus.Completed, LocalTime.of(14, 0, 0)));
+		Game findGame = gameJpaService.findByTeamNameGameDateTime("Inter Milan", LocalDate.of(2020, 9, 29), LocalTime.of(14, 0, 0));
+		Assert.assertEquals(GameStatus.Completed, findGame.getGameStatus());
+	}
 
-//	@Test
-//	public void create_EmailIsMandatory_Empty() {
-//		CustomException exception = assertThrows(CustomException.class, () -> {
-//			gameJpaService.save(GameRepositoryTest.createMockGame(1L, "", "Bonetti", "Super3"));
-//		});
-//		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
-//		Assert.assertEquals("Email is mandatory", exception.getError().getErrorMessage());
-//	}
-//
-//	@Test
-//	public void create_LastNameIsMandatory_Null() {
-//		CustomException exception = assertThrows(CustomException.class, () -> {
-//			gameJpaService.save(GameRepositoryTest.createMockGame(1L, "bonetti.tatiana@hotmail.com", null, "Super3"));
-//		});
-//		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
-//		Assert.assertEquals("LastName is mandatory", exception.getError().getErrorMessage());
-//	}
-//
-//	@Test
-//	public void create_EmailInvalidFormat() {
-//		CustomException exception = assertThrows(CustomException.class, () -> {
-//			gameJpaService.save(GameRepositoryTest.createMockGame(1L, "bonetti.tatiana.hotmail.com", "Bonetti", "Super3"));
-//		});
-//		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
-//		Assert.assertEquals("Email invalid format", exception.getError().getErrorMessage());
-//	}
-//
-//	@Test
-//	public void create_PasswordInvalidFormat() {
-//		CustomException exception = assertThrows(CustomException.class, () -> {
-//			gameJpaService.save(GameRepositoryTest.createMockGame(1L, "bonetti.tatiana@hotmail.com", "Bonetti", "Sup"));
-//		});
-//		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
-//		Assert.assertEquals("Password invalid format", exception.getError().getErrorMessage());
-//	}
-//
+	@Test
+	public void create_GameStatusIsMandatory_Null() {
+		CustomException exception = assertThrows(CustomException.class, () -> {
+			gameJpaService.save(GameRepositoryTest.createMockGame(null, LocalTime.of(14, 0, 0)));
+		});
+		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+		Assert.assertEquals("GameStatus is mandatory", exception.getError().getErrorMessage());
+	}
+
 //	@Test
 //	public void update_Updated() {
 //		Game updateGame = gameJpaService.findByOrganizationNameAndGameEmail("FC Juventes", "alessia.piazza@telecomitalia.com");

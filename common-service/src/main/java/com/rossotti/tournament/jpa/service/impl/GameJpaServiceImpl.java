@@ -104,22 +104,21 @@ public class GameJpaServiceImpl implements GameJpaService {
 
 	@Override
 	public Game delete(Long id) {
-//		try {
-//			Game game = getById(id);
-//			if (game != null) {
-//				gameRepository.deleteById(game.getId());
-//				return game;
-//			}
-//			else {
-//				throw new CustomException(ValidationMessages.MSG_VAL_0012, HttpStatus.INTERNAL_SERVER_ERROR);
-//			}
-//		}
-//		catch(CustomException ce) {
-//			throw ce;
-//		}
-//		catch(Exception e) {
-//			throw new CustomException(ValidationMessages.MSG_VAL_0007, HttpStatus.INTERNAL_SERVER_ERROR);
-//		}
-		return null;
+		try {
+			Game game = getById(id);
+			if (game != null) {
+				gameRepository.deleteById(game.getId());
+				return game;
+			}
+			else {
+				throw new CustomException(ValidationMessages.MSG_VAL_0012, HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		}
+		catch(CustomException ce) {
+			throw ce;
+		}
+		catch(Exception e) {
+			throw new CustomException(ValidationMessages.MSG_VAL_0007, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 }

@@ -73,7 +73,7 @@ public class GameRepositoryTest {
 	@Test
 	public void findByTeamName_Found() {
 		List<Game> games = gameRepository.findByTeamName("Inter Milan");
-		Assert.assertEquals(3, games.size());
+		Assert.assertEquals(4, games.size());
 	}
 
 	@Test
@@ -85,7 +85,7 @@ public class GameRepositoryTest {
 	@Test
 	public void findByEventName_Found() {
 		List<Game> games = gameRepository.findByEventName("Campania Regional Frosh Soph Tournament");
-		Assert.assertEquals(3, games.size());
+		Assert.assertEquals(4, games.size());
 	}
 
 	@Test
@@ -97,7 +97,7 @@ public class GameRepositoryTest {
 	@Test
 	public void findByGameDate_Found() {
 		List<Game> games = gameRepository.findByGameDate(LocalDate.of(2020, 9, 29));
-		Assert.assertEquals(3, games.size());
+		Assert.assertEquals(4, games.size());
 	}
 
 	@Test
@@ -181,7 +181,7 @@ public class GameRepositoryTest {
 		Assert.assertNull(gameRepository.findByTeamNameGameDateTime("Milan", LocalDate.of(2020, 9, 29), LocalTime.of(12, 0, 0)));
 	}
 
-	private static Game createMockGame(GameStatus gameStatus, LocalTime gameTime) {
+	public static Game createMockGame(GameStatus gameStatus, LocalTime gameTime) {
 		Game game = new Game();
 		game.setStartTime(gameTime);
 		game.setGameStatus(gameStatus);
