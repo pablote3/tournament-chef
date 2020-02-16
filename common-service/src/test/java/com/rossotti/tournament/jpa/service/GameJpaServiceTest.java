@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -145,63 +144,26 @@ public class GameJpaServiceTest {
 		Assert.assertEquals("GameStatus is mandatory", exception.getError().getErrorMessage());
 	}
 
-//	@Test
-//	public void update_Updated() {
-//		Game updateGame = gameJpaService.findByOrganizationNameAndGameEmail("FC Juventes", "alessia.piazza@telecomitalia.com");
-//		updateGame.setGameStatus(GameStatus.Active);
-//		gameJpaService.save(updateGame);
-//		Game findGame = gameJpaService.findByOrganizationNameAndGameEmail("FC Juventes", "alessia.piazza@telecomitalia.com");
-//		Assert.assertEquals(GameStatus.Active, findGame.getGameStatus());
-//	}
-//
-//	@Test
-//	public void update_EmailIsMandatory_Empty() {
-//		Game updateGame = gameJpaService.findByOrganizationNameAndGameEmail("FC Juventes", "alessia.piazza@telecomitalia.com");
-//		updateGame.setGameStatus(GameStatus.Active);
-//		updateGame.setEmail("");
-//		CustomException exception = assertThrows(CustomException.class, () -> {
-//			gameJpaService.save(updateGame);
-//		});
-//		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
-//		Assert.assertEquals("Email is mandatory", exception.getError().getErrorMessage());
-//	}
-//
-//	@Test
-//	public void update_LastNameIsMandatory_Null() {
-//		Game updateGame = gameJpaService.findByOrganizationNameAndGameEmail("FC Juventes", "alessia.piazza@telecomitalia.com");
-//		updateGame.setGameStatus(GameStatus.Active);
-//		updateGame.setLastName(null);
-//		CustomException exception = assertThrows(CustomException.class, () -> {
-//			gameJpaService.save(updateGame);
-//		});
-//		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
-//		Assert.assertEquals("LastName is mandatory", exception.getError().getErrorMessage());
-//	}
-//
-//	@Test
-//	public void update_PasswordInvalidFormat() {
-//		Game updateGame = gameJpaService.findByOrganizationNameAndGameEmail("FC Juventes", "alessia.piazza@telecomitalia.com");
-//		updateGame.setGameStatus(GameStatus.Active);
-//		updateGame.setPassword("Sup");
-//		CustomException exception = assertThrows(CustomException.class, () -> {
-//			gameJpaService.save(updateGame);
-//		});
-//		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
-//		Assert.assertEquals("Password invalid format", exception.getError().getErrorMessage());
-//	}
-//
-//	@Test
-//	public void update_EmailInvalidFormat() {
-//		Game updateGame = gameJpaService.findByOrganizationNameAndGameEmail("FC Juventes", "alessia.piazza@telecomitalia.com");
-//		updateGame.setEmail("alessia.piazza_telecomitalia.com");
-//		updateGame.setGameStatus(GameStatus.Active);
-//		CustomException exception = assertThrows(CustomException.class, () -> {
-//			gameJpaService.save(updateGame);
-//		});
-//		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
-//		Assert.assertEquals("Email invalid format", exception.getError().getErrorMessage());
-//	}
-//
+	@Test
+	public void update_Updated() {
+		Game game = gameJpaService.findByTeamNameGameDateTime("Inter Milan", LocalDate.of(2020, 9, 29), LocalTime.of(10, 0, 0));
+		game.setGameStatus(GameStatus.Completed);
+		gameJpaService.save(game);
+		Game findGame = gameJpaService.findByTeamNameGameDateTime("Inter Milan", LocalDate.of(2020, 9, 29), LocalTime.of(10, 0, 0));
+		Assert.assertEquals(GameStatus.Completed, findGame.getGameStatus());
+	}
+
+	@Test
+	public void update_GameStatusIsMandatory_Null() {
+		Game game = gameJpaService.findByTeamNameGameDateTime("Inter Milan", LocalDate.of(2020, 9, 29), LocalTime.of(10, 0, 0));
+		game.setGameStatus(null);
+		CustomException exception = assertThrows(CustomException.class, () -> {
+			gameJpaService.save(game);
+		});
+		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+		Assert.assertEquals("GameStatus is mandatory", exception.getError().getErrorMessage());
+	}
+
 //	@Test
 //	public void delete_Deleted() {
 //		gameJpaService.delete(7L);
