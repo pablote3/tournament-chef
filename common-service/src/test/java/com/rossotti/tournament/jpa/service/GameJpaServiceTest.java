@@ -164,19 +164,19 @@ public class GameJpaServiceTest {
 		Assert.assertEquals("GameStatus is mandatory", exception.getError().getErrorMessage());
 	}
 
-//	@Test
-//	public void delete_Deleted() {
-//		gameJpaService.delete(7L);
-//		Assert.assertNull(gameJpaService.getById(7L));
-//	}
-//
-//	@Test
-//	public void delete_NotFound() {
-//		CustomException exception = assertThrows(CustomException.class, () -> {
-//			gameJpaService.delete(21L);
-//		});
-//		Assert.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, exception.getStatus());
-//		Assert.assertEquals("Server error when trying to find record for id of {}", exception.getError().getErrorMessage());
-//		Assert.assertEquals("MSG_VAL_0012", exception.getError().getError());
-//	}
+	@Test
+	public void delete_Deleted() {
+		gameJpaService.delete(4L);
+		Assert.assertNull(gameJpaService.getById(4L));
+	}
+
+	@Test
+	public void delete_NotFound() {
+		CustomException exception = assertThrows(CustomException.class, () -> {
+			gameJpaService.delete(21L);
+		});
+		Assert.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, exception.getStatus());
+		Assert.assertEquals("Server error when trying to find record for id of {}", exception.getError().getErrorMessage());
+		Assert.assertEquals("MSG_VAL_0012", exception.getError().getError());
+	}
 }
