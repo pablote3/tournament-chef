@@ -215,7 +215,7 @@ public class GameRepositoryTest {
 
 	private static GameDate createMockGameDate(GameLocation gameLocation) {
 		GameDate gameDate = new GameDate();
-		gameDate.setId(1L);
+		gameDate.setId(2L);
 		List<GameLocation> gameLocations = new ArrayList<>();
 		gameLocations.add(gameLocation);
 		gameDate.setGameLocations(gameLocations);

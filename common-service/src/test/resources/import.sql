@@ -63,6 +63,8 @@ insert into game (id, gameRoundId, startTime, gameStatus, createTs, lupdTs, lupd
 insert into game (id, gameRoundId, startTime, gameStatus, createTs, lupdTs, lupdUserId) VALUES(5, 1, '07:00:00.0', 'Forfeited', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
 insert into game (id, gameRoundId, startTime, gameStatus, createTs, lupdTs, lupdUserId) VALUES(6, 2, '16:00:00.0', 'Scheduled', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
 insert into game (id, gameRoundId, startTime, gameStatus, createTs, lupdTs, lupdUserId) VALUES(7, 2, '07:00:00.0', 'Scheduled', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
+insert into game (id, gameRoundId, startTime, gameStatus, createTs, lupdTs, lupdUserId) VALUES(8, 3, '07:00:00.0', 'Scheduled', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
+insert into game (id, gameRoundId, startTime, gameStatus, createTs, lupdTs, lupdUserId) VALUES(9, 4, '07:00:00.0', 'Scheduled', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
 
 insert into gameTeam (id, gameId, eventTeamId, homeTeam, pointsScored) VALUES(1, 1, 1, TRUE, 14);
 insert into gameTeam (id, gameId, eventTeamId, homeTeam, pointsScored) VALUES(2, 1, 2, FALSE, 5);
@@ -70,4 +72,6 @@ insert into gameTeam (id, gameId, eventTeamId, homeTeam, pointsScored) VALUES(3,
 insert into gameTeam (id, gameId, eventTeamId, homeTeam, pointsScored) VALUES(4, 3, 2, TRUE, 14);
 insert into gameTeam (id, gameId, eventTeamId, homeTeam, pointsScored) VALUES(5, 4, 2, TRUE, 14);
 insert into gameTeam (id, gameId, eventTeamId, homeTeam, pointsScored) VALUES(6, 6, 1, TRUE, 14);
-insert into gameTeam (id, gameId, eventTeamId, homeTeam, pointsScored) VALUES(7, 6, 2, FALSE, 14);
+insert into gameTeam (id, gameId, eventTeamId, homeTeam, pointsScored) VALUES(7, 7, 2, FALSE, 14);
+insert into gameTeam (id, gameId, eventTeamId, homeTeam, pointsScored) VALUES(8, 8, 1, TRUE, 14);
+insert into gameTeam (id, gameId, eventTeamId, homeTeam, pointsScored) VALUES(9, 9, 2, FALSE, 14);
