@@ -184,7 +184,7 @@ public class GameRepositoryTest {
 		Game game = new Game();
 		game.setStartTime(gameTime);
 		game.setGameStatus(gameStatus);
-		game.setGameRound(createMockGameRound(1L, game));
+		game.setGameRound(createMockGameRound(game));
 		game.getGameTeams().add(EventRepositoryTest.createMockGameTeam(game));
 		game.setCreateTs(LocalDateTime.of(2019, 10, 27, 20, 30));
 		game.setLupdTs(LocalDateTime.of(2019, 10, 27, 20, 30));
@@ -192,60 +192,60 @@ public class GameRepositoryTest {
 		return game;
 	}
 
-	private static GameRound createMockGameRound(Long gameRoundId, Game game) {
+	private static GameRound createMockGameRound(Game game) {
 		GameRound gameRound = new GameRound();
-		gameRound.setId(gameRoundId);
+		gameRound.setId(1L);
 		List<Game> games = new ArrayList<>();
 		games.add(game);
 		gameRound.setGames(games);
-		gameRound.setGameLocation(createMockGameLocation(1L, gameRound));
+		gameRound.setGameLocation(createMockGameLocation(gameRound));
 		return gameRound;
 	}
 
-	private static GameLocation createMockGameLocation(Long gameLocationId, GameRound gameRound) {
+	private static GameLocation createMockGameLocation(GameRound gameRound) {
 		GameLocation gameLocation = new GameLocation();
-		gameLocation.setId(gameLocationId);
+		gameLocation.setId(1L);
 		gameLocation.setOrganizationLocation(createMockOrganizationLocation(1L));
-		gameLocation.setGameDate(createMockGameDate(1L, gameLocation));
+		gameLocation.setGameDate(createMockGameDate(gameLocation));
 		List<GameRound> gameRounds = new ArrayList<>();
 		gameRounds.add(gameRound);
 		gameLocation.setGameRounds(gameRounds);
 		return gameLocation;
 	}
 
-	private static GameDate createMockGameDate(Long gameDateId, GameLocation gameLocation) {
+	private static GameDate createMockGameDate(GameLocation gameLocation) {
 		GameDate gameDate = new GameDate();
-		gameDate.setId(gameDateId);
+		gameDate.setId(1L);
 		List<GameLocation> gameLocations = new ArrayList<>();
 		gameLocations.add(gameLocation);
 		gameDate.setGameLocations(gameLocations);
-		gameDate.setEvent(createMockEvent(1L, gameDate));
+		gameDate.setEvent(createMockEvent(gameDate));
 		return gameDate;
 	}
 
-	private static Event createMockEvent(Long eventId, GameDate gameDate) {
+	private static Event createMockEvent(GameDate gameDate) {
 		Event event = new Event();
-		event.setId(eventId);
+		event.setId(1L);
 		List<GameDate> gameDates = new ArrayList<>();
 		gameDates.add(gameDate);
 		event.setGameDates(gameDates);
 		List<EventTeam> eventTeams = new ArrayList<>();
-		eventTeams.add(createMockEventTeam(1L, event));
+		eventTeams.add(createMockEventTeam(event));
 		event.setEventTeams(eventTeams);
 		return event;
 	}
 
-	private static EventTeam createMockEventTeam(Long eventTeamId, Event event) {
+	private static EventTeam createMockEventTeam(Event event) {
 		EventTeam eventTeam = new EventTeam();
-		eventTeam.setId(eventTeamId);
+		eventTeam.setId(1L);
 		eventTeam.setEvent(event);
-		eventTeam.setOrganizationTeam(createMockOrganizationTeam(1L, eventTeam));
+		eventTeam.setOrganizationTeam(createMockOrganizationTeam(eventTeam));
 		return eventTeam;
 	}
 
-	private static OrganizationTeam createMockOrganizationTeam(Long organizationTeamId, EventTeam eventTeam) {
+	private static OrganizationTeam createMockOrganizationTeam(EventTeam eventTeam) {
 		OrganizationTeam organizationTeam = new OrganizationTeam();
-		organizationTeam.setId(organizationTeamId);
+		organizationTeam.setId(1L);
 		organizationTeam.setTeamName("Inter Milan");
 		List<EventTeam> eventTeams = new ArrayList<>();
 		eventTeams.add(eventTeam);

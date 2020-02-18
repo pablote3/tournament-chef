@@ -49,6 +49,15 @@ public interface GameRepository extends Repository<Game, Long> {
 	@Query(findByGameDate)
 	List<Game> findByGameDate(@Param("gameDate") LocalDate gameDate);
 
+//	String findByGameDate2 =
+//			"select gd from GameDate gd " +
+//			"inner join gd.gameLocation gl " +
+//			"inner join gl.gameRound gr " +
+//			"inner join gr.game g " +
+//			"where gd.gameDate = :gameDate";
+//	@Query(findByGameDate2)
+//	List<Game> findByGameDate2(@Param("gameDate") LocalDate gameDate);
+
 	String findByLocationName =
 			"select g from Game g " +
 			"inner join g.gameRound gr " +

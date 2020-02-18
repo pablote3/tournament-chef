@@ -166,7 +166,6 @@ public class EventJpaServiceTest {
 
 	@Test
 	public void delete_Deleted() {
-		eventJpaService.listAll();
 		eventJpaService.delete(6L);
 		Assert.assertNull(eventJpaService.getById(6L));
 	}
