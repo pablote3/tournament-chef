@@ -78,7 +78,7 @@ public class EventRepositoryTest {
 	@Test
 	public void findByOrganizationName_Found() {
 		List<Event> events = eventRepository.findByOrganizationName("FC Juventes");
-		Assert.assertEquals(6, events.size());
+		Assert.assertEquals(3, events.size());
 	}
 
 	@Test
@@ -104,7 +104,7 @@ public class EventRepositoryTest {
 	public void findByOrganizationNameAsOfDate_Found() {
 		List<Event> events = eventRepository.findByOrganizationNameAsOfDate("FC Juventes", LocalDate.of(2020, 9, 24));
 		Event event = events.get(0);
-		Assert.assertEquals("Lombardy Memorial Tournament", event.getEventName());
+		Assert.assertEquals("Lombardy Halloween Invitational", event.getEventName());
 	}
 
 	@Test
@@ -127,7 +127,7 @@ public class EventRepositoryTest {
 	@Test
 	public void findByOrganizationNameAsOfDateTemplateType_Found() {
 		Event event = eventRepository.findByOrganizationNameAsOfDateTemplateType("FC Juventes", LocalDate.of(2020, 9, 24), TemplateType.four_x_four_pp);
-		Assert.assertEquals("Lombardy Memorial Tournament", event.getEventName());
+		Assert.assertEquals("Lombardy Halloween Invitational", event.getEventName());
 	}
 
 	@Test
@@ -137,10 +137,9 @@ public class EventRepositoryTest {
 
 	@Test
 	public void create() {
-		eventRepository.save(createMockEvent(1L, "Juventes Fall Classic", 1L, 4L, 1L, 2L, LocalDate.of(2012, 9, 10), LocalDate.of(2012, 9, 11)));
-		List<Event> events = eventRepository.findByOrganizationNameAsOfDate("FC Juventes", LocalDate.of(2012, 9, 10));
-		Event event = events.get(0);
-		Assert.assertEquals("Juventes Fall Classic", event.getEventName());
+		eventRepository.save(createMockEvent(7L, "Tavagnacco Fall Classic", 1L, 4L, 1L, 2L, LocalDate.of(2012, 9, 10), LocalDate.of(2012, 9, 11)));
+		Event event = eventRepository.findByEventNameAsOfDateTemplateType("Tavagnacco Fall Classic", LocalDate.of(2012, 9, 10), TemplateType.four_x_four_pp);
+		Assert.assertEquals("Tavagnacco Fall Classic", event.getEventName());
 		Assert.assertEquals(2, event.getEventTeams().size());
 		Assert.assertEquals(2, event.getGameDates().size());
 		Assert.assertEquals(2, event.getGameDates().get(0).getGameLocations().size());
@@ -168,8 +167,7 @@ public class EventRepositoryTest {
 	@Test
 	public void update() {
 		eventRepository.save(updateMockEvent(LocalDate.of(2020, 10, 25), EventStatus.Complete));
-		List<Event> events = eventRepository.findByOrganizationNameAsOfDate("FC Juventes", LocalDate.of(2020, 10, 25));
-		Event event = events.get(0);
+		Event event = eventRepository.findByEventNameAsOfDateTemplateType("Lombardy Halloween Invitational", LocalDate.of(2020, 10, 25), TemplateType.four_x_four_pp);
 		Assert.assertEquals(EventStatus.Complete, event.getEventStatus());
 	}
 
@@ -298,7 +296,7 @@ public class EventRepositoryTest {
 	}
 
 	private Event updateMockEvent(LocalDate asOfDate, EventStatus eventStatus) {
-		Event event = eventRepository.findByOrganizationNameAsOfDateTemplateType("FC Juventes", asOfDate, TemplateType.four_x_four_pp);
+		Event event = eventRepository.findByEventNameAsOfDateTemplateType("Lombardy Halloween Invitational", asOfDate, TemplateType.four_x_four_pp);
 		event.setEventStatus(eventStatus);
 		return event;
 	}

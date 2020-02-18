@@ -108,7 +108,7 @@ public class GameRepositoryTest {
 
 	@Test
 	public void findByLocationName_Found() {
-		List<Game> games = gameRepository.findByLocationName("Verona Arena");
+		List<Game> games = gameRepository.findByLocationName("San Siro");
 		Assert.assertEquals(4, games.size());
 	}
 
@@ -132,7 +132,6 @@ public class GameRepositoryTest {
 	@Test
 	public void create() {
 		gameRepository.save(createMockGame(GameStatus.Scheduled, LocalTime.of(9, 0, 0)));
-		gameRepository.findAll();
 		Game game = gameRepository.findByTeamNameGameDateTime("Inter Milan", LocalDate.of(2020, 9 , 29), LocalTime.of(9, 0, 0));
 		Assert.assertEquals(GameStatus.Scheduled, game.getGameStatus());
 	}
