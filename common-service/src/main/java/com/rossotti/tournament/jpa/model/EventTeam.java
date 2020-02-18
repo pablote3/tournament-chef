@@ -36,6 +36,15 @@ public class EventTeam {
 		this.eventTeamRankings = eventTeamRankings;
 	}
 
+	@OneToMany(mappedBy="eventTeam", fetch = FetchType.LAZY, cascade= CascadeType.ALL, orphanRemoval = true)
+	private List<GameTeam> gameTeams = new ArrayList<>();
+	public List<GameTeam> getGameTeams()  {
+		return gameTeams;
+	}
+	public void setGameTeams(List<GameTeam> gameTeams)  {
+		this.gameTeams = gameTeams;
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
