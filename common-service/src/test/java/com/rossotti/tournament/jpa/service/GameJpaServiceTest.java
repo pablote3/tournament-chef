@@ -59,8 +59,8 @@ public class GameJpaServiceTest {
 
 	@Test
 	public void findByGameStatus_Found() {
-		List<Game> games = gameJpaService.findByGameStatus(GameStatus.Scheduled);
-		Assert.assertEquals(10, games.size());
+		List<Game> games = gameJpaService.findByGameStatus(GameStatus.Forfeited);
+		Assert.assertEquals(1, games.size());
 	}
 
 	@Test
@@ -84,7 +84,7 @@ public class GameJpaServiceTest {
 	@Test
 	public void findByEventName_Found() {
 		List<Game> games = gameJpaService.findByEventName("Campania Regional Frosh Soph Tournament");
-		Assert.assertEquals(3, games.size());
+		Assert.assertEquals(4, games.size());
 	}
 
 	@Test
@@ -96,7 +96,7 @@ public class GameJpaServiceTest {
 	@Test
 	public void findByGameDate_Found() {
 		List<Game> games = gameJpaService.findByGameDate(LocalDate.of(2020, 9, 29));
-		Assert.assertEquals(3, games.size());
+		Assert.assertEquals(4, games.size());
 	}
 
 	@Test
