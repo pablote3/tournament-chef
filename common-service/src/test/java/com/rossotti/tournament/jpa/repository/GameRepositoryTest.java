@@ -49,7 +49,7 @@ public class GameRepositoryTest {
 
 	@Test
 	public void findById_NotFound() {
-		Assert.assertNull(gameRepository.findById(21L));
+		Assert.assertNull(gameRepository.findById(31L));
 	}
 
 	@Test
@@ -85,7 +85,7 @@ public class GameRepositoryTest {
 	@Test
 	public void findByEventName_Found() {
 		List<Game> games = gameRepository.findByEventName("Campania Regional Frosh Soph Tournament");
-		Assert.assertEquals(5, games.size());
+		Assert.assertEquals(7, games.size());
 	}
 
 	@Test
@@ -97,7 +97,7 @@ public class GameRepositoryTest {
 	@Test
 	public void findByGameDate_Found() {
 		List<Game> games = gameRepository.findByGameDate(LocalDate.of(2020, 9, 29));
-		Assert.assertEquals(5, games.size());
+		Assert.assertEquals(7, games.size());
 	}
 
 	@Test
@@ -108,8 +108,8 @@ public class GameRepositoryTest {
 
 	@Test
 	public void findByLocationName_Found() {
-		List<Game> games = gameRepository.findByLocationName("San Siro");
-		Assert.assertEquals(4, games.size());
+		List<Game> games = gameRepository.findByLocationName("Giuseppe Meazza Stadium");
+		Assert.assertEquals(2, games.size());
 	}
 
 	@Test
@@ -131,7 +131,8 @@ public class GameRepositoryTest {
 
 	@Test
 	public void create() {
-		gameRepository.save(createMockGame(GameStatus.Scheduled, LocalTime.of(9, 0, 0)));
+		Game mockGame = createMockGame(GameStatus.Scheduled, LocalTime.of(9, 0, 0));
+		gameRepository.save(mockGame);
 		Game game = gameRepository.findByTeamNameGameDateTime("Inter Milan", LocalDate.of(2020, 9 , 29), LocalTime.of(9, 0, 0));
 		Assert.assertEquals(GameStatus.Scheduled, game.getGameStatus());
 	}
@@ -205,7 +206,7 @@ public class GameRepositoryTest {
 	private static GameLocation createMockGameLocation(GameRound gameRound) {
 		GameLocation gameLocation = new GameLocation();
 		gameLocation.setId(1L);
-		gameLocation.setOrganizationLocation(createMockOrganizationLocation(1L));
+		gameLocation.setOrganizationLocation(createMockOrganizationLocation());
 		gameLocation.setGameDate(createMockGameDate(gameLocation));
 		List<GameRound> gameRounds = new ArrayList<>();
 		gameRounds.add(gameRound);
@@ -246,16 +247,15 @@ public class GameRepositoryTest {
 	private static OrganizationTeam createMockOrganizationTeam(EventTeam eventTeam) {
 		OrganizationTeam organizationTeam = new OrganizationTeam();
 		organizationTeam.setId(1L);
-		organizationTeam.setTeamName("Inter Milan");
 		List<EventTeam> eventTeams = new ArrayList<>();
 		eventTeams.add(eventTeam);
 		organizationTeam.setEventTeams(eventTeams);
 		return organizationTeam;
 	}
 
-	private static OrganizationLocation createMockOrganizationLocation(Long organizationLocationId) {
+	private static OrganizationLocation createMockOrganizationLocation() {
 		OrganizationLocation organizationLocation = new OrganizationLocation();
-		organizationLocation.setId(organizationLocationId);
+		organizationLocation.setId(1L);
 		return organizationLocation;
 	}
 
