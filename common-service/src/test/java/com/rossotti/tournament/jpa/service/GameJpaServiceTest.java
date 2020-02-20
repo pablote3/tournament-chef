@@ -95,7 +95,7 @@ public class GameJpaServiceTest {
 
 	@Test
 	public void findByGameDate_Found() {
-		List<Game> games = gameJpaService.findByGameDate(LocalDate.of(2020, 9, 29));
+		List<Game> games = gameJpaService.findByGameDate(LocalDate.of(2020, 10, 30));
 		Assert.assertEquals(7, games.size());
 	}
 
@@ -131,7 +131,7 @@ public class GameJpaServiceTest {
 	@Test
 	public void create_Created() {
 		gameJpaService.save(GameRepositoryTest.createMockGame(GameStatus.Completed, LocalTime.of(14, 0, 0)));
-		Game findGame = gameJpaService.findByTeamNameGameDateTime("Inter Milan", LocalDate.of(2020, 9, 29), LocalTime.of(14, 0, 0));
+		Game findGame = gameJpaService.findByTeamNameGameDateTime("Orobica", LocalDate.of(2020, 10 , 30), LocalTime.of(14, 0, 0));
 		Assert.assertEquals(GameStatus.Completed, findGame.getGameStatus());
 	}
 

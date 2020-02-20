@@ -136,7 +136,7 @@ public class GameRepositoryTest {
 	public void create() {
 		Game mockGame = createMockGame(GameStatus.Scheduled, LocalTime.of(7, 0, 0));
 		gameRepository.save(mockGame);
-		Game game = gameRepository.findByTeamNameGameDateTime("Inter Milan", LocalDate.of(2020, 9 , 29), LocalTime.of(9, 0, 0));
+		Game game = gameRepository.findByTeamNameGameDateTime("Orobica", LocalDate.of(2020, 10 , 30), LocalTime.of(7, 0, 0));
 		Assert.assertEquals(GameStatus.Scheduled, game.getGameStatus());
 	}
 
@@ -151,7 +151,7 @@ public class GameRepositoryTest {
 	@Test
 	public void create_Duplicate() {
 		Exception exception = assertThrows(DataIntegrityViolationException.class, () -> {
-			gameRepository.save(createMockGame(GameStatus.Scheduled, LocalTime.of(8, 0, 0)));
+			gameRepository.save(createMockGame(GameStatus.Scheduled, LocalTime.of(6, 0, 0)));
 		});
 		Assert.assertTrue(exception.getMessage().contains("could not execute statement"));
 	}
@@ -248,7 +248,7 @@ public class GameRepositoryTest {
 
 	private static OrganizationTeam createMockOrganizationTeam(EventTeam eventTeam) {
 		OrganizationTeam organizationTeam = new OrganizationTeam();
-		organizationTeam.setId(5L);
+		organizationTeam.setId(9L);
 		List<EventTeam> eventTeams = new ArrayList<>();
 		eventTeams.add(eventTeam);
 		organizationTeam.setEventTeams(eventTeams);
@@ -257,7 +257,7 @@ public class GameRepositoryTest {
 
 	private static OrganizationLocation createMockOrganizationLocation() {
 		OrganizationLocation organizationLocation = new OrganizationLocation();
-		organizationLocation.setId(7L);
+		organizationLocation.setId(8L);
 		return organizationLocation;
 	}
 
