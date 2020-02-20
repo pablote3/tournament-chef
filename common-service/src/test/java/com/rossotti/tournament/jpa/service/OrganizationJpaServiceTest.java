@@ -156,8 +156,9 @@ public class OrganizationJpaServiceTest {
 
 	@Test
 	public void delete_Deleted() {
-		organizationJpaService.delete(7L);
-		Assert.assertNull(organizationJpaService.getById(7L));
+		organizationJpaService.listAll();
+		organizationJpaService.delete(9L);
+		Assert.assertNull(organizationJpaService.getById(9L));
 	}
 
 	@Test

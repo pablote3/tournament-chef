@@ -98,7 +98,7 @@ public class Organization extends BaseEntity {
 		this.endDate = endDate;
 	}
 
-	@Column(length=25, nullable=false)
+	@Column(length=40, nullable=false)
 	@NotBlank(message="Address1 is mandatory")
 	private String address1;
 	public String getAddress1() {
@@ -108,7 +108,7 @@ public class Organization extends BaseEntity {
 		this.address1 = address1;
 	}
 
-	@Column(length=25)
+	@Column(length=40)
 	private String address2;
 	public String getAddress2() {
 		return address2;

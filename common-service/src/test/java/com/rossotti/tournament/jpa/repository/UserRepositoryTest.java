@@ -49,7 +49,7 @@ public class UserRepositoryTest {
 
 	@Test
 	public void findById_NotFound() {
-		Assert.assertNull(userRepository.findById(10L));
+		Assert.assertNull(userRepository.findById(20L));
 	}
 
 	@Test

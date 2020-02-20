@@ -52,7 +52,7 @@ public class OrganizationRepositoryTest {
 
 	@Test
 	public void findById_NotFound() {
-		Assert.assertNull(organizationRepository.findById(11L));
+		Assert.assertNull(organizationRepository.findById(21L));
 	}
 
 	@Test
@@ -182,14 +182,14 @@ public class OrganizationRepositoryTest {
 
 	@Test
 	public void delete() {
-		Organization organization = organizationRepository.findByOrganizationNameAndAsOfDate("US Sassuolo", LocalDate.of(2012, 1, 15));
+		Organization organization = organizationRepository.findByOrganizationNameAndAsOfDate("ASD Orobica Calcio Bergamo", LocalDate.of(2017, 1, 15));
 		if (organization != null) {
 			organizationRepository.deleteById(organization.getId());
 		}
 		else {
 			Assert.fail("Unable to find record to delete");
 		}
-		Organization findOrg = organizationRepository.findByOrganizationNameAndAsOfDate("US Sassuolo", LocalDate.of(2012, 1, 15));
+		Organization findOrg = organizationRepository.findByOrganizationNameAndAsOfDate("ASD Orobica Calcio Bergamo", LocalDate.of(2017, 1, 15));
 		Assert.assertNull(findOrg);
 	}
 

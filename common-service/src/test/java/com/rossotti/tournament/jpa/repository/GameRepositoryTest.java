@@ -78,7 +78,10 @@ public class GameRepositoryTest {
 
 	@Test
 	public void findByTeamName_NotFound() {
-		List<Game> games = gameRepository.findByTeamName("FC Juventes");
+		List<Game> games = gameRepository.findByTeamName("Tavagnacco");
+
+		gameRepository.findAll();
+
 		Assert.assertEquals(0, games.size());
 	}
 
@@ -131,7 +134,7 @@ public class GameRepositoryTest {
 
 	@Test
 	public void create() {
-		Game mockGame = createMockGame(GameStatus.Scheduled, LocalTime.of(9, 0, 0));
+		Game mockGame = createMockGame(GameStatus.Scheduled, LocalTime.of(7, 0, 0));
 		gameRepository.save(mockGame);
 		Game game = gameRepository.findByTeamNameGameDateTime("Inter Milan", LocalDate.of(2020, 9 , 29), LocalTime.of(9, 0, 0));
 		Assert.assertEquals(GameStatus.Scheduled, game.getGameStatus());
@@ -170,7 +173,6 @@ public class GameRepositoryTest {
 
 	@Test
 	public void delete() {
-		gameRepository.findAll();
 		Game game = gameRepository.findByTeamNameGameDateTime("Milan", LocalDate.of(2020, 9, 29), LocalTime.of(12, 0, 0));
 		if (game != null) {
 			gameRepository.deleteById(game.getId());
@@ -186,7 +188,7 @@ public class GameRepositoryTest {
 		game.setStartTime(gameTime);
 		game.setGameStatus(gameStatus);
 		game.setGameRound(createMockGameRound(game));
-		game.getGameTeams().add(EventRepositoryTest.createMockGameTeam(game));
+		game.getGameTeams().add(createMockGameTeam(game));
 		game.setCreateTs(LocalDateTime.of(2019, 10, 27, 20, 30));
 		game.setLupdTs(LocalDateTime.of(2019, 10, 27, 20, 30));
 		game.setLupdUserId(4L);
@@ -195,7 +197,7 @@ public class GameRepositoryTest {
 
 	private static GameRound createMockGameRound(Game game) {
 		GameRound gameRound = new GameRound();
-		gameRound.setId(1L);
+		gameRound.setId(5L);
 		List<Game> games = new ArrayList<>();
 		games.add(game);
 		gameRound.setGames(games);
@@ -205,7 +207,7 @@ public class GameRepositoryTest {
 
 	private static GameLocation createMockGameLocation(GameRound gameRound) {
 		GameLocation gameLocation = new GameLocation();
-		gameLocation.setId(1L);
+		gameLocation.setId(5L);
 		gameLocation.setOrganizationLocation(createMockOrganizationLocation());
 		gameLocation.setGameDate(createMockGameDate(gameLocation));
 		List<GameRound> gameRounds = new ArrayList<>();
@@ -216,7 +218,7 @@ public class GameRepositoryTest {
 
 	private static GameDate createMockGameDate(GameLocation gameLocation) {
 		GameDate gameDate = new GameDate();
-		gameDate.setId(2L);
+		gameDate.setId(3L);
 		List<GameLocation> gameLocations = new ArrayList<>();
 		gameLocations.add(gameLocation);
 		gameDate.setGameLocations(gameLocations);
@@ -226,7 +228,7 @@ public class GameRepositoryTest {
 
 	private static Event createMockEvent(GameDate gameDate) {
 		Event event = new Event();
-		event.setId(1L);
+		event.setId(7L);
 		List<GameDate> gameDates = new ArrayList<>();
 		gameDates.add(gameDate);
 		event.setGameDates(gameDates);
@@ -238,7 +240,7 @@ public class GameRepositoryTest {
 
 	private static EventTeam createMockEventTeam(Event event) {
 		EventTeam eventTeam = new EventTeam();
-		eventTeam.setId(1L);
+		eventTeam.setId(3L);
 		eventTeam.setEvent(event);
 		eventTeam.setOrganizationTeam(createMockOrganizationTeam(eventTeam));
 		return eventTeam;
@@ -246,7 +248,7 @@ public class GameRepositoryTest {
 
 	private static OrganizationTeam createMockOrganizationTeam(EventTeam eventTeam) {
 		OrganizationTeam organizationTeam = new OrganizationTeam();
-		organizationTeam.setId(1L);
+		organizationTeam.setId(5L);
 		List<EventTeam> eventTeams = new ArrayList<>();
 		eventTeams.add(eventTeam);
 		organizationTeam.setEventTeams(eventTeams);
@@ -255,8 +257,17 @@ public class GameRepositoryTest {
 
 	private static OrganizationLocation createMockOrganizationLocation() {
 		OrganizationLocation organizationLocation = new OrganizationLocation();
-		organizationLocation.setId(1L);
+		organizationLocation.setId(7L);
 		return organizationLocation;
+	}
+
+	public static GameTeam createMockGameTeam(Game game) {
+		GameTeam gameTeam = new GameTeam();
+		gameTeam.setGame(game);
+		gameTeam.setPointsScored((short)12);
+		gameTeam.setHomeTeam(Boolean.TRUE);
+		gameTeam.setEventTeam(game.getGameRound().getGameLocation().getGameDate().getEvent().getEventTeams().get(0));
+		return gameTeam;
 	}
 
 	private Game updateMockGame(LocalTime gameTime, GameStatus gameStatus) {

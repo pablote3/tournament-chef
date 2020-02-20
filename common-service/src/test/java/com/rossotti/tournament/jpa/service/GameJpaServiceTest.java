@@ -128,12 +128,12 @@ public class GameJpaServiceTest {
 		Assert.assertNull(gameJpaService.findByTeamNameGameDateTime("Inter Circle", LocalDate.of(2020, 9, 29), LocalTime.of(8, 0, 0)));
 	}
 
-//	@Test
-//	public void create_Created() {
-//		gameJpaService.save(GameRepositoryTest.createMockGame(GameStatus.Completed, LocalTime.of(14, 0, 0)));
-//		Game findGame = gameJpaService.findByTeamNameGameDateTime("Inter Milan", LocalDate.of(2020, 9, 29), LocalTime.of(14, 0, 0));
-//		Assert.assertEquals(GameStatus.Completed, findGame.getGameStatus());
-//	}
+	@Test
+	public void create_Created() {
+		gameJpaService.save(GameRepositoryTest.createMockGame(GameStatus.Completed, LocalTime.of(14, 0, 0)));
+		Game findGame = gameJpaService.findByTeamNameGameDateTime("Inter Milan", LocalDate.of(2020, 9, 29), LocalTime.of(14, 0, 0));
+		Assert.assertEquals(GameStatus.Completed, findGame.getGameStatus());
+	}
 
 	@Test
 	public void create_GameStatusIsMandatory_Null() {
