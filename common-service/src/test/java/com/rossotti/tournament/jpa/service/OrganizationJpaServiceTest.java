@@ -36,7 +36,7 @@ public class OrganizationJpaServiceTest {
 
 	@Test
 	public void findById_NotFound() {
-		Assert.assertNull(organizationJpaService.getById(11L));
+		Assert.assertNull(organizationJpaService.getById(31L));
 	}
 
 	@Test
@@ -156,7 +156,6 @@ public class OrganizationJpaServiceTest {
 
 	@Test
 	public void delete_Deleted() {
-		organizationJpaService.listAll();
 		organizationJpaService.delete(9L);
 		Assert.assertNull(organizationJpaService.getById(9L));
 	}

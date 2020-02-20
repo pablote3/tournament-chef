@@ -54,7 +54,7 @@ public class EventRepositoryTest {
 
 	@Test
 	public void findById_NotFound() {
-		Assert.assertNull(eventRepository.findById(11L));
+		Assert.assertNull(eventRepository.findById(31L));
 	}
 
 	@Test

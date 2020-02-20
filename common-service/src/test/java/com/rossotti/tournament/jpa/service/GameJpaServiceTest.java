@@ -83,8 +83,8 @@ public class GameJpaServiceTest {
 
 	@Test
 	public void findByEventName_Found() {
-		List<Game> games = gameJpaService.findByEventName("Campania Regional Frosh Soph Tournament");
-		Assert.assertEquals(7, games.size());
+		List<Game> games = gameJpaService.findByEventName("Reddan Thunder Invitational");
+		Assert.assertEquals(4, games.size());
 	}
 
 	@Test
@@ -95,8 +95,8 @@ public class GameJpaServiceTest {
 
 	@Test
 	public void findByGameDate_Found() {
-		List<Game> games = gameJpaService.findByGameDate(LocalDate.of(2020, 10, 30));
-		Assert.assertEquals(7, games.size());
+		List<Game> games = gameJpaService.findByGameDate(LocalDate.of(2010, 1, 20));
+		Assert.assertEquals(2, games.size());
 	}
 
 	@Test
@@ -173,7 +173,7 @@ public class GameJpaServiceTest {
 	@Test
 	public void delete_NotFound() {
 		CustomException exception = assertThrows(CustomException.class, () -> {
-			gameJpaService.delete(21L);
+			gameJpaService.delete(31L);
 		});
 		Assert.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, exception.getStatus());
 		Assert.assertEquals("Server error when trying to find record for id of {}", exception.getError().getErrorMessage());

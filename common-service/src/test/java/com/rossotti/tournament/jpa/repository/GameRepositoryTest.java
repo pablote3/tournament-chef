@@ -79,16 +79,13 @@ public class GameRepositoryTest {
 	@Test
 	public void findByTeamName_NotFound() {
 		List<Game> games = gameRepository.findByTeamName("Tavagnacco");
-
-		gameRepository.findAll();
-
 		Assert.assertEquals(0, games.size());
 	}
 
 	@Test
 	public void findByEventName_Found() {
-		List<Game> games = gameRepository.findByEventName("Campania Regional Frosh Soph Tournament");
-		Assert.assertEquals(7, games.size());
+		List<Game> games = gameRepository.findByEventName("Reddan Thunder Invitational");
+		Assert.assertEquals(4, games.size());
 	}
 
 	@Test
@@ -99,8 +96,8 @@ public class GameRepositoryTest {
 
 	@Test
 	public void findByGameDate_Found() {
-		List<Game> games = gameRepository.findByGameDate(LocalDate.of(2020, 9, 29));
-		Assert.assertEquals(7, games.size());
+		List<Game> games = gameRepository.findByGameDate(LocalDate.of(2010, 1, 20));
+		Assert.assertEquals(2, games.size());
 	}
 
 	@Test
@@ -134,8 +131,7 @@ public class GameRepositoryTest {
 
 	@Test
 	public void create() {
-		Game mockGame = createMockGame(GameStatus.Scheduled, LocalTime.of(7, 0, 0));
-		gameRepository.save(mockGame);
+		gameRepository.save(createMockGame(GameStatus.Scheduled, LocalTime.of(7, 0, 0)));
 		Game game = gameRepository.findByTeamNameGameDateTime("Orobica", LocalDate.of(2020, 10 , 30), LocalTime.of(7, 0, 0));
 		Assert.assertEquals(GameStatus.Scheduled, game.getGameStatus());
 	}
