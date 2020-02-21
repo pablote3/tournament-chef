@@ -4,7 +4,6 @@ import com.rossotti.tournament.jpa.enumeration.GroupPlay;
 import com.rossotti.tournament.jpa.enumeration.TemplateType;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;

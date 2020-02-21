@@ -3,7 +3,6 @@ package com.rossotti.tournament.jpa.service.impl;
 import com.rossotti.tournament.exception.CustomException;
 import com.rossotti.tournament.exception.ValidationMessages;
 import com.rossotti.tournament.jpa.enumeration.GameStatus;
-import com.rossotti.tournament.jpa.enumeration.GameType;
 import com.rossotti.tournament.jpa.model.Game;
 import com.rossotti.tournament.jpa.repository.GameRepository;
 import com.rossotti.tournament.jpa.service.GameJpaService;
