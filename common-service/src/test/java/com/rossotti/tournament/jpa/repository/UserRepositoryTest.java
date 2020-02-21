@@ -5,7 +5,6 @@ import com.rossotti.tournament.jpa.enumeration.UserStatus;
 import com.rossotti.tournament.jpa.enumeration.UserType;
 import com.rossotti.tournament.jpa.model.Organization;
 import com.rossotti.tournament.jpa.model.User;
-import com.rossotti.tournament.jpa.repository.UserRepository;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -90,48 +89,38 @@ public class UserRepositoryTest {
 
 	@Test
 	public void create_ConstraintViolation_EmailMissing() {
-		Exception exception = assertThrows(ConstraintViolationException.class, () -> {
-			userRepository.save(createMockUser(1L, "", "Bonfantini", "Brescia3"));
-		});
+		Exception exception = assertThrows(ConstraintViolationException.class, () -> userRepository.save(createMockUser(1L, "", "Bonfantini", "Brescia3")));
 		Assert.assertTrue(exception.getMessage().contains("Email is mandatory"));
 	}
 
 	@Test
 	public void create_ConstraintViolation_EmailInvalid() {
-		Exception exception = assertThrows(ConstraintViolationException.class, () -> {
-			userRepository.save(createMockUser(1L, "bonfantini.com", "Bonfantini", "Brescia3"));
-		});
+		Exception exception = assertThrows(ConstraintViolationException.class, () -> userRepository.save(createMockUser(1L, "bonfantini.com", "Bonfantini", "Brescia3")));
 		Assert.assertTrue(exception.getMessage().contains("Email invalid format"));
 	}
 
 	@Test
 	public void create_ConstraintViolation_PasswordInvalid_Short() {
-		Exception exception = assertThrows(ConstraintViolationException.class, () -> {
-			userRepository.save(createMockUser(1L, "angelica.soffia@gmail.com", "Soffia", "Br3"));
-		});
+		Exception exception = assertThrows(ConstraintViolationException.class, () -> userRepository.save(createMockUser(1L, "angelica.soffia@gmail.com", "Soffia", "Br3")));
 		Assert.assertTrue(exception.getMessage().contains("Password invalid format"));
 	}
 
 	@Test
 	public void create_Duplicate() {
-		Exception exception = assertThrows(DataIntegrityViolationException.class, () -> {
-			userRepository.save(createMockUser(1L, "valentina.giacinti@telecomitalia.com", "Giacinti", "Brescia3"));
-		});
+		Exception exception = assertThrows(DataIntegrityViolationException.class, () -> userRepository.save(createMockUser(1L, "valentina.giacinti@telecomitalia.com", "Giacinti", "Brescia3")));
 		Assert.assertTrue(exception.getMessage().contains("could not execute statement"));
 	}
 
 	@Test
 	public void update() {
-		userRepository.save(updateMockUser("FC Juventes", "valentina.bergamaschi@hotmail.com", "Valencia"));
+		userRepository.save(updateMockUser("valentina.bergamaschi@hotmail.com", "Valencia"));
 		User user = userRepository.findByOrganizationNameAndUserEmail("FC Juventes", "valentina.bergamaschi@hotmail.com");
 		Assert.assertEquals("Valencia", user.getLastName());
 	}
 
 	@Test
 	public void update_TransactionSystemException_LastNameMissing() {
-		Exception exception = assertThrows(TransactionSystemException.class, () -> {
-			userRepository.save(updateMockUser("FC Juventes", "alessia.piazza@telecomitalia.com", null));
-		});
+		Exception exception = assertThrows(TransactionSystemException.class, () -> userRepository.save(updateMockUser("alessia.piazza@telecomitalia.com", null)));
 		Assert.assertTrue(exception.getCause().getCause().getMessage().contains("LastName is mandatory"));
 	}
 
@@ -162,8 +151,8 @@ public class UserRepositoryTest {
 		return user;
 	}
 
-	private User updateMockUser(String orgName, String email, String lastName) {
-		User user = userRepository.findByOrganizationNameAndUserEmail(orgName, email);
+	private User updateMockUser(String email, String lastName) {
+		User user = userRepository.findByOrganizationNameAndUserEmail("FC Juventes", email);
 		user.setLastName(lastName);
 		return user;
 	}

@@ -157,9 +157,7 @@ public class EventJpaServiceTest {
 	public void update_EventTypeIsMandatory_Empty() {
 		Event event = eventJpaService.findByEventNameAsOfDateTemplateType("Lombardy Halloween Invitational", LocalDate.of(2020, 9, 24), TemplateType.four_x_four_pp);
 		event.setEventType(null);
-		CustomException exception = assertThrows(CustomException.class, () -> {
-			eventJpaService.save(event);
-		});
+		CustomException exception = assertThrows(CustomException.class, () -> eventJpaService.save(event));
 		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
 		Assert.assertEquals("EventType is mandatory", exception.getError().getErrorMessage());
 	}
@@ -172,9 +170,7 @@ public class EventJpaServiceTest {
 
 	@Test
 	public void delete_NotFound() {
-		CustomException exception = assertThrows(CustomException.class, () -> {
-			eventJpaService.delete(21L);
-		});
+		CustomException exception = assertThrows(CustomException.class, () -> eventJpaService.delete(21L));
 		Assert.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, exception.getStatus());
 		Assert.assertEquals("Server error when trying to find record for id of {}", exception.getError().getErrorMessage());
 		Assert.assertEquals("MSG_VAL_0012", exception.getError().getError());

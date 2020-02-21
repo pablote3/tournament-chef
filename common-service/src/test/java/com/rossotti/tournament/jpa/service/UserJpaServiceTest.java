@@ -76,36 +76,28 @@ public class UserJpaServiceTest {
 
 	@Test
 	public void create_EmailIsMandatory_Empty() {
-		CustomException exception = assertThrows(CustomException.class, () -> {
-			userJpaService.save(UserRepositoryTest.createMockUser(1L, "", "Bonetti", "Super3"));
-		});
+		CustomException exception = assertThrows(CustomException.class, () -> userJpaService.save(UserRepositoryTest.createMockUser(1L, "", "Bonetti", "Super3")));
 		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
 		Assert.assertEquals("Email is mandatory", exception.getError().getErrorMessage());
 	}
 
 	@Test
 	public void create_LastNameIsMandatory_Null() {
-		CustomException exception = assertThrows(CustomException.class, () -> {
-			userJpaService.save(UserRepositoryTest.createMockUser(1L, "bonetti.tatiana@hotmail.com", null, "Super3"));
-		});
+		CustomException exception = assertThrows(CustomException.class, () -> userJpaService.save(UserRepositoryTest.createMockUser(1L, "bonetti.tatiana@hotmail.com", null, "Super3")));
 		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
 		Assert.assertEquals("LastName is mandatory", exception.getError().getErrorMessage());
 	}
 
 	@Test
 	public void create_EmailInvalidFormat() {
-		CustomException exception = assertThrows(CustomException.class, () -> {
-			userJpaService.save(UserRepositoryTest.createMockUser(1L, "bonetti.tatiana.hotmail.com", "Bonetti", "Super3"));
-		});
+		CustomException exception = assertThrows(CustomException.class, () -> userJpaService.save(UserRepositoryTest.createMockUser(1L, "bonetti.tatiana.hotmail.com", "Bonetti", "Super3")));
 		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
 		Assert.assertEquals("Email invalid format", exception.getError().getErrorMessage());
 	}
 
 	@Test
 	public void create_PasswordInvalidFormat() {
-		CustomException exception = assertThrows(CustomException.class, () -> {
-			userJpaService.save(UserRepositoryTest.createMockUser(1L, "bonetti.tatiana@hotmail.com", "Bonetti", "Sup"));
-		});
+		CustomException exception = assertThrows(CustomException.class, () -> userJpaService.save(UserRepositoryTest.createMockUser(1L, "bonetti.tatiana@hotmail.com", "Bonetti", "Sup")));
 		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
 		Assert.assertEquals("Password invalid format", exception.getError().getErrorMessage());
 	}
@@ -124,9 +116,7 @@ public class UserJpaServiceTest {
 		User updateUser = userJpaService.findByOrganizationNameAndUserEmail("FC Juventes", "alessia.piazza@telecomitalia.com");
 		updateUser.setUserStatus(UserStatus.Active);
 		updateUser.setEmail("");
-		CustomException exception = assertThrows(CustomException.class, () -> {
-			userJpaService.save(updateUser);
-		});
+		CustomException exception = assertThrows(CustomException.class, () -> userJpaService.save(updateUser));
 		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
 		Assert.assertEquals("Email is mandatory", exception.getError().getErrorMessage());
 	}
@@ -136,9 +126,7 @@ public class UserJpaServiceTest {
 		User updateUser = userJpaService.findByOrganizationNameAndUserEmail("FC Juventes", "alessia.piazza@telecomitalia.com");
 		updateUser.setUserStatus(UserStatus.Active);
 		updateUser.setLastName(null);
-		CustomException exception = assertThrows(CustomException.class, () -> {
-			userJpaService.save(updateUser);
-		});
+		CustomException exception = assertThrows(CustomException.class, () -> userJpaService.save(updateUser));
 		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
 		Assert.assertEquals("LastName is mandatory", exception.getError().getErrorMessage());
 	}
@@ -148,9 +136,7 @@ public class UserJpaServiceTest {
 		User updateUser = userJpaService.findByOrganizationNameAndUserEmail("FC Juventes", "alessia.piazza@telecomitalia.com");
 		updateUser.setUserStatus(UserStatus.Active);
 		updateUser.setPassword("Sup");
-		CustomException exception = assertThrows(CustomException.class, () -> {
-			userJpaService.save(updateUser);
-		});
+		CustomException exception = assertThrows(CustomException.class, () -> userJpaService.save(updateUser));
 		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
 		Assert.assertEquals("Password invalid format", exception.getError().getErrorMessage());
 	}
@@ -160,9 +146,7 @@ public class UserJpaServiceTest {
 		User updateUser = userJpaService.findByOrganizationNameAndUserEmail("FC Juventes", "alessia.piazza@telecomitalia.com");
 		updateUser.setEmail("alessia.piazza_telecomitalia.com");
 		updateUser.setUserStatus(UserStatus.Active);
-		CustomException exception = assertThrows(CustomException.class, () -> {
-			userJpaService.save(updateUser);
-		});
+		CustomException exception = assertThrows(CustomException.class, () -> userJpaService.save(updateUser));
 		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
 		Assert.assertEquals("Email invalid format", exception.getError().getErrorMessage());
 	}
@@ -175,9 +159,7 @@ public class UserJpaServiceTest {
 
 	@Test
 	public void delete_NotFound() {
-		CustomException exception = assertThrows(CustomException.class, () -> {
-			userJpaService.delete(21L);
-		});
+		CustomException exception = assertThrows(CustomException.class, () -> userJpaService.delete(21L));
 		Assert.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, exception.getStatus());
 		Assert.assertEquals("Server error when trying to find record for id of {}", exception.getError().getErrorMessage());
 		Assert.assertEquals("MSG_VAL_0012", exception.getError().getError());

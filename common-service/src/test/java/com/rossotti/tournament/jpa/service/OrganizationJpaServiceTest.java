@@ -96,18 +96,14 @@ public class OrganizationJpaServiceTest {
 
 	@Test
 	public void create_ContactEmailIsMandatory_Null() {
-		CustomException exception = assertThrows(CustomException.class, () -> {
-			organizationJpaService.save(OrganizationRepositoryTest.createMockOrganization("Empoli FC", LocalDate.of(2011, 1, 15), LocalDate.of(2011, 1, 22), "Di Guglielmo", null));
-		});
+		CustomException exception = assertThrows(CustomException.class, () -> organizationJpaService.save(OrganizationRepositoryTest.createMockOrganization("Empoli FC", LocalDate.of(2011, 1, 15), LocalDate.of(2011, 1, 22), "Di Guglielmo", null)));
 		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
 		Assert.assertEquals("ContactEmail is mandatory", exception.getError().getErrorMessage());
 	}
 
 	@Test
 	public void create_ContactEmailInvalidFormat() {
-		CustomException exception = assertThrows(CustomException.class, () -> {
-			organizationJpaService.save(OrganizationRepositoryTest.createMockOrganization("Empoli FC", LocalDate.of(2011, 1, 15), LocalDate.of(2011, 1, 22), "Di Guglielmo", "di guglielmo@dada.it"));
-		});
+		CustomException exception = assertThrows(CustomException.class, () -> organizationJpaService.save(OrganizationRepositoryTest.createMockOrganization("Empoli FC", LocalDate.of(2011, 1, 15), LocalDate.of(2011, 1, 22), "Di Guglielmo", "di guglielmo@dada.it")));
 		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
 		Assert.assertEquals("ContactEmail invalid format", exception.getError().getErrorMessage());
 	}
@@ -125,9 +121,7 @@ public class OrganizationJpaServiceTest {
 	public void update_ContactEmailIsMandatory_Empty() {
 		Organization organization = organizationJpaService.findByOrganizationNameAndAsOfDate("AC Milan SPA", LocalDate.of(2012, 1, 15));
 		organization.setContactEmail("");
-		CustomException exception = assertThrows(CustomException.class, () -> {
-			organizationJpaService.save(organization);
-		});
+		CustomException exception = assertThrows(CustomException.class, () -> organizationJpaService.save(organization));
 		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
 		Assert.assertEquals("ContactEmail is mandatory", exception.getError().getErrorMessage());
 	}
@@ -136,9 +130,7 @@ public class OrganizationJpaServiceTest {
 	public void update_ContactEmailIsMandatory_Null() {
 		Organization organization = organizationJpaService.findByOrganizationNameAndAsOfDate("AC Milan SPA", LocalDate.of(2012, 1, 15));
 		organization.setContactEmail(null);
-		CustomException exception = assertThrows(CustomException.class, () -> {
-			organizationJpaService.save(organization);
-		});
+		CustomException exception = assertThrows(CustomException.class, () -> organizationJpaService.save(organization));
 		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
 		Assert.assertEquals("ContactEmail is mandatory", exception.getError().getErrorMessage());
 	}
@@ -147,9 +139,7 @@ public class OrganizationJpaServiceTest {
 	public void update_ContactEmailInvalidFormat() {
 		Organization organization = organizationJpaService.findByOrganizationNameAndAsOfDate("AC Milan SPA", LocalDate.of(2012, 1, 15));
 		organization.setContactEmail("LauraFusetti_dada.it");
-		CustomException exception = assertThrows(CustomException.class, () -> {
-			organizationJpaService.save(organization);
-		});
+		CustomException exception = assertThrows(CustomException.class, () -> organizationJpaService.save(organization));
 		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
 		Assert.assertEquals("ContactEmail invalid format", exception.getError().getErrorMessage());
 	}
@@ -162,9 +152,7 @@ public class OrganizationJpaServiceTest {
 
 	@Test
 	public void delete_NotFound() {
-		CustomException exception = assertThrows(CustomException.class, () -> {
-			organizationJpaService.delete(21L);
-		});
+		CustomException exception = assertThrows(CustomException.class, () -> organizationJpaService.delete(21L));
 		Assert.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, exception.getStatus());
 		Assert.assertEquals("Server error when trying to find record for id of {}", exception.getError().getErrorMessage());
 		Assert.assertEquals("MSG_VAL_0012", exception.getError().getError());

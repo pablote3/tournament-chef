@@ -150,23 +150,19 @@ public class OrganizationRepositoryTest {
 
 	@Test
 	public void create_ConstraintViolation_ContactLastNameMissing() {
-		Exception exception = assertThrows(ConstraintViolationException.class, () -> {
-			organizationRepository.save(createMockOrganization("AS Roma", LocalDate.of(2010, 1, 11), LocalDate.of(9999, 12, 31), null, "manuela.giugliano@gmail.com"));
-		});
+		Exception exception = assertThrows(ConstraintViolationException.class, () -> organizationRepository.save(createMockOrganization("AS Roma", LocalDate.of(2010, 1, 11), LocalDate.of(9999, 12, 31), null, "manuela.giugliano@gmail.com")));
 		Assert.assertTrue(exception.getMessage().contains("ContactLastName is mandatory"));
 	}
 
 	@Test
 	public void create_Duplicate() {
-		Exception exception = assertThrows(DataIntegrityViolationException.class, () -> {
-			organizationRepository.save(createMockOrganization("FC Juventes", LocalDate.of(2010, 1, 15), LocalDate.of(2016, 2, 20), "Bonansea", "barbara.bonansea@gmail.com"));
-		});
+		Exception exception = assertThrows(DataIntegrityViolationException.class, () -> organizationRepository.save(createMockOrganization("FC Juventes", LocalDate.of(2010, 1, 15), LocalDate.of(2016, 2, 20), "Bonansea", "barbara.bonansea@gmail.com")));
 		Assert.assertTrue(exception.getMessage().contains("could not execute statement"));
 	}
 
 	@Test
 	public void update() {
-		organizationRepository.save(updateMockOrganization("Fiorentina FC", LocalDate.of(2012, 1, 15), "Mauro"));
+		organizationRepository.save(updateMockOrganization(LocalDate.of(2012, 1, 15), "Mauro"));
 		Organization organization = organizationRepository.findByOrganizationNameAndAsOfDate("Fiorentina FC", LocalDate.of(2012, 1, 15));
 		Assert.assertEquals("Mauro", organization.getContactLastName());
 		Assert.assertEquals("Ilaria", organization.getContactFirstName());
@@ -174,9 +170,7 @@ public class OrganizationRepositoryTest {
 
 	@Test
 	public void update_TransactionSystemException_ContactLastNameMissing() {
-		Exception exception = assertThrows(TransactionSystemException.class, () -> {
-			organizationRepository.save(updateMockOrganization("Fiorentina FC", LocalDate.of(2012, 1, 15), null));
-		});
+		Exception exception = assertThrows(TransactionSystemException.class, () -> organizationRepository.save(updateMockOrganization(LocalDate.of(2012, 1, 15), null)));
 		Assert.assertTrue(exception.getCause().getCause().getMessage().contains("ContactLastName is mandatory"));
 	}
 
@@ -215,8 +209,8 @@ public class OrganizationRepositoryTest {
 		return organization;
 	}
 
-	private Organization updateMockOrganization(String orgName, LocalDate asOfDate, String contactLastName) {
-		Organization organization = organizationRepository.findByOrganizationNameAndAsOfDate(orgName, asOfDate);
+	private Organization updateMockOrganization(LocalDate asOfDate, String contactLastName) {
+		Organization organization = organizationRepository.findByOrganizationNameAndAsOfDate("Fiorentina FC", asOfDate);
 		organization.setContactLastName(contactLastName);
 		organization.setContactFirstName("Ilaria");
 		return organization;

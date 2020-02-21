@@ -137,9 +137,7 @@ public class GameJpaServiceTest {
 
 	@Test
 	public void create_GameStatusIsMandatory_Null() {
-		CustomException exception = assertThrows(CustomException.class, () -> {
-			gameJpaService.save(GameRepositoryTest.createMockGame(null, LocalTime.of(14, 0, 0)));
-		});
+		CustomException exception = assertThrows(CustomException.class, () -> gameJpaService.save(GameRepositoryTest.createMockGame(null, LocalTime.of(14, 0, 0))));
 		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
 		Assert.assertEquals("GameStatus is mandatory", exception.getError().getErrorMessage());
 	}
@@ -157,9 +155,7 @@ public class GameJpaServiceTest {
 	public void update_GameStatusIsMandatory_Null() {
 		Game game = gameJpaService.findByTeamNameGameDateTime("Inter Milan", LocalDate.of(2020, 9, 29), LocalTime.of(10, 0, 0));
 		game.setGameStatus(null);
-		CustomException exception = assertThrows(CustomException.class, () -> {
-			gameJpaService.save(game);
-		});
+		CustomException exception = assertThrows(CustomException.class, () -> gameJpaService.save(game));
 		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
 		Assert.assertEquals("GameStatus is mandatory", exception.getError().getErrorMessage());
 	}
@@ -172,9 +168,7 @@ public class GameJpaServiceTest {
 
 	@Test
 	public void delete_NotFound() {
-		CustomException exception = assertThrows(CustomException.class, () -> {
-			gameJpaService.delete(31L);
-		});
+		CustomException exception = assertThrows(CustomException.class, () -> gameJpaService.delete(31L));
 		Assert.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, exception.getStatus());
 		Assert.assertEquals("Server error when trying to find record for id of {}", exception.getError().getErrorMessage());
 		Assert.assertEquals("MSG_VAL_0012", exception.getError().getError());

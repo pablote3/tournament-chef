@@ -138,17 +138,13 @@ public class GameRepositoryTest {
 
 	@Test
 	public void create_ConstraintViolation_GameStatusMissing() {
-		Exception exception = assertThrows(ConstraintViolationException.class, () -> {
-			gameRepository.save(createMockGame(null, LocalTime.of(9, 0, 0)));
-		});
+		Exception exception = assertThrows(ConstraintViolationException.class, () -> gameRepository.save(createMockGame(null, LocalTime.of(9, 0, 0))));
 		Assert.assertTrue(exception.getMessage().contains("GameStatus is mandatory"));
 	}
 
 	@Test
 	public void create_Duplicate() {
-		Exception exception = assertThrows(DataIntegrityViolationException.class, () -> {
-			gameRepository.save(createMockGame(GameStatus.Scheduled, LocalTime.of(6, 0, 0)));
-		});
+		Exception exception = assertThrows(DataIntegrityViolationException.class, () -> gameRepository.save(createMockGame(GameStatus.Scheduled, LocalTime.of(6, 0, 0))));
 		Assert.assertTrue(exception.getMessage().contains("could not execute statement"));
 	}
 
@@ -161,9 +157,7 @@ public class GameRepositoryTest {
 
 	@Test
 	public void update_GameStatusMissing() {
-		Exception exception = assertThrows(TransactionSystemException.class, () -> {
-			gameRepository.save(updateMockGame(LocalTime.of(10, 0, 0), null));
-		});
+		Exception exception = assertThrows(TransactionSystemException.class, () -> gameRepository.save(updateMockGame(LocalTime.of(10, 0, 0), null)));
 		Assert.assertTrue(exception.getCause().getCause().getMessage().contains("GameStatus is mandatory"));
 	}
 
@@ -267,7 +261,6 @@ public class GameRepositoryTest {
 	}
 
 	private Game updateMockGame(LocalTime gameTime, GameStatus gameStatus) {
-		gameRepository.findAll();
 		Game game = gameRepository.findByTeamNameGameDateTime("Inter Milan", LocalDate.of(2020, 9, 29), gameTime);
 		game.setGameStatus(gameStatus);
 		return game;

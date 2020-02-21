@@ -150,17 +150,13 @@ public class EventRepositoryTest {
 
 	@Test
 	public void create_ConstraintViolation_EventNameMissing() {
-		Exception exception = assertThrows(ConstraintViolationException.class, () -> {
-			eventRepository.save(createMockEvent(1L, null, 1L, 4L, 1L, 2L, LocalDate.of(2012, 9, 10), LocalDate.of(2012, 9, 11)));
-		});
+		Exception exception = assertThrows(ConstraintViolationException.class, () -> eventRepository.save(createMockEvent(1L, null, 1L, 4L, 1L, 2L, LocalDate.of(2012, 9, 10), LocalDate.of(2012, 9, 11))));
 		Assert.assertTrue(exception.getMessage().contains("EventName is mandatory"));
 	}
 
 	@Test
 	public void create_Duplicate() {
-		Exception exception = assertThrows(DataIntegrityViolationException.class, () -> {
-			eventRepository.save(createMockEvent(1L, "Lombardy Halloween Invitational", 1L, 4L, 1L, 2L, LocalDate.of(2020, 10, 24), LocalDate.of(2020, 10, 25)));
-		});
+		Exception exception = assertThrows(DataIntegrityViolationException.class, () -> eventRepository.save(createMockEvent(1L, "Lombardy Halloween Invitational", 1L, 4L, 1L, 2L, LocalDate.of(2020, 10, 24), LocalDate.of(2020, 10, 25))));
 		Assert.assertTrue(exception.getMessage().contains("could not execute statement"));
 	}
 
@@ -173,9 +169,7 @@ public class EventRepositoryTest {
 
 	@Test
 	public void update_TransactionSystemException_EventStatusMissing() {
-		Exception exception = assertThrows(TransactionSystemException.class, () -> {
-			eventRepository.save(updateMockEvent(LocalDate.of(2020, 10, 25), null));
-		});
+		Exception exception = assertThrows(TransactionSystemException.class, () -> eventRepository.save(updateMockEvent(LocalDate.of(2020, 10, 25), null)));
 		Assert.assertTrue(exception.getCause().getCause().getMessage().contains("EventStatus is mandatory"));
 	}
 
