@@ -35,19 +35,14 @@ public class UserJpaServiceImpl implements UserJpaService {
 	}
 
 	@Override
-	public List<User> findByEmail(String email) {
+	public User findByEmail(String email) {
 		return userRepository.findByEmail(email);
-	}
-
-	@Override
-	public User findByOrganizationNameAndUserEmail(String email, String organizationName) {
-		return userRepository.findByOrganizationNameAndUserEmail(email, organizationName);
 	}
 
 	@Override
 	public User save(User user) throws ResponseStatusException {
 		try {
-			User findUser = findByOrganizationNameAndUserEmail(user.getOrganization().getOrganizationName(), user.getEmail());
+			User findUser = findByEmail(user.getEmail());
 			if (findUser != null) {
 				findUser.setUserType(user.getUserType());
 				findUser.setUserStatus(user.getUserStatus());

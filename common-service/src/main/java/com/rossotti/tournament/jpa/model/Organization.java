@@ -13,12 +13,12 @@ import java.util.List;
 @Table(uniqueConstraints=@UniqueConstraint(columnNames={"organizationName", "startDate", "endDate"}))
 public class Organization extends BaseEntity {
 	@OneToMany(mappedBy="organization", fetch = FetchType.LAZY, cascade= CascadeType.ALL, orphanRemoval = true)
-	private List<User> users = new ArrayList<>();
-	public List<User> getUsers()  {
-		return users;
+	private List<UserOrganization> userOrganizations = new ArrayList<>();
+	public List<UserOrganization> getUserOrganizations()  {
+		return userOrganizations;
 	}
-	public void setUsers(List<User> users)  {
-		this.users = users;
+	public void setUserOrganizations(List<UserOrganization> userOrganizations)  {
+		this.userOrganizations = userOrganizations;
 	}
 
 	@OneToMany(mappedBy="organization", fetch = FetchType.LAZY, cascade= CascadeType.ALL, orphanRemoval = true)

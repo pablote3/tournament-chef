@@ -40,7 +40,7 @@ public class EventRepositoryTest {
 		Assert.assertEquals(LocalDateTime.of(2020, 1, 16, 20, 0), event.getCreateTs());
 		Assert.assertEquals(LocalDateTime.of(2020, 1, 19, 20, 0), event.getLupdTs());
 		Assert.assertEquals(2, event.getLupdUserId().longValue());
-		Assert.assertEquals(5, event.getOrganization().getUsers().size());
+		Assert.assertEquals(5, event.getOrganization().getUserOrganizations().size());
 		Assert.assertEquals(2, event.getOrganization().getTeams().size());
 		Assert.assertEquals(2, event.getOrganization().getLocations().size());
 		Assert.assertEquals(2, event.getEventTeams().size());

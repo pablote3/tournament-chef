@@ -31,7 +31,7 @@ public class OrganizationJpaServiceTest {
 	public void getById_Found() {
 		Organization organization = organizationJpaService.getById(1L);
 		Assert.assertEquals("FC Juventes", organization.getOrganizationName());
-		Assert.assertEquals(5, organization.getUsers().size());
+		Assert.assertEquals(5, organization.getUserOrganizations().size());
 	}
 
 	@Test

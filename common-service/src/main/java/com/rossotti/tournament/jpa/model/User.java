@@ -4,19 +4,20 @@ import com.rossotti.tournament.jpa.enumeration.UserStatus;
 import com.rossotti.tournament.jpa.enumeration.UserType;
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Table(uniqueConstraints=@UniqueConstraint(columnNames={"organizationId", "email"}))
+@Table(uniqueConstraints=@UniqueConstraint(columnNames={"email"}))
 public class User extends BaseEntity {
 
-	@ManyToOne
-	@JoinColumn(name="organizationId", referencedColumnName="id", nullable=false)
-	private Organization organization;
-	public Organization getOrganization() {
-		return organization;
+	@OneToMany(mappedBy="user", fetch = FetchType.LAZY, cascade= CascadeType.ALL, orphanRemoval = true)
+	private List<UserOrganization> userOrganizations = new ArrayList<>();
+	public List<UserOrganization> getUserOrganization()  {
+		return userOrganizations;
 	}
-	public void setOrganization(Organization organization) {
-		this.organization = organization;
+	public void setUserOrganization(List<UserOrganization> userOrganizations)  {
+		this.userOrganizations = userOrganizations;
 	}
 
 	@Column(length=50, nullable=false)

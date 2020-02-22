@@ -5,6 +5,7 @@ import com.rossotti.tournament.jpa.enumeration.UserStatus;
 import com.rossotti.tournament.jpa.enumeration.UserType;
 import com.rossotti.tournament.jpa.model.Organization;
 import com.rossotti.tournament.jpa.model.User;
+import com.rossotti.tournament.jpa.model.UserOrganization;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,10 +41,10 @@ public class UserRepositoryTest {
 		Assert.assertEquals(LocalDateTime.of(2020, 1, 16, 20, 0), user.getCreateTs());
 		Assert.assertEquals(LocalDateTime.of(2020, 1, 19, 20, 0), user.getLupdTs());
 		Assert.assertEquals(1, user.getLupdUserId().longValue());
-		Assert.assertEquals("FC Juventes", user.getOrganization().getOrganizationName());
-		Assert.assertEquals(5, user.getOrganization().getUsers().size());
-		Assert.assertEquals(2, user.getOrganization().getTeams().size());
-		Assert.assertEquals(2, user.getOrganization().getLocations().size());
+		Assert.assertEquals("FC Juventes", user.getUserOrganization().get(0).getOrganization().getOrganizationName());
+		Assert.assertEquals(1, user.getUserOrganization().size());
+		Assert.assertEquals(2, user.getUserOrganization().get(0).getOrganization().getTeams().size());
+		Assert.assertEquals(2, user.getUserOrganization().get(0).getOrganization().getLocations().size());
 	}
 
 	@Test
@@ -59,62 +60,49 @@ public class UserRepositoryTest {
 
 	@Test
 	public void findByEmail_Found() {
-		List<User> users = userRepository.findByEmail("valentina.giacinti@telecomitalia.com");
-		Assert.assertEquals(2, users.size());
+		Assert.assertNotNull(userRepository.findByEmail("valentina.giacinti@telecomitalia.com"));
 	}
 
 	@Test
 	public void findByEmail_NotFound() {
-		List<User> users = userRepository.findByEmail("saratamborini@euro.com");
-		Assert.assertEquals(0, users.size());
-	}
-
-	@Test
-	public void findByOrganizationNameAndEmail_Found() {
-		User user = userRepository.findByOrganizationNameAndUserEmail("FC Juventes", "valentina.giacinti@telecomitalia.com");
-		Assert.assertEquals("Giacinti", user.getLastName());
-	}
-
-	@Test
-	public void findByOrganizationNameAndEmail_NotFound() {
-		Assert.assertNull(userRepository.findByOrganizationNameAndUserEmail("FC Juventes", "saratamborini@euro.com"));
+		Assert.assertNull(userRepository.findByEmail("saratamborini@euro.com"));
 	}
 
 	@Test
 	public void create() {
-		userRepository.save(createMockUser(1L, "amserturini@gmail.com", "Serturini", "Brescia3"));
-		User user = userRepository.findByOrganizationNameAndUserEmail("FC Juventes", "amserturini@gmail.com");
+		userRepository.save(createMockUser("amserturini@gmail.com", "Serturini", "Brescia3"));
+		User user = userRepository.findByEmail("amserturini@gmail.com");
 		Assert.assertEquals("Serturini", user.getLastName());
 	}
 
 	@Test
 	public void create_ConstraintViolation_EmailMissing() {
-		Exception exception = assertThrows(ConstraintViolationException.class, () -> userRepository.save(createMockUser(1L, "", "Bonfantini", "Brescia3")));
+		Exception exception = assertThrows(ConstraintViolationException.class, () -> userRepository.save(createMockUser("", "Bonfantini", "Brescia3")));
 		Assert.assertTrue(exception.getMessage().contains("Email is mandatory"));
 	}
 
 	@Test
 	public void create_ConstraintViolation_EmailInvalid() {
-		Exception exception = assertThrows(ConstraintViolationException.class, () -> userRepository.save(createMockUser(1L, "bonfantini.com", "Bonfantini", "Brescia3")));
+		Exception exception = assertThrows(ConstraintViolationException.class, () -> userRepository.save(createMockUser("bonfantini.com", "Bonfantini", "Brescia3")));
 		Assert.assertTrue(exception.getMessage().contains("Email invalid format"));
 	}
 
 	@Test
 	public void create_ConstraintViolation_PasswordInvalid_Short() {
-		Exception exception = assertThrows(ConstraintViolationException.class, () -> userRepository.save(createMockUser(1L, "angelica.soffia@gmail.com", "Soffia", "Br3")));
+		Exception exception = assertThrows(ConstraintViolationException.class, () -> userRepository.save(createMockUser("angelica.soffia@gmail.com", "Soffia", "Br3")));
 		Assert.assertTrue(exception.getMessage().contains("Password invalid format"));
 	}
 
 	@Test
 	public void create_Duplicate() {
-		Exception exception = assertThrows(DataIntegrityViolationException.class, () -> userRepository.save(createMockUser(1L, "valentina.giacinti@telecomitalia.com", "Giacinti", "Brescia3")));
+		Exception exception = assertThrows(DataIntegrityViolationException.class, () -> userRepository.save(createMockUser("valentina.giacinti@telecomitalia.com", "Giacinti", "Brescia3")));
 		Assert.assertTrue(exception.getMessage().contains("could not execute statement"));
 	}
 
 	@Test
 	public void update() {
 		userRepository.save(updateMockUser("valentina.bergamaschi@hotmail.com", "Valencia"));
-		User user = userRepository.findByOrganizationNameAndUserEmail("FC Juventes", "valentina.bergamaschi@hotmail.com");
+		User user = userRepository.findByEmail("valentina.bergamaschi@hotmail.com");
 		Assert.assertEquals("Valencia", user.getLastName());
 	}
 
@@ -126,19 +114,19 @@ public class UserRepositoryTest {
 
 	@Test
 	public void delete() {
-		User user = userRepository.findByOrganizationNameAndUserEmail("FC Juventes", "martina.capelli@telecomitalia.com");
+		User user = userRepository.findByEmail("martina.capelli@telecomitalia.com");
 		if (user != null) {
 			userRepository.deleteById(user.getId());
 		}
 		else {
 			Assert.fail("Unable to find record to delete");
 		}
-		Assert.assertNull(userRepository.findByOrganizationNameAndUserEmail("FC Juventes", "martina.capelli@telecomitalia.com"));
+		Assert.assertNull(userRepository.findByEmail("martina.capelli@telecomitalia.com"));
 	}
 
-	public static User createMockUser(Long orgId, String email, String lastName, String password) {
+	public static User createMockUser(String email, String lastName, String password) {
 		User user = new User();
-		user.setOrganization(createMockOrganization(orgId));
+		user.getUserOrganization().add(createMockUserOrganization(user));
 		user.setEmail(email);
 		user.setUserType(UserType.Administrator);
 		user.setUserStatus(UserStatus.Active);
@@ -152,14 +140,21 @@ public class UserRepositoryTest {
 	}
 
 	private User updateMockUser(String email, String lastName) {
-		User user = userRepository.findByOrganizationNameAndUserEmail("FC Juventes", email);
+		User user = userRepository.findByEmail(email);
 		user.setLastName(lastName);
 		return user;
 	}
 
-	private static Organization createMockOrganization(Long orgId) {
+	private static UserOrganization createMockUserOrganization(User user) {
+		UserOrganization userOrganization = new UserOrganization();
+		userOrganization.setOrganization(createMockOrganization());
+		userOrganization.setUser(user);
+		return userOrganization;
+	}
+
+	private static Organization createMockOrganization() {
 		Organization organization = new Organization();
-		organization.setId(orgId);
+		organization.setId(1L);
 		return organization;
 	}
 }
