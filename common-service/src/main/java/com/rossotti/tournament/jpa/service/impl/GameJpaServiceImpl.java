@@ -71,7 +71,7 @@ public class GameJpaServiceImpl implements GameJpaService {
 	@Override
 	public Game save(Game game) throws ResponseStatusException {
 		try {
-			String gameTeam = game.getGameTeams().get(0).getEventTeam().getOrganizationTeam().getTeamName();
+			String gameTeam = game.getGameTeams().get(0).getEventTeam().getAvailableTeam().getTeamName();
 			LocalDate gameDate = game.getGameRound().getGameLocation().getGameDate().getGameDate();
 			Game findGame = findByTeamNameGameDateTime(gameTeam, gameDate, game.getStartTime());
 			if (findGame != null) {

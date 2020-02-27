@@ -22,12 +22,12 @@ public class Organization extends BaseEntity {
 	}
 
 	@OneToMany(mappedBy="organization", fetch = FetchType.LAZY, cascade= CascadeType.ALL, orphanRemoval = true)
-	private List<OrganizationTeam> teams = new ArrayList<>();
-	public List<OrganizationTeam> getTeams()  {
-		return teams;
+	private List<AvailableTeam> availableTeams = new ArrayList<>();
+	public List<AvailableTeam> getAvailableTeams()  {
+		return availableTeams;
 	}
-	public void setTeams(List<OrganizationTeam> teams)  {
-		this.teams = teams;
+	public void setAvailableTeams(List<AvailableTeam> availableTeams)  {
+		this.availableTeams = availableTeams;
 	}
 
 	@OneToMany(mappedBy="organization", fetch = FetchType.LAZY, cascade= CascadeType.ALL, orphanRemoval = true)

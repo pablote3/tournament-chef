@@ -7,7 +7,7 @@ import java.util.List;
 
 @Entity
 @Table(uniqueConstraints=@UniqueConstraint(columnNames={"organizationId", "teamName"}))
-public class OrganizationTeam extends BaseEntity {
+public class AvailableTeam extends BaseEntity {
 
 	@ManyToOne
 	@JoinColumn(name="organizationId", referencedColumnName="id", nullable=false)
@@ -19,7 +19,7 @@ public class OrganizationTeam extends BaseEntity {
 		this.organization = organization;
 	}
 
-	@OneToMany(mappedBy="organizationTeam", fetch = FetchType.LAZY, cascade= CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy="availableTeam", fetch = FetchType.LAZY, cascade= CascadeType.ALL, orphanRemoval = true)
 	private List<EventTeam> eventTeams = new ArrayList<>();
 	public List<EventTeam> getEventTeams()  {
 		return eventTeams;

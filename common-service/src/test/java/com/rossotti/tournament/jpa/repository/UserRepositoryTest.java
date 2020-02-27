@@ -43,7 +43,7 @@ public class UserRepositoryTest {
 		Assert.assertEquals(1, user.getLupdUserId().longValue());
 		Assert.assertEquals("FC Juventes", user.getUserOrganization().get(0).getOrganization().getOrganizationName());
 		Assert.assertEquals(1, user.getUserOrganization().size());
-		Assert.assertEquals(2, user.getUserOrganization().get(0).getOrganization().getTeams().size());
+		Assert.assertEquals(2, user.getUserOrganization().get(0).getOrganization().getAvailableTeams().size());
 		Assert.assertEquals(2, user.getUserOrganization().get(0).getOrganization().getLocations().size());
 	}
 
