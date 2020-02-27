@@ -21,16 +21,16 @@ insert into organization (id, organizationName, address1, address2, city, state,
 insert into organization (id, organizationName, address1, address2, city, state, zipCode, country, contactEmail, contactFirstName, contactLastName, contactPhone, startDate, endDate, organizationStatus, createTs, lupdTs, lupdUserId) VALUES(10, 'Empoli FC', 'Via di Pianezzoli', '', 'Empoli', 'Tuscany', '33891', 'irene.mazzella@yahoo.com', 'Italy', 'Irene', 'Mazzella', '385494221', '2014-01-15', '9999-12-31', 'Active', '2020-01-19 20:00:00.0', '2020-01-20 20:00:00.0', 1);
 insert into organization (id, organizationName, address1, address2, city, state, zipCode, country, contactEmail, contactFirstName, contactLastName, contactPhone, startDate, endDate, organizationStatus, createTs, lupdTs, lupdUserId) VALUES(11, 'Hellas Verona', 'Via Anselmi, 9', '', 'Verona', 'Veneto', '37139', 'Italy', 'benedetta.glionna@hotmail.com', 'Benedetta', 'Glionna', '389851221', '2014-01-15', '9999-12-31', 'Active', '2020-01-19 20:00:00.0', '2020-01-20 20:00:00.0', 1);
 
-insert into userOrganization (id, userId, organizationId) VALUES (1, 1, 1)
-insert into userOrganization (id, userId, organizationId) VALUES (2, 2, 1)
-insert into userOrganization (id, userId, organizationId) VALUES (3, 3, 1)
-insert into userOrganization (id, userId, organizationId) VALUES (4, 4, 1)
-insert into userOrganization (id, userId, organizationId) VALUES (5, 5, 1)
-insert into userOrganization (id, userId, organizationId) VALUES (6, 6, 4)
-insert into userOrganization (id, userId, organizationId) VALUES (7, 7, 4)
-insert into userOrganization (id, userId, organizationId) VALUES (8, 8, 8)
-insert into userOrganization (id, userId, organizationId) VALUES (9, 9, 9)
-insert into userOrganization (id, userId, organizationId) VALUES (10, 10, 10)
+insert into userOrganization (id, userId, organizationId) VALUES (1, 1, 1);
+insert into userOrganization (id, userId, organizationId) VALUES (2, 2, 1);
+insert into userOrganization (id, userId, organizationId) VALUES (3, 3, 1);
+insert into userOrganization (id, userId, organizationId) VALUES (4, 4, 1);
+insert into userOrganization (id, userId, organizationId) VALUES (5, 5, 2);
+insert into userOrganization (id, userId, organizationId) VALUES (6, 6, 4);
+insert into userOrganization (id, userId, organizationId) VALUES (7, 7, 4);
+insert into userOrganization (id, userId, organizationId) VALUES (8, 8, 8);
+insert into userOrganization (id, userId, organizationId) VALUES (9, 9, 9);
+insert into userOrganization (id, userId, organizationId) VALUES (10, 10, 10);
 
 insert into availableTeam (id, organizationId, teamName, city, country, state, zipCode, createTs, lupdTs, lupdUserId) VALUES(1, 1, 'Verona', 'Naples', 'Italy', 'Campania', '10052', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
 insert into availableTeam (id, organizationId, teamName, city, country, state, zipCode, createTs, lupdTs, lupdUserId) VALUES(2, 1, 'Inter Milan', 'Milan', 'Italy', 'Lombardy', '10096', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 1);

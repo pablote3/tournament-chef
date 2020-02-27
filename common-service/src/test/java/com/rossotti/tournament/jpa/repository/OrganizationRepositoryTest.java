@@ -45,7 +45,7 @@ public class OrganizationRepositoryTest {
 		Assert.assertEquals("9093381808", organization.getContactPhone());
 		Assert.assertEquals(LocalDateTime.of(2015, 10, 27, 20, 0), organization.getCreateTs());
 		Assert.assertEquals(LocalDateTime.of(2020, 1, 18, 20, 0), organization.getLupdTs());
-		Assert.assertEquals(5, organization.getUserOrganizations().size());
+		Assert.assertEquals(4, organization.getUserOrganizations().size());
 		Assert.assertEquals(2, organization.getAvailableTeams().size());
 		Assert.assertEquals(2, organization.getLocations().size());
 	}

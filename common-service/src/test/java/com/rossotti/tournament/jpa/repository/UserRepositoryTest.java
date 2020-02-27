@@ -154,7 +154,7 @@ public class UserRepositoryTest {
 
 	private static Organization createMockOrganization() {
 		Organization organization = new Organization();
-		organization.setId(1L);
+		organization.setId(11L);
 		return organization;
 	}
 }

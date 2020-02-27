@@ -31,7 +31,7 @@ public class OrganizationJpaServiceTest {
 	public void getById_Found() {
 		Organization organization = organizationJpaService.getById(1L);
 		Assert.assertEquals("FC Juventes", organization.getOrganizationName());
-		Assert.assertEquals(5, organization.getUserOrganizations().size());
+		Assert.assertEquals(4, organization.getUserOrganizations().size());
 	}
 
 	@Test
@@ -42,7 +42,7 @@ public class OrganizationJpaServiceTest {
 	@Test
 	public void listAll() {
 		List<Organization> organizations = (List<Organization>) organizationJpaService.listAll();
-		Assert.assertTrue(organizations.size() >= 4);
+		Assert.assertTrue(organizations.size() >= 9);
 	}
 
 	@Test
