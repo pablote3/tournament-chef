@@ -8,7 +8,6 @@ import java.util.List;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "teamType")
-//@Table(uniqueConstraints=@UniqueConstraint(columnNames={"teamName"}))
 public class AvailableTeam extends BaseEntity {
 
 	@OneToMany(mappedBy="availableTeam", fetch = FetchType.LAZY, cascade= CascadeType.ALL, orphanRemoval = true)

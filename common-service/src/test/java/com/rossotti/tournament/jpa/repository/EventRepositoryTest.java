@@ -195,8 +195,8 @@ public class EventRepositoryTest {
 		event.setEventStatus(EventStatus.Sandbox);
 		event.setEventType(EventType.Tournament);
 		event.setSport(Sport.WaterPolo);
-		event.getEventTeams().add(createMockEventTeam(team1, event));
-		event.getEventTeams().add(createMockEventTeam(team2, event));
+		event.getEventTeams().add(createMockEventOrganizationTeam(team1, event));
+		event.getEventTeams().add(createMockEventBaseTeam(team2, event));
 		event.getGameDates().add(createMockGameDate(startDate, event, location1, location2));
 		if (Period.between(startDate, endDate).getDays() != 0) {
 			event.getGameDates().add(createMockGameDate(endDate, event, location1, location2));
@@ -219,10 +219,17 @@ public class EventRepositoryTest {
 		return template;
 	}
 
-	private static EventTeam createMockEventTeam(Long availableTeamId, Event event) {
+	private static EventTeam createMockEventOrganizationTeam(Long availableTeamId, Event event) {
 		EventTeam eventTeam = new EventTeam();
 		eventTeam.setEvent(event);
 		eventTeam.setAvailableTeam(createMockOrganizationTeam(availableTeamId));
+		return eventTeam;
+	}
+
+	private static EventTeam createMockEventBaseTeam(Long availableTeamId, Event event) {
+		EventTeam eventTeam = new EventTeam();
+		eventTeam.setEvent(event);
+		eventTeam.setAvailableTeam(createMockBaseTeam(availableTeamId));
 		return eventTeam;
 	}
 
@@ -241,6 +248,12 @@ public class EventRepositoryTest {
 		OrganizationTeam organizationTeam = new OrganizationTeam();
 		organizationTeam.setId(organizationTeamId);
 		return organizationTeam;
+	}
+
+	private static BaseTeam createMockBaseTeam(Long baseTeamId) {
+		BaseTeam baseTeam = new BaseTeam();
+		baseTeam.setId(baseTeamId);
+		return baseTeam;
 	}
 
 	private static GameLocation createMockGameLocation(Long locationId, GameDate gameDate) {

@@ -5,7 +5,7 @@ import javax.validation.constraints.NotBlank;
 
 @Entity
 @DiscriminatorValue("O")
-//@Table(uniqueConstraints=@UniqueConstraint(columnNames={"organizationId", "teamName"}))
+@Table(uniqueConstraints=@UniqueConstraint(columnNames={"organizationId", "teamName"}))
 public class OrganizationTeam extends AvailableTeam {
 
 	@ManyToOne

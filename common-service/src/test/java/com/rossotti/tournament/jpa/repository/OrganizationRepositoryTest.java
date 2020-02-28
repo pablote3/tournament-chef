@@ -2,6 +2,7 @@ package com.rossotti.tournament.jpa.repository;
 
 import com.rossotti.tournament.config.PersistenceConfig;
 import com.rossotti.tournament.jpa.enumeration.OrganizationStatus;
+import com.rossotti.tournament.jpa.model.AvailableTeam;
 import com.rossotti.tournament.jpa.model.Organization;
 import org.junit.Assert;
 import org.junit.Test;
@@ -46,6 +47,9 @@ public class OrganizationRepositoryTest {
 		Assert.assertEquals(LocalDateTime.of(2015, 10, 27, 20, 0), organization.getCreateTs());
 		Assert.assertEquals(LocalDateTime.of(2020, 1, 18, 20, 0), organization.getLupdTs());
 		Assert.assertEquals(4, organization.getUserOrganizations().size());
+
+		AvailableTeam availableTeam = (AvailableTeam)organization.getOrganizationTeams().get(0);
+
 		Assert.assertEquals(2, organization.getOrganizationTeams().size());
 		Assert.assertEquals(2, organization.getLocations().size());
 	}
