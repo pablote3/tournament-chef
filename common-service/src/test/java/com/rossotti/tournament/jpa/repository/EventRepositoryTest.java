@@ -41,7 +41,7 @@ public class EventRepositoryTest {
 		Assert.assertEquals(LocalDateTime.of(2020, 1, 19, 20, 0), event.getLupdTs());
 		Assert.assertEquals(2, event.getLupdUserId().longValue());
 		Assert.assertEquals(4, event.getOrganization().getUserOrganizations().size());
-		Assert.assertEquals(2, event.getOrganization().getAvailableTeams().size());
+		Assert.assertEquals(2, event.getOrganization().getOrganizationTeams().size());
 		Assert.assertEquals(2, event.getOrganization().getLocations().size());
 		Assert.assertEquals(2, event.getEventTeams().size());
 		Assert.assertEquals(2, event.getGameDates().size());
@@ -222,7 +222,7 @@ public class EventRepositoryTest {
 	private static EventTeam createMockEventTeam(Long availableTeamId, Event event) {
 		EventTeam eventTeam = new EventTeam();
 		eventTeam.setEvent(event);
-		eventTeam.setAvailableTeam(createMockAvailableTeam(availableTeamId));
+		eventTeam.setAvailableTeam(createMockOrganizationTeam(availableTeamId));
 		return eventTeam;
 	}
 
@@ -237,10 +237,10 @@ public class EventRepositoryTest {
 		return gameDate;
 	}
 	
-	private static AvailableTeam createMockAvailableTeam(Long availableTeamId) {
-		AvailableTeam availableTeam = new AvailableTeam();
-		availableTeam.setId(availableTeamId);
-		return availableTeam;
+	private static OrganizationTeam createMockOrganizationTeam(Long organizationTeamId) {
+		OrganizationTeam organizationTeam = new OrganizationTeam();
+		organizationTeam.setId(organizationTeamId);
+		return organizationTeam;
 	}
 
 	private static GameLocation createMockGameLocation(Long locationId, GameDate gameDate) {

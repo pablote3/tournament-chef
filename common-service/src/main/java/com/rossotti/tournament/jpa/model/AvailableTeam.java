@@ -6,18 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(uniqueConstraints=@UniqueConstraint(columnNames={"organizationId", "teamName"}))
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "teamType")
+//@Table(uniqueConstraints=@UniqueConstraint(columnNames={"teamName"}))
 public class AvailableTeam extends BaseEntity {
-
-	@ManyToOne
-	@JoinColumn(name="organizationId", referencedColumnName="id", nullable=false)
-	private Organization organization;
-	public Organization getOrganization() {
-		return organization;
-	}
-	public void setOrganization(Organization organization) {
-		this.organization = organization;
-	}
 
 	@OneToMany(mappedBy="availableTeam", fetch = FetchType.LAZY, cascade= CascadeType.ALL, orphanRemoval = true)
 	private List<EventTeam> eventTeams = new ArrayList<>();
