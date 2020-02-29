@@ -42,7 +42,7 @@ public class GameRepositoryTest {
 		Assert.assertEquals("Inter Milan", game.getGameTeams().get(0).getEventTeam().getAvailableTeam().getTeamName());
 		Assert.assertEquals(1, game.getGameTeams().get(0).getEventTeam().getEventTeamRankings().get(0).getRanking().shortValue());
 		Assert.assertEquals(45, game.getGameRound().getGameDuration().shortValue());
-		Assert.assertEquals("San Siro", game.getGameRound().getGameLocation().getOrganizationLocation().getLocationName());
+		Assert.assertEquals("San Siro", game.getGameRound().getGameLocation().getAvailableLocation().getLocationName());
 		Assert.assertEquals(LocalDate.of(2020, 9, 29), game.getGameRound().getGameLocation().getGameDate().getGameDate());
 		Assert.assertEquals("Campania Regional Frosh Soph Tournament", game.getGameRound().getGameLocation().getGameDate().getEvent().getEventName());
 	}
@@ -198,7 +198,7 @@ public class GameRepositoryTest {
 	private static GameLocation createMockGameLocation(GameRound gameRound) {
 		GameLocation gameLocation = new GameLocation();
 		gameLocation.setId(5L);
-		gameLocation.setOrganizationLocation(createMockOrganizationLocation());
+		gameLocation.setAvailableLocation(createMockOrganizationLocation());
 		gameLocation.setGameDate(createMockGameDate(gameLocation));
 		List<GameRound> gameRounds = new ArrayList<>();
 		gameRounds.add(gameRound);
@@ -245,10 +245,10 @@ public class GameRepositoryTest {
 		return availableTeam;
 	}
 
-	private static OrganizationLocation createMockOrganizationLocation() {
-		OrganizationLocation organizationLocation = new OrganizationLocation();
-		organizationLocation.setId(8L);
-		return organizationLocation;
+	private static AvailableLocation createMockOrganizationLocation() {
+		AvailableLocation availableLocation = new AvailableLocation();
+		availableLocation.setId(8L);
+		return availableLocation;
 	}
 
 	public static GameTeam createMockGameTeam(Game game) {

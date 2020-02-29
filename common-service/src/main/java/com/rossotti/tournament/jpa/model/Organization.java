@@ -31,11 +31,11 @@ public class Organization extends BaseEntity {
 	}
 
 	@OneToMany(mappedBy="organization", fetch = FetchType.LAZY, cascade= CascadeType.ALL, orphanRemoval = true)
-	private List<OrganizationLocation> locations = new ArrayList<>();
-	public List<OrganizationLocation> getLocations()  {
+	private List<AvailableLocation> locations = new ArrayList<>();
+	public List<AvailableLocation> getLocations()  {
 		return locations;
 	}
-	public void setLocations(List<OrganizationLocation> locations)  {
+	public void setLocations(List<AvailableLocation> locations)  {
 		this.locations = locations;
 	}
 

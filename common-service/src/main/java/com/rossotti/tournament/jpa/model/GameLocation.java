@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(uniqueConstraints=@UniqueConstraint(columnNames={"gameDateId", "organizationLocationId"}))
+@Table(uniqueConstraints=@UniqueConstraint(columnNames={"gameDateId", "availableLocationId"}))
 public class GameLocation {
 	@ManyToOne
 	@JoinColumn(name="gameDateId", referencedColumnName="id", nullable=false)
@@ -20,13 +20,13 @@ public class GameLocation {
 	}
 
 	@ManyToOne
-	@JoinColumn(name="organizationLocationId", referencedColumnName="id", nullable=false)
-	private OrganizationLocation organizationLocation;
-	public OrganizationLocation getOrganizationLocation() {
-		return organizationLocation;
+	@JoinColumn(name="availableLocationId", referencedColumnName="id", nullable=false)
+	private AvailableLocation availableLocation;
+	public AvailableLocation getAvailableLocation() {
+		return availableLocation;
 	}
-	public void setOrganizationLocation(OrganizationLocation organizationLocation) {
-		this.organizationLocation = organizationLocation;
+	public void setAvailableLocation(AvailableLocation availableLocation) {
+		this.availableLocation = availableLocation;
 	}
 
 	@OneToMany(mappedBy="gameLocation", fetch = FetchType.LAZY, cascade= CascadeType.ALL, orphanRemoval = true)

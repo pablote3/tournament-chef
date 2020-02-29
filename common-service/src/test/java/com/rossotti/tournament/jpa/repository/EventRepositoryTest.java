@@ -259,7 +259,7 @@ public class EventRepositoryTest {
 	private static GameLocation createMockGameLocation(Long locationId, GameDate gameDate) {
 		GameLocation gameLocation = new GameLocation();
 		gameLocation.setGameDate(gameDate);
-		gameLocation.setOrganizationLocation(createMockOrganizationLocation(locationId));
+		gameLocation.setAvailableLocation(createMockOrganizationLocation(locationId));
 		gameLocation.setStartTime(LocalTime.of(8, 0, 0));
 		gameLocation.getGameRounds().add(createMockGameRound(GameType.GroupPlay, gameLocation));
 		gameLocation.getGameRounds().add(createMockGameRound(GameType.Final, gameLocation));
@@ -296,10 +296,10 @@ public class EventRepositoryTest {
 		return gameTeam;
 	}
 
-	private static OrganizationLocation createMockOrganizationLocation(Long organizationLocationId) {
-		OrganizationLocation organizationLocation = new OrganizationLocation();
-		organizationLocation.setId(organizationLocationId);
-		return organizationLocation;
+	private static AvailableLocation createMockOrganizationLocation(Long organizationLocationId) {
+		AvailableLocation availableLocation = new AvailableLocation();
+		availableLocation.setId(organizationLocationId);
+		return availableLocation;
 	}
 
 	private Event updateMockEvent(LocalDate asOfDate, EventStatus eventStatus) {
