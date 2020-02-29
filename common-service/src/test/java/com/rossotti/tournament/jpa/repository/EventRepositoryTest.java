@@ -41,7 +41,7 @@ public class EventRepositoryTest {
 		Assert.assertEquals(LocalDateTime.of(2020, 1, 19, 20, 0), event.getLupdTs());
 		Assert.assertEquals(2, event.getLupdUserId().longValue());
 		Assert.assertEquals(4, event.getOrganization().getUserOrganizations().size());
-		Assert.assertEquals(2, event.getOrganization().getOrganizationTeams().size());
+		Assert.assertEquals(2, event.getOrganization().getAvailableTeams().size());
 		Assert.assertEquals(2, event.getOrganization().getLocations().size());
 		Assert.assertEquals(2, event.getEventTeams().size());
 		Assert.assertEquals(2, event.getGameDates().size());
@@ -135,6 +135,19 @@ public class EventRepositoryTest {
 		Assert.assertNull(eventRepository.findByOrganizationNameAsOfDateTemplateType("FC Juventes", LocalDate.of(2020, 9, 23), TemplateType.two_x_four_pp));
 	}
 
+//	@Test
+//	public void create() {
+//		eventRepository.save(createMockEvent(7L, "Tavagnacco Fall Classic", 5L, 6L, 1L, 2L, LocalDate.of(2012, 9, 10), LocalDate.of(2012, 9, 11)));
+//		Event event = eventRepository.findByEventNameAsOfDateTemplateType("Tavagnacco Fall Classic", LocalDate.of(2012, 9, 10), TemplateType.four_x_four_pp);
+//		Assert.assertEquals("Tavagnacco Fall Classic", event.getEventName());
+//		Assert.assertEquals(2, event.getEventTeams().size());
+//		Assert.assertEquals(2, event.getGameDates().size());
+//		Assert.assertEquals(2, event.getGameDates().get(0).getGameLocations().size());
+//		Assert.assertEquals(2, event.getGameDates().get(0).getGameLocations().get(0).getGameRounds().size());
+//		Assert.assertEquals(1, event.getGameDates().get(0).getGameLocations().get(0).getGameRounds().get(0).getGames().size());
+//		Assert.assertEquals(1, event.getGameDates().get(0).getGameLocations().get(0).getGameRounds().get(0).getGames().get(0).getGameTeams().size());
+//	}
+
 	@Test
 	public void create() {
 		eventRepository.save(createMockEvent(7L, "Tavagnacco Fall Classic", 5L, 6L, 1L, 2L, LocalDate.of(2012, 9, 10), LocalDate.of(2012, 9, 11)));
@@ -195,8 +208,8 @@ public class EventRepositoryTest {
 		event.setEventStatus(EventStatus.Sandbox);
 		event.setEventType(EventType.Tournament);
 		event.setSport(Sport.WaterPolo);
-		event.getEventTeams().add(createMockEventOrganizationTeam(team1, event));
-		event.getEventTeams().add(createMockEventBaseTeam(team2, event));
+		event.getEventTeams().add(createMockEventTeam(team1, event));
+		event.getEventTeams().add(createMockEventTeam(team2, event));
 		event.getGameDates().add(createMockGameDate(startDate, event, location1, location2));
 		if (Period.between(startDate, endDate).getDays() != 0) {
 			event.getGameDates().add(createMockGameDate(endDate, event, location1, location2));
@@ -219,17 +232,10 @@ public class EventRepositoryTest {
 		return template;
 	}
 
-	private static EventTeam createMockEventOrganizationTeam(Long availableTeamId, Event event) {
+	private static EventTeam createMockEventTeam(Long availableTeamId, Event event) {
 		EventTeam eventTeam = new EventTeam();
 		eventTeam.setEvent(event);
-		eventTeam.setAvailableTeam(createMockOrganizationTeam(availableTeamId));
-		return eventTeam;
-	}
-
-	private static EventTeam createMockEventBaseTeam(Long availableTeamId, Event event) {
-		EventTeam eventTeam = new EventTeam();
-		eventTeam.setEvent(event);
-		eventTeam.setAvailableTeam(createMockBaseTeam(availableTeamId));
+		eventTeam.setAvailableTeam(createMockAvailableTeam(availableTeamId));
 		return eventTeam;
 	}
 
@@ -244,16 +250,10 @@ public class EventRepositoryTest {
 		return gameDate;
 	}
 	
-	private static OrganizationTeam createMockOrganizationTeam(Long organizationTeamId) {
-		OrganizationTeam organizationTeam = new OrganizationTeam();
-		organizationTeam.setId(organizationTeamId);
-		return organizationTeam;
-	}
-
-	private static BaseTeam createMockBaseTeam(Long baseTeamId) {
-		BaseTeam baseTeam = new BaseTeam();
-		baseTeam.setId(baseTeamId);
-		return baseTeam;
+	private static AvailableTeam createMockAvailableTeam(Long availableTeamId) {
+		AvailableTeam availableTeam = new AvailableTeam();
+		availableTeam.setId(availableTeamId);
+		return availableTeam;
 	}
 
 	private static GameLocation createMockGameLocation(Long locationId, GameDate gameDate) {

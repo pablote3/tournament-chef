@@ -8,16 +8,6 @@ import javax.validation.constraints.NotBlank;
 @Table(uniqueConstraints=@UniqueConstraint(columnNames={"organizationId", "teamName"}))
 public class OrganizationTeam extends AvailableTeam {
 
-	@ManyToOne
-	@JoinColumn(name="organizationId", referencedColumnName="id", nullable=false)
-	private Organization organization;
-	public Organization getOrganization() {
-		return organization;
-	}
-	public void setOrganization(Organization organization) {
-		this.organization = organization;
-	}
-
 	@Column(length=25, nullable=false)
 	@NotBlank(message="City is mandatory")
 	private String city;
