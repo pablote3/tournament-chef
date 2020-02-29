@@ -2,11 +2,12 @@ package com.rossotti.tournament.jpa.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(uniqueConstraints=@UniqueConstraint(columnNames={"organizationId", "locationName"}))
 public class OrganizationLocation extends BaseEntity {
-
 	@ManyToOne
 	@JoinColumn(name="organizationId", referencedColumnName="id", nullable=false)
 	private Organization organization;
@@ -15,6 +16,15 @@ public class OrganizationLocation extends BaseEntity {
 	}
 	public void setOrganization(Organization organization) {
 		this.organization = organization;
+	}
+
+	@OneToMany(mappedBy="organizationLocation", fetch = FetchType.LAZY, cascade= CascadeType.ALL, orphanRemoval = true)
+	private List<GameLocation> gameLocations = new ArrayList<>();
+	public List<GameLocation> getGameLocations()  {
+		return gameLocations;
+	}
+	public void setGameLocations(List<GameLocation> eventTeams)  {
+		this.gameLocations = gameLocations;
 	}
 
 	@Column(length=50, nullable=false)
