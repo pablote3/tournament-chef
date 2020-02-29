@@ -2,7 +2,6 @@ package com.rossotti.tournament.jpa.repository;
 
 import com.rossotti.tournament.config.PersistenceConfig;
 import com.rossotti.tournament.jpa.enumeration.OrganizationStatus;
-import com.rossotti.tournament.jpa.model.AvailableTeam;
 import com.rossotti.tournament.jpa.model.Organization;
 import org.junit.Assert;
 import org.junit.Test;

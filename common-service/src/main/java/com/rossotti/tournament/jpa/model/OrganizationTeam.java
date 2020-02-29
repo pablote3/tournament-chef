@@ -29,7 +29,6 @@ public class OrganizationTeam extends AvailableTeam {
 	}
 
 	@Column(length=9, nullable=false)
-	@NotBlank(message="ZipCode is mandatory")
 	private String zipCode;
 	public String getZipCode() {
 		return zipCode;
