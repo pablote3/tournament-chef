@@ -44,13 +44,13 @@ public class User extends BaseEntity {
 	public Boolean isAdministrator() {
 		return userType == UserType.Administrator;
 	}
-	public Boolean isManager() {
-		return userType == UserType.Manager;
+	public Boolean isOrganization() {
+		return userType == UserType.Organization;
 	}
-	public Boolean isUser() {
-		return userType == UserType.User;
+	public Boolean isEvent() {
+		return userType == UserType.Event;
 	}
-	public Boolean isGuest() {return userType == UserType.Guest;
+	public Boolean isGame() {return userType == UserType.Game;
 	}
 
 	@Enumerated(EnumType.STRING)
