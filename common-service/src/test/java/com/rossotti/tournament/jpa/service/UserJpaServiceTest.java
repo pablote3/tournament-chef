@@ -6,11 +6,15 @@ import com.rossotti.tournament.jpa.model.User;
 import com.rossotti.tournament.jpa.repository.UserRepositoryTest;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.TransactionSystemException;
+
+import javax.validation.ConstraintViolationException;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -64,30 +68,26 @@ public class UserJpaServiceTest {
 
 	@Test
 	public void create_EmailIsMandatory_Empty() {
-		CustomException exception = assertThrows(CustomException.class, () -> userJpaService.save(UserRepositoryTest.createMockUser("", "Bonetti", "Super3")));
-		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
-		Assert.assertEquals("Email is mandatory", exception.getError().getErrorMessage());
+		ConstraintViolationException exception = assertThrows(ConstraintViolationException.class, () -> userJpaService.save(UserRepositoryTest.createMockUser("", "Bonetti", "Super3")));
+		Assert.assertTrue(exception.getMessage().contains("Email is mandatory"));
 	}
 
 	@Test
 	public void create_LastNameIsMandatory_Null() {
-		CustomException exception = assertThrows(CustomException.class, () -> userJpaService.save(UserRepositoryTest.createMockUser("bonetti.tatiana@hotmail.com", null, "Super3")));
-		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
-		Assert.assertEquals("LastName is mandatory", exception.getError().getErrorMessage());
+		TransactionSystemException exception = assertThrows(TransactionSystemException.class, () -> userJpaService.save(UserRepositoryTest.createMockUser("bonetti.tatiana@hotmail.com", null, "Super3")));
+		Assert.assertTrue(exception.getCause().getCause().getMessage().contains("LastName is mandatory"));
 	}
 
 	@Test
 	public void create_EmailInvalidFormat() {
-		CustomException exception = assertThrows(CustomException.class, () -> userJpaService.save(UserRepositoryTest.createMockUser("bonetti.tatiana.hotmail.com", "Bonetti", "Super3")));
-		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
-		Assert.assertEquals("Email invalid format", exception.getError().getErrorMessage());
+		ConstraintViolationException exception = assertThrows(ConstraintViolationException.class, () -> userJpaService.save(UserRepositoryTest.createMockUser("bonetti.tatiana.hotmail.com", "Bonetti", "Super3")));
+		Assert.assertTrue(exception.getMessage().contains("Email invalid format"));
 	}
 
 	@Test
 	public void create_PasswordInvalidFormat() {
-		CustomException exception = assertThrows(CustomException.class, () -> userJpaService.save(UserRepositoryTest.createMockUser("bonetti.tatiana@hotmail.com", "Bonetti", "Sup")));
-		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
-		Assert.assertEquals("Password invalid format", exception.getError().getErrorMessage());
+		ConstraintViolationException exception = assertThrows(ConstraintViolationException.class, () -> userJpaService.save(UserRepositoryTest.createMockUser("bonetti.tatiana@hotmail.com", "Bonetti", "Sup")));
+		Assert.assertTrue(exception.getMessage().contains("Password invalid format"));
 	}
 
 	@Test
@@ -104,9 +104,8 @@ public class UserJpaServiceTest {
 		User updateUser = userJpaService.findByEmail("alessia.piazza@telecomitalia.com");
 		updateUser.setUserStatus(UserStatus.Active);
 		updateUser.setEmail("");
-		CustomException exception = assertThrows(CustomException.class, () -> userJpaService.save(updateUser));
-		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
-		Assert.assertEquals("Email is mandatory", exception.getError().getErrorMessage());
+		TransactionSystemException exception = assertThrows(TransactionSystemException.class, () -> userJpaService.save(updateUser));
+		Assert.assertTrue(exception.getCause().getCause().getMessage().contains("Email is mandatory"));
 	}
 
 	@Test
@@ -114,9 +113,8 @@ public class UserJpaServiceTest {
 		User updateUser = userJpaService.findByEmail("alessia.piazza@telecomitalia.com");
 		updateUser.setUserStatus(UserStatus.Active);
 		updateUser.setLastName(null);
-		CustomException exception = assertThrows(CustomException.class, () -> userJpaService.save(updateUser));
-		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
-		Assert.assertEquals("LastName is mandatory", exception.getError().getErrorMessage());
+		TransactionSystemException exception = assertThrows(TransactionSystemException.class, () -> userJpaService.save(updateUser));
+		Assert.assertTrue(exception.getCause().getCause().getMessage().contains("LastName is mandatory"));
 	}
 
 	@Test
@@ -124,9 +122,8 @@ public class UserJpaServiceTest {
 		User updateUser = userJpaService.findByEmail("alessia.piazza@telecomitalia.com");
 		updateUser.setUserStatus(UserStatus.Active);
 		updateUser.setPassword("Sup");
-		CustomException exception = assertThrows(CustomException.class, () -> userJpaService.save(updateUser));
-		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
-		Assert.assertEquals("Password invalid format", exception.getError().getErrorMessage());
+		TransactionSystemException exception = assertThrows(TransactionSystemException.class, () -> userJpaService.save(updateUser));
+		Assert.assertTrue(exception.getCause().getCause().getMessage().contains("Password invalid format"));
 	}
 
 	@Test
@@ -134,9 +131,8 @@ public class UserJpaServiceTest {
 		User updateUser = userJpaService.findByEmail("alessia.piazza@telecomitalia.com");
 		updateUser.setEmail("alessia.piazza_telecomitalia.com");
 		updateUser.setUserStatus(UserStatus.Active);
-		CustomException exception = assertThrows(CustomException.class, () -> userJpaService.save(updateUser));
-		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
-		Assert.assertEquals("Email invalid format", exception.getError().getErrorMessage());
+		TransactionSystemException exception = assertThrows(TransactionSystemException.class, () -> userJpaService.save(updateUser));
+		Assert.assertTrue(exception.getCause().getCause().getMessage().contains("Email invalid format"));
 	}
 
 	@Test

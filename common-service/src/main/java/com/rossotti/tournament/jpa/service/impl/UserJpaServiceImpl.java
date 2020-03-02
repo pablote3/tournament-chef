@@ -56,15 +56,7 @@ public class UserJpaServiceImpl implements UserJpaService {
 			}
 		}
 		catch (Exception e) {
-			if (e instanceof TransactionSystemException) {
-				throw new CustomException(e.getCause().getCause().getMessage(), HttpStatus.BAD_REQUEST);
-			}
-			else if (e instanceof ConstraintViolationException) {
-				throw new CustomException(e.getMessage(), HttpStatus.BAD_REQUEST);
-			}
-			else {
-				throw new CustomException(ValidationMessages.MSG_VAL_0000, HttpStatus.INTERNAL_SERVER_ERROR);
-			}
+			throw e;
 		}
 		return user;
 	}
