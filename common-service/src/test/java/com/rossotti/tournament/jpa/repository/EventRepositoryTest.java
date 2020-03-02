@@ -135,19 +135,6 @@ public class EventRepositoryTest {
 		Assert.assertNull(eventRepository.findByOrganizationNameAsOfDateTemplateType("FC Juventes", LocalDate.of(2020, 9, 23), TemplateType.two_x_four_pp));
 	}
 
-//	@Test
-//	public void create() {
-//		eventRepository.save(createMockEvent(7L, "Tavagnacco Fall Classic", 5L, 6L, 1L, 2L, LocalDate.of(2012, 9, 10), LocalDate.of(2012, 9, 11)));
-//		Event event = eventRepository.findByEventNameAsOfDateTemplateType("Tavagnacco Fall Classic", LocalDate.of(2012, 9, 10), TemplateType.four_x_four_pp);
-//		Assert.assertEquals("Tavagnacco Fall Classic", event.getEventName());
-//		Assert.assertEquals(2, event.getEventTeams().size());
-//		Assert.assertEquals(2, event.getGameDates().size());
-//		Assert.assertEquals(2, event.getGameDates().get(0).getGameLocations().size());
-//		Assert.assertEquals(2, event.getGameDates().get(0).getGameLocations().get(0).getGameRounds().size());
-//		Assert.assertEquals(1, event.getGameDates().get(0).getGameLocations().get(0).getGameRounds().get(0).getGames().size());
-//		Assert.assertEquals(1, event.getGameDates().get(0).getGameLocations().get(0).getGameRounds().get(0).getGames().get(0).getGameTeams().size());
-//	}
-
 	@Test
 	public void create() {
 		eventRepository.save(createMockEvent(7L, "Tavagnacco Fall Classic", 5L, 6L, 1L, 2L, LocalDate.of(2012, 9, 10), LocalDate.of(2012, 9, 11)));
