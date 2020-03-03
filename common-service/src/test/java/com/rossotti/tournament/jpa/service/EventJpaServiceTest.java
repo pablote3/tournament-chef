@@ -1,6 +1,6 @@
 package com.rossotti.tournament.jpa.service;
 
-import com.rossotti.tournament.exception.CustomException;
+import com.rossotti.tournament.exception.NoSuchEntityException;
 import com.rossotti.tournament.jpa.enumeration.EventStatus;
 import com.rossotti.tournament.jpa.enumeration.TemplateType;
 import com.rossotti.tournament.jpa.model.Event;
@@ -10,8 +10,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.TransactionSystemException;
+import javax.validation.ConstraintViolationException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -128,18 +129,16 @@ public class EventJpaServiceTest {
 
 	@Test
 	public void create_EventNameIsMandatory_Empty() {
-		CustomException exception = assertThrows(CustomException.class, () ->
+		ConstraintViolationException exception = assertThrows(ConstraintViolationException.class, () ->
 			eventJpaService.save(EventRepositoryTest.createMockEvent(4L, "", 3L, 4L, 4L, null, LocalDate.of(2020, 1, 15), LocalDate.of(2020, 1, 15))));
-		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
-		Assert.assertEquals("EventName is mandatory", exception.getError().getErrorMessage());
+		Assert.assertTrue(exception.getMessage().contains("EventName is mandatory"));
 	}
 
 	@Test
 	public void create_EventNameIsMandatory_Null() {
-		CustomException exception = assertThrows(CustomException.class, () ->
+		ConstraintViolationException exception = assertThrows(ConstraintViolationException.class, () ->
 			eventJpaService.save(EventRepositoryTest.createMockEvent(4L, null, 3L, 4L, 4L, null, LocalDate.of(2020, 1, 15), LocalDate.of(2020, 1, 15))));
-		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
-		Assert.assertEquals("EventName is mandatory", exception.getError().getErrorMessage());
+		Assert.assertTrue(exception.getMessage().contains("EventName is mandatory"));
 	}
 
 	@Test
@@ -157,9 +156,8 @@ public class EventJpaServiceTest {
 	public void update_EventTypeIsMandatory_Empty() {
 		Event event = eventJpaService.findByEventNameAsOfDateTemplateType("Lombardy Halloween Invitational", LocalDate.of(2020, 9, 24), TemplateType.four_x_four_pp);
 		event.setEventType(null);
-		CustomException exception = assertThrows(CustomException.class, () -> eventJpaService.save(event));
-		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
-		Assert.assertEquals("EventType is mandatory", exception.getError().getErrorMessage());
+		TransactionSystemException exception = assertThrows(TransactionSystemException.class, () -> eventJpaService.save(event));
+		Assert.assertTrue(exception.getCause().getCause().getMessage().contains("EventType is mandatory"));
 	}
 
 	@Test
@@ -170,9 +168,8 @@ public class EventJpaServiceTest {
 
 	@Test
 	public void delete_NotFound() {
-		CustomException exception = assertThrows(CustomException.class, () -> eventJpaService.delete(21L));
-		Assert.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, exception.getStatus());
-		Assert.assertEquals("Server error when trying to find record for id of {}", exception.getError().getErrorMessage());
-		Assert.assertEquals("MSG_VAL_0012", exception.getError().getError());
+		NoSuchEntityException exception = assertThrows(NoSuchEntityException.class, () -> eventJpaService.delete(21L));
+		Assert.assertTrue(exception.getMessage().contains("Event does not exist"));
+		Assert.assertEquals(Event.class, exception.getEntityClass());
 	}
 }
