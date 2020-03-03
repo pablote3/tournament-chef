@@ -19,13 +19,13 @@ public interface OrganizationRepository extends Repository<Organization, Long> {
 
 	List<Organization> findByOrganizationName(String organizationName);
 
-	String findByOrganizationNameAndAsOfDate =
+	String findByOrganizationNameAsOfDate =
 			"select o from Organization o " +
 			"where o.organizationName = :organizationName " +
 			"and o.startDate <= :asOfDate " +
 			"and o.endDate >= :asOfDate";
-	@Query(findByOrganizationNameAndAsOfDate)
-	Organization findByOrganizationNameAndAsOfDate(@Param("organizationName") String organizationName, @Param("asOfDate") LocalDate asOfDate);
+	@Query(findByOrganizationNameAsOfDate)
+	Organization findByOrganizationNameAsOfDate(@Param("organizationName") String organizationName, @Param("asOfDate") LocalDate asOfDate);
 
 	String findByOrganizationNameStartDateEndDate =
 			"select o from Organization o " +

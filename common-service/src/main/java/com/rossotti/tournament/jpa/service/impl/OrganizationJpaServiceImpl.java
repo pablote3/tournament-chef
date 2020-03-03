@@ -37,8 +37,8 @@ public class OrganizationJpaServiceImpl implements OrganizationJpaService {
 	}
 
 	@Override
-	public Organization findByOrganizationNameAndAsOfDate(String organizationName, LocalDate asOfDate) {
-		return organizationRepository.findByOrganizationNameAndAsOfDate(organizationName, asOfDate);
+	public Organization findByOrganizationNameAsOfDate(String organizationName, LocalDate asOfDate) {
+		return organizationRepository.findByOrganizationNameAsOfDate(organizationName, asOfDate);
 	}
 
 	@Override

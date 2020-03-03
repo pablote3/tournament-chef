@@ -73,30 +73,30 @@ public class OrganizationRepositoryTest {
 
 	@Test
 	public void findByOrgNameAndAsOfDate_Found_EqualStartDate() {
-		Organization organization = organizationRepository.findByOrganizationNameAndAsOfDate("FC Juventes", LocalDate.of(2010, 1, 15));
+		Organization organization = organizationRepository.findByOrganizationNameAsOfDate("FC Juventes", LocalDate.of(2010, 1, 15));
 		Assert.assertEquals("barbara.bonansea@gmail.com", organization.getContactEmail());
 	}
 
 	@Test
 	public void findByOrgNameAndAsOfDate_Found_EqualEndDate() {
-		Organization organization = organizationRepository.findByOrganizationNameAndAsOfDate("FC Juventes", LocalDate.of(9999, 12, 31));
+		Organization organization = organizationRepository.findByOrganizationNameAsOfDate("FC Juventes", LocalDate.of(9999, 12, 31));
 		Assert.assertEquals("cristiana.girelli@gmail.com", organization.getContactEmail());
 	}
 
 	@Test
 	public void findByOrgNameAndAsOfDate_Found_BetweenStartAndEndDate() {
-		Organization organization = organizationRepository.findByOrganizationNameAndAsOfDate("FC Juventes", LocalDate.of(2012, 10, 29));
+		Organization organization = organizationRepository.findByOrganizationNameAsOfDate("FC Juventes", LocalDate.of(2012, 10, 29));
 		Assert.assertEquals("barbara.bonansea@gmail.com", organization.getContactEmail());
 	}
 
 	@Test
 	public void findByOrgNameAndAsOfDate_NotFound_BeforeStartDate() {
-		Assert.assertNull(organizationRepository.findByOrganizationNameAndAsOfDate("FC Juventes", LocalDate.of(2010, 1, 14)));
+		Assert.assertNull(organizationRepository.findByOrganizationNameAsOfDate("FC Juventes", LocalDate.of(2010, 1, 14)));
 	}
 
 	@Test
 	public void findByOrgNameAndAsOfDate_NotFound_AfterEndDate() {
-		Assert.assertNull(organizationRepository.findByOrganizationNameAndAsOfDate("FC Juventes", LocalDate.of(10000, 1, 1)));
+		Assert.assertNull(organizationRepository.findByOrganizationNameAsOfDate("FC Juventes", LocalDate.of(10000, 1, 1)));
 	}
 
 	@Test
@@ -135,13 +135,13 @@ public class OrganizationRepositoryTest {
 
 	@Test
 	public void findByOrgNameAndAsOfDate_NotFound_OrganizationName() {
-		Assert.assertNull(organizationRepository.findByOrganizationNameAndAsOfDate("Orobica", LocalDate.of(9999, 12, 31)));
+		Assert.assertNull(organizationRepository.findByOrganizationNameAsOfDate("Orobica", LocalDate.of(9999, 12, 31)));
 	}
 
 	@Test
 	public void create() {
 		organizationRepository.save(createMockOrganization("AS Roma", LocalDate.of(2010, 1, 11), LocalDate.of(9999, 12, 31), "Giugliano", "manuela.giugliano@gmail.com"));
-		Organization organization = organizationRepository.findByOrganizationNameAndAsOfDate("AS Roma", LocalDate.of(2010, 1, 21));
+		Organization organization = organizationRepository.findByOrganizationNameAsOfDate("AS Roma", LocalDate.of(2010, 1, 21));
 		Assert.assertEquals("Giugliano", organization.getContactLastName());
 		Assert.assertEquals("Manuela", organization.getContactFirstName());
 	}
@@ -161,7 +161,7 @@ public class OrganizationRepositoryTest {
 	@Test
 	public void update() {
 		organizationRepository.save(updateMockOrganization(LocalDate.of(2012, 1, 15), "Mauro"));
-		Organization organization = organizationRepository.findByOrganizationNameAndAsOfDate("Fiorentina FC", LocalDate.of(2012, 1, 15));
+		Organization organization = organizationRepository.findByOrganizationNameAsOfDate("Fiorentina FC", LocalDate.of(2012, 1, 15));
 		Assert.assertEquals("Mauro", organization.getContactLastName());
 		Assert.assertEquals("Ilaria", organization.getContactFirstName());
 	}
@@ -174,14 +174,14 @@ public class OrganizationRepositoryTest {
 
 	@Test
 	public void delete() {
-		Organization organization = organizationRepository.findByOrganizationNameAndAsOfDate("ASD Orobica Calcio Bergamo", LocalDate.of(2017, 1, 15));
+		Organization organization = organizationRepository.findByOrganizationNameAsOfDate("ASD Orobica Calcio Bergamo", LocalDate.of(2017, 1, 15));
 		if (organization != null) {
 			organizationRepository.deleteById(organization.getId());
 		}
 		else {
 			Assert.fail("Unable to find record to delete");
 		}
-		Organization findOrg = organizationRepository.findByOrganizationNameAndAsOfDate("ASD Orobica Calcio Bergamo", LocalDate.of(2017, 1, 15));
+		Organization findOrg = organizationRepository.findByOrganizationNameAsOfDate("ASD Orobica Calcio Bergamo", LocalDate.of(2017, 1, 15));
 		Assert.assertNull(findOrg);
 	}
 
@@ -207,7 +207,7 @@ public class OrganizationRepositoryTest {
 	}
 
 	private Organization updateMockOrganization(LocalDate asOfDate, String contactLastName) {
-		Organization organization = organizationRepository.findByOrganizationNameAndAsOfDate("Fiorentina FC", asOfDate);
+		Organization organization = organizationRepository.findByOrganizationNameAsOfDate("Fiorentina FC", asOfDate);
 		organization.setContactLastName(contactLastName);
 		organization.setContactFirstName("Ilaria");
 		return organization;

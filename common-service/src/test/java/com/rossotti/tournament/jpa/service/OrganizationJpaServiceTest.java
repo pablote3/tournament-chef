@@ -1,19 +1,15 @@
 package com.rossotti.tournament.jpa.service;
 
-import com.rossotti.tournament.exception.CustomException;
 import com.rossotti.tournament.exception.NoSuchEntityException;
 import com.rossotti.tournament.jpa.model.Organization;
-import com.rossotti.tournament.jpa.model.User;
 import com.rossotti.tournament.jpa.repository.OrganizationRepositoryTest;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.TransactionSystemException;
-
 import javax.validation.ConstraintViolationException;
 import java.time.LocalDate;
 import java.util.List;
@@ -51,13 +47,13 @@ public class OrganizationJpaServiceTest {
 
 	@Test
 	public void findByOrganizationNameAndAsOfDate_Found() {
-		Organization organization = organizationJpaService.findByOrganizationNameAndAsOfDate("FC Juventes", LocalDate.of(2011, 2, 15));
+		Organization organization = organizationJpaService.findByOrganizationNameAsOfDate("FC Juventes", LocalDate.of(2011, 2, 15));
 		Assert.assertEquals("barbara.bonansea@gmail.com", organization.getContactEmail());
 	}
 
 	@Test
 	public void findByOrganizationNameAndAsOfDate_NotFound() {
-		Assert.assertNull(organizationJpaService.findByOrganizationNameAndAsOfDate("FC Juventes", LocalDate.of(2009, 12, 31)));
+		Assert.assertNull(organizationJpaService.findByOrganizationNameAsOfDate("FC Juventes", LocalDate.of(2009, 12, 31)));
 	}
 
 	@Test
@@ -111,7 +107,7 @@ public class OrganizationJpaServiceTest {
 
 	@Test
 	public void update_Updated() {
-		Organization organization = organizationJpaService.findByOrganizationNameAndAsOfDate("AC Milan SPA", LocalDate.of(2012, 1, 15));
+		Organization organization = organizationJpaService.findByOrganizationNameAsOfDate("AC Milan SPA", LocalDate.of(2012, 1, 15));
 		organization.setContactLastName("Fusetti");
 		organizationJpaService.save(organization);
 		Organization findOrganization = organizationJpaService.findByOrganizationNameStartDateEndDate("AC Milan SPA", LocalDate.of(2012, 1, 15), LocalDate.of(9999, 12, 31));
@@ -120,7 +116,7 @@ public class OrganizationJpaServiceTest {
 
 	@Test
 	public void update_ContactEmailIsMandatory_Empty() {
-		Organization organization = organizationJpaService.findByOrganizationNameAndAsOfDate("AC Milan SPA", LocalDate.of(2012, 1, 15));
+		Organization organization = organizationJpaService.findByOrganizationNameAsOfDate("AC Milan SPA", LocalDate.of(2012, 1, 15));
 		organization.setContactEmail("");
 		TransactionSystemException exception = assertThrows(TransactionSystemException.class, () -> organizationJpaService.save(organization));
 		Assert.assertTrue(exception.getCause().getCause().getMessage().contains("ContactEmail is mandatory"));
@@ -128,7 +124,7 @@ public class OrganizationJpaServiceTest {
 
 	@Test
 	public void update_ContactEmailIsMandatory_Null() {
-		Organization organization = organizationJpaService.findByOrganizationNameAndAsOfDate("AC Milan SPA", LocalDate.of(2012, 1, 15));
+		Organization organization = organizationJpaService.findByOrganizationNameAsOfDate("AC Milan SPA", LocalDate.of(2012, 1, 15));
 		organization.setContactEmail(null);
 		TransactionSystemException exception = assertThrows(TransactionSystemException.class, () -> organizationJpaService.save(organization));
 		Assert.assertTrue(exception.getCause().getCause().getMessage().contains("ContactEmail is mandatory"));
@@ -136,7 +132,7 @@ public class OrganizationJpaServiceTest {
 
 	@Test
 	public void update_ContactEmailInvalidFormat() {
-		Organization organization = organizationJpaService.findByOrganizationNameAndAsOfDate("AC Milan SPA", LocalDate.of(2012, 1, 15));
+		Organization organization = organizationJpaService.findByOrganizationNameAsOfDate("AC Milan SPA", LocalDate.of(2012, 1, 15));
 		organization.setContactEmail("LauraFusetti_dada.it");
 		TransactionSystemException exception = assertThrows(TransactionSystemException.class, () -> organizationJpaService.save(organization));
 		Assert.assertTrue(exception.getCause().getCause().getMessage().contains("ContactEmail invalid format"));
