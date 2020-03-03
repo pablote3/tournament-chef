@@ -50,7 +50,6 @@ public class OrganizationJpaServiceImpl implements OrganizationJpaService {
 	public Organization save(Organization organization) {
 		Organization findOrganization = findByOrganizationNameStartDateEndDate(organization.getOrganizationName(), organization.getStartDate(), organization.getEndDate());
 		if (findOrganization != null) {
-			findOrganization.setOrganizationStatus(organization.getOrganizationStatus());
 			findOrganization.setAddress1(organization.getAddress1());
 			findOrganization.setAddress2(organization.getAddress2());
 			findOrganization.setCity(organization.getCity());

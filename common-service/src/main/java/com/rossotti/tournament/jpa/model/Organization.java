@@ -1,6 +1,5 @@
 package com.rossotti.tournament.jpa.model;
 
-import com.rossotti.tournament.jpa.enumeration.OrganizationStatus;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -56,26 +55,6 @@ public class Organization extends BaseEntity {
 	}
 	public void setOrganizationName(String organizationName) {
 		this.organizationName = organizationName;
-	}
-
-	@Enumerated(EnumType.STRING)
-	@Column(length=9, nullable=false)
-	@NotNull(message="OrganizationStatus is mandatory")
-	private OrganizationStatus organizationStatus;
-	public OrganizationStatus getOrganizationStatus() {
-		return organizationStatus;
-	}
-	public void setOrganizationStatus(OrganizationStatus organizationStatus) {
-		this.organizationStatus = organizationStatus;
-	}
-	public Boolean isPending() {
-		return organizationStatus == OrganizationStatus.Pending;
-	}
-	public Boolean isActive() {
-		return organizationStatus == OrganizationStatus.Active;
-	}
-	public Boolean isInactive() {
-		return organizationStatus == OrganizationStatus.Inactive;
 	}
 
 	@Column(nullable=false)
@@ -196,5 +175,12 @@ public class Organization extends BaseEntity {
 	}
 	public void setContactPhone(String contactPhone) {
 		this.contactPhone = contactPhone;
+	}
+
+	public boolean isOrgActive() {
+		if (this.getStartDate().compareTo(LocalDate.now()) > 0) {
+
+		}
+		return true;
 	}
 }

@@ -1,7 +1,6 @@
 package com.rossotti.tournament.jpa.repository;
 
 import com.rossotti.tournament.config.PersistenceConfig;
-import com.rossotti.tournament.jpa.enumeration.OrganizationStatus;
 import com.rossotti.tournament.jpa.model.Organization;
 import org.junit.Assert;
 import org.junit.Test;
@@ -30,7 +29,6 @@ public class OrganizationRepositoryTest {
 	public void findById_Found() {
 		Organization organization = organizationRepository.findById(1L);
 		Assert.assertEquals("FC Juventes", organization.getOrganizationName());
-		Assert.assertEquals(OrganizationStatus.Active, organization.getOrganizationStatus());
 		Assert.assertEquals(LocalDate.of(2016, 2, 21), organization.getStartDate());
 		Assert.assertEquals(LocalDate.of(9999, 12, 31), organization.getEndDate());
 		Assert.assertEquals("Via Stupinigi 182", organization.getAddress1());
@@ -76,19 +74,19 @@ public class OrganizationRepositoryTest {
 	@Test
 	public void findByOrgNameAndAsOfDate_Found_EqualStartDate() {
 		Organization organization = organizationRepository.findByOrganizationNameAndAsOfDate("FC Juventes", LocalDate.of(2010, 1, 15));
-		Assert.assertEquals(OrganizationStatus.Inactive, organization.getOrganizationStatus());
+		Assert.assertEquals("barbara.bonansea@gmail.com", organization.getContactEmail());
 	}
 
 	@Test
 	public void findByOrgNameAndAsOfDate_Found_EqualEndDate() {
 		Organization organization = organizationRepository.findByOrganizationNameAndAsOfDate("FC Juventes", LocalDate.of(9999, 12, 31));
-		Assert.assertEquals(OrganizationStatus.Active, organization.getOrganizationStatus());
+		Assert.assertEquals("cristiana.girelli@gmail.com", organization.getContactEmail());
 	}
 
 	@Test
 	public void findByOrgNameAndAsOfDate_Found_BetweenStartAndEndDate() {
 		Organization organization = organizationRepository.findByOrganizationNameAndAsOfDate("FC Juventes", LocalDate.of(2012, 10, 29));
-		Assert.assertEquals(OrganizationStatus.Inactive, organization.getOrganizationStatus());
+		Assert.assertEquals("barbara.bonansea@gmail.com", organization.getContactEmail());
 	}
 
 	@Test
@@ -104,25 +102,25 @@ public class OrganizationRepositoryTest {
 	@Test
 	public void findByOrgNameStartDateEndDate_Found_EqualStartDate() {
 		Organization organization = organizationRepository.findByOrganizationNameStartDateEndDate("FC Juventes", LocalDate.of(2010, 1, 15), LocalDate.of(2011, 12, 31));
-		Assert.assertEquals(OrganizationStatus.Inactive, organization.getOrganizationStatus());
+		Assert.assertEquals("barbara.bonansea@gmail.com", organization.getContactEmail());
 	}
 
 	@Test
 	public void findByOrgNameStartDateEndDate_Found_EqualEndDate() {
 		Organization organization = organizationRepository.findByOrganizationNameStartDateEndDate("FC Juventes", LocalDate.of(2010, 12, 31), LocalDate.of(2016, 2, 20));
-		Assert.assertEquals(OrganizationStatus.Inactive, organization.getOrganizationStatus());
+		Assert.assertEquals("barbara.bonansea@gmail.com", organization.getContactEmail());
 	}
 
 	@Test
 	public void findByOrgNameStartDateEndDate_Found_EqualStartDateEndDate() {
 		Organization organization = organizationRepository.findByOrganizationNameStartDateEndDate("FC Juventes", LocalDate.of(2010, 1, 15), LocalDate.of(2016, 2, 20));
-		Assert.assertEquals(OrganizationStatus.Inactive, organization.getOrganizationStatus());
+		Assert.assertEquals("barbara.bonansea@gmail.com", organization.getContactEmail());
 	}
 
 	@Test
 	public void findByOrgNameStateDateEndDate_Found_BetweenStartAndEndDate() {
 		Organization organization = organizationRepository.findByOrganizationNameStartDateEndDate("FC Juventes", LocalDate.of(2012, 10, 29), LocalDate.of(2012, 12, 29));
-		Assert.assertEquals(OrganizationStatus.Inactive, organization.getOrganizationStatus());
+		Assert.assertEquals("barbara.bonansea@gmail.com", organization.getContactEmail());
 	}
 
 	@Test
@@ -190,7 +188,6 @@ public class OrganizationRepositoryTest {
 	public static Organization createMockOrganization(String orgName, LocalDate startDate, LocalDate endDate, String contactLastName, String contactEmail) {
 		Organization organization = new Organization();
 		organization.setOrganizationName(orgName);
-		organization.setOrganizationStatus(OrganizationStatus.Active);
 		organization.setStartDate(startDate);
 		organization.setEndDate(endDate);
 		organization.setAddress1("Via delle Tre Fontane 5");

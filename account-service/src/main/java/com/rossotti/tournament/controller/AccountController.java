@@ -35,8 +35,8 @@ public class AccountController {
 			}
 			else {
 				logger.debug("CreateAccount - Email " + user.getEmail() + " exists - " +
-							 "Status = " + user.getUserStatus() + " " +
-							 "UserType = " + user.getUserStatus());
+						"Status = " + user.getUserStatus() + " " +
+						"UserType = " + user.getUserStatus());
 				if (user.isActive()) {
 					if (user.isAdministrator() || user.isOrganization()) {
 						if (user.getUserOrganization().size() == 0) {
@@ -44,9 +44,16 @@ public class AccountController {
 						} else {
 							Iterator<UserOrganization> iter = user.getUserOrganization().iterator();
 							boolean organizationExists = false;
+							Organization organization;
 							while (iter.hasNext()) {
-								String organizationName = iter.next().getOrganization().getOrganizationName();
-								if (organizationName.equals(userIn.getUserOrganization().get(0).getOrganization().getOrganizationName()) ){
+								organization = iter.next().getOrganization();
+								if (organization.getOrganizationName().equals(userIn.getUserOrganization().get(0).getOrganization().getOrganizationName()) ){
+									logger.debug("CreateAccount - Organization " + organization.getOrganizationName() + " exists " +
+											"StartDate = " + organization.getStartDate() + " " +
+											"EndDate = " + organization.getEndDate());
+//									if (organization.getStartDate().compareTo(LocalDate.now()) > 0) {
+//
+//									}
 									organizationExists = true;
 									break;
 								}
