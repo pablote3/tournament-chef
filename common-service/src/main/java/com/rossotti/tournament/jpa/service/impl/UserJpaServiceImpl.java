@@ -1,15 +1,11 @@
 package com.rossotti.tournament.jpa.service.impl;
 
-import com.rossotti.tournament.exception.CustomException;
 import com.rossotti.tournament.exception.NoSuchEntityException;
-import com.rossotti.tournament.exception.ValidationMessages;
 import com.rossotti.tournament.jpa.model.User;
 import com.rossotti.tournament.jpa.repository.UserRepository;
 import com.rossotti.tournament.jpa.service.UserJpaService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 

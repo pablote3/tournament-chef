@@ -1,7 +1,9 @@
 package com.rossotti.tournament.jpa.service;
 
 import com.rossotti.tournament.exception.CustomException;
+import com.rossotti.tournament.exception.NoSuchEntityException;
 import com.rossotti.tournament.jpa.model.Organization;
+import com.rossotti.tournament.jpa.model.User;
 import com.rossotti.tournament.jpa.repository.OrganizationRepositoryTest;
 import org.junit.Assert;
 import org.junit.Test;
@@ -10,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.TransactionSystemException;
 
+import javax.validation.ConstraintViolationException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -88,24 +92,21 @@ public class OrganizationJpaServiceTest {
 
 	@Test
 	public void create_ContactEmailIsMandatory_Empty() {
-		CustomException exception = assertThrows(CustomException.class, () ->
+		ConstraintViolationException exception = assertThrows(ConstraintViolationException.class, () ->
 			organizationJpaService.save(OrganizationRepositoryTest.createMockOrganization("Empoli FC", LocalDate.of(2011, 1, 15), LocalDate.of(2011, 1, 22), "Di Guglielmo", "")));
-		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
-		Assert.assertEquals("ContactEmail is mandatory", exception.getError().getErrorMessage());
+		Assert.assertTrue(exception.getMessage().contains("ContactEmail is mandatory"));
 	}
 
 	@Test
 	public void create_ContactEmailIsMandatory_Null() {
-		CustomException exception = assertThrows(CustomException.class, () -> organizationJpaService.save(OrganizationRepositoryTest.createMockOrganization("Empoli FC", LocalDate.of(2011, 1, 15), LocalDate.of(2011, 1, 22), "Di Guglielmo", null)));
-		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
-		Assert.assertEquals("ContactEmail is mandatory", exception.getError().getErrorMessage());
+		ConstraintViolationException exception = assertThrows(ConstraintViolationException.class, () -> organizationJpaService.save(OrganizationRepositoryTest.createMockOrganization("Empoli FC", LocalDate.of(2011, 1, 15), LocalDate.of(2011, 1, 22), "Di Guglielmo", null)));
+		Assert.assertTrue(exception.getMessage().contains("ContactEmail is mandatory"));
 	}
 
 	@Test
 	public void create_ContactEmailInvalidFormat() {
-		CustomException exception = assertThrows(CustomException.class, () -> organizationJpaService.save(OrganizationRepositoryTest.createMockOrganization("Empoli FC", LocalDate.of(2011, 1, 15), LocalDate.of(2011, 1, 22), "Di Guglielmo", "di guglielmo@dada.it")));
-		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
-		Assert.assertEquals("ContactEmail invalid format", exception.getError().getErrorMessage());
+		ConstraintViolationException exception = assertThrows(ConstraintViolationException.class, () -> organizationJpaService.save(OrganizationRepositoryTest.createMockOrganization("Empoli FC", LocalDate.of(2011, 1, 15), LocalDate.of(2011, 1, 22), "Di Guglielmo", "di guglielmo@dada.it")));
+		Assert.assertTrue(exception.getMessage().contains("ContactEmail invalid format"));
 	}
 
 	@Test
@@ -121,27 +122,24 @@ public class OrganizationJpaServiceTest {
 	public void update_ContactEmailIsMandatory_Empty() {
 		Organization organization = organizationJpaService.findByOrganizationNameAndAsOfDate("AC Milan SPA", LocalDate.of(2012, 1, 15));
 		organization.setContactEmail("");
-		CustomException exception = assertThrows(CustomException.class, () -> organizationJpaService.save(organization));
-		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
-		Assert.assertEquals("ContactEmail is mandatory", exception.getError().getErrorMessage());
+		TransactionSystemException exception = assertThrows(TransactionSystemException.class, () -> organizationJpaService.save(organization));
+		Assert.assertTrue(exception.getCause().getCause().getMessage().contains("ContactEmail is mandatory"));
 	}
 
 	@Test
 	public void update_ContactEmailIsMandatory_Null() {
 		Organization organization = organizationJpaService.findByOrganizationNameAndAsOfDate("AC Milan SPA", LocalDate.of(2012, 1, 15));
 		organization.setContactEmail(null);
-		CustomException exception = assertThrows(CustomException.class, () -> organizationJpaService.save(organization));
-		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
-		Assert.assertEquals("ContactEmail is mandatory", exception.getError().getErrorMessage());
+		TransactionSystemException exception = assertThrows(TransactionSystemException.class, () -> organizationJpaService.save(organization));
+		Assert.assertTrue(exception.getCause().getCause().getMessage().contains("ContactEmail is mandatory"));
 	}
 
 	@Test
 	public void update_ContactEmailInvalidFormat() {
 		Organization organization = organizationJpaService.findByOrganizationNameAndAsOfDate("AC Milan SPA", LocalDate.of(2012, 1, 15));
 		organization.setContactEmail("LauraFusetti_dada.it");
-		CustomException exception = assertThrows(CustomException.class, () -> organizationJpaService.save(organization));
-		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
-		Assert.assertEquals("ContactEmail invalid format", exception.getError().getErrorMessage());
+		TransactionSystemException exception = assertThrows(TransactionSystemException.class, () -> organizationJpaService.save(organization));
+		Assert.assertTrue(exception.getCause().getCause().getMessage().contains("ContactEmail invalid format"));
 	}
 
 	@Test
@@ -152,9 +150,8 @@ public class OrganizationJpaServiceTest {
 
 	@Test
 	public void delete_NotFound() {
-		CustomException exception = assertThrows(CustomException.class, () -> organizationJpaService.delete(21L));
-		Assert.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, exception.getStatus());
-		Assert.assertEquals("Server error when trying to find record for id of {}", exception.getError().getErrorMessage());
-		Assert.assertEquals("MSG_VAL_0012", exception.getError().getError());
+		NoSuchEntityException exception = assertThrows(NoSuchEntityException.class, () -> organizationJpaService.delete(21L));
+		Assert.assertTrue(exception.getMessage().contains("Organization does not exist"));
+		Assert.assertEquals(Organization.class, exception.getEntityClass());
 	}
 }
