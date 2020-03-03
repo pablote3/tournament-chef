@@ -1,8 +1,10 @@
 package com.rossotti.tournament.jpa.service;
 
 import com.rossotti.tournament.exception.CustomException;
+import com.rossotti.tournament.exception.NoSuchEntityException;
 import com.rossotti.tournament.jpa.enumeration.GameStatus;
 import com.rossotti.tournament.jpa.model.Game;
+import com.rossotti.tournament.jpa.model.User;
 import com.rossotti.tournament.jpa.repository.GameRepositoryTest;
 import org.junit.Assert;
 import org.junit.Test;
@@ -11,6 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.TransactionSystemException;
+
+import javax.validation.ConstraintViolationException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -137,9 +142,8 @@ public class GameJpaServiceTest {
 
 	@Test
 	public void create_GameStatusIsMandatory_Null() {
-		CustomException exception = assertThrows(CustomException.class, () -> gameJpaService.save(GameRepositoryTest.createMockGame(null, LocalTime.of(14, 0, 0))));
-		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
-		Assert.assertEquals("GameStatus is mandatory", exception.getError().getErrorMessage());
+		ConstraintViolationException exception = assertThrows(ConstraintViolationException.class, () -> gameJpaService.save(GameRepositoryTest.createMockGame(null, LocalTime.of(14, 0, 0))));
+		Assert.assertTrue(exception.getMessage().contains("GameStatus is mandatory"));
 	}
 
 	@Test
@@ -155,9 +159,8 @@ public class GameJpaServiceTest {
 	public void update_GameStatusIsMandatory_Null() {
 		Game game = gameJpaService.findByTeamNameGameDateTime("Inter Milan", LocalDate.of(2020, 9, 29), LocalTime.of(10, 0, 0));
 		game.setGameStatus(null);
-		CustomException exception = assertThrows(CustomException.class, () -> gameJpaService.save(game));
-		Assert.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
-		Assert.assertEquals("GameStatus is mandatory", exception.getError().getErrorMessage());
+		TransactionSystemException exception = assertThrows(TransactionSystemException.class, () -> gameJpaService.save(game));
+		Assert.assertTrue(exception.getCause().getCause().getMessage().contains("GameStatus is mandatory"));
 	}
 
 	@Test
@@ -168,9 +171,8 @@ public class GameJpaServiceTest {
 
 	@Test
 	public void delete_NotFound() {
-		CustomException exception = assertThrows(CustomException.class, () -> gameJpaService.delete(31L));
-		Assert.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, exception.getStatus());
-		Assert.assertEquals("Server error when trying to find record for id of {}", exception.getError().getErrorMessage());
-		Assert.assertEquals("MSG_VAL_0012", exception.getError().getError());
+		NoSuchEntityException exception = assertThrows(NoSuchEntityException.class, () -> gameJpaService.delete(31L));
+		Assert.assertTrue(exception.getMessage().contains("Game does not exist"));
+		Assert.assertEquals(Game.class, exception.getEntityClass());
 	}
 }

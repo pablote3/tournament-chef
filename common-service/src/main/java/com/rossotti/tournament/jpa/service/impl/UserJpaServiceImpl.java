@@ -56,10 +56,10 @@ public class UserJpaServiceImpl implements UserJpaService {
 		User user = getById(id);
 		if (user != null) {
 			userRepository.deleteById(user.getId());
+			return user;
 		}
 		else {
 			throw new NoSuchEntityException(User.class);
 		}
-		return user;
 	}
 }
