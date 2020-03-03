@@ -1,16 +1,14 @@
 package com.rossotti.tournament.jpa.service;
 
-import com.rossotti.tournament.exception.CustomException;
+import com.rossotti.tournament.exception.NoSuchEntityException;
 import com.rossotti.tournament.jpa.enumeration.UserStatus;
 import com.rossotti.tournament.jpa.model.User;
 import com.rossotti.tournament.jpa.repository.UserRepositoryTest;
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.jupiter.api.Assertions;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.TransactionSystemException;
 
@@ -143,9 +141,8 @@ public class UserJpaServiceTest {
 
 	@Test
 	public void delete_NotFound() {
-		CustomException exception = assertThrows(CustomException.class, () -> userJpaService.delete(21L));
-		Assert.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, exception.getStatus());
-		Assert.assertEquals("Server error when trying to find record for id of {}", exception.getError().getErrorMessage());
-		Assert.assertEquals("MSG_VAL_0012", exception.getError().getError());
+		NoSuchEntityException exception = assertThrows(NoSuchEntityException.class, () -> userJpaService.delete(21L));
+		Assert.assertTrue(exception.getMessage().contains("User does not exist"));
+		Assert.assertEquals(User.class, exception.getEntityClass());
 	}
 }
