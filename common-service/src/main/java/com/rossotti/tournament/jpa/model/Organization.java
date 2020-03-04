@@ -176,11 +176,4 @@ public class Organization extends BaseEntity {
 	public void setContactPhone(String contactPhone) {
 		this.contactPhone = contactPhone;
 	}
-
-	public boolean isOrgActive() {
-		if (this.getStartDate().compareTo(LocalDate.now()) > 0) {
-
-		}
-		return true;
-	}
 }

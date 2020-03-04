@@ -1,18 +1,18 @@
 package com.rossotti.tournament.controller;
 
+import com.rossotti.tournament.dto.AccountDTO;
+import com.rossotti.tournament.exception.EntityExistsException;
 import com.rossotti.tournament.exception.InactiveEntityException;
 import com.rossotti.tournament.exception.UnauthorizedEntityException;
 import com.rossotti.tournament.jpa.model.Organization;
 import com.rossotti.tournament.jpa.model.User;
-import com.rossotti.tournament.jpa.model.UserOrganization;
 import com.rossotti.tournament.jpa.service.OrganizationJpaService;
 import com.rossotti.tournament.jpa.service.UserJpaService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Iterator;
+import java.time.LocalDate;
 
 @Service
 public class AccountController {
@@ -27,9 +27,9 @@ public class AccountController {
 		this.organizationJpaService = organizationJpaService;
 	}
 
-	private Organization createAccount(User userIn) {
+	private Organization createAccount(AccountDTO accountDTO) {
 		try {
-			User user = userJpaService.findByEmail(userIn.getEmail());
+			User user = userJpaService.findByEmail(accountDTO.getUserEmail());
 			if (user == null) {
 				//new user persist
 			}
@@ -39,25 +39,16 @@ public class AccountController {
 						"UserType = " + user.getUserStatus());
 				if (user.isActive()) {
 					if (user.isAdministrator() || user.isOrganization()) {
-						if (user.getUserOrganization().size() == 0) {
-							//new org persist
-						} else {
-							Iterator<UserOrganization> iter = user.getUserOrganization().iterator();
-							boolean organizationExists = false;
-							Organization organization;
-							while (iter.hasNext()) {
-								organization = iter.next().getOrganization();
-								if (organization.getOrganizationName().equals(userIn.getUserOrganization().get(0).getOrganization().getOrganizationName()) ){
-									logger.debug("CreateAccount - Organization " + organization.getOrganizationName() + " exists " +
-											"StartDate = " + organization.getStartDate() + " " +
-											"EndDate = " + organization.getEndDate());
-//									if (organization.getStartDate().compareTo(LocalDate.now()) > 0) {
-//
-//									}
-									organizationExists = true;
-									break;
-								}
+						if (organizationJpaService.findByOrganizationNameAsOfDate(accountDTO.getOrgName(), LocalDate.now()) == null) {
+							if (organizationJpaService.findByOrganizationName(accountDTO.getOrgName()).size() == 0) {
+								//new user persist
 							}
+							else {
+								throw new InactiveEntityException(Organization.class);
+							}
+						}
+						else {
+							throw new EntityExistsException(Organization.class);
 						}
 					}
 					else {
