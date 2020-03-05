@@ -1,11 +1,7 @@
 package com.rossotti.tournament.dto;
 
-public class AccountDTO {
-	private String userEmail;
-	private String userLastName;
-	private String userFirstName;
-	private String userPassword;
-	private String orgName;
+public class OrganizationDTO {
+	private String organizationName;
 	private String orgAddress1;
 	private String orgAddress2;
 	private String orgCity;
@@ -16,40 +12,20 @@ public class AccountDTO {
 	private String orgContactFirstName;
 	private String orgContactEmail;
 	private String orgContactPhone;
+	private UserDTO user;
 
-	public String getUserEmail() {
-		return userEmail;
+	public UserDTO getUserDTO() {
+		return user;
 	}
-	public void setUserEmail(String userEmail) {
-		this.userEmail = userEmail;
-	}
-
-	public String getUserLastName() {
-		return userLastName;
-	}
-	public void setUserLastName(String userLastName) {
-		this.userLastName = userLastName;
+	public void setUserDTO(UserDTO user) {
+		this.user = user;
 	}
 
-	public String getUserFirstName() {
-		return userFirstName;
+	public String getOrganizationName() {
+		return organizationName;
 	}
-	public void setUserFirstName(String userFirstName) {
-		this.userFirstName = userFirstName;
-	}
-
-	public String getUserPassword() {
-		return userPassword;
-	}
-	public void setUserPassword(String userPassword) {
-		this.userPassword = userPassword;
-	}
-
-	public String getOrgName() {
-		return orgName;
-	}
-	public void setOrgName(String orgName) {
-		this.orgName = orgName;
+	public void setOrganizationName(String organizationName) {
+		this.organizationName = organizationName;
 	}
 
 	public String getOrgAddress1() {

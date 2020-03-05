@@ -1,6 +1,6 @@
 package com.rossotti.tournament.controller;
 
-import com.rossotti.tournament.dto.AccountDTO;
+import com.rossotti.tournament.dto.OrganizationDTO;
 import com.rossotti.tournament.exception.EntityExistsException;
 import com.rossotti.tournament.exception.InactiveEntityException;
 import com.rossotti.tournament.exception.UnauthorizedEntityException;
@@ -8,6 +8,7 @@ import com.rossotti.tournament.jpa.model.Organization;
 import com.rossotti.tournament.jpa.model.User;
 import com.rossotti.tournament.jpa.service.OrganizationJpaService;
 import com.rossotti.tournament.jpa.service.UserJpaService;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +28,14 @@ public class AccountController {
 		this.organizationJpaService = organizationJpaService;
 	}
 
-	private Organization createAccount(AccountDTO accountDTO) {
+	public Organization createAccount(OrganizationDTO organizationDTO) {
 		try {
-			User user = userJpaService.findByEmail(accountDTO.getUserEmail());
+			User user = userJpaService.findByEmail(organizationDTO.getUserDTO().getUserEmail());
 			if (user == null) {
-				//new user persist
+				ModelMapper modelMapper = new ModelMapper();
+				Organization organization = modelMapper.map(organizationDTO, Organization.class);
+				//check if org exists
+				return organization;
 			}
 			else {
 				logger.debug("CreateAccount - Email " + user.getEmail() + " exists - " +
@@ -39,8 +43,8 @@ public class AccountController {
 						"UserType = " + user.getUserStatus());
 				if (user.isActive()) {
 					if (user.isAdministrator() || user.isOrganization()) {
-						if (organizationJpaService.findByOrganizationNameAsOfDate(accountDTO.getOrgName(), LocalDate.now()) == null) {
-							if (organizationJpaService.findByOrganizationName(accountDTO.getOrgName()).size() == 0) {
+						if (organizationJpaService.findByOrganizationNameAsOfDate(organizationDTO.getOrganizationName(), LocalDate.now()) == null) {
+							if (organizationJpaService.findByOrganizationName(organizationDTO.getOrganizationName()).size() == 0) {
 								//new user persist
 							}
 							else {
