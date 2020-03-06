@@ -29,43 +29,49 @@ public class AccountController {
 	}
 
 	public Organization createAccount(OrganizationDTO organizationDTO) {
-		try {
-			User user = userJpaService.findByEmail(organizationDTO.getUserDTO().getUserEmail());
-			if (user == null) {
-				ModelMapper modelMapper = new ModelMapper();
-				Organization organization = modelMapper.map(organizationDTO, Organization.class);
-				//check if org exists
-				return organization;
-			}
-			else {
-				logger.debug("CreateAccount - Email " + user.getEmail() + " exists - " +
-						"Status = " + user.getUserStatus() + " " +
-						"UserType = " + user.getUserStatus());
-				if (user.isActive()) {
-					if (user.isAdministrator() || user.isOrganization()) {
-						if (organizationJpaService.findByOrganizationNameAsOfDate(organizationDTO.getOrganizationName(), LocalDate.now()) == null) {
-							if (organizationJpaService.findByOrganizationName(organizationDTO.getOrganizationName()).size() == 0) {
-								//new user persist
-							}
-							else {
-								throw new InactiveEntityException(Organization.class);
-							}
-						}
-						else {
-							throw new EntityExistsException(Organization.class);
-						}
-					}
-					else {
-						throw new UnauthorizedEntityException(Organization.class);
-					}
+		User user = userJpaService.findByEmail(organizationDTO.getUserDTO().getUserEmail());
+		if (user == null) {
+			logger.debug("createAccount - findByUserEmail: email = " + organizationDTO.getUserDTO().getUserEmail() + " does not exist");
+			return createOrganization(organizationDTO);
+		}
+		else {
+			logger.debug("createAccount - findByUserEmail: email = " + user.getEmail() + " exists");
+			if (user.isActive()) {
+				logger.debug("createAccount - activeUser " + user.getUserStatus());
+				if (user.isAdministrator() || user.isOrganization()) {
+					return createOrganization(organizationDTO);
 				}
 				else {
-					throw new InactiveEntityException(User.class);
+					logger.debug("createAccount - unauthorizedUser " + user.getUserStatus());
+					throw new UnauthorizedEntityException(Organization.class);
 				}
 			}
+			else {
+				logger.debug("createAccount - inactiveUser " + user.getUserStatus());
+				throw new InactiveEntityException(User.class);
+			}
 		}
-		catch (Exception e) {
+	}
+
+	private Organization createOrganization(OrganizationDTO organizationDTO) {
+		LocalDate currentDate = LocalDate.now();
+		if (organizationJpaService.findByOrganizationNameAsOfDate(organizationDTO.getOrganizationName(), currentDate) == null) {
+			logger.debug("createOrganization - findByOrganizationNameAsOfDate: orgName = " + organizationDTO.getOrganizationName() + ", asOfDate = " + currentDate + " does not exist");
+			if (organizationJpaService.findByOrganizationName(organizationDTO.getOrganizationName()).size() == 0) {
+				logger.debug("createOrganization - findByOrganizationName: orgName = " + organizationDTO.getOrganizationName() + " does not exist");
+				ModelMapper modelMapper = new ModelMapper();
+				Organization organization = modelMapper.map(organizationDTO, Organization.class);
+				logger.debug("createOrganization - saveOrganization: orgName = " + organizationDTO.getOrganizationName() + ", userEmail = " + organizationDTO.getUserDTO().getUserEmail());
+				return organizationJpaService.save(organization);
+			}
+			else {
+				logger.debug("createOrganization - findByOrganizationName: orgName = " + organizationDTO.getOrganizationName() + " exists");
+				throw new InactiveEntityException(Organization.class);
+			}
 		}
-		return null;
+		else {
+			logger.debug("createOrganization - findByOrganizationNameAsOfDate: orgName = " + organizationDTO.getOrganizationName() + " exists");
+			throw new EntityExistsException(Organization.class);
+		}
 	}
 }
