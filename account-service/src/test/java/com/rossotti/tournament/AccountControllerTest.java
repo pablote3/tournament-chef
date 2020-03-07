@@ -18,6 +18,10 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+
+import javax.persistence.PersistenceException;
+import java.util.ArrayList;
+import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
@@ -34,7 +38,7 @@ public class AccountControllerTest {
 	private AccountController accountController;
 
 	@Test
-	public void userFindByEmail_userFoundInactive() {
+	public void findByUserEmail_foundInactive() {
 		when(userJpaService.findByEmail(anyString()))
 			.thenReturn(createMockUser(UserStatus.Inactive, UserType.Event));
 		InactiveEntityException exception = assertThrows(InactiveEntityException.class, () -> accountController.createAccount(createMockOrganizationDTO()));
@@ -42,7 +46,7 @@ public class AccountControllerTest {
 	}
 
 	@Test
-	public void userFindByEmail_userFoundUnauthorized() {
+	public void findByUserEmail_foundUnauthorized() {
 		when(userJpaService.findByEmail(anyString()))
 			.thenReturn(createMockUser(UserStatus.Active, UserType.Event));
 		UnauthorizedEntityException exception = assertThrows(UnauthorizedEntityException.class, () -> accountController.createAccount(createMockOrganizationDTO()));
@@ -50,13 +54,52 @@ public class AccountControllerTest {
 	}
 
 	@Test
-	public void userFindByEmail_userFoundAuthorized() {
+	public void findByOrganizationNameAsOfDate_foundActive() {
 		when(userJpaService.findByEmail(anyString()))
 			.thenReturn(createMockUser(UserStatus.Active, UserType.Organization));
 		when(organizationJpaService.findByOrganizationNameAsOfDate(anyString(), any()))
 			.thenReturn(createMockOrganization());
 		EntityExistsException exception = assertThrows(EntityExistsException.class, () -> accountController.createAccount(createMockOrganizationDTO()));
 		Assert.assertTrue(exception.getMessage().contains("Organization already exists"));
+	}
+
+	@Test
+	public void findByOrganizationName_foundInactive() {
+		when(userJpaService.findByEmail(anyString()))
+			.thenReturn(createMockUser(UserStatus.Active, UserType.Organization));
+		when(organizationJpaService.findByOrganizationNameAsOfDate(anyString(), any()))
+			.thenReturn(null);
+		when(organizationJpaService.findByOrganizationName(anyString()))
+			.thenReturn(createMockOrganizations());
+		InactiveEntityException exception = assertThrows(InactiveEntityException.class, () -> accountController.createAccount(createMockOrganizationDTO()));
+		Assert.assertTrue(exception.getMessage().contains("Organization is in an inactive status"));
+	}
+
+	@Test
+	public void createAccount_persistenceException() {
+		when(userJpaService.findByEmail(anyString()))
+			.thenReturn(createMockUser(UserStatus.Active, UserType.Organization));
+		when(organizationJpaService.findByOrganizationNameAsOfDate(anyString(), any()))
+			.thenReturn(null);
+		when(organizationJpaService.findByOrganizationName(anyString()))
+			.thenReturn(new ArrayList<>());
+		when(organizationJpaService.save(any()))
+			.thenThrow(PersistenceException.class);
+		assertThrows(PersistenceException.class, () -> accountController.createAccount(createMockOrganizationDTO()));
+	}
+
+	@Test
+	public void createAccount_success() {
+		when(userJpaService.findByEmail(anyString()))
+				.thenReturn(createMockUser(UserStatus.Active, UserType.Organization));
+		when(organizationJpaService.findByOrganizationNameAsOfDate(anyString(), any()))
+				.thenReturn(null);
+		when(organizationJpaService.findByOrganizationName(anyString()))
+				.thenReturn(new ArrayList<>());
+		when(organizationJpaService.save(any()))
+				.thenReturn(createMockOrganization());
+		Organization organization = accountController.createAccount(createMockOrganizationDTO());
+		Assert.assertEquals("Bonfantini", organization.getContactLastName());
 	}
 
 	private OrganizationDTO createMockOrganizationDTO() {
@@ -106,5 +149,11 @@ public class AccountControllerTest {
 		organization.setContactFirstName("Agnes");
 		organization.setContactPhone("520-158-1258");
 		return organization;
+	}
+
+	private List<Organization> createMockOrganizations() {
+		List<Organization> organizations = new ArrayList<>();
+		organizations.add(createMockOrganization());
+		return organizations;
 	}
 }
