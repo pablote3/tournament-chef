@@ -39,8 +39,7 @@ public class AccountController {
 			if (user.isActive()) {
 				logger.debug("createAccount - activeUser " + user.getUserStatus());
 				if (user.isAdministrator() || user.isOrganization()) {
-					Organization organization = createOrganization(organizationDTO);
-					return organization;
+					return createOrganization(organizationDTO);
 				}
 				else {
 					logger.debug("createAccount - unauthorizedUser " + user.getUserStatus());
@@ -62,8 +61,7 @@ public class AccountController {
 				logger.debug("createOrganization - findByOrganizationName: orgName = " + organizationDTO.getOrganizationName() + " does not exist");
 				ModelMapper modelMapper = new ModelMapper();
 				logger.debug("createOrganization - saveOrganization: orgName = " + organizationDTO.getOrganizationName() + ", userEmail = " + organizationDTO.getUserDTO().getUserEmail());
-				Organization organization = organizationJpaService.save(modelMapper.map(organizationDTO, Organization.class));
-				return organization;
+				return organizationJpaService.save(modelMapper.map(organizationDTO, Organization.class));
 			}
 			else {
 				logger.debug("createOrganization - findByOrganizationName: orgName = " + organizationDTO.getOrganizationName() + " exists");

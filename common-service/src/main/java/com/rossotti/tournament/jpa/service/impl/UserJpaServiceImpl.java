@@ -52,11 +52,10 @@ public class UserJpaServiceImpl implements UserJpaService {
 	}
 
 	@Override
-	public User delete(Long id) {
+	public void delete(Long id) {
 		User user = getById(id);
 		if (user != null) {
 			userRepository.deleteById(user.getId());
-			return user;
 		}
 		else {
 			throw new NoSuchEntityException(User.class);

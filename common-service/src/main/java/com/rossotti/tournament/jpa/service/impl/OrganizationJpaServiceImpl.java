@@ -71,11 +71,10 @@ public class OrganizationJpaServiceImpl implements OrganizationJpaService {
 	}
 
 	@Override
-	public Organization delete(Long id) {
+	public void delete(Long id) {
 		Organization organization = getById(id);
 		if (organization != null) {
 			organizationRepository.deleteById(organization.getId());
-			return organization;
 		}
 		else {
 			throw new NoSuchEntityException(Organization.class);

@@ -9,5 +9,5 @@ public interface CrudService<T> {
 
 	T save(T domainObject);
 
-	T delete(Long id);
+	void delete(Long id);
 }

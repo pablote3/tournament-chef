@@ -84,11 +84,10 @@ public class GameJpaServiceImpl implements GameJpaService {
 	}
 
 	@Override
-	public Game delete(Long id) {
+	public void delete(Long id) {
 		Game game = getById(id);
 		if (game != null) {
 			gameRepository.deleteById(game.getId());
-			return game;
 		}
 		else {
 			throw new NoSuchEntityException(Game.class);

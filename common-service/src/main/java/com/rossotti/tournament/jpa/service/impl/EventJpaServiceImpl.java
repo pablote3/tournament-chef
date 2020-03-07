@@ -86,11 +86,10 @@ public class EventJpaServiceImpl implements EventJpaService {
 	}
 
 	@Override
-	public Event delete(Long id) {
+	public void delete(Long id) {
 		Event event = getById(id);
 		if (event != null) {
 			eventRepository.deleteById(event.getId());
-			return event;
 		}
 		else {
 			throw new NoSuchEntityException(Event.class);
