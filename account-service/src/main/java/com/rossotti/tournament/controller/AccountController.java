@@ -43,7 +43,7 @@ public class AccountController {
 				}
 				else {
 					logger.debug("createAccount - unauthorizedUser " + user.getUserStatus());
-					throw new UnauthorizedEntityException(Organization.class);
+					throw new UnauthorizedEntityException(User.class);
 				}
 			}
 			else {
