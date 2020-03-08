@@ -1,6 +1,7 @@
-package com.rossotti.tournament.jpa.model;
+package com.rossotti.tournament.model;
 
 import com.rossotti.tournament.jpa.enumeration.GameStatus;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalTime;

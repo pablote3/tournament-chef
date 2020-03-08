@@ -1,4 +1,4 @@
-package com.rossotti.tournament.jpa.model;
+package com.rossotti.tournament.model;
 
 import com.rossotti.tournament.jpa.enumeration.EventStatus;
 import com.rossotti.tournament.jpa.enumeration.EventType;

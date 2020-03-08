@@ -1,7 +1,7 @@
 package com.rossotti.tournament.jpa.repository;
 
 import com.rossotti.tournament.jpa.enumeration.TemplateType;
-import com.rossotti.tournament.jpa.model.Event;
+import com.rossotti.tournament.model.Event;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.query.Param;

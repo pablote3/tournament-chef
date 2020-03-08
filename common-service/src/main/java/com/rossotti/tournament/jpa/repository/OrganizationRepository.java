@@ -1,6 +1,6 @@
 package com.rossotti.tournament.jpa.repository;
 
-import com.rossotti.tournament.jpa.model.Organization;
+import com.rossotti.tournament.model.Organization;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.query.Param;

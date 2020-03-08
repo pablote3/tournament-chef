@@ -1,4 +1,4 @@
-package com.rossotti.tournament.jpa.model;
+package com.rossotti.tournament.model;
 
 import javax.persistence.*;
 import java.util.ArrayList;

@@ -1,7 +1,7 @@
 package com.rossotti.tournament.dto;
 
-import com.rossotti.tournament.jpa.model.AvailableLocation;
-import com.rossotti.tournament.jpa.model.AvailableTeam;
+import com.rossotti.tournament.model.AvailableLocation;
+import com.rossotti.tournament.model.AvailableTeam;
 import java.time.LocalDate;
 import java.util.List;
 

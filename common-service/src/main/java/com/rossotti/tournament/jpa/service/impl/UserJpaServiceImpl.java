@@ -1,7 +1,7 @@
 package com.rossotti.tournament.jpa.service.impl;
 
 import com.rossotti.tournament.exception.NoSuchEntityException;
-import com.rossotti.tournament.jpa.model.User;
+import com.rossotti.tournament.model.User;
 import com.rossotti.tournament.jpa.repository.UserRepository;
 import com.rossotti.tournament.jpa.service.UserJpaService;
 import org.springframework.beans.factory.annotation.Autowired;

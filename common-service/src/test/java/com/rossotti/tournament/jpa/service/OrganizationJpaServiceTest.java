@@ -1,7 +1,7 @@
 package com.rossotti.tournament.jpa.service;
 
 import com.rossotti.tournament.exception.NoSuchEntityException;
-import com.rossotti.tournament.jpa.model.Organization;
+import com.rossotti.tournament.model.Organization;
 import com.rossotti.tournament.jpa.repository.OrganizationRepositoryTest;
 import org.junit.Assert;
 import org.junit.Test;

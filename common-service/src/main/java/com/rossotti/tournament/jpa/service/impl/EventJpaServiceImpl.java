@@ -2,7 +2,7 @@ package com.rossotti.tournament.jpa.service.impl;
 
 import com.rossotti.tournament.exception.NoSuchEntityException;
 import com.rossotti.tournament.jpa.enumeration.TemplateType;
-import com.rossotti.tournament.jpa.model.Event;
+import com.rossotti.tournament.model.Event;
 import com.rossotti.tournament.jpa.repository.EventRepository;
 import com.rossotti.tournament.jpa.service.EventJpaService;
 import org.springframework.beans.factory.annotation.Autowired;

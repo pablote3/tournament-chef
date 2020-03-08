@@ -3,7 +3,7 @@ package com.rossotti.tournament.jpa.service.impl;
 
 import com.rossotti.tournament.exception.NoSuchEntityException;
 import com.rossotti.tournament.jpa.enumeration.GameStatus;
-import com.rossotti.tournament.jpa.model.Game;
+import com.rossotti.tournament.model.Game;
 import com.rossotti.tournament.jpa.repository.GameRepository;
 import com.rossotti.tournament.jpa.service.GameJpaService;
 import org.springframework.beans.factory.annotation.Autowired;

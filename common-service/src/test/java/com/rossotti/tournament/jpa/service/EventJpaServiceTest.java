@@ -3,7 +3,7 @@ package com.rossotti.tournament.jpa.service;
 import com.rossotti.tournament.exception.NoSuchEntityException;
 import com.rossotti.tournament.jpa.enumeration.EventStatus;
 import com.rossotti.tournament.jpa.enumeration.TemplateType;
-import com.rossotti.tournament.jpa.model.Event;
+import com.rossotti.tournament.model.Event;
 import com.rossotti.tournament.jpa.repository.EventRepositoryTest;
 import org.junit.Assert;
 import org.junit.Test;
@@ -15,7 +15,6 @@ import org.springframework.transaction.TransactionSystemException;
 import javax.validation.ConstraintViolationException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 

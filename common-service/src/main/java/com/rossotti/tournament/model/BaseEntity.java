@@ -1,10 +1,9 @@
-package com.rossotti.tournament.jpa.model;
-
-import javax.persistence.*;
+package com.rossotti.tournament.model;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.LastModifiedBy;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @MappedSuperclass

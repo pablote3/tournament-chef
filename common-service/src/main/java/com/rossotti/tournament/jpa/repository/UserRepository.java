@@ -1,6 +1,6 @@
 package com.rossotti.tournament.jpa.repository;
 
-import com.rossotti.tournament.jpa.model.User;
+import com.rossotti.tournament.model.User;
 import org.springframework.data.repository.Repository;
 
 import java.util.List;

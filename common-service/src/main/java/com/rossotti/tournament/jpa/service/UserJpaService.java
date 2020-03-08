@@ -1,6 +1,6 @@
 package com.rossotti.tournament.jpa.service;
 
-import com.rossotti.tournament.jpa.model.User;
+import com.rossotti.tournament.model.User;
 import org.springframework.stereotype.Service;
 
 @Service

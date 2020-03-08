@@ -1,6 +1,6 @@
 package com.rossotti.tournament.jpa.service;
 
-import com.rossotti.tournament.jpa.model.Organization;
+import com.rossotti.tournament.model.Organization;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;

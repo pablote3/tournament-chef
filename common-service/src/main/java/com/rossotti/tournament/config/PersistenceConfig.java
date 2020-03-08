@@ -40,7 +40,7 @@ public class PersistenceConfig {
 		LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
 		entityManagerFactoryBean.setDataSource(dataSource());
 		entityManagerFactoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
-		entityManagerFactoryBean.setPackagesToScan("com.rossotti.tournament.jpa.model");
+		entityManagerFactoryBean.setPackagesToScan("com.rossotti.tournament.model");
 
 		Properties jpaProperties = new Properties();
 		jpaProperties.put("hibernate.dialect", config.getHibernate().getDialect());

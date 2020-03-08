@@ -1,7 +1,7 @@
 package com.rossotti.tournament.jpa.service;
 
 import com.rossotti.tournament.jpa.enumeration.GameStatus;
-import com.rossotti.tournament.jpa.model.Game;
+import com.rossotti.tournament.model.Game;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalTime;
