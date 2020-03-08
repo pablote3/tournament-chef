@@ -1,4 +1,4 @@
-package com.rossotti.tournament.jpa.enumeration;
+package com.rossotti.tournament.enumeration;
 
 public enum GroupPlay {
 	Pairing, RoundRobin, None

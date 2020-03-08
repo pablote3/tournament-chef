@@ -1,8 +1,8 @@
 package com.rossotti.tournament.model;
 
-import com.rossotti.tournament.jpa.enumeration.EventStatus;
-import com.rossotti.tournament.jpa.enumeration.EventType;
-import com.rossotti.tournament.jpa.enumeration.Sport;
+import com.rossotti.tournament.enumeration.EventStatus;
+import com.rossotti.tournament.enumeration.EventType;
+import com.rossotti.tournament.enumeration.Sport;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;

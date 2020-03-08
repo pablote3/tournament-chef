@@ -1,7 +1,7 @@
 package com.rossotti.tournament.jpa.service;
 
 import com.rossotti.tournament.exception.NoSuchEntityException;
-import com.rossotti.tournament.jpa.enumeration.GameStatus;
+import com.rossotti.tournament.enumeration.GameStatus;
 import com.rossotti.tournament.model.Game;
 import com.rossotti.tournament.jpa.repository.GameRepositoryTest;
 import org.junit.Assert;

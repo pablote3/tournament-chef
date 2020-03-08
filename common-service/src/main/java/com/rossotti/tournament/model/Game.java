@@ -1,6 +1,6 @@
 package com.rossotti.tournament.model;
 
-import com.rossotti.tournament.jpa.enumeration.GameStatus;
+import com.rossotti.tournament.enumeration.GameStatus;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

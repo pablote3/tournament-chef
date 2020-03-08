@@ -1,7 +1,7 @@
 package com.rossotti.tournament.jpa.repository;
 
 import com.rossotti.tournament.config.PersistenceConfig;
-import com.rossotti.tournament.jpa.enumeration.*;
+import com.rossotti.tournament.enumeration.*;
 import com.rossotti.tournament.model.*;
 import org.junit.Assert;
 import org.junit.Test;

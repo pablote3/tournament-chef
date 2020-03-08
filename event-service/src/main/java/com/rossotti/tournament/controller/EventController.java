@@ -3,7 +3,7 @@ package com.rossotti.tournament.controller;
 import com.rossotti.tournament.dto.EventDTO;
 import com.rossotti.tournament.exception.EntityExistsException;
 import com.rossotti.tournament.exception.NoSuchEntityException;
-import com.rossotti.tournament.jpa.enumeration.TemplateType;
+import com.rossotti.tournament.enumeration.TemplateType;
 import com.rossotti.tournament.model.Event;
 import com.rossotti.tournament.model.Organization;
 import com.rossotti.tournament.jpa.service.EventJpaService;

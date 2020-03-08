@@ -1,7 +1,7 @@
 package com.rossotti.tournament.model;
 
-import com.rossotti.tournament.jpa.enumeration.UserStatus;
-import com.rossotti.tournament.jpa.enumeration.UserType;
+import com.rossotti.tournament.enumeration.UserStatus;
+import com.rossotti.tournament.enumeration.UserType;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;

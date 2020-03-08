@@ -1,6 +1,6 @@
 package com.rossotti.tournament.model;
 
-import com.rossotti.tournament.jpa.enumeration.RankingType;
+import com.rossotti.tournament.enumeration.RankingType;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 

@@ -1,8 +1,8 @@
 package com.rossotti.tournament.jpa.repository;
 
 import com.rossotti.tournament.config.PersistenceConfig;
-import com.rossotti.tournament.jpa.enumeration.UserStatus;
-import com.rossotti.tournament.jpa.enumeration.UserType;
+import com.rossotti.tournament.enumeration.UserStatus;
+import com.rossotti.tournament.enumeration.UserType;
 import com.rossotti.tournament.model.Organization;
 import com.rossotti.tournament.model.User;
 import com.rossotti.tournament.model.UserOrganization;
