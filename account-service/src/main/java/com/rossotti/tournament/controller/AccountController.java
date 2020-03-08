@@ -56,11 +56,13 @@ public class AccountController {
 	private Organization createOrganization(OrganizationDTO organizationDTO) {
 		LocalDate currentDate = LocalDate.now();
 		if (organizationJpaService.findByOrganizationNameAsOfDate(organizationDTO.getOrganizationName(), currentDate) == null) {
-			logger.debug("createOrganization - findByOrganizationNameAsOfDate: orgName = " + organizationDTO.getOrganizationName() + ", asOfDate = " + currentDate + " does not exist");
+			logger.debug("createOrganization - findByOrganizationNameAsOfDate: orgName = " + organizationDTO.getOrganizationName() +
+						 " asOfDate = " + currentDate + " does not exist");
 			if (organizationJpaService.findByOrganizationName(organizationDTO.getOrganizationName()).size() == 0) {
 				logger.debug("createOrganization - findByOrganizationName: orgName = " + organizationDTO.getOrganizationName() + " does not exist");
 				ModelMapper modelMapper = new ModelMapper();
-				logger.debug("createOrganization - saveOrganization: orgName = " + organizationDTO.getOrganizationName() + ", userEmail = " + organizationDTO.getUserDTO().getUserEmail());
+				logger.debug("createOrganization - saveOrganization: orgName = " + organizationDTO.getOrganizationName() +
+							 " userEmail = " + organizationDTO.getUserDTO().getUserEmail());
 				return organizationJpaService.save(modelMapper.map(organizationDTO, Organization.class));
 			}
 			else {

@@ -42,7 +42,7 @@ public class EventController {
 				logger.debug("createEvent - findByOrganizationNameAsOfDateTemplateType: orgName = " + eventDTO.getOrganizationName() +
 							 " endDate = " + eventDTO.getEndDate() +
 							 " templateType = " + eventDTO.getTemplateType() + " exists");
-				throw new EntityExistsException(Organization.class);
+				throw new EntityExistsException(Event.class);
 			}
 		}
 		else {

@@ -91,13 +91,13 @@ public class AccountControllerTest {
 	@Test
 	public void createAccount_success() {
 		when(userJpaService.findByEmail(anyString()))
-				.thenReturn(createMockUser(UserStatus.Active, UserType.Organization));
+			.thenReturn(createMockUser(UserStatus.Active, UserType.Organization));
 		when(organizationJpaService.findByOrganizationNameAsOfDate(anyString(), any()))
-				.thenReturn(null);
+			.thenReturn(null);
 		when(organizationJpaService.findByOrganizationName(anyString()))
-				.thenReturn(new ArrayList<>());
+			.thenReturn(new ArrayList<>());
 		when(organizationJpaService.save(any()))
-				.thenReturn(createMockOrganization());
+			.thenReturn(createMockOrganization());
 		Organization organization = accountController.createAccount(createMockOrganizationDTO());
 		Assert.assertEquals("Bonfantini", organization.getContactLastName());
 	}

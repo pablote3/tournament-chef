@@ -14,7 +14,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-
+import javax.persistence.PersistenceException;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -46,7 +46,30 @@ public class EventControllerTest {
 		when(eventJpaService.findByOrganizationNameAsOfDateTemplateType(anyString(), any(), any()))
 			.thenReturn(createMockEvent());
 		EntityExistsException exception = assertThrows(EntityExistsException.class, () -> eventController.createEvent(createMockInitialEventDTO()));
-		Assert.assertTrue(exception.getMessage().contains("Organization already exists"));
+		Assert.assertTrue(exception.getMessage().contains("Event already exists"));
+	}
+
+	@Test
+	public void createEvent_persistenceException() {
+		when(organizationJpaService.findByOrganizationNameAsOfDate(anyString(), any()))
+			.thenReturn(createMockOrganization());
+		when(eventJpaService.findByOrganizationNameAsOfDateTemplateType(anyString(), any(), any()))
+			.thenReturn(null);
+		when(eventJpaService.save(any()))
+			.thenThrow(PersistenceException.class);
+		assertThrows(PersistenceException.class, () -> eventController.createEvent(createMockInitialEventDTO()));
+	}
+
+	@Test
+	public void createEvent_success() {
+		when(organizationJpaService.findByOrganizationNameAsOfDate(anyString(), any()))
+			.thenReturn(createMockOrganization());
+		when(eventJpaService.findByOrganizationNameAsOfDateTemplateType(anyString(), any(), any()))
+			.thenReturn(null);
+		when(eventJpaService.save(any()))
+			.thenReturn(createMockEvent());
+		Event event = eventController.createEvent(createMockInitialEventDTO());
+		Assert.assertEquals("Cypress Cup", event.getEventName());
 	}
 
 	private EventDTO createMockInitialEventDTO() {
