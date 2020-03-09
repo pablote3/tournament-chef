@@ -58,7 +58,7 @@ insert into availableLocation (id, locationType, organizationId, locationName, a
 insert into availableLocation (id, locationType, organizationId, locationName, address1, address2, city, country, state, zipCode, createTs, lupdTs, lupdUserId) VALUES(10, 'B', 'location1', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
 insert into availableLocation (id, locationType, organizationId, locationName, address1, address2, city, country, state, zipCode, createTs, lupdTs, lupdUserId) VALUES(11, 'B', 'location2', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
 
-insert into template (id, templateType, gridGroupRound1, gridTeamsRound1, groupPlay1, groupPlayoffGamesRound1, gridGroupRound2, gridTeamsRound2, groupPlay2, groupPlayoffGamesRound2, quarterFinalGames, semiFinalGames) VALUES(1, 'four_x_four_pp', 4, 4, 'Pairing', 0, 0, 0, 'None', 0, 8, 8);
+insert into template (id, templateType, gridGroupRound1, gridTeamsRound1, groupPlay1, groupPlayoffGamesRound1, gridGroupRound2, gridTeamsRound2, groupPlay2, groupPlayoffGamesRound2, quarterFinalGames, semiFinalGames) VALUES(1, 'four_x_four_pp', 4, 4, 'PoolPlay', 0, 0, 0, 'None', 0, 8, 8);
 insert into template (id, templateType, gridGroupRound1, gridTeamsRound1, groupPlay1, groupPlayoffGamesRound1, gridGroupRound2, gridTeamsRound2, groupPlay2, groupPlayoffGamesRound2, quarterFinalGames, semiFinalGames) VALUES(2, 'four_x_four_rr', 4, 4, 'RoundRobin', 0, 0, 0, 'None', 0, 8, 8);
 
 insert into event (id, organizationId, templateId, startDate, endDate, eventName, eventStatus, eventType, sport, createTs, lupdTs, lupdUserId) VALUES(1, 1, 1, '2020-09-29', '2020-09-30', 'Campania Regional Frosh Soph Tournament', 'Sandbox', 'Tournament', 'WaterPolo', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
