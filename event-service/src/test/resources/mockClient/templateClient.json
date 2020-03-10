@@ -1,30 +1,28 @@
-{
-  "templates": [
-    {
-      "templateType": "four_x_four_pp",
-      "gridGroupRound1": "4",
-      "gridTeamsRound1": "4",
-      "groupPlay1": "PoolPlay",
-      "groupPlayoffGamesRound1": "0",
-      "gridGroupRound2": "0",
-      "gridTeamsRound2": "0",
-      "groupPlay2": "None",
-      "groupPlayoffGamesRound2": "0",
-      "quarterFinalGames": "8",
-      "semiFinalGames": "8"
-    },
-    {
-      "templateType": "four_x_four_rr",
-      "gridGroupRound1": "4",
-      "gridTeamsRound1": "4",
-      "groupPlay1": "RoundRobin",
-      "groupPlayoffGamesRound1": "0",
-      "gridGroupRound2": "0",
-      "gridTeamsRound2": "0",
-      "groupPlay2": "None",
-      "groupPlayoffGamesRound2": "0",
-      "quarterFinalGames": "8",
-      "semiFinalGames": "8"
-    }
-  ]
-}
+[
+  {
+    "templateType": "four_x_four_pp",
+    "gridGroupRound1": "4",
+    "gridTeamsRound1": "4",
+    "groupPlay1": "PoolPlay",
+    "groupPlayoffGamesRound1": "0",
+    "gridGroupRound2": "0",
+    "gridTeamsRound2": "0",
+    "groupPlay2": "None",
+    "groupPlayoffGamesRound2": "0",
+    "quarterFinalGames": "8",
+    "semiFinalGames": "8"
+  },
+  {
+    "templateType": "four_x_four_rr",
+    "gridGroupRound1": "4",
+    "gridTeamsRound1": "4",
+    "groupPlay1": "RoundRobin",
+    "groupPlayoffGamesRound1": "0",
+    "gridGroupRound2": "0",
+    "gridTeamsRound2": "0",
+    "groupPlay2": "None",
+    "groupPlayoffGamesRound2": "0",
+    "quarterFinalGames": "8",
+    "semiFinalGames": "8"
+  }
+]
