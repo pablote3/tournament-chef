@@ -1,26 +1,25 @@
 package com.rossotti.tournament.jpa.client;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.rossotti.tournament.model.Template;
+import com.rossotti.tournament.client.JsonProvider;
+import com.rossotti.tournament.dto.TemplatesDTO;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.json.JsonTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import java.io.IOException;
+import java.io.InputStream;
 
 @ActiveProfiles(profiles = "development")
 @RunWith(SpringRunner.class)
 @JsonTest
-public class TemplateJsonDeserializerTest {
-	@Autowired
-	private ObjectMapper objectMapper;
+public class JsonDeserializerTest {
 
 	@Test
 	public void testDeserialize() throws IOException {
-		String json = "{\"template\":\"#f0f8ff\"}";
-		Template template = objectMapper.readValue(json, Template.class);
-//		Assert.assertEquals(Color.ALICEBLUE, user.getFavoriteColor());
+		InputStream json = this.getClass().getClassLoader().getResourceAsStream("mockClient/templateClient.json");
+		TemplatesDTO template = JsonProvider.deserializeJson(TemplatesDTO.class, json);
+		Assert.assertEquals(2, template.templates.length);
 	}
 }
