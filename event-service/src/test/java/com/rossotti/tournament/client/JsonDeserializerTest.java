@@ -1,6 +1,5 @@
-package com.rossotti.tournament.jpa.client;
+package com.rossotti.tournament.client;
 
-import com.rossotti.tournament.client.JsonProvider;
 import com.rossotti.tournament.dto.TemplatesDTO;
 import org.junit.Assert;
 import org.junit.Test;
@@ -8,6 +7,7 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.json.JsonTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
+
 import java.io.IOException;
 import java.io.InputStream;
 
