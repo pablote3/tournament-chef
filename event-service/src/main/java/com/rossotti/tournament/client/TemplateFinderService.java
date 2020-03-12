@@ -1,6 +1,7 @@
 package com.rossotti.tournament.client;
 
 import com.rossotti.tournament.dto.TemplateDTO;
+import com.rossotti.tournament.exception.NoSuchEntityException;
 import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,20 +11,19 @@ import java.util.Map;
 @Service
 public class TemplateFinderService {
 
-	private static Map<String, Object> templates = new HashMap<>();
+	private static final Map<String, Object> templates = new HashMap<>();
 
-	public TemplateDTO locateTemplate(String templateType) {
-		try {
-			if (templates == null) {
-
-
-				initializeTemplates();
-			}
+	public TemplateDTO locateTemplate(String templateType) throws Exception {
+		if (templates == null) {
+			initializeTemplates();
 		}
-		catch (IOException e) {
-
+		TemplateDTO template = (TemplateDTO)templates.get(templateType);
+		if (template == null) {
+			throw new NoSuchEntityException(TemplateFinderService.class);
 		}
-		return null;
+		else {
+			return template;
+		}
 	}
 
 	private void initializeTemplates() throws IOException {
@@ -31,8 +31,8 @@ public class TemplateFinderService {
 		TemplateDTO[] temp = JsonProvider.deserializeJson(TemplateDTO[].class, json);
 		TemplateDTO templateDTO;
 
-		for (int i = 0; i < temp.length; i++) {
-			templateDTO = temp[i];
+		for (TemplateDTO dto : temp) {
+			templateDTO = dto;
 			templates.put(templateDTO.getTemplateType().toString(), templateDTO);
 		}
 	}

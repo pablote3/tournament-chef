@@ -9,10 +9,7 @@ import org.springframework.core.env.Environment;
 @ComponentScan(basePackages = "com.rossotti.tournament")
 public class ServiceConfig {
 
-	private final Environment env;
-
 	@Autowired
 	public ServiceConfig(Environment env) {
-		this.env = env;
 	}
 }
