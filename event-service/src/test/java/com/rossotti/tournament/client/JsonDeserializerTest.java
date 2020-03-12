@@ -4,19 +4,29 @@ import com.rossotti.tournament.dto.TemplateDTO;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
-import java.io.IOException;
-import java.io.InputStream;
 
 @ActiveProfiles(profiles = "development")
 @RunWith(SpringRunner.class)
 public class JsonDeserializerTest {
 
+	private TemplateFinderService templateFinderService;
+
+	@Autowired
+	public void setTemplateFinderService(TemplateFinderService templateFinderService) {
+		this.templateFinderService = templateFinderService;
+	}
+
 	@Test
-	public void testDeserialize() throws IOException {
-		InputStream json = this.getClass().getClassLoader().getResourceAsStream("mockClient/templateClient.json");
-		TemplateDTO[] templates = JsonProvider.deserializeJson(TemplateDTO[].class, json);
-		Assert.assertEquals(2, templates.length);
+	public void testDeserialize() {
+		try {
+			TemplateDTO template = templateFinderService.locateTemplate("four_x_four_rr");
+			Assert.assertEquals("RoundRobin", template.getGroupPlay1());
+		}
+		catch(Exception e) {
+
+		}
 	}
 }

@@ -11,7 +11,7 @@ import java.util.Map;
 @Service
 public class TemplateFinderService {
 
-	private static final Map<String, Object> templates = new HashMap<>();
+	private static Map<String, Object> templates = null;
 
 	public TemplateDTO locateTemplate(String templateType) throws Exception {
 		if (templates == null) {
@@ -27,6 +27,7 @@ public class TemplateFinderService {
 	}
 
 	private void initializeTemplates() throws IOException {
+		templates = new HashMap<>();
 		InputStream json = this.getClass().getClassLoader().getResourceAsStream("mockClient/templateClient.json");
 		TemplateDTO[] temp = JsonProvider.deserializeJson(TemplateDTO[].class, json);
 		TemplateDTO templateDTO;
