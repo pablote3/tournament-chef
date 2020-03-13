@@ -13,7 +13,7 @@ public class TemplateFinderService {
 
 	private static Map<String, Object> templates = null;
 
-	public TemplateDTO locateTemplate(String templateType) throws Exception {
+	public TemplateDTO findTemplateType(String templateType) throws Exception {
 		if (templates == null) {
 			initializeTemplates();
 		}
@@ -29,10 +29,10 @@ public class TemplateFinderService {
 	private void initializeTemplates() throws IOException {
 		templates = new HashMap<>();
 		InputStream json = this.getClass().getClassLoader().getResourceAsStream("mockClient/templateClient.json");
-		TemplateDTO[] temp = JsonProvider.deserializeJson(TemplateDTO[].class, json);
+		TemplateDTO[] templateIn = JsonProvider.deserializeJson(TemplateDTO[].class, json);
 		TemplateDTO templateDTO;
 
-		for (TemplateDTO dto : temp) {
+		for (TemplateDTO dto : templateIn) {
 			templateDTO = dto;
 			templates.put(templateDTO.getTemplateType().toString(), templateDTO);
 		}

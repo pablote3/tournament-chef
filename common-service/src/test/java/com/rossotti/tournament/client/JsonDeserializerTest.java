@@ -2,12 +2,15 @@ package com.rossotti.tournament.client;
 
 import com.rossotti.tournament.dto.TemplateDTO;
 import com.rossotti.tournament.enumeration.GroupPlay;
+import com.rossotti.tournament.exception.NoSuchEntityException;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = com.rossotti.tournament.config.ServiceConfig.class)
@@ -21,13 +24,20 @@ public class JsonDeserializerTest {
 	}
 
 	@Test
-	public void testDeserialize() {
+	public void testLocateTemplate_found() {
+		TemplateDTO template = null;
 		try {
-			TemplateDTO template = templateFinderService.locateTemplate("four_x_four_rr");
-			Assert.assertEquals(GroupPlay.RoundRobin, template.getGroupPlay1());
+			template = templateFinderService.findTemplateType("four_x_four_rr");
+		} catch (Exception e) {
+			System.out.println("failed to create template from json file " + e.getMessage());
 		}
-		catch(Exception e) {
+		Assert.assertNotNull(template);
+		Assert.assertEquals(GroupPlay.RoundRobin, template.getGroupPlay1());
+	}
 
-		}
+	@Test
+	public void testLocateTemplate_notFound() {
+		NoSuchEntityException exception = assertThrows(NoSuchEntityException.class, () -> templateFinderService.findTemplateType("four_x_four_qq"));
+		Assert.assertTrue(exception.getMessage().contains("TemplateFinderService does not exist"));
 	}
 }
