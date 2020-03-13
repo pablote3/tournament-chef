@@ -50,22 +50,20 @@ public interface EventRepository extends Repository<Event, Long> {
 
 	String findByEventNameAsOfDateTemplateType =
 			"select e from Event e " +
-			"inner join e.template t " +
 			"where e.eventName = :eventName " +
 			"and e.startDate <= :asOfDate " +
 			"and e.endDate >= :asOfDate " +
-			"and t.templateType = :templateType";
+			"and e.templateType = :templateType";
 	@Query(findByEventNameAsOfDateTemplateType)
 	Event findByEventNameAsOfDateTemplateType(@Param("eventName") String eventName, @Param("asOfDate") LocalDate asOfDate, @Param("templateType") TemplateType templateType);
 
 	String findByOrganizationNameAsOfDateTemplateType =
 			"select e from Event e " +
 			"inner join e.organization o " +
-			"inner join e.template t " +
 			"where o.organizationName = :organizationName " +
 			"and e.startDate <= :asOfDate " +
 			"and e.endDate >= :asOfDate " +
-			"and t.templateType = :templateType";
+			"and e.templateType = :templateType";
 	@Query(findByOrganizationNameAsOfDateTemplateType)
 	Event findByOrganizationNameAsOfDateTemplateType(@Param("organizationName") String organizationName, @Param("asOfDate") LocalDate asOfDate, @Param("templateType") TemplateType templateType);
 }

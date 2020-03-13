@@ -49,7 +49,7 @@ public class EventRepositoryTest {
 		Assert.assertEquals(2, event.getGameDates().get(0).getGameLocations().get(0).getGameRounds().size());
 		Assert.assertEquals(6, event.getGameDates().get(0).getGameLocations().get(0).getGameRounds().get(0).getGames().size());
 		Assert.assertEquals(1, event.getGameDates().get(0).getGameLocations().get(0).getGameRounds().get(0).getGames().get(0).getGameTeams().size());
-		Assert.assertEquals(TemplateType.four_x_four_pp, event.getTemplate().getTemplateType());
+		Assert.assertEquals(TemplateType.four_x_four_pp, event.getTemplateType());
 	}
 
 	@Test
@@ -188,7 +188,7 @@ public class EventRepositoryTest {
 	public static Event createMockEvent(Long organizationId, String eventName, Long team1, Long team2, Long location1, Long location2, LocalDate startDate, LocalDate endDate) {
 		Event event = new Event();
 		event.setOrganization(createMockOrganization(organizationId));
-		event.setTemplate(createMockTemplate());
+		event.setTemplateType(TemplateType.four_x_four_pp);
 		event.setEventName(eventName);
 		event.setStartDate(startDate);
 		event.setEndDate(endDate);
@@ -211,12 +211,6 @@ public class EventRepositoryTest {
 		Organization organization = new Organization();
 		organization.setId(organizationId);
 		return organization;
-	}
-
-	private static Template createMockTemplate() {
-		Template template = new Template();
-		template.setId(1L);
-		return template;
 	}
 
 	private static EventTeam createMockEventTeam(Long availableTeamId, Event event) {

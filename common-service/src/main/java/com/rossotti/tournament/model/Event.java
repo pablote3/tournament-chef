@@ -3,6 +3,8 @@ package com.rossotti.tournament.model;
 import com.rossotti.tournament.enumeration.EventStatus;
 import com.rossotti.tournament.enumeration.EventType;
 import com.rossotti.tournament.enumeration.Sport;
+import com.rossotti.tournament.enumeration.TemplateType;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -11,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(uniqueConstraints=@UniqueConstraint(columnNames={"organizationId", "templateId", "startDate", "endDate"}))
+@Table(uniqueConstraints=@UniqueConstraint(columnNames={"organizationId", "templateType", "startDate", "endDate"}))
 public class Event extends BaseEntity {
 	@ManyToOne
 	@JoinColumn(name="organizationId", referencedColumnName="id", nullable=false)
@@ -21,16 +23,6 @@ public class Event extends BaseEntity {
 	}
 	public void setOrganization(Organization organization) {
 		this.organization = organization;
-	}
-
-	@ManyToOne
-	@JoinColumn(name="templateId", referencedColumnName="id", nullable=false)
-	private Template template;
-	public Template getTemplate() {
-		return template;
-	}
-	public void setTemplate(Template template) {
-		this.template = template;
 	}
 
 	@OneToMany(mappedBy="event", fetch = FetchType.LAZY, cascade= CascadeType.ALL, orphanRemoval = true)
@@ -49,6 +41,32 @@ public class Event extends BaseEntity {
 	}
 	public void setGameDates(List<GameDate> gameDates)  {
 		this.gameDates = gameDates;
+	}
+
+	@Enumerated(EnumType.STRING)
+	@Column(length=20, nullable=false)
+	@NotNull(message="TemplateType is mandatory")
+	private TemplateType templateType;
+	public TemplateType getTemplateType() {
+		return templateType;
+	}
+	public void setTemplateType(TemplateType templateType) {
+		this.templateType = templateType;
+	}
+	public Boolean is2x4pp() {
+		return templateType == TemplateType.two_x_four_pp;
+	}
+	public Boolean is2x4rr() {
+		return templateType == TemplateType.two_x_four_rr;
+	}
+	public Boolean is4x3rr() {
+		return templateType == TemplateType.four_x_three_rr;
+	}
+	public Boolean is4x4pp() {
+		return templateType == TemplateType.four_x_four_pp;
+	}
+	public Boolean is4x4rr() {
+		return templateType == TemplateType.four_x_four_rr;
 	}
 
 	@Column(nullable=false)

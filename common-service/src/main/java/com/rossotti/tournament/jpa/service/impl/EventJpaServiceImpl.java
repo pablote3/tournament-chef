@@ -63,10 +63,10 @@ public class EventJpaServiceImpl implements EventJpaService {
 
 	@Override
 	public Event save(Event event) {
-		Event findEvent = findByOrganizationNameAsOfDateTemplateType(event.getOrganization().getOrganizationName(), event.getStartDate(), event.getTemplate().getTemplateType());
+		Event findEvent = findByOrganizationNameAsOfDateTemplateType(event.getOrganization().getOrganizationName(), event.getStartDate(), event.getTemplateType());
 		if (findEvent != null) {
 			findEvent.setOrganization(event.getOrganization());
-			findEvent.setTemplate(event.getTemplate());
+			findEvent.setTemplateType(event.getTemplateType());
 			findEvent.setStartDate(event.getStartDate());
 			findEvent.setEndDate(event.getEndDate());
 			findEvent.setEventStatus(event.getEventStatus());
