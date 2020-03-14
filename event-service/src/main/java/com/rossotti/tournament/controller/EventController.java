@@ -16,6 +16,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+
 @Service
 public class EventController {
 
@@ -37,12 +39,9 @@ public class EventController {
 			TemplateType templateType = TemplateType.valueOf(eventDTO.getTemplateType());
 			Event event = eventJpaService.findByOrganizationNameAsOfDateTemplateType(eventDTO.getOrganizationName(), eventDTO.getEndDate(), templateType);
 			if (event == null) {
-				ModelMapper modelMapper = new ModelMapper();
-				event = modelMapper.map(eventDTO, Event.class);
+				TemplateDTO templateDTO = templateFinderService.findTemplateType(eventDTO.getTemplateType().toString());
 
-				TemplateDTO template = templateFinderService.findTemplateType(event.getTemplateType().toString());
-
-//				buildEvent(event, template);
+				event = buildEvent(eventDTO, templateDTO);
 
 				logger.debug("createEvent - saveEvent: orgName = " + eventDTO.getOrganizationName() + ", eventName = " + eventDTO.getEventName());
 				return eventJpaService.save(event);
@@ -59,5 +58,14 @@ public class EventController {
 						 " endDate = " + eventDTO.getEndDate() + " does not exist");
 			throw new NoSuchEntityException(Organization.class);
 		}
+	}
+
+	private Event buildEvent(EventDTO eventDTO, TemplateDTO templateDTO) {
+		LocalDate currentDate = LocalDate.now();
+
+		ModelMapper modelMapper = new ModelMapper();
+		Event event = modelMapper.map(eventDTO, Event.class);
+
+		return event;
 	}
 }

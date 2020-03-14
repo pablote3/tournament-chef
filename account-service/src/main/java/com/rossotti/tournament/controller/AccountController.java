@@ -60,9 +60,9 @@ public class AccountController {
 						 " asOfDate = " + currentDate + " does not exist");
 			if (organizationJpaService.findByOrganizationName(organizationDTO.getOrganizationName()).size() == 0) {
 				logger.debug("createOrganization - findByOrganizationName: orgName = " + organizationDTO.getOrganizationName() + " does not exist");
-				ModelMapper modelMapper = new ModelMapper();
 				logger.debug("createOrganization - saveOrganization: orgName = " + organizationDTO.getOrganizationName() +
 							 " userEmail = " + organizationDTO.getUserDTO().getUserEmail());
+				ModelMapper modelMapper = new ModelMapper();
 				return organizationJpaService.save(modelMapper.map(organizationDTO, Organization.class));
 			}
 			else {
