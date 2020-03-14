@@ -1,20 +1,28 @@
 package com.rossotti.tournament;
 
+import com.rossotti.tournament.client.TemplateFinderService;
 import com.rossotti.tournament.controller.EventController;
 import com.rossotti.tournament.dto.EventDTO;
+import com.rossotti.tournament.dto.TemplateDTO;
+import com.rossotti.tournament.enumeration.GroupPlay;
+import com.rossotti.tournament.enumeration.TemplateType;
 import com.rossotti.tournament.exception.EntityExistsException;
 import com.rossotti.tournament.exception.NoSuchEntityException;
-import com.rossotti.tournament.model.Event;
-import com.rossotti.tournament.model.Organization;
 import com.rossotti.tournament.jpa.service.EventJpaService;
 import com.rossotti.tournament.jpa.service.OrganizationJpaService;
+import com.rossotti.tournament.model.Event;
+import com.rossotti.tournament.model.Organization;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+
 import javax.persistence.PersistenceException;
+
+import java.io.IOException;
+
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -27,6 +35,9 @@ public class EventControllerTest {
 
 	@Mock
 	private EventJpaService eventJpaService;
+
+	@Mock
+	private TemplateFinderService templateFinderService;
 
 	@InjectMocks
 	private EventController eventController;
@@ -50,6 +61,42 @@ public class EventControllerTest {
 	}
 
 	@Test
+	public void createEvent_findTemplate_jsonNotFound() throws Exception {
+		when(organizationJpaService.findByOrganizationNameAsOfDate(anyString(), any()))
+			.thenReturn(createMockOrganization());
+		when(eventJpaService.findByOrganizationNameAsOfDateTemplateType(anyString(), any(), any()))
+			.thenReturn(null);
+		when(templateFinderService.findTemplateType(anyString()))
+			.thenThrow(IOException.class);
+		assertThrows(IOException.class, () -> eventController.createEvent(createMockInitialEventDTO()));
+	}
+
+	@Test
+	public void createEvent_findTemplate_TemplateTypeNotFound() throws Exception {
+		when(organizationJpaService.findByOrganizationNameAsOfDate(anyString(), any()))
+			.thenReturn(createMockOrganization());
+		when(eventJpaService.findByOrganizationNameAsOfDateTemplateType(anyString(), any(), any()))
+			.thenReturn(null);
+		when(templateFinderService.findTemplateType(anyString()))
+			.thenThrow(NoSuchEntityException.class);
+		NoSuchEntityException exception = assertThrows(NoSuchEntityException.class, () -> eventController.createEvent(createMockInitialEventDTO()));
+	}
+
+	@Test
+	public void createEvent_findTemplate_success() throws Exception {
+		when(organizationJpaService.findByOrganizationNameAsOfDate(anyString(), any()))
+			.thenReturn(createMockOrganization());
+		when(eventJpaService.findByOrganizationNameAsOfDateTemplateType(anyString(), any(), any()))
+			.thenReturn(null);
+		when(templateFinderService.findTemplateType(anyString()))
+			.thenReturn(createMockTemplateDTO());
+		when(eventJpaService.save(any()))
+			.thenReturn(createMockEvent());
+		Event event = eventController.createEvent(createMockInitialEventDTO());
+		Assert.assertEquals("Cypress Cup", event.getEventName());
+	}
+
+	@Test
 	public void createEvent_persistenceException() {
 		when(organizationJpaService.findByOrganizationNameAsOfDate(anyString(), any()))
 			.thenReturn(createMockOrganization());
@@ -61,7 +108,7 @@ public class EventControllerTest {
 	}
 
 	@Test
-	public void createEvent_success() {
+	public void createEvent_success() throws Exception {
 		when(organizationJpaService.findByOrganizationNameAsOfDate(anyString(), any()))
 			.thenReturn(createMockOrganization());
 		when(eventJpaService.findByOrganizationNameAsOfDateTemplateType(anyString(), any(), any()))
@@ -101,5 +148,21 @@ public class EventControllerTest {
 		Event event = new Event();
 		event.setEventName("Cypress Cup");
 		return event;
+	}
+	
+	private TemplateDTO createMockTemplateDTO() {
+		TemplateDTO templateDTO = new TemplateDTO();
+		templateDTO.setTemplateType(TemplateType.four_x_four_pp);
+		templateDTO.setGridGroupRound1((short)4);
+		templateDTO.setGridTeamsRound1((short)4);
+		templateDTO.setGroupPlay1(GroupPlay.PoolPlay);
+		templateDTO.setGroupPlayoffGamesRound1((short)0);
+		templateDTO.setGridGroupRound2((short)0);
+		templateDTO.setGridTeamsRound2((short)0);
+		templateDTO.setGroupPlay2(GroupPlay.None);
+		templateDTO.setGroupPlayoffGamesRound2((short)0);
+		templateDTO.setQuarterFinalGames((short)8);
+		templateDTO.setSemiFinalGames((short)8);
+		return templateDTO;		
 	}
 }
