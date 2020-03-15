@@ -2,6 +2,7 @@ package com.rossotti.tournament.dto;
 
 import com.rossotti.tournament.model.AvailableLocation;
 import com.rossotti.tournament.model.AvailableTeam;
+import com.rossotti.tournament.model.GameDate;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -10,11 +11,12 @@ public class EventDTO {
 	private String organizationName;
 	private String templateType;
 	private LocalDate startDate;
-	private LocalDate endDate;
-	private int eventLocationCount;
+	private int eventDays;
+	private int eventLocations;
 	private String sport;
 	private List<AvailableTeam> availableTeams;
 	private List<AvailableLocation> availableLocations;
+	private List<GameDate> gameDates;
 
 	public String getEventName() {
 		return eventName;
@@ -44,18 +46,18 @@ public class EventDTO {
 		this.startDate = startDate;
 	}
 
-	public LocalDate getEndDate() {
-		return endDate;
+	public int getEventDays() {
+		return eventDays;
 	}
-	public void setEndDate(LocalDate endDate) {
-		this.endDate = endDate;
+	public void setEventDays(int eventDays) {
+		this.eventDays = eventDays;
 	}
 
-	public int getEventLocationCount() {
-		return eventLocationCount;
+	public int getEventLocations() {
+		return eventLocations;
 	}
-	public void setEventLocationCount(int eventLocationCount) {
-		this.eventLocationCount = eventLocationCount;
+	public void setEventLocations(int eventLocations) {
+		this.eventLocations = eventLocations;
 	}
 
 	public String getSport() {
@@ -77,5 +79,12 @@ public class EventDTO {
 	}
 	public void setAvailableLocations(List<AvailableLocation> availableLocations) {
 		this.availableLocations = availableLocations;
+	}
+
+	public List<GameDate> getGameDates() {
+		return gameDates;
+	}
+	public void setGameDates(List<GameDate> gameDates) {
+		this.gameDates = gameDates;
 	}
 }

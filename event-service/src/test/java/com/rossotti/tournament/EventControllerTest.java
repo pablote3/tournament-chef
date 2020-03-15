@@ -18,11 +18,8 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-
 import javax.persistence.PersistenceException;
-
 import java.io.IOException;
-
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -97,11 +94,13 @@ public class EventControllerTest {
 	}
 
 	@Test
-	public void createEvent_persistenceException() {
+	public void createEvent_persistenceException() throws Exception {
 		when(organizationJpaService.findByOrganizationNameAsOfDate(anyString(), any()))
 			.thenReturn(createMockOrganization());
 		when(eventJpaService.findByOrganizationNameAsOfDateTemplateType(anyString(), any(), any()))
 			.thenReturn(null);
+		when(templateFinderService.findTemplateType(anyString()))
+			.thenReturn(createMockTemplateDTO());
 		when(eventJpaService.save(any()))
 			.thenThrow(PersistenceException.class);
 		assertThrows(PersistenceException.class, () -> eventController.createEvent(createMockInitialEventDTO()));
@@ -113,6 +112,8 @@ public class EventControllerTest {
 			.thenReturn(createMockOrganization());
 		when(eventJpaService.findByOrganizationNameAsOfDateTemplateType(anyString(), any(), any()))
 			.thenReturn(null);
+		when(templateFinderService.findTemplateType(anyString()))
+			.thenReturn(createMockTemplateDTO());
 		when(eventJpaService.save(any()))
 			.thenReturn(createMockEvent());
 		Event event = eventController.createEvent(createMockInitialEventDTO());
@@ -123,8 +124,9 @@ public class EventControllerTest {
 		EventDTO event = new EventDTO();
 		event.setEventName("Algarve Soccer Cup");
 		event.setOrganizationName("Fiesole School District");
-		event.setsTemplateType("four_x_four_rr");
-		event.setEventLocationCount(2);
+		event.setsTemplateType("four_x_four_pp");
+		event.setEventDays(2);
+		event.setEventLocations(2);
 		return event;
 	}
 
