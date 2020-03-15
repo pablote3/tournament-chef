@@ -238,7 +238,7 @@ public class GameRepositoryTest {
 
 	private static AvailableTeam createMockAvailableTeam(EventTeam eventTeam) {
 		AvailableTeam availableTeam = new AvailableTeam();
-		availableTeam.setId(9L);
+		availableTeam.setId(13L);
 		List<EventTeam> eventTeams = new ArrayList<>();
 		eventTeams.add(eventTeam);
 		availableTeam.setEventTeams(eventTeams);
