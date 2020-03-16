@@ -8,10 +8,7 @@ import com.rossotti.tournament.exception.EntityExistsException;
 import com.rossotti.tournament.exception.NoSuchEntityException;
 import com.rossotti.tournament.jpa.service.EventJpaService;
 import com.rossotti.tournament.jpa.service.OrganizationJpaService;
-import com.rossotti.tournament.model.BaseTeam;
-import com.rossotti.tournament.model.Event;
-import com.rossotti.tournament.model.EventTeam;
-import com.rossotti.tournament.model.Organization;
+import com.rossotti.tournament.model.*;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,19 +35,6 @@ public class EventController {
 	public Event createEvent(EventDTO eventDTO) throws Exception {
 		Organization organization = organizationJpaService.findByOrganizationNameAsOfDate(eventDTO.getOrganizationName(), eventDTO.getStartDate());
 		if (organization != null) {
-			BaseTeam baseTeam1 = new BaseTeam();
-			baseTeam1.setTeamName("Team1");
-			organization.getAvailableTeams().add(baseTeam1);
-			BaseTeam baseTeam2 = new BaseTeam();
-			baseTeam2.setTeamName("Team2");
-			organization.getAvailableTeams().add(baseTeam2);
-			BaseTeam baseTeam3 = new BaseTeam();
-			baseTeam3.setTeamName("Team3");
-			organization.getAvailableTeams().add(baseTeam3);
-			BaseTeam baseTeam4 = new BaseTeam();
-			baseTeam4.setTeamName("Team4");
-			organization.getAvailableTeams().add(baseTeam4);
-
 			TemplateType templateType = TemplateType.valueOf(eventDTO.getTemplateType());
 			Event event = eventJpaService.findByOrganizationNameAsOfDateTemplateType(eventDTO.getOrganizationName(), eventDTO.getStartDate(), templateType);
 			if (event == null) {
@@ -86,7 +70,8 @@ public class EventController {
 		for (int i = 0; i < templateDTO.getGridTeamsRound1(); i++) {
 			eventTeam = new EventTeam();
 			eventTeam.setEvent(event);
-			BaseTeam baseTeam = (BaseTeam)event.getOrganization().getAvailableTeams().get(i);
+			AvailableTeam baseTeam = new BaseTeam();
+			baseTeam.setTeamName("Team" + i);
 			baseTeam.getEventTeams().add(eventTeam);
 			eventTeam.setAvailableTeam(baseTeam);
 			event.getEventTeams().add(eventTeam);

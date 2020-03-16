@@ -41,7 +41,7 @@ public class EventRepositoryTest {
 		Assert.assertEquals(LocalDateTime.of(2020, 1, 19, 20, 0), event.getLupdTs());
 		Assert.assertEquals(2, event.getLupdUserId().longValue());
 		Assert.assertEquals(4, event.getOrganization().getUserOrganizations().size());
-		Assert.assertEquals(2, event.getOrganization().getAvailableTeams().size());
+		Assert.assertEquals(2, event.getOrganization().getOrganizationTeams().size());
 		Assert.assertEquals(2, event.getOrganization().getLocations().size());
 		Assert.assertEquals(2, event.getEventTeams().size());
 		Assert.assertEquals(2, event.getGameDates().size());
@@ -195,8 +195,8 @@ public class EventRepositoryTest {
 		event.setEventStatus(EventStatus.Sandbox);
 		event.setEventType(EventType.Tournament);
 		event.setSport(Sport.WaterPolo);
-		event.getEventTeams().add(createMockEventTeam(team1, event));
-		event.getEventTeams().add(createMockEventTeam(team2, event));
+		event.getEventTeams().add(createMockEventTeam(createMockOrganizationTeam(), event));
+		event.getEventTeams().add(createMockEventTeam(createMockBaseTeam(), event));
 		event.getGameDates().add(createMockGameDate(startDate, event, location1, location2));
 		if (Period.between(startDate, endDate).getDays() != 0) {
 			event.getGameDates().add(createMockGameDate(endDate, event, location1, location2));
@@ -213,10 +213,10 @@ public class EventRepositoryTest {
 		return organization;
 	}
 
-	private static EventTeam createMockEventTeam(Long availableTeamId, Event event) {
+	private static EventTeam createMockEventTeam(AvailableTeam availableTeam, Event event) {
 		EventTeam eventTeam = new EventTeam();
 		eventTeam.setEvent(event);
-		eventTeam.setAvailableTeam(createMockAvailableTeam(availableTeamId));
+		eventTeam.setAvailableTeam(availableTeam);
 		return eventTeam;
 	}
 
@@ -231,10 +231,16 @@ public class EventRepositoryTest {
 		return gameDate;
 	}
 	
-	private static AvailableTeam createMockAvailableTeam(Long availableTeamId) {
-		AvailableTeam availableTeam = new AvailableTeam();
-		availableTeam.setId(availableTeamId);
-		return availableTeam;
+	private static AvailableTeam createMockOrganizationTeam() {
+		AvailableTeam organizationTeam = new OrganizationTeam();
+		organizationTeam.setId(9L);
+		return organizationTeam;
+	}
+
+	private static AvailableTeam createMockBaseTeam() {
+		AvailableTeam baseTeam = new BaseTeam();
+		baseTeam.setId(1L);
+		return baseTeam;
 	}
 
 	private static GameLocation createMockGameLocation(Long locationId, GameDate gameDate) {
