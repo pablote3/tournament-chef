@@ -39,7 +39,7 @@ public class GameJpaServiceTest {
 		Assert.assertEquals(LocalDateTime.of(2020, 1, 19, 20, 0), game.getLupdTs());
 		Assert.assertEquals(2, game.getLupdUserId().longValue());
 		Assert.assertEquals(Boolean.TRUE, game.getGameTeams().get(0).getHomeTeam());
-		Assert.assertEquals("Inter Milan", game.getGameTeams().get(0).getEventTeam().getAvailableTeam().getTeamName());
+		Assert.assertEquals("Inter Milan", game.getGameTeams().get(0).getEventTeam().getOrganizationTeam().getTeamName());
 		Assert.assertEquals(1, game.getGameTeams().get(0).getEventTeam().getEventTeamRankings().get(0).getRanking().shortValue());
 		Assert.assertEquals(45, game.getGameRound().getGameDuration().shortValue());
 		Assert.assertEquals("San Siro", game.getGameRound().getGameLocation().getAvailableLocation().getLocationName());

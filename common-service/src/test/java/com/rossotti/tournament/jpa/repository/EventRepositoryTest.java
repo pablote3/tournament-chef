@@ -213,7 +213,7 @@ public class EventRepositoryTest {
 		return organization;
 	}
 
-	private static EventTeam createMockEventTeam(AvailableTeam availableTeam, Event event) {
+	private static EventTeam createMockEventTeam(OrganizationTeam availableTeam, Event event) {
 		EventTeam eventTeam = new EventTeam();
 		eventTeam.setEvent(event);
 		eventTeam.setAvailableTeam(availableTeam);
@@ -231,14 +231,14 @@ public class EventRepositoryTest {
 		return gameDate;
 	}
 	
-	private static AvailableTeam createMockOrganizationTeam() {
-		AvailableTeam organizationTeam = new OrganizationTeam();
+	private static OrganizationTeam createMockOrganizationTeam() {
+		OrganizationTeam organizationTeam = new OrganizationTeam();
 		organizationTeam.setId(9L);
 		return organizationTeam;
 	}
 
-	private static AvailableTeam createMockBaseTeam() {
-		AvailableTeam baseTeam = new BaseTeam();
+	private static OrganizationTeam createMockBaseTeam() {
+		OrganizationTeam baseTeam = new BaseTeam();
 		baseTeam.setId(1L);
 		return baseTeam;
 	}

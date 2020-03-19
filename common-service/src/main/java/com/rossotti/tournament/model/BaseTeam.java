@@ -1,9 +1,13 @@
 package com.rossotti.tournament.model;
 
-import javax.persistence.*;
+public class BaseTeam extends OrganizationTeam {
 
-@Entity
-@DiscriminatorValue("B")
-@Table(uniqueConstraints=@UniqueConstraint(columnNames={"teamName"}))
-public class BaseTeam extends AvailableTeam {
+	private Short gridTeamsRound1;
+	public Short getGridTeamsRound1() {
+		return gridTeamsRound1;
+	}
+	public void setGridTeamsRound1(Short gridTeamsRound1) {
+		this.gridTeamsRound1 = gridTeamsRound1;
+	}
+
 }

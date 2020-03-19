@@ -70,7 +70,7 @@ public class EventController {
 		for (int i = 0; i < templateDTO.getGridTeamsRound1(); i++) {
 			eventTeam = new EventTeam();
 			eventTeam.setEvent(event);
-			AvailableTeam baseTeam = new BaseTeam();
+			OrganizationTeam baseTeam = new BaseTeam();
 			baseTeam.setTeamName("Team" + i);
 			baseTeam.getEventTeams().add(eventTeam);
 			eventTeam.setAvailableTeam(baseTeam);

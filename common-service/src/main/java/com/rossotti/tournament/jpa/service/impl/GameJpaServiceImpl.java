@@ -65,7 +65,7 @@ public class GameJpaServiceImpl implements GameJpaService {
 
 	@Override
 	public Game save(Game game) {
-		String gameTeam = game.getGameTeams().get(0).getEventTeam().getAvailableTeam().getTeamName();
+		String gameTeam = game.getGameTeams().get(0).getEventTeam().getOrganizationTeam().getTeamName();
 		LocalDate gameDate = game.getGameRound().getGameLocation().getGameDate().getGameDate();
 		Game findGame = findByTeamNameGameDateTime(gameTeam, gameDate, game.getStartTime());
 		if (findGame != null) {

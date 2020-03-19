@@ -25,8 +25,8 @@ public interface GameRepository extends Repository<Game, Long> {
 			"select g from Game g " +
 			"inner join g.gameTeams gt " +
 			"inner join gt.eventTeam et " +
-			"inner join et.availableTeam at " +
-			"where at.teamName = :teamName";
+			"inner join et.organizationTeam ot " +
+			"where ot.teamName = :teamName";
 	@Query(findByTeamName)
 	List<Game> findByTeamName(@Param("teamName") String teamName);
 
@@ -71,7 +71,7 @@ public interface GameRepository extends Repository<Game, Long> {
 			"select g from Game g " +
 			"inner join g.gameTeams gt " +
 			"inner join gt.eventTeam et " +
-			"inner join et.availableTeam at " +
+			"inner join et.organizationTeam at " +
 			"inner join g.gameRound gr " +
 			"inner join gr.gameLocation gl " +
 			"inner join gl.gameDate gd " +

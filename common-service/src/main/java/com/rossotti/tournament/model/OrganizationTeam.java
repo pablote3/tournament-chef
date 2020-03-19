@@ -2,11 +2,12 @@ package com.rossotti.tournament.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@DiscriminatorValue("O")
 @Table(uniqueConstraints=@UniqueConstraint(columnNames={"organizationId", "teamName"}))
-public class OrganizationTeam extends AvailableTeam {
+public class OrganizationTeam extends BaseEntity {
 
 	@ManyToOne
 	@JoinColumn(name="organizationId", referencedColumnName="id", nullable=false)
@@ -16,6 +17,25 @@ public class OrganizationTeam extends AvailableTeam {
 	}
 	public void setOrganization(Organization organization) {
 		this.organization = organization;
+	}
+
+	@OneToMany(mappedBy="organizationTeam", fetch = FetchType.LAZY, cascade= CascadeType.ALL, orphanRemoval = true)
+	private List<EventTeam> eventTeams = new ArrayList<>();
+	public List<EventTeam> getEventTeams()  {
+		return eventTeams;
+	}
+	public void setEventTeams(List<EventTeam> eventTeams)  {
+		this.eventTeams = eventTeams;
+	}
+
+	@Column(length=50, nullable=false)
+	@NotBlank(message="TeamName is mandatory")
+	private String teamName;
+	public String getTeamName() {
+		return teamName;
+	}
+	public void setTeamName(String teamName) {
+		this.teamName = teamName;
 	}
 
 	@Column(length=25, nullable=false)
