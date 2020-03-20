@@ -120,7 +120,7 @@ public class EventJpaServiceTest {
 
 	@Test
 	public void create_Created() {
-		eventJpaService.save(EventRepositoryTest.createMockEvent(4L, "Florence Caput Mundi", 5L, 6L, 4L, null, LocalDate.of(2020, 1, 15), LocalDate.of(2020, 1, 15)));
+		eventJpaService.save(EventRepositoryTest.createMockEvent(4L, "Florence Caput Mundi", 7L, 1L, 4L, null, LocalDate.of(2020, 1, 15), LocalDate.of(2020, 1, 15)));
 		Event findEvent = eventJpaService.findByEventNameAsOfDateTemplateType("Florence Caput Mundi", LocalDate.of(2020, 1, 15), TemplateType.four_x_four_pp);
 		Assert.assertEquals(EventStatus.Sandbox, findEvent.getEventStatus());
 		Assert.assertEquals(2, findEvent.getEventTeams().size());

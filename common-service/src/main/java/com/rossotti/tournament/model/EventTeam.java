@@ -6,6 +6,7 @@ import java.util.List;
 
 @Entity
 @Table(uniqueConstraints=@UniqueConstraint(columnNames={"eventId", "organizationTeamId"}))
+//@Table(uniqueConstraints=@UniqueConstraint(columnNames={"eventId", "organizationTeamId", "baseTeamName"}))
 public class EventTeam {
 	@ManyToOne
 	@JoinColumn(name="eventId", referencedColumnName="id", nullable=false)

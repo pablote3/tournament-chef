@@ -41,7 +41,7 @@ public class EventRepositoryTest {
 		Assert.assertEquals(LocalDateTime.of(2020, 1, 19, 20, 0), event.getLupdTs());
 		Assert.assertEquals(2, event.getLupdUserId().longValue());
 		Assert.assertEquals(4, event.getOrganization().getUserOrganizations().size());
-		Assert.assertEquals(2, event.getOrganization().getOrganizationTeams().size());
+		Assert.assertEquals(3, event.getOrganization().getOrganizationTeams().size());
 		Assert.assertEquals(2, event.getOrganization().getLocations().size());
 		Assert.assertEquals(2, event.getEventTeams().size());
 		Assert.assertEquals(2, event.getGameDates().size());
@@ -137,7 +137,7 @@ public class EventRepositoryTest {
 
 	@Test
 	public void create() {
-		eventRepository.save(createMockEvent(7L, "Tavagnacco Fall Classic", 5L, 6L, 1L, 2L, LocalDate.of(2012, 9, 10), LocalDate.of(2012, 9, 11)));
+		eventRepository.save(createMockEvent(7L, "Tavagnacco Fall Classic", 6L, 1L, 1L, 2L, LocalDate.of(2012, 9, 10), LocalDate.of(2012, 9, 11)));
 		Event event = eventRepository.findByEventNameAsOfDateTemplateType("Tavagnacco Fall Classic", LocalDate.of(2012, 9, 10), TemplateType.four_x_four_pp);
 		Assert.assertEquals("Tavagnacco Fall Classic", event.getEventName());
 		Assert.assertEquals(2, event.getEventTeams().size());
@@ -185,7 +185,7 @@ public class EventRepositoryTest {
 		Assert.assertNull(eventRepository.findByEventNameAsOfDateTemplateType("Trentino Sections Tournament", LocalDate.of(2020, 8, 24), TemplateType.four_x_four_rr));
 	}
 
-	public static Event createMockEvent(Long organizationId, String eventName, Long team1, Long team2, Long location1, Long location2, LocalDate startDate, LocalDate endDate) {
+	public static Event createMockEvent(Long organizationId, String eventName, Long orgTeam, Long baseTeam, Long location1, Long location2, LocalDate startDate, LocalDate endDate) {
 		Event event = new Event();
 		event.setOrganization(createMockOrganization(organizationId));
 		event.setTemplateType(TemplateType.four_x_four_pp);
@@ -195,8 +195,8 @@ public class EventRepositoryTest {
 		event.setEventStatus(EventStatus.Sandbox);
 		event.setEventType(EventType.Tournament);
 		event.setSport(Sport.WaterPolo);
-		event.getEventTeams().add(createMockEventTeam(createMockOrganizationTeam(), event));
-		event.getEventTeams().add(createMockEventTeam(createMockBaseTeam(), event));
+		event.getEventTeams().add(createMockEventTeam(createMockOrganizationTeam(orgTeam), event));
+		event.getEventTeams().add(createMockEventTeam(createMockBaseTeam(baseTeam), event));
 		event.getGameDates().add(createMockGameDate(startDate, event, location1, location2));
 		if (Period.between(startDate, endDate).getDays() != 0) {
 			event.getGameDates().add(createMockGameDate(endDate, event, location1, location2));
@@ -231,15 +231,15 @@ public class EventRepositoryTest {
 		return gameDate;
 	}
 	
-	private static OrganizationTeam createMockOrganizationTeam() {
+	private static OrganizationTeam createMockOrganizationTeam(Long id) {
 		OrganizationTeam organizationTeam = new OrganizationTeam();
-		organizationTeam.setId(9L);
+		organizationTeam.setId(id);
 		return organizationTeam;
 	}
 
-	private static OrganizationTeam createMockBaseTeam() {
+	private static OrganizationTeam createMockBaseTeam(Long id) {
 		OrganizationTeam baseTeam = new BaseTeam();
-		baseTeam.setId(1L);
+		baseTeam.setId(id);
 		return baseTeam;
 	}
 
