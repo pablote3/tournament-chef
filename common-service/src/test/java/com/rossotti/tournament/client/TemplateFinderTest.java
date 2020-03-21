@@ -9,12 +9,11 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = com.rossotti.tournament.config.ServiceConfig.class)
-public class JsonDeserializerTest {
+public class TemplateFinderTest {
 
 	private TemplateFinderService templateFinderService;
 
@@ -29,7 +28,7 @@ public class JsonDeserializerTest {
 		try {
 			template = templateFinderService.findTemplateType("four_x_four_rr");
 		} catch (Exception e) {
-			System.out.println("failed to create template from json file " + e.getMessage());
+			System.out.println("failed to create templates from json file " + e.getMessage());
 		}
 		Assert.assertNotNull(template);
 		Assert.assertEquals(GroupPlay.RoundRobin, template.getGroupPlay1());
