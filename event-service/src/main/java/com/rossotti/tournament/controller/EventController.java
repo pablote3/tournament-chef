@@ -91,8 +91,7 @@ public class EventController {
 			}
 		}
 		else {
-			logger.debug("buildEvent - findByOrganizationBaseTeam: orgName = " + eventDTO.getOrganizationName() +
-					" startDate = " + eventDTO.getStartDate() + " baseTeam does not exist");
+			logger.debug("buildEvent - findOrganizationTeam: baseTeam does not exist");
 			throw new NoSuchEntityException(OrganizationTeam.class);
 		}
 		return event;

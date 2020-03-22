@@ -53,7 +53,7 @@ public class EventControllerTest {
 	@Test
 	public void findByEventNameAsOfDateTemplateType_found() {
 		when(organizationJpaService.findByOrganizationNameAsOfDate(anyString(), any()))
-			.thenReturn(createMockOrganization());
+			.thenReturn(createMockOrganization(true));
 		when(eventJpaService.findByOrganizationNameAsOfDateTemplateType(anyString(), any(), any()))
 			.thenReturn(createMockEvent());
 		EntityExistsException exception = assertThrows(EntityExistsException.class, () -> eventController.createEvent(createMockInitialEventDTO()));
@@ -61,9 +61,9 @@ public class EventControllerTest {
 	}
 
 	@Test
-	public void createEvent_findTemplate_jsonNotFound() throws Exception {
+	public void createEvent_findTemplate_fileNotFound() throws Exception {
 		when(organizationJpaService.findByOrganizationNameAsOfDate(anyString(), any()))
-			.thenReturn(createMockOrganization());
+			.thenReturn(createMockOrganization(true));
 		when(eventJpaService.findByOrganizationNameAsOfDateTemplateType(anyString(), any(), any()))
 			.thenReturn(null);
 		when(templateFinderService.findTemplateType(anyString()))
@@ -74,32 +74,29 @@ public class EventControllerTest {
 	@Test
 	public void createEvent_findTemplate_TemplateTypeNotFound() throws Exception {
 		when(organizationJpaService.findByOrganizationNameAsOfDate(anyString(), any()))
-			.thenReturn(createMockOrganization());
+			.thenReturn(createMockOrganization(true));
 		when(eventJpaService.findByOrganizationNameAsOfDateTemplateType(anyString(), any(), any()))
 			.thenReturn(null);
 		when(templateFinderService.findTemplateType(anyString()))
 			.thenThrow(NoSuchEntityException.class);
-		NoSuchEntityException exception = assertThrows(NoSuchEntityException.class, () -> eventController.createEvent(createMockInitialEventDTO()));
+		assertThrows(NoSuchEntityException.class, () -> eventController.createEvent(createMockInitialEventDTO()));
 	}
 
 	@Test
-	public void createEvent_findTemplate_success() throws Exception {
+	public void createEvent_BaseTeamNotFound() throws Exception {
 		when(organizationJpaService.findByOrganizationNameAsOfDate(anyString(), any()))
-			.thenReturn(createMockOrganization());
+				.thenReturn(createMockOrganization(false));
 		when(eventJpaService.findByOrganizationNameAsOfDateTemplateType(anyString(), any(), any()))
-			.thenReturn(null);
+				.thenReturn(null);
 		when(templateFinderService.findTemplateType(anyString()))
-			.thenReturn(createMockTemplateDTO());
-		when(eventJpaService.save(any()))
-			.thenReturn(createMockEvent());
-		Event event = eventController.createEvent(createMockInitialEventDTO());
-		Assert.assertEquals("Cypress Cup", event.getEventName());
+				.thenReturn(createMockTemplateDTO());
+		assertThrows(NoSuchEntityException.class, () -> eventController.createEvent(createMockInitialEventDTO()));
 	}
 
 	@Test
 	public void createEvent_persistenceException() throws Exception {
 		when(organizationJpaService.findByOrganizationNameAsOfDate(anyString(), any()))
-			.thenReturn(createMockOrganization());
+			.thenReturn(createMockOrganization(true));
 		when(eventJpaService.findByOrganizationNameAsOfDateTemplateType(anyString(), any(), any()))
 			.thenReturn(null);
 		when(templateFinderService.findTemplateType(anyString()))
@@ -112,7 +109,7 @@ public class EventControllerTest {
 	@Test
 	public void createEvent_success() throws Exception {
 		when(organizationJpaService.findByOrganizationNameAsOfDate(anyString(), any()))
-			.thenReturn(createMockOrganization());
+			.thenReturn(createMockOrganization(true));
 		when(eventJpaService.findByOrganizationNameAsOfDateTemplateType(anyString(), any(), any()))
 			.thenReturn(null);
 		when(templateFinderService.findTemplateType(anyString()))
@@ -133,7 +130,7 @@ public class EventControllerTest {
 		return event;
 	}
 
-	private Organization createMockOrganization() {
+	private Organization createMockOrganization(boolean hasBaseTeam) {
 		Organization organization = new Organization();
 		organization.setOrganizationName("Fiesole School District");
 		organization.setAddress1("123 Main Street");
@@ -146,7 +143,9 @@ public class EventControllerTest {
 		organization.setContactLastName("Bonfantini");
 		organization.setContactFirstName("Agnes");
 		organization.setContactPhone("520-158-1258");
-		organization.getOrganizationTeams().add(createMockOrganizationTeam("BaseTeam"));
+		if (hasBaseTeam) {
+			organization.getOrganizationTeams().add(createMockOrganizationTeam("BaseTeam"));
+		}
 		organization.getOrganizationTeams().add(createMockOrganizationTeam("San Marino Academy"));
 		return organization;
 	}
