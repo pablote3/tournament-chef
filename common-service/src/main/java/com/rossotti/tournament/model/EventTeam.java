@@ -5,8 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(uniqueConstraints=@UniqueConstraint(columnNames={"eventId", "organizationTeamId"}))
-//@Table(uniqueConstraints=@UniqueConstraint(columnNames={"eventId", "organizationTeamId", "baseTeamName"}))
+@Table(uniqueConstraints=@UniqueConstraint(columnNames={"eventId", "organizationTeamId", "baseTeamName"}))
 public class EventTeam {
 	@ManyToOne
 	@JoinColumn(name="eventId", referencedColumnName="id", nullable=false)
@@ -24,7 +23,7 @@ public class EventTeam {
 	public OrganizationTeam getOrganizationTeam() {
 		return organizationTeam;
 	}
-	public void setAvailableTeam(OrganizationTeam organizationTeam) {
+	public void setOrganizationTeam(OrganizationTeam organizationTeam) {
 		this.organizationTeam = organizationTeam;
 	}
 
@@ -54,5 +53,15 @@ public class EventTeam {
 	}
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	@Column(length=10, nullable=false)
+//	@NotBlank(message= "BaseTeamName is mandatory")
+	private String baseTeamName;
+	public String getBaseTeamName() {
+		return baseTeamName;
+	}
+	public void setBaseTeamName(String baseTeamName) {
+		this.baseTeamName = baseTeamName;
 	}
 }

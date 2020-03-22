@@ -232,7 +232,7 @@ public class GameRepositoryTest {
 		EventTeam eventTeam = new EventTeam();
 		eventTeam.setId(3L);
 		eventTeam.setEvent(event);
-		eventTeam.setAvailableTeam(createMockOrganizationTeam(eventTeam));
+		eventTeam.setOrganizationTeam(createMockOrganizationTeam(eventTeam));
 		return eventTeam;
 	}
 

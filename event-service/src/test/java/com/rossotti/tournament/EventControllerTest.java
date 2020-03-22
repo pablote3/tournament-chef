@@ -12,14 +12,17 @@ import com.rossotti.tournament.jpa.service.EventJpaService;
 import com.rossotti.tournament.jpa.service.OrganizationJpaService;
 import com.rossotti.tournament.model.Event;
 import com.rossotti.tournament.model.Organization;
+import com.rossotti.tournament.model.OrganizationTeam;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+
 import javax.persistence.PersistenceException;
 import java.io.IOException;
+
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -143,7 +146,15 @@ public class EventControllerTest {
 		organization.setContactLastName("Bonfantini");
 		organization.setContactFirstName("Agnes");
 		organization.setContactPhone("520-158-1258");
+		organization.getOrganizationTeams().add(createMockOrganizationTeam("BaseTeam"));
+		organization.getOrganizationTeams().add(createMockOrganizationTeam("San Marino Academy"));
 		return organization;
+	}
+
+	private OrganizationTeam createMockOrganizationTeam(String teamName) {
+		OrganizationTeam organizationTeam = new OrganizationTeam();
+		organizationTeam.setTeamName(teamName);
+		return organizationTeam;
 	}
 
 	private Event createMockEvent() {

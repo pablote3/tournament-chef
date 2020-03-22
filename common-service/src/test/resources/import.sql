@@ -67,13 +67,13 @@ insert into event (id, organizationId, startDate, endDate, templateType, eventNa
 insert into event (id, organizationId, startDate, endDate, templateType, eventName, eventStatus, eventType, sport, createTs, lupdTs, lupdUserId) VALUES(8, 11, '2010-01-20', '2010-01-21', 'four_x_four_pp', 'Reddan Thunder Invitational', 'Sandbox', 'Tournament', 'WaterPolo', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 1);
 insert into event (id, organizationId, startDate, endDate, templateType, eventName, eventStatus, eventType, sport, createTs, lupdTs, lupdUserId) VALUES(9, 11, '2011-01-20', '2011-01-21', 'four_x_four_rr', 'Reddan Thunder Invitational', 'Sandbox', 'Tournament', 'WaterPolo', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 1);
 
-insert into eventTeam (id, eventId, organizationTeamId) VALUES(1, 1, 3);
-insert into eventTeam (id, eventId, organizationTeamId) VALUES(2, 1, 4);
-insert into eventTeam (id, eventId, organizationTeamId) VALUES(3, 7, 10);
-insert into eventTeam (id, eventId, organizationTeamId) VALUES(4, 8, 11);
-insert into eventTeam (id, eventId, organizationTeamId) VALUES(5, 8, 12);
-insert into eventTeam (id, eventId, organizationTeamId) VALUES(6, 9, 11);
-insert into eventTeam (id, eventId, organizationTeamId) VALUES(7, 9, 12);
+insert into eventTeam (id, eventId, organizationTeamId, baseTeamName) VALUES(1, 1, 3, 'BaseTeam1');
+insert into eventTeam (id, eventId, organizationTeamId, baseTeamName) VALUES(2, 1, 4, 'BaseTeam2');
+insert into eventTeam (id, eventId, organizationTeamId, baseTeamName) VALUES(3, 7, 10, '');
+insert into eventTeam (id, eventId, organizationTeamId, baseTeamName) VALUES(4, 8, 11, 'BaseTeam1');
+insert into eventTeam (id, eventId, organizationTeamId, baseTeamName) VALUES(5, 8, 12, 'BaseTeam2');
+insert into eventTeam (id, eventId, organizationTeamId, baseTeamName) VALUES(6, 9, 11, 'BaseTeam1');
+insert into eventTeam (id, eventId, organizationTeamId, baseTeamName) VALUES(7, 9, 12, '');
 
 insert into eventTeamRanking (id, eventTeamId, rankingType, ranking) VALUES(1, 1, 'Initial', 1);
 insert into eventTeamRanking (id, eventTeamId, rankingType, ranking) VALUES(2, 2, 'Initial', 2);

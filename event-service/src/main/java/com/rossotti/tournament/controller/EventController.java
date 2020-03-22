@@ -8,12 +8,16 @@ import com.rossotti.tournament.exception.EntityExistsException;
 import com.rossotti.tournament.exception.NoSuchEntityException;
 import com.rossotti.tournament.jpa.service.EventJpaService;
 import com.rossotti.tournament.jpa.service.OrganizationJpaService;
-import com.rossotti.tournament.model.*;
+import com.rossotti.tournament.model.Event;
+import com.rossotti.tournament.model.EventTeam;
+import com.rossotti.tournament.model.Organization;
+import com.rossotti.tournament.model.OrganizationTeam;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -65,16 +69,31 @@ public class EventController {
 		Event event = modelMapper.map(eventDTO, Event.class);
 		event.setOrganization(organization);
 
-		EventTeam eventTeam;
-		event.setEventTeams(new ArrayList<>());
-		for (int i = 0; i < templateDTO.getGridTeamsRound1(); i++) {
-			eventTeam = new EventTeam();
-			eventTeam.setEvent(event);
-			OrganizationTeam organizationTeam = new OrganizationTeam();
-			organizationTeam.setTeamName("Team" + i);
-			organizationTeam.getEventTeams().add(eventTeam);
-			eventTeam.setAvailableTeam(organizationTeam);
-			event.getEventTeams().add(eventTeam);
+		OrganizationTeam baseTeam = null;
+
+		for (int i = 0; i < organization.getOrganizationTeams().size(); i++) {
+			if (organization.getOrganizationTeams().get(i).getTeamName().equals("BaseTeam")) {
+				baseTeam = organization.getOrganizationTeams().get(i);
+				break;
+			}
+		}
+
+		if (baseTeam != null) {
+			event.setEventTeams(new ArrayList<>());
+			EventTeam eventTeam;
+			for (int i = 0; i < templateDTO.getGridTeamsRound1(); i++) {
+				eventTeam = new EventTeam();
+				eventTeam.setEvent(event);
+				eventTeam.setBaseTeamName(baseTeam.getTeamName() + i);
+				eventTeam.setOrganizationTeam(baseTeam);
+				baseTeam.getEventTeams().add(eventTeam);
+				event.getEventTeams().add(eventTeam);
+			}
+		}
+		else {
+			logger.debug("buildEvent - findByOrganizationBaseTeam: orgName = " + eventDTO.getOrganizationName() +
+					" startDate = " + eventDTO.getStartDate() + " baseTeam does not exist");
+			throw new NoSuchEntityException(OrganizationTeam.class);
 		}
 		return event;
 	}
