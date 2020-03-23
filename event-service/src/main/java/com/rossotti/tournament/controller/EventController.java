@@ -47,7 +47,8 @@ public class EventController {
 				event = buildEvent(eventDTO, organization, templateDTO);
 
 				logger.debug("createEvent - saveEvent: orgName = " + eventDTO.getOrganizationName() + ", eventName = " + eventDTO.getEventName());
-				return eventJpaService.save(event);
+				eventJpaService.save(event);
+				return event;
 			}
 			else {
 				logger.debug("createEvent - findByOrganizationNameAsOfDateTemplateType: orgName = " + eventDTO.getOrganizationName() +
@@ -81,7 +82,7 @@ public class EventController {
 		if (baseTeam != null) {
 			event.setEventTeams(new ArrayList<>());
 			EventTeam eventTeam;
-			for (int i = 0; i < templateDTO.getGridTeamsRound1(); i++) {
+			for (int i = 1; i < templateDTO.getGridTeamsRound1() + 1; i++) {
 				eventTeam = new EventTeam();
 				eventTeam.setEvent(event);
 				eventTeam.setBaseTeamName(baseTeam.getTeamName() + i);

@@ -117,7 +117,8 @@ public class EventControllerTest {
 		when(eventJpaService.save(any()))
 			.thenReturn(createMockEvent());
 		Event event = eventController.createEvent(createMockInitialEventDTO());
-		Assert.assertEquals("Cypress Cup", event.getEventName());
+		Assert.assertEquals("Algarve Soccer Cup", event.getEventName());
+		Assert.assertEquals(4, event.getEventTeams().size());
 	}
 
 	private EventDTO createMockInitialEventDTO() {
