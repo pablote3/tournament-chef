@@ -2,11 +2,41 @@ package com.rossotti.tournament.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@DiscriminatorValue("O")
 @Table(uniqueConstraints=@UniqueConstraint(columnNames={"organizationId", "locationName"}))
-public class OrganizationLocation extends AvailableLocation {
+public class OrganizationLocation extends BaseEntity {
+
+	@ManyToOne
+	@JoinColumn(name="organizationId", referencedColumnName="id", nullable=false)
+	private Organization organization;
+	public Organization getOrganization() {
+		return organization;
+	}
+	public void setOrganization(Organization organization) {
+		this.organization = organization;
+	}
+
+	@OneToMany(mappedBy="organizationLocation", fetch = FetchType.LAZY, cascade= CascadeType.ALL, orphanRemoval = true)
+	private List<GameLocation> gameLocations = new ArrayList<>();
+	public List<GameLocation> getGameLocations()  {
+		return gameLocations;
+	}
+	public void setGameLocations(List<GameLocation> gameLocations)  {
+		this.gameLocations = gameLocations;
+	}
+
+	@Column(length=50, nullable=false)
+	@NotBlank(message="LocationName is mandatory")
+	private String locationName;
+	public String getLocationName() {
+		return locationName;
+	}
+	public void setLocationName(String locationName) {
+		this.locationName = locationName;
+	}
 
 	@Column(length=25, nullable=false)
 	@NotBlank(message="Address1 is mandatory")

@@ -42,7 +42,7 @@ public class EventRepositoryTest {
 		Assert.assertEquals(2, event.getLupdUserId().longValue());
 		Assert.assertEquals(4, event.getOrganization().getUserOrganizations().size());
 		Assert.assertEquals(3, event.getOrganization().getOrganizationTeams().size());
-		Assert.assertEquals(2, event.getOrganization().getLocations().size());
+		Assert.assertEquals(3, event.getOrganization().getOrganizationLocations().size());
 		Assert.assertEquals(2, event.getEventTeams().size());
 		Assert.assertEquals(2, event.getGameDates().size());
 		Assert.assertEquals(2, event.getGameDates().get(0).getGameLocations().size());
@@ -241,7 +241,7 @@ public class EventRepositoryTest {
 	private static GameLocation createMockGameLocation(Long locationId, GameDate gameDate) {
 		GameLocation gameLocation = new GameLocation();
 		gameLocation.setGameDate(gameDate);
-		gameLocation.setAvailableLocation(createMockOrganizationLocation(locationId));
+		gameLocation.setOrganizationLocation(createMockOrganizationLocation(locationId));
 		gameLocation.setStartTime(LocalTime.of(8, 0, 0));
 		gameLocation.getGameRounds().add(createMockGameRound(GameType.GroupPlay, gameLocation));
 		gameLocation.getGameRounds().add(createMockGameRound(GameType.Final, gameLocation));
@@ -278,10 +278,10 @@ public class EventRepositoryTest {
 		return gameTeam;
 	}
 
-	private static AvailableLocation createMockOrganizationLocation(Long organizationLocationId) {
-		AvailableLocation availableLocation = new AvailableLocation();
-		availableLocation.setId(organizationLocationId);
-		return availableLocation;
+	private static OrganizationLocation createMockOrganizationLocation(Long organizationLocationId) {
+		OrganizationLocation organizationLocation = new OrganizationLocation();
+		organizationLocation.setId(organizationLocationId);
+		return organizationLocation;
 	}
 
 	private Event updateMockEvent(LocalDate asOfDate, EventStatus eventStatus) {

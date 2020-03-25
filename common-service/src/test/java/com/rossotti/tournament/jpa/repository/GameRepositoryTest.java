@@ -12,14 +12,12 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.TransactionSystemException;
-
 import javax.validation.ConstraintViolationException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ActiveProfiles(profiles = "development")
@@ -42,7 +40,7 @@ public class GameRepositoryTest {
 		Assert.assertEquals("Inter Milan", game.getGameTeams().get(0).getEventTeam().getOrganizationTeam().getTeamName());
 		Assert.assertEquals(1, game.getGameTeams().get(0).getEventTeam().getEventTeamRankings().get(0).getRanking().shortValue());
 		Assert.assertEquals(45, game.getGameRound().getGameDuration().shortValue());
-		Assert.assertEquals("San Siro", game.getGameRound().getGameLocation().getAvailableLocation().getLocationName());
+		Assert.assertEquals("San Siro", game.getGameRound().getGameLocation().getOrganizationLocation().getLocationName());
 		Assert.assertEquals(LocalDate.of(2020, 9, 29), game.getGameRound().getGameLocation().getGameDate().getGameDate());
 		Assert.assertEquals("Campania Regional Frosh Soph Tournament", game.getGameRound().getGameLocation().getGameDate().getEvent().getEventName());
 	}
@@ -198,7 +196,7 @@ public class GameRepositoryTest {
 	private static GameLocation createMockGameLocation(GameRound gameRound) {
 		GameLocation gameLocation = new GameLocation();
 		gameLocation.setId(5L);
-		gameLocation.setAvailableLocation(createMockOrganizationLocation());
+		gameLocation.setOrganizationLocation(createMockOrganizationLocation());
 		gameLocation.setGameDate(createMockGameDate(gameLocation));
 		List<GameRound> gameRounds = new ArrayList<>();
 		gameRounds.add(gameRound);
@@ -245,10 +243,10 @@ public class GameRepositoryTest {
 		return organizationTeam;
 	}
 
-	private static AvailableLocation createMockOrganizationLocation() {
-		AvailableLocation availableLocation = new AvailableLocation();
-		availableLocation.setId(8L);
-		return availableLocation;
+	private static OrganizationLocation createMockOrganizationLocation() {
+		OrganizationLocation organizationLocation = new OrganizationLocation();
+		organizationLocation.setId(8L);
+		return organizationLocation;
 	}
 
 	public static GameTeam createMockGameTeam(Game game) {

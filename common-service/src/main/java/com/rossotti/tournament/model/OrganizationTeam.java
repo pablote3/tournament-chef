@@ -59,6 +59,7 @@ public class OrganizationTeam extends BaseEntity {
 	}
 
 	@Column(length=9, nullable=false)
+	@NotBlank(message="ZipCode is mandatory")
 	private String zipCode;
 	public String getZipCode() {
 		return zipCode;

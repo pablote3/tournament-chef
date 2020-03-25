@@ -1,9 +1,8 @@
 package com.rossotti.tournament.dto;
 
-import com.rossotti.tournament.model.AvailableLocation;
 import com.rossotti.tournament.model.GameDate;
+import com.rossotti.tournament.model.OrganizationLocation;
 import com.rossotti.tournament.model.OrganizationTeam;
-
 import java.time.LocalDate;
 import java.util.List;
 
@@ -16,7 +15,7 @@ public class EventDTO {
 	private int eventLocations;
 	private String sport;
 	private List<OrganizationTeam> organizationTeams;
-	private List<AvailableLocation> availableLocations;
+	private List<OrganizationLocation> organizationLocations;
 	private List<GameDate> gameDates;
 
 	public String getEventName() {
@@ -75,11 +74,11 @@ public class EventDTO {
 		this.organizationTeams = availableTeams;
 	}
 
-	public List<AvailableLocation> getAvailableLocations() {
-		return availableLocations;
+	public List<OrganizationLocation> getOrganizationLocations() {
+		return organizationLocations;
 	}
-	public void setAvailableLocations(List<AvailableLocation> availableLocations) {
-		this.availableLocations = availableLocations;
+	public void setOrganizationLocations(List<OrganizationLocation> organizationLocations) {
+		this.organizationLocations = organizationLocations;
 	}
 
 	public List<GameDate> getGameDates() {

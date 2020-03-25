@@ -30,12 +30,12 @@ public class Organization extends BaseEntity {
 	}
 
 	@OneToMany(mappedBy="organization", fetch = FetchType.LAZY, cascade= CascadeType.ALL, orphanRemoval = true)
-	private List<AvailableLocation> locations = new ArrayList<>();
-	public List<AvailableLocation> getLocations()  {
-		return locations;
+	private List<OrganizationLocation> organizationLocations = new ArrayList<>();
+	public List<OrganizationLocation> getOrganizationLocations()  {
+		return organizationLocations;
 	}
-	public void setLocations(List<AvailableLocation> locations)  {
-		this.locations = locations;
+	public void setOrganizationLocations(List<OrganizationLocation> organizationLocations)  {
+		this.organizationLocations = organizationLocations;
 	}
 
 	@OneToMany(mappedBy="organization", fetch = FetchType.LAZY, cascade= CascadeType.ALL, orphanRemoval = true)

@@ -62,7 +62,7 @@ public interface GameRepository extends Repository<Game, Long> {
 			"select g from Game g " +
 			"inner join g.gameRound gr " +
 			"inner join gr.gameLocation gl " +
-			"inner join gl.availableLocation al " +
+			"inner join gl.organizationLocation al " +
 			"where al.locationName = :locationName";
 	@Query(findByLocationName)
 	List<Game> findByLocationName(@Param("locationName") String locationName);
