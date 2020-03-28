@@ -40,7 +40,7 @@ public class GameRepositoryTest {
 		Assert.assertEquals("Inter Milan", game.getGameTeams().get(0).getEventTeam().getOrganizationTeam().getTeamName());
 		Assert.assertEquals(1, game.getGameTeams().get(0).getEventTeam().getEventTeamRankings().get(0).getRanking().shortValue());
 		Assert.assertEquals(45, game.getGameRound().getGameDuration().shortValue());
-		Assert.assertEquals("San Siro", game.getGameRound().getGameLocation().getOrganizationLocation().getLocationName());
+		Assert.assertEquals("Verona Arena", game.getGameRound().getGameLocation().getOrganizationLocation().getLocationName());
 		Assert.assertEquals(LocalDate.of(2020, 9, 29), game.getGameRound().getGameLocation().getGameDate().getGameDate());
 		Assert.assertEquals("Campania Regional Frosh Soph Tournament", game.getGameRound().getGameLocation().getGameDate().getEvent().getEventName());
 	}
@@ -129,6 +129,11 @@ public class GameRepositoryTest {
 
 	@Test
 	public void create() {
+		List<Game> gameExisting = gameRepository.findByTeamName("Orobica");
+//		Game gameExisting = gameRepository.findByTeamNameGameDateTime("Orobica", LocalDate.of(2020, 10 , 30), LocalTime.of(6, 0, 0));
+//		List<Game> event = gameRepository.findByEventName("Pisa World Cup");
+
+
 		gameRepository.save(createMockGame(GameStatus.Scheduled, LocalTime.of(7, 0, 0)));
 		Game game = gameRepository.findByTeamNameGameDateTime("Orobica", LocalDate.of(2020, 10 , 30), LocalTime.of(7, 0, 0));
 		Assert.assertEquals(GameStatus.Scheduled, game.getGameStatus());
@@ -209,6 +214,7 @@ public class GameRepositoryTest {
 		gameDate.setId(3L);
 		List<GameLocation> gameLocations = new ArrayList<>();
 		gameLocations.add(gameLocation);
+		gameDate.setGameDate(LocalDate.of(2020, 10 , 30));
 		gameDate.setGameLocations(gameLocations);
 		gameDate.setEvent(createMockEvent(gameDate));
 		return gameDate;

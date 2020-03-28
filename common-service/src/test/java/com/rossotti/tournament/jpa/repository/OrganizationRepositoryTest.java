@@ -174,14 +174,14 @@ public class OrganizationRepositoryTest {
 
 	@Test
 	public void delete() {
-		Organization organization = organizationRepository.findByOrganizationNameAsOfDate("ASD Orobica Calcio Bergamo", LocalDate.of(2017, 1, 15));
+		Organization organization = organizationRepository.findByOrganizationNameAsOfDate("Lazio ARL", LocalDate.of(2016, 1, 1));
 		if (organization != null) {
 			organizationRepository.deleteById(organization.getId());
 		}
 		else {
 			Assert.fail("Unable to find record to delete");
 		}
-		Organization findOrg = organizationRepository.findByOrganizationNameAsOfDate("ASD Orobica Calcio Bergamo", LocalDate.of(2017, 1, 15));
+		Organization findOrg = organizationRepository.findByOrganizationNameAsOfDate("Lazio ARL", LocalDate.of(2016, 1, 1));
 		Assert.assertNull(findOrg);
 	}
 
