@@ -71,11 +71,11 @@ public interface GameRepository extends Repository<Game, Long> {
 			"select g from Game g " +
 			"inner join g.gameTeams gt " +
 			"inner join gt.eventTeam et " +
-			"inner join et.organizationTeam at " +
+			"inner join et.organizationTeam ot " +
 			"inner join g.gameRound gr " +
 			"inner join gr.gameLocation gl " +
 			"inner join gl.gameDate gd " +
-			"where at.teamName = :teamName " +
+			"where ot.teamName = :teamName " +
 			"and g.startTime = :gameTime " +
 			"and gd.gameDate = :gameDate";
 	@Query(findByTeamNameGameDateTime)

@@ -55,7 +55,7 @@ public class EventTeam {
 		this.id = id;
 	}
 
-	@Column(length=10, nullable=false)
+	@Column(length=50, nullable=false)
 //	@NotBlank(message= "BaseTeamName is mandatory")
 	private String baseTeamName;
 	public String getBaseTeamName() {

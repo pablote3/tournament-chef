@@ -14,5 +14,5 @@ public interface GameJpaService extends CrudService<Game> {
 	List<Game> findByEventName(String eventName);
 	List<Game> findByGameDate(LocalDate gameDate);
 	List<Game> findByLocationName(String locationName);
-	Game findByTeamNameGameDateTime(String eventName, LocalDate gameDate, LocalTime gameTime);
+	Game findByTeamNameGameDateTime(String teamName, LocalDate gameDate, LocalTime gameTime);
 }
