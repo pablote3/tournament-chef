@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(uniqueConstraints=@UniqueConstraint(columnNames={"gameDateId", "organizationLocationId"}))
+@Table(uniqueConstraints=@UniqueConstraint(columnNames={"gameDateId", "organizationLocationId", "baseLocationName"}))
 public class GameLocation {
 	@ManyToOne
 	@JoinColumn(name="gameDateId", referencedColumnName="id", nullable=false)
@@ -46,6 +46,16 @@ public class GameLocation {
 	}
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	@Column(length=50, nullable=false)
+//	@NotBlank(message= "BaseLocationName is mandatory")
+	private String baseLocationName;
+	public String getBaseLocationName() {
+		return baseLocationName;
+	}
+	public void setBaseLocationName(String baseLocationName) {
+		this.baseLocationName = baseLocationName;
 	}
 
 	@Column(nullable=false)
