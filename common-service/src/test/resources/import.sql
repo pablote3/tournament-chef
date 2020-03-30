@@ -21,6 +21,7 @@ insert into organization (id, organizationName, address1, address2, city, state,
 insert into organization (id, organizationName, address1, address2, city, state, zipCode, country, contactEmail, contactFirstName, contactLastName, contactPhone, startDate, endDate, createTs, lupdTs, lupdUserId) VALUES(10, 'Empoli FC', 'Via di Pianezzoli', '', 'Empoli', 'Tuscany', '33891', 'irene.mazzella@yahoo.com', 'Italy', 'Irene', 'Mazzella', '385494221', '2014-01-15', '9999-12-31', '2020-01-19 20:00:00.0', '2020-01-20 20:00:00.0', 1);
 insert into organization (id, organizationName, address1, address2, city, state, zipCode, country, contactEmail, contactFirstName, contactLastName, contactPhone, startDate, endDate, createTs, lupdTs, lupdUserId) VALUES(11, 'Hellas Verona', 'Via Anselmi', '9', 'Verona', 'Veneto', '37139', 'Italy', 'benedetta.glionna@hotmail.com', 'Benedetta', 'Glionna', '389851221', '2014-01-15', '9999-12-31', '2020-01-19 20:00:00.0', '2020-01-20 20:00:00.0', 1);
 insert into organization (id, organizationName, address1, address2, city, state, zipCode, country, contactEmail, contactFirstName, contactLastName, contactPhone, startDate, endDate, createTs, lupdTs, lupdUserId) VALUES(12, 'Lazio ARL', 'Via Cina', '91', 'Roma', 'Lazio', '00144', 'Italy', 'apezzotti.hotmail.com', 'Arianna', 'Pezzotti', '389253251', '2016-01-01', '9999-12-31', '2020-01-19 20:00:00.0', '2020-01-20 20:00:00.0', 1);
+insert into organization (id, organizationName, address1, address2, city, state, zipCode, country, contactEmail, contactFirstName, contactLastName, contactPhone, startDate, endDate, createTs, lupdTs, lupdUserId) VALUES(13, 'Ravenna FC', 'Ravenna', '39', 'San Zaccaria', 'Venice', '01500', 'Italy', 'lindacimini.telecomitalia.com', 'Linda', 'Tucceri Cimini', '351958471', '2016-06-01', '9999-12-31', '2020-01-19 20:00:00.0', '2020-01-20 20:00:00.0', 1);
 
 insert into userOrganization (id, userId, organizationId) VALUES (1, 1, 1);
 insert into userOrganization (id, userId, organizationId) VALUES (2, 2, 1);
@@ -33,29 +34,33 @@ insert into userOrganization (id, userId, organizationId) VALUES (8, 8, 8);
 insert into userOrganization (id, userId, organizationId) VALUES (9, 9, 9);
 insert into userOrganization (id, userId, organizationId) VALUES (10, 10, 10);
 
-insert into organizationTeam (id, organizationId, teamName, city, country, state, zipCode, createTs, lupdTs, lupdUserId) VALUES(1, 1, 'BaseTeam', '', '', '', '', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
-insert into organizationTeam (id, organizationId, teamName, city, country, state, zipCode, createTs, lupdTs, lupdUserId) VALUES(2, 1, 'Verona', 'Naples', 'Italy', 'Campania', '10052', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
-insert into organizationTeam (id, organizationId, teamName, city, country, state, zipCode, createTs, lupdTs, lupdUserId) VALUES(3, 1, 'Inter Milan', 'Milan', 'Italy', 'Lombardy', '10096', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 1);
-insert into organizationTeam (id, organizationId, teamName, city, country, state, zipCode, createTs, lupdTs, lupdUserId) VALUES(4, 4, 'Milan', 'Milan', 'Italy', 'Lombardy', '', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 1);
-insert into organizationTeam (id, organizationId, teamName, city, country, state, zipCode, createTs, lupdTs, lupdUserId) VALUES(5, 4, 'Tavarnuzze', 'Impruneta', 'Italy', 'Trentino', '', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
-insert into organizationTeam (id, organizationId, teamName, city, country, state, zipCode, createTs, lupdTs, lupdUserId) VALUES(6, 7, 'Tavagnacco', 'Adegliacco', 'Italy', 'Tavagnacco', '', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
-insert into organizationTeam (id, organizationId, teamName, city, country, state, zipCode, createTs, lupdTs, lupdUserId) VALUES(7, 7, 'Orobica', 'Zanica', 'Italy', 'Lombardy', '', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
-insert into organizationTeam (id, organizationId, teamName, city, country, state, zipCode, createTs, lupdTs, lupdUserId) VALUES(8, 8, 'Naples', 'Naples', 'Italy', 'Campania', '', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
-insert into organizationTeam (id, organizationId, teamName, city, country, state, zipCode, createTs, lupdTs, lupdUserId) VALUES(9, 9, 'Perugia', 'Perugia', 'Italy', 'Lombardy', '', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
-insert into organizationTeam (id, organizationId, teamName, city, country, state, zipCode, createTs, lupdTs, lupdUserId) VALUES(10, 10, 'Napoli', 'Napoli', 'Italy', 'Campania', '', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
-insert into organizationTeam (id, organizationId, teamName, city, country, state, zipCode, createTs, lupdTs, lupdUserId) VALUES(11, 11, 'Napoli', 'Napoli', 'Italy', 'Campania', '', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
-insert into organizationTeam (id, organizationId, teamName, city, country, state, zipCode, createTs, lupdTs, lupdUserId) VALUES(12, 11, 'Milan', 'Milan', 'Italy', 'Lombardy', '', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
+insert into organizationTeam (id, organizationId, teamName, city, state, zipCode, country, createTs, lupdTs, lupdUserId) VALUES(1, 1, 'BaseTeam', '', '', '', '', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
+insert into organizationTeam (id, organizationId, teamName, city, state, zipCode, country, createTs, lupdTs, lupdUserId) VALUES(2, 1, 'Verona', 'Naples', 'Campania', '10052', 'Italy', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
+insert into organizationTeam (id, organizationId, teamName, city, state, zipCode, country, createTs, lupdTs, lupdUserId) VALUES(3, 1, 'Inter Milan', 'Milan', 'Lombardy', '10096', 'Italy', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 1);
+insert into organizationTeam (id, organizationId, teamName, city, state, zipCode, country, createTs, lupdTs, lupdUserId) VALUES(4, 4, 'Milan', 'Milan', 'Lombardy', '', 'Italy', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 1);
+insert into organizationTeam (id, organizationId, teamName, city, state, zipCode, country, createTs, lupdTs, lupdUserId) VALUES(5, 4, 'Tavarnuzze', 'Impruneta', 'Trentino', '', 'Italy', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
+insert into organizationTeam (id, organizationId, teamName, city, state, zipCode, country, createTs, lupdTs, lupdUserId) VALUES(6, 7, 'Tavagnacco', 'Adegliacco', 'Tavagnacco', '', 'Italy', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
+insert into organizationTeam (id, organizationId, teamName, city, state, zipCode, country, createTs, lupdTs, lupdUserId) VALUES(7, 7, 'Orobica', 'Zanica', 'Lombardy', '', 'Italy', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
+insert into organizationTeam (id, organizationId, teamName, city, state, zipCode, country, createTs, lupdTs, lupdUserId) VALUES(8, 8, 'Naples', 'Naples', 'Campania', '', 'Italy', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
+insert into organizationTeam (id, organizationId, teamName, city, state, zipCode, country, createTs, lupdTs, lupdUserId) VALUES(9, 9, 'Perugia', 'Perugia', 'Lombardy', '', 'Italy', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
+insert into organizationTeam (id, organizationId, teamName, city, state, zipCode, country, createTs, lupdTs, lupdUserId) VALUES(10, 10, 'Napoli', 'Napoli', 'Campania', '', 'Italy', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
+insert into organizationTeam (id, organizationId, teamName, city, state, zipCode, country, createTs, lupdTs, lupdUserId) VALUES(11, 11, 'Napoli', 'Napoli', 'Campania', '', 'Italy', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
+insert into organizationTeam (id, organizationId, teamName, city, state, zipCode, country, createTs, lupdTs, lupdUserId) VALUES(12, 11, 'Milan', 'Milan', 'Lombardy', '', 'Italy', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
+insert into organizationTeam (id, organizationId, teamName, city, state, zipCode, country, createTs, lupdTs, lupdUserId) VALUES(13, 13, 'BaseTeam', '', '', '', '', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
+insert into organizationTeam (id, organizationId, teamName, city, state, zipCode, country, createTs, lupdTs, lupdUserId) VALUES(14, 13, 'AS Roma SPA', 'Rome', 'Lazio', '00144', 'Italy', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
 
-insert into organizationLocation (id, organizationId, locationName, address1, address2, city, country, state, zipCode, createTs, lupdTs, lupdUserId) VALUES(1, 1, 'BaseLocation', '', '', '', '', '', '', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
-insert into organizationLocation (id, organizationId, locationName, address1, address2, city, country, state, zipCode, createTs, lupdTs, lupdUserId) VALUES(2, 1, 'Verona Arena', '123 Main Street', 'Suite 1', 'Naples', 'Italy', 'Campania', '10052', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
-insert into organizationLocation (id, organizationId, locationName, address1, address2, city, country, state, zipCode, createTs, lupdTs, lupdUserId) VALUES(3, 1, 'San Siro', '456 Central Avenue', 'PO Box 16', 'Milan', 'Italy', 'Lombardy', '10096', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 1);
-insert into organizationLocation (id, organizationId, locationName, address1, address2, city, country, state, zipCode, createTs, lupdTs, lupdUserId) VALUES(4, 2, 'Giuseppe Meazza Stadium', '890 Park Street', '', 'Milan', 'Italy', 'Lombardy', '10094', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 1);
-insert into organizationLocation (id, organizationId, locationName, address1, address2, city, country, state, zipCode, createTs, lupdTs, lupdUserId) VALUES(5, 4, 'Stadio Briamasco', '321 Church Street', '2nd Floor', 'Trento', 'Italy', 'Trentino', '10036', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
-insert into organizationLocation (id, organizationId, locationName, address1, address2, city, country, state, zipCode, createTs, lupdTs, lupdUserId) VALUES(6, 7, 'Municipal Stadium of Tavagnacco', '1 Via Sempione', '', 'Adegliacco', 'Italy', 'Tavagnacco', '33010', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
-insert into organizationLocation (id, organizationId, locationName, address1, address2, city, country, state, zipCode, createTs, lupdTs, lupdUserId) VALUES(7, 8, 'Municipal Stadium of San Sisto', 'Strada Ospedalone', 'S.Francesco', 'Perugia', 'Italy', 'Lombardy', '10098', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
-insert into organizationLocation (id, organizationId, locationName, address1, address2, city, country, state, zipCode, createTs, lupdTs, lupdUserId) VALUES(8, 9, 'CSM Soprani Sports Field', '1 Via Ravenna', '', 'Ravenna', 'Italy', 'Emilia-Romagna', '39170', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
-insert into organizationLocation (id, organizationId, locationName, address1, address2, city, country, state, zipCode, createTs, lupdTs, lupdUserId) VALUES(9, 10, 'Monteboro Sports Center', '1 Via Basta', '', 'Empoli', 'Italy', 'Tuscany', '33891', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
-insert into organizationLocation (id, organizationId, locationName, address1, address2, city, country, state, zipCode, createTs, lupdTs, lupdUserId) VALUES(10, 11, 'Stadium AGSM Olivieri', 'Via Anselmi, 9', '', 'Verona', 'Italy', 'Campania', '10052', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
+insert into organizationLocation (id, organizationId, locationName, address1, address2, city, state, zipCode, country, createTs, lupdTs, lupdUserId) VALUES(1, 1, 'BaseLocation', '', '', '', '', '', '', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
+insert into organizationLocation (id, organizationId, locationName, address1, address2, city, state, zipCode, country, createTs, lupdTs, lupdUserId) VALUES(2, 1, 'Verona Arena', '123 Main Street', 'Suite 1', 'Naples', 'Campania', '10052', 'Italy', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
+insert into organizationLocation (id, organizationId, locationName, address1, address2, city, state, zipCode, country, createTs, lupdTs, lupdUserId) VALUES(3, 1, 'San Siro', '456 Central Avenue', 'PO Box 16', 'Milan', 'Lombardy', '10096', 'Italy', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 1);
+insert into organizationLocation (id, organizationId, locationName, address1, address2, city, state, zipCode, country, createTs, lupdTs, lupdUserId) VALUES(4, 2, 'Giuseppe Meazza Stadium', '890 Park Street', '', 'Milan', 'Lombardy', '10094', 'Italy', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 1);
+insert into organizationLocation (id, organizationId, locationName, address1, address2, city, state, zipCode, country, createTs, lupdTs, lupdUserId) VALUES(5, 4, 'Stadio Briamasco', '321 Church Street', '2nd Floor', 'Trento', 'Trentino', '10036', 'Italy', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
+insert into organizationLocation (id, organizationId, locationName, address1, address2, city, state, zipCode, country, createTs, lupdTs, lupdUserId) VALUES(6, 7, 'Municipal Stadium of Tavagnacco', '1 Via Sempione', '', 'Adegliacco', 'Tavagnacco', '33010', 'Italy', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
+insert into organizationLocation (id, organizationId, locationName, address1, address2, city, state, zipCode, country, createTs, lupdTs, lupdUserId) VALUES(7, 8, 'Municipal Stadium of San Sisto', 'Strada Ospedalone', 'S.Francesco', 'Perugia', 'Lombardy', '10098', 'Italy', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
+insert into organizationLocation (id, organizationId, locationName, address1, address2, city, state, zipCode, country, createTs, lupdTs, lupdUserId) VALUES(8, 9, 'CSM Soprani Sports Field', '1 Via Ravenna', '', 'Ravenna', 'Emilia-Romagna', '39170', 'Italy', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
+insert into organizationLocation (id, organizationId, locationName, address1, address2, city, state, zipCode, country, createTs, lupdTs, lupdUserId) VALUES(9, 10, 'Monteboro Sports Center', '1 Via Basta', '', 'Empoli', 'Tuscany', '33891', 'Italy', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
+insert into organizationLocation (id, organizationId, locationName, address1, address2, city, state, zipCode, country, createTs, lupdTs, lupdUserId) VALUES(10, 11, 'Stadium AGSM Olivieri', 'Via Anselmi, 9', '', 'Verona', 'Campania', '10052', 'Italy', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
+insert into organizationLocation (id, organizationId, locationName, address1, address2, city, state, zipCode, country, createTs, lupdTs, lupdUserId) VALUES(11, 13, 'BaseLocation', '', '', '', '', '', '', '', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
+insert into organizationLocation (id, organizationId, locationName, address1, address2, city, state, zipCode, country, createTs, lupdTs, lupdUserId) VALUES(12, 13, 'Campo Sportivo CSM Soprani', 'Vicolo della Vecchia', '2', 'San Zaccaria', 'Venice', '48125', 'Italy', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
 
 insert into event (id, organizationId, startDate, endDate, templateType, eventName, eventStatus, eventType, sport, createTs, lupdTs, lupdUserId) VALUES(1, 1, '2020-09-29', '2020-09-30', 'four_x_four_pp', 'Campania Regional Frosh Soph Tournament', 'Sandbox', 'Tournament', 'WaterPolo', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
 insert into event (id, organizationId, startDate, endDate, templateType, eventName, eventStatus, eventType, sport, createTs, lupdTs, lupdUserId) VALUES(2, 1, '2020-09-24', '2020-09-25', 'four_x_four_pp', 'Lombardy Halloween Invitational', 'Scheduled', 'Tournament', 'WaterPolo', '2020-01-19 20:00:00.0', '2020-01-16 20:00:00.0', 1);
@@ -66,6 +71,7 @@ insert into event (id, organizationId, startDate, endDate, templateType, eventNa
 insert into event (id, organizationId, startDate, endDate, templateType, eventName, eventStatus, eventType, sport, createTs, lupdTs, lupdUserId) VALUES(7, 7, '2020-10-30', '2020-10-31', 'four_x_four_pp', 'Pisa World Cup', 'Sandbox', 'Tournament', 'WaterPolo', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 1);
 insert into event (id, organizationId, startDate, endDate, templateType, eventName, eventStatus, eventType, sport, createTs, lupdTs, lupdUserId) VALUES(8, 11, '2010-01-20', '2010-01-21', 'four_x_four_pp', 'Reddan Thunder Invitational', 'Sandbox', 'Tournament', 'WaterPolo', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 1);
 insert into event (id, organizationId, startDate, endDate, templateType, eventName, eventStatus, eventType, sport, createTs, lupdTs, lupdUserId) VALUES(9, 11, '2011-01-20', '2011-01-21', 'four_x_four_rr', 'Reddan Thunder Invitational', 'Sandbox', 'Tournament', 'WaterPolo', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 1);
+insert into event (id, organizationId, startDate, endDate, templateType, eventName, eventStatus, eventType, sport, createTs, lupdTs, lupdUserId) VALUES(10, 13, '2020-05-20', '2020-05-21', 'four_x_four_rr', 'Campo Sportivo Spring Classic', 'Sandbox', 'Tournament', 'WaterPolo', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 1);
 
 insert into eventTeam (id, eventId, organizationTeamId, baseTeamName) VALUES(1, 1, 3, 'BaseTeam1');
 insert into eventTeam (id, eventId, organizationTeamId, baseTeamName) VALUES(2, 1, 4, 'BaseTeam2');
@@ -74,6 +80,8 @@ insert into eventTeam (id, eventId, organizationTeamId, baseTeamName) VALUES(4, 
 insert into eventTeam (id, eventId, organizationTeamId, baseTeamName) VALUES(5, 8, 12, 'BaseTeam2');
 insert into eventTeam (id, eventId, organizationTeamId, baseTeamName) VALUES(6, 9, 11, 'BaseTeam1');
 insert into eventTeam (id, eventId, organizationTeamId, baseTeamName) VALUES(7, 9, 12, '');
+insert into eventTeam (id, eventId, organizationTeamId, baseTeamName) VALUES(8, 10, 13, 'BaseTeam1');
+insert into eventTeam (id, eventId, organizationTeamId, baseTeamName) VALUES(9, 10, 14, '');
 
 insert into eventTeamRanking (id, eventTeamId, rankingType, ranking) VALUES(1, 1, 'Initial', 1);
 insert into eventTeamRanking (id, eventTeamId, rankingType, ranking) VALUES(2, 2, 'Initial', 2);
@@ -85,6 +93,7 @@ insert into gameDate (id, eventId, gameDate) VALUES(2, 1, '2020-09-30');
 insert into gameDate (id, eventId, gameDate) VALUES(3, 7, '2020-10-30');
 insert into gameDate (id, eventId, gameDate) VALUES(4, 8, '2010-01-20');
 insert into gameDate (id, eventId, gameDate) VALUES(5, 9, '2011-01-20');
+insert into gameDate (id, eventId, gameDate) VALUES(6, 10, '2020-05-20');
 
 insert into gameLocation (id, gameDateId, organizationLocationId, baseLocationName, startTime) VALUES(1, 1, 2, 'BaseLocation1', '20:00:00.0');
 insert into gameLocation (id, gameDateId, organizationLocationId, baseLocationName, startTime) VALUES(2, 1, 3, 'BaseLocation2', '19:30:00.0');
@@ -93,6 +102,7 @@ insert into gameLocation (id, gameDateId, organizationLocationId, baseLocationNa
 insert into gameLocation (id, gameDateId, organizationLocationId, baseLocationName, startTime) VALUES(5, 3, 8, 'BaseLocation1', '07:30:00.0');
 insert into gameLocation (id, gameDateId, organizationLocationId, baseLocationName, startTime) VALUES(6, 4, 9, '', '07:30:00.0');
 insert into gameLocation (id, gameDateId, organizationLocationId, baseLocationName, startTime) VALUES(7, 5, 9, '', '07:30:00.0');
+insert into gameLocation (id, gameDateId, organizationLocationId, baseLocationName, startTime) VALUES(8, 6, 12, '', '07:30:00.0');
 
 insert into gameRound (id, gameLocationId, gameType, gameDuration) VALUES(1, 1, 'GroupPlay', 45);
 insert into gameRound (id, gameLocationId, gameType, gameDuration) VALUES(2, 1, 'Final', 50);
@@ -101,6 +111,7 @@ insert into gameRound (id, gameLocationId, gameType, gameDuration) VALUES(4, 2, 
 insert into gameRound (id, gameLocationId, gameType, gameDuration) VALUES(5, 5, 'Final', 50);
 insert into gameRound (id, gameLocationId, gameType, gameDuration) VALUES(6, 6, 'Final', 50);
 insert into gameRound (id, gameLocationId, gameType, gameDuration) VALUES(7, 7, 'Final', 50);
+insert into gameRound (id, gameLocationId, gameType, gameDuration) VALUES(8, 8, 'Final', 35);
 
 insert into game (id, gameRoundId, startTime, gameStatus, createTs, lupdTs, lupdUserId) VALUES(1, 1, '08:00:00.0', 'Completed', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
 insert into game (id, gameRoundId, startTime, gameStatus, createTs, lupdTs, lupdUserId) VALUES(2, 1, '10:00:00.0', 'Scheduled', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
@@ -117,6 +128,7 @@ insert into game (id, gameRoundId, startTime, gameStatus, createTs, lupdTs, lupd
 insert into game (id, gameRoundId, startTime, gameStatus, createTs, lupdTs, lupdUserId) VALUES(13, 7, '07:00:00.0', 'Scheduled', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
 insert into game (id, gameRoundId, startTime, gameStatus, createTs, lupdTs, lupdUserId) VALUES(14, 7, '10:00:00.0', 'Scheduled', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
 insert into game (id, gameRoundId, startTime, gameStatus, createTs, lupdTs, lupdUserId) VALUES(15, 1, '11:00:00.0', 'Scheduled', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
+insert into game (id, gameRoundId, startTime, gameStatus, createTs, lupdTs, lupdUserId) VALUES(16, 8, '08:00:00.0', 'Completed', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
 
 insert into gameTeam (id, gameId, eventTeamId, homeTeam, pointsScored) VALUES(1, 1, 1, TRUE, 14);
 insert into gameTeam (id, gameId, eventTeamId, homeTeam, pointsScored) VALUES(2, 1, 2, FALSE, 5);
@@ -132,5 +144,7 @@ insert into gameTeam (id, gameId, eventTeamId, homeTeam, pointsScored) VALUES(11
 insert into gameTeam (id, gameId, eventTeamId, homeTeam, pointsScored) VALUES(12, 12, 5, TRUE, 14);
 insert into gameTeam (id, gameId, eventTeamId, homeTeam, pointsScored) VALUES(13, 13, 6, FALSE, 14);
 insert into gameTeam (id, gameId, eventTeamId, homeTeam, pointsScored) VALUES(14, 14, 7, TRUE, 14);
-insert into gameTeam (id, gameId, eventTeamId, homeTeam, pointsScored) VALUES(15, 15, 8, FALSE, 14);
-insert into gameTeam (id, gameId, eventTeamId, homeTeam, pointsScored) VALUES(16, 15, 9, TRUE, 14);
+insert into gameTeam (id, gameId, eventTeamId, homeTeam, pointsScored) VALUES(15, 15, 6, FALSE, 14);
+insert into gameTeam (id, gameId, eventTeamId, homeTeam, pointsScored) VALUES(16, 15, 7, TRUE, 14);
+insert into gameTeam (id, gameId, eventTeamId, homeTeam, pointsScored) VALUES(17, 16, 8, FALSE, 12);
+insert into gameTeam (id, gameId, eventTeamId, homeTeam, pointsScored) VALUES(18, 16, 9, TRUE, 8);

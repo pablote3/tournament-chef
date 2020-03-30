@@ -129,12 +129,12 @@ public class GameRepositoryTest {
 
 	@Test
 	public void create() {
-		List<Game> gameExisting = gameRepository.findByTeamName("Orobica");
-//		Game gameExisting = gameRepository.findByTeamNameGameDateTime("Orobica", LocalDate.of(2020, 10 , 30), LocalTime.of(6, 0, 0));
+		List<Game> gameExisting = gameRepository.findByTeamName("AS Roma SPA");
+//		Game gameExisting = gameRepository.findByTeamNameGameDateTime("AS Roma SPA", LocalDate.of(2020, 5 , 20), LocalTime.of(8, 0, 0));
 //		List<Game> event = gameRepository.findByEventName("Pisa World Cup");
 
 
-		gameRepository.save(createMockGame(GameStatus.Scheduled, LocalTime.of(7, 0, 0)));
+		gameRepository.save(createMockGame(GameStatus.Scheduled, LocalTime.of(9, 0, 0)));
 		Game game = gameRepository.findByTeamNameGameDateTime("Orobica", LocalDate.of(2020, 10 , 30), LocalTime.of(7, 0, 0));
 		Assert.assertEquals(GameStatus.Scheduled, game.getGameStatus());
 	}
