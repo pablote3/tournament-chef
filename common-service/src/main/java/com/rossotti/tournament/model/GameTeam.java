@@ -4,7 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(uniqueConstraints=@UniqueConstraint(columnNames={"gameId"}))
+@Table(uniqueConstraints=@UniqueConstraint(columnNames={"gameId", "eventTeamId"}))
 public class GameTeam {
 	@ManyToOne
 	@JoinColumn(name="gameId", referencedColumnName="id", nullable=false)
