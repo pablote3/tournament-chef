@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Period;
 import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ActiveProfiles(profiles = "development")
@@ -41,14 +42,15 @@ public class EventRepositoryTest {
 		Assert.assertEquals(LocalDateTime.of(2020, 1, 19, 20, 0), event.getLupdTs());
 		Assert.assertEquals(2, event.getLupdUserId().longValue());
 		Assert.assertEquals(4, event.getOrganization().getUserOrganizations().size());
-		Assert.assertEquals(3, event.getOrganization().getOrganizationTeams().size());
-		Assert.assertEquals(3, event.getOrganization().getOrganizationLocations().size());
-		Assert.assertEquals(2, event.getEventTeams().size());
+		Assert.assertEquals(4, event.getOrganization().getOrganizationTeams().size());
+		Assert.assertEquals(2, event.getOrganization().getOrganizationLocations().size());
+		Assert.assertEquals(4, event.getEventTeams().size());
+		Assert.assertEquals(2, event.getEventTeams().get(0).getEventTeamRankings().size());
 		Assert.assertEquals(2, event.getGameDates().size());
 		Assert.assertEquals(2, event.getGameDates().get(0).getGameLocations().size());
 		Assert.assertEquals(2, event.getGameDates().get(0).getGameLocations().get(0).getGameRounds().size());
-		Assert.assertEquals(6, event.getGameDates().get(0).getGameLocations().get(0).getGameRounds().get(0).getGames().size());
-		Assert.assertEquals(1, event.getGameDates().get(0).getGameLocations().get(0).getGameRounds().get(0).getGames().get(0).getGameTeams().size());
+		Assert.assertEquals(1, event.getGameDates().get(0).getGameLocations().get(0).getGameRounds().get(0).getGames().size());
+		Assert.assertEquals(2, event.getGameDates().get(0).getGameLocations().get(0).getGameRounds().get(0).getGames().get(0).getGameTeams().size());
 		Assert.assertEquals(TemplateType.four_x_four_pp, event.getTemplateType());
 	}
 
@@ -217,7 +219,7 @@ public class EventRepositoryTest {
 		EventTeam eventTeam = new EventTeam();
 		eventTeam.setEvent(event);
 		eventTeam.setOrganizationTeam(availableTeam);
-		eventTeam.setBaseTeamName(teamName);
+//		eventTeam.setBaseTeamName(teamName);
 		return eventTeam;
 	}
 
