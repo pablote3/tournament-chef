@@ -1,5 +1,7 @@
 package com.rossotti.tournament.jpa.service;
 
+import com.rossotti.tournament.enumeration.EventType;
+import com.rossotti.tournament.enumeration.Sport;
 import com.rossotti.tournament.exception.NoSuchEntityException;
 import com.rossotti.tournament.enumeration.EventStatus;
 import com.rossotti.tournament.enumeration.TemplateType;
@@ -32,9 +34,26 @@ public class EventJpaServiceTest {
 	@Test
 	public void getById_Found() {
 		Event event = eventJpaService.getById(1L);
+		Assert.assertEquals(LocalDate.of(2020, 9, 29), event.getStartDate());
+		Assert.assertEquals(LocalDate.of(2020, 9, 30), event.getEndDate());
 		Assert.assertEquals("Campania Regional Frosh Soph Tournament", event.getEventName());
-		Assert.assertEquals(2, event.getEventTeams().size());
+		Assert.assertEquals(EventStatus.Sandbox, event.getEventStatus());
+		Assert.assertEquals(EventType.Tournament, event.getEventType());
+		Assert.assertEquals(Sport.WaterPolo, event.getSport());
+		Assert.assertEquals(LocalDateTime.of(2020, 1, 16, 20, 0), event.getCreateTs());
+		Assert.assertEquals(LocalDateTime.of(2020, 1, 19, 20, 0), event.getLupdTs());
+		Assert.assertEquals(2, event.getLupdUserId().longValue());
+		Assert.assertEquals(4, event.getOrganization().getUserOrganizations().size());
+		Assert.assertEquals(4, event.getOrganization().getOrganizationTeams().size());
+		Assert.assertEquals(2, event.getOrganization().getOrganizationLocations().size());
+		Assert.assertEquals(4, event.getEventTeams().size());
+		Assert.assertEquals(2, event.getEventTeams().get(0).getEventTeamRankings().size());
 		Assert.assertEquals(2, event.getGameDates().size());
+		Assert.assertEquals(2, event.getGameDates().get(0).getGameLocations().size());
+		Assert.assertEquals(2, event.getGameDates().get(0).getGameLocations().get(0).getGameRounds().size());
+		Assert.assertEquals(1, event.getGameDates().get(0).getGameLocations().get(0).getGameRounds().get(0).getGames().size());
+		Assert.assertEquals(2, event.getGameDates().get(0).getGameLocations().get(0).getGameRounds().get(0).getGames().get(0).getGameTeams().size());
+		Assert.assertEquals(TemplateType.four_x_four_pp, event.getTemplateType());
 	}
 
 	@Test
@@ -144,6 +163,7 @@ public class EventJpaServiceTest {
 	@Test
 	public void update_Updated() {
 		Event event = eventJpaService.findByEventNameAsOfDateTemplateType("Lombardy Halloween Invitational", LocalDate.of(2020, 9, 24), TemplateType.four_x_four_pp);
+		Assert.assertEquals(EventStatus.Scheduled, event.getEventStatus());
 		event.setEventStatus(EventStatus.InProgress);
 		event.setLupdUserId(3L);
 		event.setLupdTs(LocalDateTime.now());

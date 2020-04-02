@@ -108,6 +108,7 @@ public class OrganizationJpaServiceTest {
 	@Test
 	public void update_Updated() {
 		Organization organization = organizationJpaService.findByOrganizationNameAsOfDate("AC Milan SPA", LocalDate.of(2012, 1, 15));
+		Assert.assertEquals("Cimini", organization.getContactLastName());
 		organization.setContactLastName("Fusetti");
 		organizationJpaService.save(organization);
 		Organization findOrganization = organizationJpaService.findByOrganizationNameStartDateEndDate("AC Milan SPA", LocalDate.of(2012, 1, 15), LocalDate.of(9999, 12, 31));

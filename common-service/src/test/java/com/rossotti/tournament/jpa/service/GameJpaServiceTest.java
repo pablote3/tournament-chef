@@ -144,6 +144,7 @@ public class GameJpaServiceTest {
 	@Test
 	public void update_Updated() {
 		Game game = gameJpaService.findByTeamNameGameDateTime("Inter Milan", LocalDate.of(2020, 9, 29), LocalTime.of(10, 0, 0));
+		Assert.assertEquals(GameStatus.Scheduled, game.getGameStatus());
 		game.setGameStatus(GameStatus.Completed);
 		gameJpaService.save(game);
 		Game findGame = gameJpaService.findByTeamNameGameDateTime("Inter Milan", LocalDate.of(2020, 9, 29), LocalTime.of(10, 0, 0));

@@ -90,9 +90,10 @@ public class UserJpaServiceTest {
 
 	@Test
 	public void update_Updated() {
-		User updateUser = userJpaService.findByEmail("alessia.piazza@telecomitalia.com");
-		updateUser.setUserStatus(UserStatus.Active);
-		userJpaService.save(updateUser);
+		User user = userJpaService.findByEmail("alessia.piazza@telecomitalia.com");
+		Assert.assertEquals(UserStatus.Inactive, user.getUserStatus());
+		user.setUserStatus(UserStatus.Active);
+		userJpaService.save(user);
 		User findUser = userJpaService.findByEmail("alessia.piazza@telecomitalia.com");
 		Assert.assertEquals(UserStatus.Active, findUser.getUserStatus());
 	}
