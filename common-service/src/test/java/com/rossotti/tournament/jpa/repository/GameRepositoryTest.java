@@ -37,10 +37,10 @@ public class GameRepositoryTest {
 		Assert.assertEquals(LocalDateTime.of(2020, 1, 19, 20, 0), game.getLupdTs());
 		Assert.assertEquals(2, game.getLupdUserId().longValue());
 		Assert.assertEquals(Boolean.TRUE, game.getGameTeams().get(0).getHomeTeam());
-		Assert.assertEquals("Inter Milan", game.getGameTeams().get(0).getEventTeam().getOrganizationTeam().getTeamName());
-		Assert.assertEquals(1, game.getGameTeams().get(0).getEventTeam().getEventTeamRankings().get(0).getRanking().shortValue());
+		Assert.assertEquals("BaseTeam1", game.getGameTeams().get(0).getEventTeam().getOrganizationTeam().getTeamName());
+		Assert.assertEquals(2, game.getGameTeams().get(0).getEventTeam().getEventTeamRankings().size());
 		Assert.assertEquals(45, game.getGameRound().getGameDuration().shortValue());
-		Assert.assertEquals("Verona Arena", game.getGameRound().getGameLocation().getOrganizationLocation().getLocationName());
+		Assert.assertEquals("BaseLocation1", game.getGameRound().getGameLocation().getOrganizationLocation().getLocationName());
 		Assert.assertEquals(LocalDate.of(2020, 9, 29), game.getGameRound().getGameLocation().getGameDate().getGameDate());
 		Assert.assertEquals("Campania Regional Frosh Soph Tournament", game.getGameRound().getGameLocation().getGameDate().getEvent().getEventName());
 	}
@@ -118,8 +118,8 @@ public class GameRepositoryTest {
 
 	@Test
 	public void findByTeamNameGameDateTime_Found() {
-		Game game = gameRepository.findByTeamNameGameDateTime("Inter Milan", LocalDate.of(2020, 9, 29), LocalTime.of(8, 0, 0, 0));
-		Assert.assertEquals(GameStatus.Completed, game.getGameStatus());
+		Game game = gameRepository.findByTeamNameGameDateTime("Inter Milan", LocalDate.of(2020, 9, 29), LocalTime.of(10, 0, 0, 0));
+		Assert.assertEquals(GameStatus.Scheduled, game.getGameStatus());
 	}
 
 	@Test
