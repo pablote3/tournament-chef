@@ -1,7 +1,7 @@
 package com.rossotti.tournament.jpa.repository;
 
 import com.rossotti.tournament.config.PersistenceConfig;
-import com.rossotti.tournament.model.Organization;
+import com.rossotti.tournament.model.*;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -142,8 +142,11 @@ public class OrganizationRepositoryTest {
 	public void create() {
 		organizationRepository.save(createMockOrganization("AS Roma", LocalDate.of(2010, 1, 11), LocalDate.of(9999, 12, 31), "Giugliano", "manuela.giugliano@gmail.com"));
 		Organization organization = organizationRepository.findByOrganizationNameAsOfDate("AS Roma", LocalDate.of(2010, 1, 21));
+		Assert.assertEquals(1, organization.getUserOrganizations().size());
+		Assert.assertEquals(1, organization.getOrganizationTeams().size());
+		Assert.assertEquals(1, organization.getOrganizationLocations().size());
 		Assert.assertEquals("Giugliano", organization.getContactLastName());
-		Assert.assertEquals("Manuela", organization.getContactFirstName());
+		Assert.assertEquals("manuela.giugliano@gmail.com", organization.getContactEmail());
 	}
 
 	@Test
@@ -200,10 +203,52 @@ public class OrganizationRepositoryTest {
 		organization.setContactFirstName("Manuela");
 		organization.setContactEmail(contactEmail);
 		organization.setContactPhone("390665951");
+		organization.getUserOrganizations().add(createMockUserOrganization(organization));
+		organization.getOrganizationTeams().add(createMockOrganizationTeam(organization));
+		organization.getOrganizationLocations().add(createMockOrganizationLocation(organization));
 		organization.setCreateTs(LocalDateTime.of(2015, 10, 27, 20, 30));
 		organization.setLupdTs(LocalDateTime.of(2015, 10, 27, 20, 30));
 		organization.setLupdUserId(1L);
 		return organization;
+	}
+
+	private static UserOrganization createMockUserOrganization(Organization organization) {
+		UserOrganization userOrganization = new UserOrganization();
+		userOrganization.setOrganization(organization);
+		userOrganization.setUser(createMockUser(userOrganization));
+		return userOrganization;
+	}
+
+	private static User createMockUser(UserOrganization userOrganization) {
+		User user = new User();
+		user.setId(5L);
+		user.getUserOrganization().add(userOrganization);
+		return user;
+	}
+
+	private static OrganizationTeam createMockOrganizationTeam(Organization organization) {
+		OrganizationTeam organizationTeam = new OrganizationTeam();
+		organizationTeam.setOrganization(organization);
+		organizationTeam.setTeamName("Cuneo");
+		organizationTeam.setCity("Cuneo");
+		organizationTeam.setState("Piedmont");
+		organizationTeam.setCountry("Italy");
+		organizationTeam.setZipCode("12100");
+		organizationTeam.setLupdUserId(6L);
+		return organizationTeam;
+	}
+
+	private static OrganizationLocation createMockOrganizationLocation(Organization organization) {
+		OrganizationLocation organizationLocation = new OrganizationLocation();
+		organizationLocation.setOrganization(organization);
+		organizationLocation.setLocationName("Campo Sportivo CSM Soprani");
+		organizationLocation.setAddress1("Via delle Tre Fontane 5");
+		organizationLocation.setCity("Roma");
+		organizationLocation.setState("Lazio");
+		organizationLocation.setCountry("Italy");
+		organizationLocation.setZipCode("00144");
+		organizationLocation.setLupdUserId(4L);
+		return organizationLocation;
 	}
 
 	private Organization updateMockOrganization(LocalDate asOfDate, String contactLastName) {

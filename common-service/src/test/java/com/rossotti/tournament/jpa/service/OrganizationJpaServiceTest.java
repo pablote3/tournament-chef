@@ -82,8 +82,12 @@ public class OrganizationJpaServiceTest {
 	@Test
 	public void create_Created() {
 		organizationJpaService.save(OrganizationRepositoryTest.createMockOrganization("Empoli FC", LocalDate.of(2012, 1, 15), LocalDate.of(2012, 1, 22), "Simonetti", "flaminia.simonetti@dada.it"));
-		Organization findOrganization = organizationJpaService.findByOrganizationNameStartDateEndDate("Empoli FC", LocalDate.of(2012, 1, 15), LocalDate.of(2012, 1, 22));
-		Assert.assertEquals("Simonetti", findOrganization.getContactLastName());
+		Organization organization = organizationJpaService.findByOrganizationNameStartDateEndDate("Empoli FC", LocalDate.of(2012, 1, 15), LocalDate.of(2012, 1, 22));
+		Assert.assertEquals(1, organization.getUserOrganizations().size());
+		Assert.assertEquals(1, organization.getOrganizationTeams().size());
+		Assert.assertEquals(1, organization.getOrganizationLocations().size());
+		Assert.assertEquals("Simonetti", organization.getContactLastName());
+		Assert.assertEquals("flaminia.simonetti@dada.it", organization.getContactEmail());
 	}
 
 	@Test
