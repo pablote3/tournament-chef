@@ -163,15 +163,19 @@ public class OrganizationRepositoryTest {
 
 	@Test
 	public void update() {
-		organizationRepository.save(updateMockOrganization(LocalDate.of(2012, 1, 15), "Mauro"));
 		Organization organization = organizationRepository.findByOrganizationNameAsOfDate("Fiorentina FC", LocalDate.of(2012, 1, 15));
-		Assert.assertEquals("Mauro", organization.getContactLastName());
-		Assert.assertEquals("Ilaria", organization.getContactFirstName());
+		Assert.assertEquals("Bonetti", organization.getContactLastName());
+		organization.setContactLastName("Mauro");
+		organizationRepository.save(organization);
+		Organization findOrganization = organizationRepository.findByOrganizationNameAsOfDate("Fiorentina FC", LocalDate.of(2012, 1, 15));
+		Assert.assertEquals("Mauro", findOrganization.getContactLastName());
 	}
 
 	@Test
 	public void update_TransactionSystemException_ContactLastNameMissing() {
-		Exception exception = assertThrows(TransactionSystemException.class, () -> organizationRepository.save(updateMockOrganization(LocalDate.of(2012, 1, 15), null)));
+		Organization organization = organizationRepository.findByOrganizationNameAsOfDate("Fiorentina FC", LocalDate.of(2012, 1, 15));
+		organization.setContactLastName(null);
+		Exception exception = assertThrows(TransactionSystemException.class, () -> organizationRepository.save(organization));
 		Assert.assertTrue(exception.getCause().getCause().getMessage().contains("ContactLastName is mandatory"));
 	}
 
@@ -249,12 +253,5 @@ public class OrganizationRepositoryTest {
 		organizationLocation.setZipCode("00144");
 		organizationLocation.setLupdUserId(4L);
 		return organizationLocation;
-	}
-
-	private Organization updateMockOrganization(LocalDate asOfDate, String contactLastName) {
-		Organization organization = organizationRepository.findByOrganizationNameAsOfDate("Fiorentina FC", asOfDate);
-		organization.setContactLastName(contactLastName);
-		organization.setContactFirstName("Ilaria");
-		return organization;
 	}
 }

@@ -9,6 +9,7 @@ insert into user (id, email, firstName, lastName, password, userStatus, userType
 insert into user (id, email, firstName, lastName, password, userStatus, userType, createTs, lupdTs, lupdUserId) VALUES(8, 'martina.zanoli@telecomitalia.com', 'Martina', 'Zanoli', 'Orobica3', 'Active', 'Administrator', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 4);
 insert into user (id, email, firstName, lastName, password, userStatus, userType, createTs, lupdTs, lupdUserId) VALUES(9, 'noemi.manno@gmail.com', 'Noemi', 'Manno', 'PinkPink2', 'Active', 'Organization', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 4);
 insert into user (id, email, firstName, lastName, password, userStatus, userType, createTs, lupdTs, lupdUserId) VALUES(10, 'irene.mazzella@yahoo.com', 'Irene', 'Mazzella', 'Mazzy3', 'Active', 'Organization', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 4);
+insert into user (id, email, firstName, lastName, password, userStatus, userType, createTs, lupdTs, lupdUserId) VALUES(11, 'sabrina.marta@gmail.com', 'Sabrina Marta', 'Marchese', 'Marchy99', 'Active', 'Organization', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 4);
 
 insert into organization (id, organizationName, address1, address2, city, state, zipCode, country, contactEmail, contactFirstName, contactLastName, contactPhone, startDate, endDate, createTs, lupdTs, lupdUserId) VALUES(1, 'FC Juventes', 'Via Stupinigi 182', 'Suite 456', 'Vinovo', 'Piedmont', '10048', 'Italy', 'cristiana.girelli@gmail.com', 'Cristiana', 'Girelli', '9093381808', '2016-02-21', '9999-12-31', '2015-10-27 20:00:00.0', '2020-01-18 20:00:00.0', 1);
 insert into organization (id, organizationName, address1, address2, city, state, zipCode, country, contactEmail, contactFirstName, contactLastName, contactPhone, startDate, endDate, createTs, lupdTs, lupdUserId) VALUES(2, 'FC Juventes', 'Via Stupinigi 182', 'Suite 442', 'Vinovo', 'Piedmont', '10048', 'Italy', 'barbara.bonansea@gmail.com', 'Barbara', 'Bonansea', '9093381810', '2010-01-15', '2016-02-20', '2010-10-27 20:00:00.0', '2020-01-18 20:00:00.0', 1);
@@ -32,10 +33,11 @@ insert into userOrganization (id, userId, organizationId) VALUES (4, 4, 1);
 
 insert into userOrganization (id, userId, organizationId) VALUES (5, 5, 2);
 insert into userOrganization (id, userId, organizationId) VALUES (6, 6, 4);
-insert into userOrganization (id, userId, organizationId) VALUES (7, 7, 4);
+insert into userOrganization (id, userId, organizationId) VALUES (7, 7, 6);
 insert into userOrganization (id, userId, organizationId) VALUES (8, 8, 8);
 insert into userOrganization (id, userId, organizationId) VALUES (9, 9, 9);
 insert into userOrganization (id, userId, organizationId) VALUES (10, 10, 10);
+insert into userOrganization (id, userId, organizationId) VALUES (11, 11, 12);
 
 insert into organizationTeam (id, organizationId, teamName, city, state, zipCode, country, createTs, lupdTs, lupdUserId) VALUES(1, 1, 'BaseTeam1', '', '', '', '', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
 insert into organizationTeam (id, organizationId, teamName, city, state, zipCode, country, createTs, lupdTs, lupdUserId) VALUES(2, 1, 'Verona', 'Naples', 'Campania', '10052', 'Italy', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
