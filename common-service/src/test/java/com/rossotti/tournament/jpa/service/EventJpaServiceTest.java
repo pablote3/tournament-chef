@@ -128,7 +128,7 @@ public class EventJpaServiceTest {
 	@Test
 	public void findByOrganizationName_Found() {
 		List<Event> events = eventJpaService.findByOrganizationName("FC Juventes");
-		Assert.assertEquals(3, events.size());
+		Assert.assertEquals(4, events.size());
 	}
 
 	@Test

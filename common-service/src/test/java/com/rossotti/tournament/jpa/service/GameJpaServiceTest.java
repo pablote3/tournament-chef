@@ -83,7 +83,7 @@ public class GameJpaServiceTest {
 
 	@Test
 	public void findByEventName_Found() {
-		List<Game> games = gameJpaService.findByEventName("Reddan Thunder Invitational");
+		List<Game> games = gameJpaService.findByEventName("Campania Regional Frosh Soph Tournament");
 		Assert.assertEquals(4, games.size());
 	}
 
@@ -130,9 +130,10 @@ public class GameJpaServiceTest {
 
 	@Test
 	public void create_Created() {
-		gameJpaService.save(GameRepositoryTest.createMockGame(GameStatus.Completed, LocalTime.of(12, 0, 0)));
-		Game findGame = gameJpaService.findByTeamNameGameDateTime("Orobica", LocalDate.of(2020, 10 , 30), LocalTime.of(12, 0, 0));
-		Assert.assertEquals(GameStatus.Completed, findGame.getGameStatus());
+		gameJpaService.save(GameRepositoryTest.createMockGame(GameStatus.Scheduled, LocalTime.of(11, 0, 0)));
+		Game game = gameJpaService.findByTeamNameGameDateTime("Verona", LocalDate.of(2010, 1 , 15), LocalTime.of(11, 0, 0));
+		Assert.assertEquals(GameStatus.Scheduled, game.getGameStatus());
+		Assert.assertEquals(2, game.getGameTeams().size());
 	}
 
 	@Test
