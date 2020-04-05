@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.TransactionSystemException;
 import javax.validation.ConstraintViolationException;
@@ -143,6 +144,12 @@ public class GameJpaServiceTest {
 	}
 
 	@Test
+	public void create_Duplicate() {
+		DataIntegrityViolationException exception = assertThrows(DataIntegrityViolationException.class, () -> gameJpaService.save(GameRepositoryTest.createMockGame(GameStatus.Scheduled, LocalTime.of(15, 0, 0))));
+		Assert.assertTrue(exception.getMessage().contains("could not execute statement"));
+	}
+
+	@Test
 	public void update_Updated() {
 		Game game = gameJpaService.findByTeamNameGameDateTime("Roma CF", LocalDate.of(2010, 1, 15), LocalTime.of(9, 0, 0));
 		Assert.assertEquals(GameStatus.Scheduled, game.getGameStatus());
@@ -162,8 +169,8 @@ public class GameJpaServiceTest {
 
 	@Test
 	public void delete_Deleted() {
-		gameJpaService.delete(4L);
-		Assert.assertNull(gameJpaService.getById(4L));
+		gameJpaService.delete(19L);
+		Assert.assertNull(gameJpaService.getById(19L));
 	}
 
 	@Test

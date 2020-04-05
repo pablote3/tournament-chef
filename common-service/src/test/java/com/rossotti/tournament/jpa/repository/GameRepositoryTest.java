@@ -143,7 +143,7 @@ public class GameRepositoryTest {
 
 	@Test
 	public void create_Duplicate() {
-		Exception exception = assertThrows(DataIntegrityViolationException.class, () -> gameRepository.save(createMockGame(GameStatus.Scheduled, LocalTime.of(6, 0, 0))));
+		Exception exception = assertThrows(DataIntegrityViolationException.class, () -> gameRepository.save(createMockGame(GameStatus.Scheduled, LocalTime.of(15, 0, 0))));
 		Assert.assertTrue(exception.getMessage().contains("could not execute statement"));
 	}
 
@@ -162,14 +162,14 @@ public class GameRepositoryTest {
 
 	@Test
 	public void delete() {
-		Game game = gameRepository.findByTeamNameGameDateTime("Milan", LocalDate.of(2020, 5, 21), LocalTime.of(7, 0, 0));
+		Game game = gameRepository.findByTeamNameGameDateTime("Roma CF", LocalDate.of(2010, 1, 15), LocalTime.of(14, 0, 0));
 		if (game != null) {
 			gameRepository.deleteById(game.getId());
 		}
 		else {
 			Assert.fail("Unable to find record to delete");
 		}
-		Assert.assertNull(gameRepository.findByTeamNameGameDateTime("Milan", LocalDate.of(2020, 9, 29), LocalTime.of(7, 0, 0)));
+		Assert.assertNull(gameRepository.findByTeamNameGameDateTime("Roma CF", LocalDate.of(2010, 1, 15), LocalTime.of(14, 0, 0)));
 	}
 
 	public static Game createMockGame(GameStatus gameStatus, LocalTime gameTime) {
