@@ -129,11 +129,6 @@ public class GameRepositoryTest {
 
 	@Test
 	public void create() {
-		List<Game> gameExisting = gameRepository.findByTeamName("AS Roma SPA");
-//		Game gameExisting = gameRepository.findByTeamNameGameDateTime("AS Roma SPA", LocalDate.of(2020, 5 , 20), LocalTime.of(8, 0, 0));
-//		List<Game> event = gameRepository.findByEventName("Pisa World Cup");
-
-
 		gameRepository.save(createMockGame(GameStatus.Scheduled, LocalTime.of(9, 0, 0)));
 		Game game = gameRepository.findByTeamNameGameDateTime("Orobica", LocalDate.of(2020, 10 , 30), LocalTime.of(7, 0, 0));
 		Assert.assertEquals(GameStatus.Scheduled, game.getGameStatus());
@@ -166,14 +161,14 @@ public class GameRepositoryTest {
 
 	@Test
 	public void delete() {
-		Game game = gameRepository.findByTeamNameGameDateTime("Milan", LocalDate.of(2020, 9, 29), LocalTime.of(12, 0, 0));
+		Game game = gameRepository.findByTeamNameGameDateTime("Milan", LocalDate.of(2020, 9, 29), LocalTime.of(7, 0, 0));
 		if (game != null) {
 			gameRepository.deleteById(game.getId());
 		}
 		else {
 			Assert.fail("Unable to find record to delete");
 		}
-		Assert.assertNull(gameRepository.findByTeamNameGameDateTime("Milan", LocalDate.of(2020, 9, 29), LocalTime.of(12, 0, 0)));
+		Assert.assertNull(gameRepository.findByTeamNameGameDateTime("Milan", LocalDate.of(2020, 9, 29), LocalTime.of(7, 0, 0)));
 	}
 
 	public static Game createMockGame(GameStatus gameStatus, LocalTime gameTime) {

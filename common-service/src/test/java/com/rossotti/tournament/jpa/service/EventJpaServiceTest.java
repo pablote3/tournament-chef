@@ -162,19 +162,19 @@ public class EventJpaServiceTest {
 
 	@Test
 	public void update_Updated() {
-		Event event = eventJpaService.findByEventNameAsOfDateTemplateType("Lombardy Halloween Invitational", LocalDate.of(2020, 9, 24), TemplateType.four_x_four_pp);
+		Event event = eventJpaService.findByEventNameAsOfDateTemplateType("Lombardy Halloween Invitational", LocalDate.of(2019, 9, 24), TemplateType.four_x_four_pp);
 		Assert.assertEquals(EventStatus.Scheduled, event.getEventStatus());
 		event.setEventStatus(EventStatus.InProgress);
 		event.setLupdUserId(3L);
 		event.setLupdTs(LocalDateTime.now());
 		eventJpaService.save(event);
-		Event findEvent = eventJpaService.findByEventNameAsOfDateTemplateType("Lombardy Halloween Invitational", LocalDate.of(2020, 9, 24), TemplateType.four_x_four_pp);
+		Event findEvent = eventJpaService.findByEventNameAsOfDateTemplateType("Lombardy Halloween Invitational", LocalDate.of(2019, 9, 24), TemplateType.four_x_four_pp);
 		Assert.assertEquals(EventStatus.InProgress, findEvent.getEventStatus());
 	}
 
 	@Test
 	public void update_EventTypeIsMandatory_Empty() {
-		Event event = eventJpaService.findByEventNameAsOfDateTemplateType("Lombardy Halloween Invitational", LocalDate.of(2020, 9, 24), TemplateType.four_x_four_pp);
+		Event event = eventJpaService.findByEventNameAsOfDateTemplateType("Lombardy Halloween Invitational", LocalDate.of(2019, 9, 24), TemplateType.four_x_four_pp);
 		event.setEventType(null);
 		TransactionSystemException exception = assertThrows(TransactionSystemException.class, () -> eventJpaService.save(event));
 		Assert.assertTrue(exception.getCause().getCause().getMessage().contains("EventType is mandatory"));

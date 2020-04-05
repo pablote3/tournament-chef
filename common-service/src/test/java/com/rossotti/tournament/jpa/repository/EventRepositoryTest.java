@@ -104,7 +104,7 @@ public class EventRepositoryTest {
 
 	@Test
 	public void findByOrganizationNameAsOfDate_Found() {
-		List<Event> events = eventRepository.findByOrganizationNameAsOfDate("FC Juventes", LocalDate.of(2020, 9, 24));
+		List<Event> events = eventRepository.findByOrganizationNameAsOfDate("FC Juventes", LocalDate.of(2019, 9, 24));
 		Event event = events.get(0);
 		Assert.assertEquals("Lombardy Halloween Invitational", event.getEventName());
 	}
@@ -128,7 +128,7 @@ public class EventRepositoryTest {
 
 	@Test
 	public void findByOrganizationNameAsOfDateTemplateType_Found() {
-		Event event = eventRepository.findByOrganizationNameAsOfDateTemplateType("FC Juventes", LocalDate.of(2020, 9, 24), TemplateType.four_x_four_pp);
+		Event event = eventRepository.findByOrganizationNameAsOfDateTemplateType("FC Juventes", LocalDate.of(2019, 9, 24), TemplateType.four_x_four_pp);
 		Assert.assertEquals("Lombardy Halloween Invitational", event.getEventName());
 	}
 
