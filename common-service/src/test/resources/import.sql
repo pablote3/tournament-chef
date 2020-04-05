@@ -140,8 +140,8 @@ insert into gameLocation (id, gameDateId, organizationLocationId, baseLocationNa
 
 insert into gameRound (id, gameLocationId, gameType, gameDuration) VALUES(1, 1, 'GroupPlay', 45);
 insert into gameRound (id, gameLocationId, gameType, gameDuration) VALUES(2, 2, 'GroupPlay', 45);
-insert into gameRound (id, gameLocationId, gameType, gameDuration) VALUES(3, 1, 'Final', 50);
-insert into gameRound (id, gameLocationId, gameType, gameDuration) VALUES(4, 2, 'Final', 50);
+insert into gameRound (id, gameLocationId, gameType, gameDuration) VALUES(3, 3, 'Final', 50);
+insert into gameRound (id, gameLocationId, gameType, gameDuration) VALUES(4, 4, 'Final', 50);
 
 insert into gameRound (id, gameLocationId, gameType, gameDuration) VALUES(5, 5, 'Final', 50);
 insert into gameRound (id, gameLocationId, gameType, gameDuration) VALUES(6, 6, 'Final', 50);

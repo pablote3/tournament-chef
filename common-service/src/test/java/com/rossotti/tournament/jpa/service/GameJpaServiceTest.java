@@ -96,7 +96,7 @@ public class GameJpaServiceTest {
 
 	@Test
 	public void findByGameDate_Found() {
-		List<Game> games = gameJpaService.findByGameDate(LocalDate.of(2010, 1, 20));
+		List<Game> games = gameJpaService.findByGameDate(LocalDate.of(2020, 9, 29));
 		Assert.assertEquals(2, games.size());
 	}
 

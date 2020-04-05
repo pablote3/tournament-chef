@@ -94,7 +94,7 @@ public class GameRepositoryTest {
 
 	@Test
 	public void findByGameDate_Found() {
-		List<Game> games = gameRepository.findByGameDate(LocalDate.of(2010, 1, 20));
+		List<Game> games = gameRepository.findByGameDate(LocalDate.of(2020, 9, 29));
 		Assert.assertEquals(2, games.size());
 	}
 
