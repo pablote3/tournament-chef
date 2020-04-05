@@ -149,14 +149,14 @@ public class GameRepositoryTest {
 
 	@Test
 	public void update() {
-		gameRepository.save(updateMockGame(LocalTime.of(10, 0, 0), GameStatus.Completed));
-		Game game = gameRepository.findByTeamNameGameDateTime("Inter Milan", LocalDate.of(2020, 9, 29), LocalTime.of(10, 0, 0));
+		gameRepository.save(updateMockGame("Verona", LocalTime.of(8, 0, 0), GameStatus.Completed));
+		Game game = gameRepository.findByTeamNameGameDateTime("Verona", LocalDate.of(2010, 1, 15), LocalTime.of(8, 0, 0));
 		Assert.assertEquals(GameStatus.Completed, game.getGameStatus());
 	}
 
 	@Test
 	public void update_GameStatusMissing() {
-		Exception exception = assertThrows(TransactionSystemException.class, () -> gameRepository.save(updateMockGame(LocalTime.of(10, 0, 0), null)));
+		Exception exception = assertThrows(TransactionSystemException.class, () -> gameRepository.save(updateMockGame("Verona", LocalTime.of(8, 0, 0), null)));
 		Assert.assertTrue(exception.getCause().getCause().getMessage().contains("GameStatus is mandatory"));
 	}
 
@@ -262,8 +262,8 @@ public class GameRepositoryTest {
 		return gameTeam;
 	}
 
-	private Game updateMockGame(LocalTime gameTime, GameStatus gameStatus) {
-		Game game = gameRepository.findByTeamNameGameDateTime("Inter Milan", LocalDate.of(2020, 9, 29), gameTime);
+	private Game updateMockGame(String teamName, LocalTime gameTime, GameStatus gameStatus) {
+		Game game = gameRepository.findByTeamNameGameDateTime(teamName, LocalDate.of(2010, 1, 15), gameTime);
 		game.setGameStatus(gameStatus);
 		return game;
 	}

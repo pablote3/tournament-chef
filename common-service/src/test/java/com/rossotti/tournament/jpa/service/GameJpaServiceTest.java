@@ -144,11 +144,11 @@ public class GameJpaServiceTest {
 
 	@Test
 	public void update_Updated() {
-		Game game = gameJpaService.findByTeamNameGameDateTime("Inter Milan", LocalDate.of(2020, 9, 29), LocalTime.of(9, 0, 0));
+		Game game = gameJpaService.findByTeamNameGameDateTime("Roma CF", LocalDate.of(2010, 1, 15), LocalTime.of(9, 0, 0));
 		Assert.assertEquals(GameStatus.Scheduled, game.getGameStatus());
 		game.setGameStatus(GameStatus.Completed);
 		gameJpaService.save(game);
-		Game findGame = gameJpaService.findByTeamNameGameDateTime("Inter Milan", LocalDate.of(2020, 9, 29), LocalTime.of(9, 0, 0));
+		Game findGame = gameJpaService.findByTeamNameGameDateTime("Roma CF", LocalDate.of(2010, 1, 15), LocalTime.of(9, 0, 0));
 		Assert.assertEquals(GameStatus.Completed, findGame.getGameStatus());
 	}
 
