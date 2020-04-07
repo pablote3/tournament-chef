@@ -47,7 +47,7 @@ public class GameRepositoryTest {
 
 	@Test
 	public void findById_NotFound() {
-		Assert.assertNull(gameRepository.findById(31L));
+		Assert.assertNull(gameRepository.findById(81L));
 	}
 
 	@Test
@@ -71,7 +71,7 @@ public class GameRepositoryTest {
 	@Test
 	public void findByTeamName_Found() {
 		List<Game> games = gameRepository.findByTeamName("Inter Milan");
-		Assert.assertEquals(4, games.size());
+		Assert.assertEquals(2, games.size());
 	}
 
 	@Test
@@ -106,7 +106,7 @@ public class GameRepositoryTest {
 
 	@Test
 	public void findByLocationName_Found() {
-		List<Game> games = gameRepository.findByLocationName("Giuseppe Meazza Stadium");
+		List<Game> games = gameRepository.findByLocationName("Verona Arena");
 		Assert.assertEquals(2, games.size());
 	}
 

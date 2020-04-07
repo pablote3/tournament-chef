@@ -139,7 +139,7 @@ public class EventRepositoryTest {
 
 	@Test
 	public void create() {
-		eventRepository.save(createMockEvent(7L, "Tavagnacco Fall Classic", 6L, 1L, 1L, 2L, LocalDate.of(2012, 9, 10), LocalDate.of(2012, 9, 11)));
+		eventRepository.save(createMockEvent(7L, "Tavagnacco Fall Classic", 6L, 1L, 6L, 15L, LocalDate.of(2012, 9, 10), LocalDate.of(2012, 9, 11)));
 		Event event = eventRepository.findByEventNameAsOfDateTemplateType("Tavagnacco Fall Classic", LocalDate.of(2012, 9, 10), TemplateType.four_x_four_pp);
 		Assert.assertEquals("Tavagnacco Fall Classic", event.getEventName());
 		Assert.assertEquals(2, event.getEventTeams().size());

@@ -73,7 +73,7 @@ public class GameJpaServiceTest {
 	@Test
 	public void findByTeamName_Found() {
 		List<Game> games = gameJpaService.findByTeamName("Inter Milan");
-		Assert.assertEquals(4, games.size());
+		Assert.assertEquals(2, games.size());
 	}
 
 	@Test
@@ -108,7 +108,7 @@ public class GameJpaServiceTest {
 
 	@Test
 	public void findByLocationName_Found() {
-		List<Game> games = gameJpaService.findByLocationName("San Siro");
+		List<Game> games = gameJpaService.findByLocationName("Verona Arena");
 		Assert.assertEquals(2, games.size());
 	}
 
