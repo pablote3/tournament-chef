@@ -114,14 +114,14 @@ public class UserRepositoryTest {
 
 	@Test
 	public void delete() {
-		User user = userRepository.findByEmail("martina.capelli@telecomitalia.com");
+		User user = userRepository.findByEmail("sabrina.marta@gmail.com");
 		if (user != null) {
 			userRepository.deleteById(user.getId());
 		}
 		else {
 			Assert.fail("Unable to find record to delete");
 		}
-		Assert.assertNull(userRepository.findByEmail("martina.capelli@telecomitalia.com"));
+		Assert.assertNull(userRepository.findByEmail("sabrina.marta@gmail.com"));
 	}
 
 	public static User createMockUser(String email, String lastName, String password) {
