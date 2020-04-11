@@ -40,7 +40,8 @@ public class GameRepositoryTest {
 		Assert.assertEquals("BaseTeam1", game.getGameTeams().get(0).getEventTeam().getOrganizationTeam().getTeamName());
 		Assert.assertEquals(2, game.getGameTeams().get(0).getEventTeam().getEventTeamRankings().size());
 		Assert.assertEquals(45, game.getGameRound().getGameDuration().shortValue());
-		Assert.assertEquals("BaseLocation1", game.getGameRound().getGameLocation().getOrganizationLocation().getLocationName());
+		Assert.assertEquals("BaseLocation1", game.getGameRound().getGameLocation().getBaseLocationName());
+		Assert.assertEquals("BaseLocation", game.getGameRound().getGameLocation().getOrganizationLocation().getLocationName());
 		Assert.assertEquals(LocalDate.of(2020, 9, 29), game.getGameRound().getGameLocation().getGameDate().getGameDate());
 		Assert.assertEquals("Campania Regional Frosh Soph Tournament", game.getGameRound().getGameLocation().getGameDate().getEvent().getEventName());
 	}
