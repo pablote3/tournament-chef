@@ -84,7 +84,6 @@ public class EventController {
 			for (int i = 1; i < templateDTO.getGridTeamsRound1() + 1; i++) {
 				eventTeam = new EventTeam();
 				eventTeam.setEvent(event);
-				eventTeam.setBaseTeamName(baseTeam.getTeamName() + i);
 				eventTeam.setOrganizationTeam(baseTeam);
 				baseTeam.getEventTeams().add(eventTeam);
 				event.getEventTeams().add(eventTeam);
