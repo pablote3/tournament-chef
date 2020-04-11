@@ -1,6 +1,7 @@
 package com.rossotti.tournament.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,7 +57,7 @@ public class EventTeam {
 	}
 
 	@Column(length=50, nullable=false)
-//	@NotBlank(message= "BaseTeamName is mandatory")
+	@NotBlank(message= "BaseTeamName is mandatory")
 	private String baseTeamName;
 	public String getBaseTeamName() {
 		return baseTeamName;

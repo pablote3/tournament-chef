@@ -70,8 +70,8 @@ public class EventDTO {
 	public List<OrganizationTeam> getTeams() {
 		return organizationTeams;
 	}
-	public void setTeams(List<OrganizationTeam> availableTeams) {
-		this.organizationTeams = availableTeams;
+	public void setTeams(List<OrganizationTeam> organizationTeams) {
+		this.organizationTeams = organizationTeams;
 	}
 
 	public List<OrganizationLocation> getOrganizationLocations() {

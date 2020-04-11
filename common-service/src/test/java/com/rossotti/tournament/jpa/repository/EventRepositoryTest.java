@@ -187,7 +187,7 @@ public class EventRepositoryTest {
 		Assert.assertNull(eventRepository.findByEventNameAsOfDateTemplateType("Trentino Sections Tournament", LocalDate.of(2020, 8, 24), TemplateType.four_x_four_rr));
 	}
 
-	public static Event createMockEvent(Long organizationId, String eventName, Long orgTeam, Long baseTeam, Long location1, Long location2, LocalDate startDate, LocalDate endDate) {
+	public static Event createMockEvent(Long organizationId, String eventName, Long orgTeamId1, Long orgTeamId2, Long gameLocationId1, Long gameLocationId2, LocalDate startDate, LocalDate endDate) {
 		Event event = new Event();
 		event.setOrganization(createMockOrganization(organizationId));
 		event.setTemplateType(TemplateType.four_x_four_pp);
@@ -197,11 +197,11 @@ public class EventRepositoryTest {
 		event.setEventStatus(EventStatus.Sandbox);
 		event.setEventType(EventType.Tournament);
 		event.setSport(Sport.WaterPolo);
-		event.getEventTeams().add(createMockEventTeam(createMockOrganizationTeam(orgTeam), event, ""));
-		event.getEventTeams().add(createMockEventTeam(createMockOrganizationTeam(baseTeam), event, "BaseTeam1"));
-		event.getGameDates().add(createMockGameDate(startDate, event, location1, location2));
+		event.getEventTeams().add(createMockEventTeam(createMockOrganizationTeam(orgTeamId1), event, "BaseTeam1"));
+		event.getEventTeams().add(createMockEventTeam(createMockOrganizationTeam(orgTeamId2), event, "BaseTeam2"));
+		event.getGameDates().add(createMockGameDate(startDate, event, gameLocationId1, gameLocationId2));
 		if (Period.between(startDate, endDate).getDays() != 0) {
-			event.getGameDates().add(createMockGameDate(endDate, event, location1, location2));
+			event.getGameDates().add(createMockGameDate(endDate, event, gameLocationId1, gameLocationId2));
 		}
 		event.setCreateTs(LocalDateTime.of(2019, 10, 27, 20, 30));
 		event.setLupdTs(LocalDateTime.of(2019, 10, 27, 20, 30));
@@ -215,21 +215,21 @@ public class EventRepositoryTest {
 		return organization;
 	}
 
-	private static EventTeam createMockEventTeam(OrganizationTeam availableTeam, Event event, String teamName) {
+	private static EventTeam createMockEventTeam(OrganizationTeam organizationTeam, Event event, String baseTeamName) {
 		EventTeam eventTeam = new EventTeam();
 		eventTeam.setEvent(event);
-		eventTeam.setOrganizationTeam(availableTeam);
-//		eventTeam.setBaseTeamName(teamName);
+		eventTeam.setOrganizationTeam(organizationTeam);
+		eventTeam.setBaseTeamName(baseTeamName);
 		return eventTeam;
 	}
 
-	private static GameDate createMockGameDate(LocalDate date, Event event, Long locationId1, Long locationId2) {
+	private static GameDate createMockGameDate(LocalDate date, Event event, Long gameLocationId1, Long gameLocationId2) {
 		GameDate gameDate = new GameDate();
 		gameDate.setEvent(event);
 		gameDate.setGameDate(date);
-		gameDate.getGameLocations().add(createMockGameLocation(locationId1, gameDate));
-		if (locationId2 != null) {
-			gameDate.getGameLocations().add(createMockGameLocation(locationId2, gameDate));
+		gameDate.getGameLocations().add(createMockGameLocation(gameLocationId1, gameDate));
+		if (gameLocationId2 != null) {
+			gameDate.getGameLocations().add(createMockGameLocation(gameLocationId2, gameDate));
 		}
 		return gameDate;
 	}

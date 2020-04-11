@@ -1,6 +1,7 @@
 package com.rossotti.tournament.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -49,7 +50,7 @@ public class GameLocation {
 	}
 
 	@Column(length=50, nullable=false)
-//	@NotBlank(message= "BaseLocationName is mandatory")
+	@NotBlank(message= "BaseLocationName is mandatory")
 	private String baseLocationName;
 	public String getBaseLocationName() {
 		return baseLocationName;
