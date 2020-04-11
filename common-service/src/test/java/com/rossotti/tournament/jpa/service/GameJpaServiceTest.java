@@ -50,7 +50,7 @@ public class GameJpaServiceTest {
 
 	@Test
 	public void getById_NotFound() {
-		Assert.assertNull(gameJpaService.getById(31L));
+		Assert.assertNull(gameJpaService.getById(41L));
 	}
 
 	@Test
@@ -176,7 +176,7 @@ public class GameJpaServiceTest {
 
 	@Test
 	public void delete_NotFound() {
-		NoSuchEntityException exception = assertThrows(NoSuchEntityException.class, () -> gameJpaService.delete(31L));
+		NoSuchEntityException exception = assertThrows(NoSuchEntityException.class, () -> gameJpaService.delete(41L));
 		Assert.assertTrue(exception.getMessage().contains("Game does not exist"));
 		Assert.assertEquals(Game.class, exception.getEntityClass());
 	}
