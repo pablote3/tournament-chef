@@ -8,16 +8,14 @@ import com.rossotti.tournament.exception.EntityExistsException;
 import com.rossotti.tournament.exception.NoSuchEntityException;
 import com.rossotti.tournament.jpa.service.EventJpaService;
 import com.rossotti.tournament.jpa.service.OrganizationJpaService;
-import com.rossotti.tournament.model.Event;
-import com.rossotti.tournament.model.EventTeam;
-import com.rossotti.tournament.model.Organization;
-import com.rossotti.tournament.model.OrganizationTeam;
+import com.rossotti.tournament.model.*;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.time.LocalDate;
+
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 @Service
@@ -27,6 +25,8 @@ public class EventController {
 	private final OrganizationJpaService organizationJpaService;
 	private final TemplateFinderService templateFinderService;
 	private final Logger logger = LoggerFactory.getLogger(EventController.class);
+	private static final String baseTeamName = "BaseTeam";
+	private static final String baseLocationName = "BaseLocation";
 
 	@Autowired
 	public EventController(EventJpaService eventJpaService, OrganizationJpaService organizationJpaService, TemplateFinderService templateFinderService) {
@@ -43,7 +43,7 @@ public class EventController {
 			if (event == null) {
 				TemplateDTO templateDTO = templateFinderService.findTemplateType(eventDTO.getTemplateType());
 
-				event = buildEvent(eventDTO, organization, templateDTO);
+				event = buildEvent(eventDTO, organization);
 
 				logger.debug("createEvent - saveEvent: orgName = " + eventDTO.getOrganizationName() + ", eventName = " + eventDTO.getEventName());
 				eventJpaService.save(event);
@@ -63,36 +63,62 @@ public class EventController {
 		}
 	}
 
-	private Event buildEvent(EventDTO eventDTO, Organization organization, TemplateDTO templateDTO) {
-		LocalDate currentDate = LocalDate.now();
+	private Event buildEvent(EventDTO eventDTO, Organization organization) {
 		ModelMapper modelMapper = new ModelMapper();
 		Event event = modelMapper.map(eventDTO, Event.class);
 		event.setOrganization(organization);
 
 		OrganizationTeam baseTeam = null;
-
 		for (int i = 0; i < organization.getOrganizationTeams().size(); i++) {
-			if (organization.getOrganizationTeams().get(i).getTeamName().equals("BaseTeam")) {
+			if (organization.getOrganizationTeams().get(i).getTeamName().equals(baseTeamName)) {
 				baseTeam = organization.getOrganizationTeams().get(i);
 				break;
 			}
 		}
 
-		if (baseTeam != null) {
+		OrganizationLocation baseLocation = null;
+		for (int i = 0; i < organization.getOrganizationLocations().size(); i++) {
+			if (organization.getOrganizationLocations().get(i).getLocationName().equals(baseLocationName)) {
+				baseLocation = organization.getOrganizationLocations().get(i);
+				break;
+			}
+		}
+
+		if (baseTeam != null && baseLocation != null) {
 			event.setEventTeams(new ArrayList<>());
 			EventTeam eventTeam;
-			for (int i = 1; i < templateDTO.getGridTeamsRound1() + 1; i++) {
+			for (int i = 0; i < eventDTO.getEventTeams(); i++) {
 				eventTeam = new EventTeam();
 				eventTeam.setEvent(event);
 				eventTeam.setOrganizationTeam(baseTeam);
+				eventTeam.setBaseTeamName(baseTeamName + i + 1);
 				baseTeam.getEventTeams().add(eventTeam);
 				event.getEventTeams().add(eventTeam);
 			}
+
+			event.setGameDates(new ArrayList<>());
+			GameDate gameDate;
+			GameLocation gameLocation;
+			for (int i = 0; i < eventDTO.getEventDays(); i++) {
+				gameDate = new GameDate();
+				gameDate.setEvent(event);
+				gameDate.setGameDate(eventDTO.getStartDate().plusDays(i));
+				for (int j = 0; j < eventDTO.getEventLocations(); j++) {
+					gameLocation = new GameLocation();
+					gameLocation.setGameDate(gameDate);
+					gameLocation.setOrganizationLocation(baseLocation);
+					gameLocation.setBaseLocationName(baseLocationName + j + 1);
+					gameLocation.setStartTime(LocalTime.of(j, 0, 0));
+					baseLocation.getGameLocations().add(gameLocation);
+					gameDate.getGameLocations().add(gameLocation);
+				}
+			}
 		}
 		else {
-			logger.debug("buildEvent - findOrganizationTeam: baseTeam does not exist");
+			logger.debug("buildEvent - findOrganizationTeam: baseTeam or baseLocation does not exist");
 			throw new NoSuchEntityException(OrganizationTeam.class);
 		}
+
 		return event;
 	}
 }
