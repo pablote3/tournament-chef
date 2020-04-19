@@ -54,51 +54,56 @@ public class EventController {
 					}
 				}
 
-				OrganizationLocation baseLocation = null;
-				for (int i = 0; i < organization.getOrganizationLocations().size(); i++) {
-					if (organization.getOrganizationLocations().get(i).getLocationName().equals(baseLocationName)) {
-						baseLocation = organization.getOrganizationLocations().get(i);
-						break;
-					}
-				}
-
-				if (baseTeam != null && baseLocation != null) {
-					event.setEventTeams(new ArrayList<>());
-					EventTeam eventTeam;
-					int teamCount = templateDTO.getGridGroupRound1().intValue() * templateDTO.getGridTeamsRound1().intValue();
-					for (int i = 1; i < teamCount + 1; i++) {
-						eventTeam = new EventTeam();
-						eventTeam.setEvent(event);
-						eventTeam.setOrganizationTeam(baseTeam);
-						eventTeam.setBaseTeamName(baseTeamName + i);
-						baseTeam.getEventTeams().add(eventTeam);
-						event.getEventTeams().add(eventTeam);
-					}
-
-					event.setGameDates(new ArrayList<>());
-					GameDate gameDate;
-					GameLocation gameLocation;
-					for (int i = 0; i < eventDTO.getEventDays(); i++) {
-						gameDate = new GameDate();
-						gameDate.setEvent(event);
-						gameDate.setGameDate(eventDTO.getStartDate().plusDays(i));
-						for (int j = 1; j < eventDTO.getEventLocations() + 1; j++) {
-							gameLocation = new GameLocation();
-							gameLocation.setGameDate(gameDate);
-							gameLocation.setOrganizationLocation(baseLocation);
-							gameLocation.setBaseLocationName(baseLocationName + j);
-							gameLocation.setStartTime(LocalTime.of(8, 0, 0));
-							baseLocation.getGameLocations().add(gameLocation);
-							gameDate.getGameLocations().add(gameLocation);
+				if (baseTeam != null) {
+					OrganizationLocation baseLocation = null;
+					for (int i = 0; i < organization.getOrganizationLocations().size(); i++) {
+						if (organization.getOrganizationLocations().get(i).getLocationName().equals(baseLocationName)) {
+							baseLocation = organization.getOrganizationLocations().get(i);
+							break;
 						}
-						event.getGameDates().add(gameDate);
+					}
+
+					if (baseLocation != null) {
+						event.setEventTeams(new ArrayList<>());
+						EventTeam eventTeam;
+						int teamCount = templateDTO.getGridGroupRound1().intValue() * templateDTO.getGridTeamsRound1().intValue();
+						for (int i = 1; i < teamCount + 1; i++) {
+							eventTeam = new EventTeam();
+							eventTeam.setEvent(event);
+							eventTeam.setOrganizationTeam(baseTeam);
+							eventTeam.setBaseTeamName(baseTeamName + i);
+							baseTeam.getEventTeams().add(eventTeam);
+							event.getEventTeams().add(eventTeam);
+						}
+
+						event.setGameDates(new ArrayList<>());
+						GameDate gameDate;
+						GameLocation gameLocation;
+						for (int i = 0; i < eventDTO.getEventDays(); i++) {
+							gameDate = new GameDate();
+							gameDate.setEvent(event);
+							gameDate.setGameDate(eventDTO.getStartDate().plusDays(i));
+							for (int j = 1; j < eventDTO.getEventLocations() + 1; j++) {
+								gameLocation = new GameLocation();
+								gameLocation.setGameDate(gameDate);
+								gameLocation.setOrganizationLocation(baseLocation);
+								gameLocation.setBaseLocationName(baseLocationName + j);
+								gameLocation.setStartTime(LocalTime.of(8, 0, 0));
+								baseLocation.getGameLocations().add(gameLocation);
+								gameDate.getGameLocations().add(gameLocation);
+							}
+							event.getGameDates().add(gameDate);
+						}
+					}
+					else {
+						logger.debug("buildEvent - findOrganizationLocation: baseLocation does not exist");
+						throw new NoSuchEntityException(EventController.class);
 					}
 				}
 				else {
-					logger.debug("buildEvent - findOrganizationTeam: baseTeam or baseLocation does not exist");
-					throw new NoSuchEntityException(OrganizationTeam.class);
+					logger.debug("buildEvent - findOrganizationTeam: baseTeam does not exist");
+					throw new NoSuchEntityException(EventController.class);
 				}
-
 				logger.debug("createEvent - saveEvent: orgName = " + eventDTO.getOrganizationName() + ", eventName = " + eventDTO.getEventName());
 				eventJpaService.save(event);
 				return event;
