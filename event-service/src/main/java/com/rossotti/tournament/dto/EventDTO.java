@@ -1,23 +1,15 @@
 package com.rossotti.tournament.dto;
 
-import com.rossotti.tournament.model.GameDate;
-import com.rossotti.tournament.model.OrganizationLocation;
-import com.rossotti.tournament.model.OrganizationTeam;
 import java.time.LocalDate;
-import java.util.List;
 
 public class EventDTO {
 	private String eventName;
 	private String organizationName;
 	private String templateType;
 	private LocalDate startDate;
-	private int eventTeams;
 	private int eventDays;
 	private int eventLocations;
 	private String sport;
-	private List<OrganizationTeam> organizationTeams;
-	private List<OrganizationLocation> organizationLocations;
-	private List<GameDate> gameDates;
 
 	public String getEventName() {
 		return eventName;
@@ -47,13 +39,6 @@ public class EventDTO {
 		this.startDate = startDate;
 	}
 
-	public int getEventTeams() {
-		return eventTeams;
-	}
-	public void setEventTeams(int eventTeams) {
-		this.eventTeams = eventTeams;
-	}
-
 	public int getEventDays() {
 		return eventDays;
 	}
@@ -73,26 +58,5 @@ public class EventDTO {
 	}
 	public void setSport(String sport) {
 		this.sport = sport;
-	}
-
-	public List<OrganizationTeam> getTeams() {
-		return organizationTeams;
-	}
-	public void setTeams(List<OrganizationTeam> organizationTeams) {
-		this.organizationTeams = organizationTeams;
-	}
-
-	public List<OrganizationLocation> getOrganizationLocations() {
-		return organizationLocations;
-	}
-	public void setOrganizationLocations(List<OrganizationLocation> organizationLocations) {
-		this.organizationLocations = organizationLocations;
-	}
-
-	public List<GameDate> getGameDates() {
-		return gameDates;
-	}
-	public void setGameDates(List<GameDate> gameDates) {
-		this.gameDates = gameDates;
 	}
 }

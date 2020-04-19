@@ -132,17 +132,19 @@ public class EventControllerTest {
 		Assert.assertEquals("Algarve Soccer Cup", event.getEventName());
 		Assert.assertEquals(16, event.getEventTeams().size());
 		Assert.assertEquals(2, event.getGameDates().size());
+		Assert.assertEquals(2, event.getGameDates().get(0).getGameLocations().size());
 	}
 
 	private EventDTO createMockInitialEventDTO() {
-		EventDTO event = new EventDTO();
-		event.setEventName("Algarve Soccer Cup");
-		event.setOrganizationName("Fiesole School District");
-		event.setsTemplateType("four_x_four_pp");
-		event.setEventDays(2);
-		event.setEventLocations(2);
-		event.setStartDate(LocalDate.of(2020, 9, 29));
-		return event;
+		EventDTO eventDTO = new EventDTO();
+		eventDTO.setEventName("Algarve Soccer Cup");
+		eventDTO.setOrganizationName("Fiesole School District");
+		eventDTO.setsTemplateType("four_x_four_pp");
+		eventDTO.setSport("WaterPolo");
+		eventDTO.setEventDays(2);
+		eventDTO.setEventLocations(2);
+		eventDTO.setStartDate(LocalDate.of(2020, 9, 29));
+		return eventDTO;
 	}
 
 	private Organization createMockOrganization(boolean hasBaseTeam, boolean hasBaseLocation) {
