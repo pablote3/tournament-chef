@@ -1,6 +1,6 @@
 package com.rossotti.tournament.model;
 
-import com.rossotti.tournament.enumeration.GameType;
+import com.rossotti.tournament.enumeration.GameRoundType;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -41,27 +41,27 @@ public class GameRound {
 	@Enumerated(EnumType.STRING)
 	@Column(length=14, nullable=false)
 	@NotNull(message="GameType is mandatory")
-	private GameType gameType;
-	public GameType getGameType() {
+	private GameRoundType gameType;
+	public GameRoundType getGameType() {
 		return gameType;
 	}
-	public void setGameType(GameType gameType) {
+	public void setGameType(GameRoundType gameType) {
 		this.gameType = gameType;
 	}
 	public Boolean isGroupPlay() {
-		return gameType == GameType.GroupPlay;
+		return gameType == GameRoundType.GroupPlay;
 	}
 	public Boolean isPlayoff() {
-		return gameType == GameType.PlayOff;
+		return gameType == GameRoundType.PlayOff;
 	}
 	public Boolean isQuarterFinal() {
-		return gameType == GameType.QuarterFinal;
+		return gameType == GameRoundType.QuarterFinal;
 	}
 	public Boolean isSemiFinal() {
-		return gameType == GameType.SemiFinal;
+		return gameType == GameRoundType.SemiFinal;
 	}
 	public Boolean isFinal() {
-		return gameType == GameType.Final;
+		return gameType == GameRoundType.Final;
 	}
 
 	@Column(nullable=false)
