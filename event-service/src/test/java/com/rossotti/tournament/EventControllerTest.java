@@ -4,7 +4,6 @@ import com.rossotti.tournament.client.TemplateFinderService;
 import com.rossotti.tournament.controller.EventController;
 import com.rossotti.tournament.dto.EventDTO;
 import com.rossotti.tournament.dto.TemplateDTO;
-import com.rossotti.tournament.enumeration.GroupPlay;
 import com.rossotti.tournament.enumeration.TemplateType;
 import com.rossotti.tournament.exception.EntityExistsException;
 import com.rossotti.tournament.exception.NoSuchEntityException;
@@ -20,6 +19,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+
 import javax.persistence.PersistenceException;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -192,16 +192,12 @@ public class EventControllerTest {
 	private TemplateDTO createMockTemplateDTO() {
 		TemplateDTO templateDTO = new TemplateDTO();
 		templateDTO.setTemplateType(TemplateType.four_x_four_pp);
-		templateDTO.setGridGroupRound1((short)4);
-		templateDTO.setGridTeamsRound1((short)4);
-		templateDTO.setGroupPlay1(GroupPlay.PoolPlay);
-		templateDTO.setGroupPlayoffGamesRound1((short)0);
-		templateDTO.setGridGroupRound2((short)0);
-		templateDTO.setGridTeamsRound2((short)0);
-		templateDTO.setGroupPlay2(GroupPlay.None);
-		templateDTO.setGroupPlayoffGamesRound2((short)0);
-		templateDTO.setQuarterFinalGames((short)8);
-		templateDTO.setSemiFinalGames((short)8);
+		templateDTO.setGridGroupCount((short)4);
+		templateDTO.setGridTeamCount((short)4);
+		templateDTO.setRoundCount((short)4);
+		templateDTO.setPlayoffGames(Boolean.FALSE);
+		templateDTO.setQuarterFinalGames(Boolean.TRUE);
+		templateDTO.setSemiFinalGames(Boolean.TRUE);
 		return templateDTO;		
 	}
 }

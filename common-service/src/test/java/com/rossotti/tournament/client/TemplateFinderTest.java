@@ -1,7 +1,6 @@
 package com.rossotti.tournament.client;
 
 import com.rossotti.tournament.dto.TemplateDTO;
-import com.rossotti.tournament.enumeration.GroupPlay;
 import com.rossotti.tournament.exception.NoSuchEntityException;
 import org.junit.Assert;
 import org.junit.Test;
@@ -9,6 +8,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @RunWith(SpringRunner.class)
@@ -31,7 +31,8 @@ public class TemplateFinderTest {
 			System.out.println("failed to create templates from json file " + e.getMessage());
 		}
 		Assert.assertNotNull(template);
-		Assert.assertEquals(GroupPlay.RoundRobin, template.getGroupPlay1());
+		Assert.assertEquals(4, template.getGridGroupCount().shortValue());
+		Assert.assertEquals(4, template.getGridTeamCount().shortValue());
 	}
 
 	@Test
