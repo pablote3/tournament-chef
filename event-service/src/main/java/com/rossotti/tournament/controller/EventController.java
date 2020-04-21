@@ -66,7 +66,7 @@ public class EventController {
 					if (baseLocation != null) {
 						event.setEventTeams(new ArrayList<>());
 						EventTeam eventTeam;
-						int teamCount = templateDTO.getGridGroupCount().intValue() * templateDTO.getGridTeamCount().intValue();
+						int teamCount = templateDTO.getGridGroups().intValue() * templateDTO.getGridTeams().intValue();
 						for (int i = 1; i < teamCount + 1; i++) {
 							eventTeam = new EventTeam();
 							eventTeam.setEvent(event);

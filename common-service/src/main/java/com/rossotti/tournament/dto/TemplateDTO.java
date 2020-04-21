@@ -26,51 +26,59 @@ public class TemplateDTO {
 		return templateType == TemplateType.four_x_four_rr;
 	}
 
-	private Short gridGroupCount;
-	public Short getGridGroupCount() {
-		return gridGroupCount;
+	private Short gridGroups;
+	public Short getGridGroups() {
+		return gridGroups;
 	}
-	public void setGridGroupCount(Short gridGroupCount) {
-		this.gridGroupCount = gridGroupCount;
-	}
-
-	private Short gridTeamCount;
-	public Short getGridTeamCount() {
-		return gridTeamCount;
-	}
-	public void setGridTeamCount(Short gridTeamCount) {
-		this.gridTeamCount = gridTeamCount;
+	public void setGridGroups(Short gridGroups) {
+		this.gridGroups = gridGroups;
 	}
 
-	private Short roundCount;
-	public Short getRoundCount() {
-		return roundCount;
+	private Short gridTeams;
+	public Short getGridTeams() {
+		return gridTeams;
 	}
-	public void setRoundCount(Short roundCount) {
-		this.roundCount = roundCount;
-	}
-
-	private Boolean playoffGames;
-	public Boolean getPlayoffGames() {
-		return playoffGames;
-	}
-	public void setPlayoffGames(Boolean playoffGames) {
-		this.playoffGames = playoffGames;
+	public void setGridTeams(Short gridTeams) {
+		this.gridTeams = gridTeams;
 	}
 
-	private Boolean quarterFinalGames;
-	public Boolean getQuarterFinalGames() {
-		return quarterFinalGames;
+	private Short preliminaryRounds;
+	public Short getPreliminaryRounds() {
+		return preliminaryRounds;
 	}
-	public void setQuarterFinalGames(Boolean quarterFinalGames) {
-		this.quarterFinalGames = quarterFinalGames;
+	public void setPreliminaryRounds(Short preliminaryRounds) {
+		this.preliminaryRounds = preliminaryRounds;
 	}
 
-	private Boolean semiFinalGames;
-	public Boolean getSemiFinalGames() {
-		return semiFinalGames;
+	private Boolean playoffs;
+	public Boolean getPlayoffs() {
+		return playoffs;
 	}
-	public void setSemiFinalGames(Boolean semiFinalGames) {
-		this.semiFinalGames = semiFinalGames;
+	public void setPlayoffs(Boolean playoffs) {
+		this.playoffs = playoffs;
+	}
+
+	private Boolean quarterFinals;
+	public Boolean getQuarterFinals() {
+		return quarterFinals;
+	}
+	public void setQuarterFinals(Boolean quarterFinals) {
+		this.quarterFinals = quarterFinals;
+	}
+
+	private Boolean semiFinals;
+	public Boolean getSemiFinals() {
+		return semiFinals;
+	}
+	public void setSemiFinals(Boolean semiFinals) {
+		this.semiFinals = semiFinals;
+	}
+
+	private Boolean finals;
+	public Boolean getFinals() {
+		return finals;
+	}
+	public void setFinals(Boolean finals) {
+		this.finals = finals;
 	}
 }

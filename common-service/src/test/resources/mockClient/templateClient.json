@@ -1,20 +1,22 @@
 [
   {
     "templateType": "four_x_four_pp",
-    "gridGroupCount": "4",
-    "gridTeamCount": "4",
-    "roundCount": "4",
-    "playoffGames": "false",
-    "quarterFinalGames": "true",
-    "semiFinalGames": "true"
+    "gridGroups": "4",
+    "gridTeams": "4",
+    "preliminaryRounds": "2",
+    "playoffs": "false",
+    "quarterFinals": "false",
+    "semiFinals": "true",
+    "finals": "true"
   },
   {
     "templateType": "four_x_four_rr",
-    "gridGroupCount": "4",
-    "gridTeamCount": "4",
-    "roundCount": "5",
-    "playoffGames": "false",
-    "quarterFinalGames": "true",
-    "semiFinalGames": "true"
+    "gridGroups": "4",
+    "gridTeams": "4",
+    "preliminaryRounds": "3",
+    "playoffs": "false",
+    "quarterFinals": "false",
+    "semiFinals": "true",
+    "finals": "true"
   }
 ]

@@ -192,12 +192,13 @@ public class EventControllerTest {
 	private TemplateDTO createMockTemplateDTO() {
 		TemplateDTO templateDTO = new TemplateDTO();
 		templateDTO.setTemplateType(TemplateType.four_x_four_pp);
-		templateDTO.setGridGroupCount((short)4);
-		templateDTO.setGridTeamCount((short)4);
-		templateDTO.setRoundCount((short)4);
-		templateDTO.setPlayoffGames(Boolean.FALSE);
-		templateDTO.setQuarterFinalGames(Boolean.TRUE);
-		templateDTO.setSemiFinalGames(Boolean.TRUE);
+		templateDTO.setGridGroups((short)4);
+		templateDTO.setGridTeams((short)4);
+		templateDTO.setPreliminaryRounds((short)4);
+		templateDTO.setPlayoffs(Boolean.FALSE);
+		templateDTO.setQuarterFinals(Boolean.TRUE);
+		templateDTO.setSemiFinals(Boolean.TRUE);
+		templateDTO.setFinals(Boolean.TRUE);
 		return templateDTO;		
 	}
 }

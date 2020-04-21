@@ -27,12 +27,13 @@ public class TemplateFinderTest {
 		TemplateDTO template = null;
 		try {
 			template = templateFinderService.findTemplateType("four_x_four_rr");
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			System.out.println("failed to create templates from json file " + e.getMessage());
 		}
 		Assert.assertNotNull(template);
-		Assert.assertEquals(4, template.getGridGroupCount().shortValue());
-		Assert.assertEquals(4, template.getGridTeamCount().shortValue());
+		Assert.assertEquals(4, template.getGridGroups().shortValue());
+		Assert.assertEquals(4, template.getGridTeams().shortValue());
 	}
 
 	@Test
