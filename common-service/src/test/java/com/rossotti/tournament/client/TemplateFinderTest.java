@@ -32,8 +32,8 @@ public class TemplateFinderTest {
 			System.out.println("failed to create templates from json file " + e.getMessage());
 		}
 		Assert.assertNotNull(template);
-		Assert.assertEquals(4, template.getGridGroups().shortValue());
-		Assert.assertEquals(4, template.getGridTeams().shortValue());
+		Assert.assertEquals(4, template.getGridGroups());
+		Assert.assertEquals(4, template.getGridTeams());
 	}
 
 	@Test

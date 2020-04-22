@@ -26,27 +26,27 @@ public class TemplateDTO {
 		return templateType == TemplateType.four_x_four_rr;
 	}
 
-	private Short gridGroups;
-	public Short getGridGroups() {
+	private int gridGroups;
+	public int getGridGroups() {
 		return gridGroups;
 	}
-	public void setGridGroups(Short gridGroups) {
+	public void setGridGroups(int gridGroups) {
 		this.gridGroups = gridGroups;
 	}
 
-	private Short gridTeams;
-	public Short getGridTeams() {
+	private int gridTeams;
+	public int getGridTeams() {
 		return gridTeams;
 	}
-	public void setGridTeams(Short gridTeams) {
+	public void setGridTeams(int gridTeams) {
 		this.gridTeams = gridTeams;
 	}
 
-	private Short preliminaryRounds;
-	public Short getPreliminaryRounds() {
+	private int preliminaryRounds;
+	public int getPreliminaryRounds() {
 		return preliminaryRounds;
 	}
-	public void setPreliminaryRounds(Short preliminaryRounds) {
+	public void setPreliminaryRounds(int preliminaryRounds) {
 		this.preliminaryRounds = preliminaryRounds;
 	}
 
