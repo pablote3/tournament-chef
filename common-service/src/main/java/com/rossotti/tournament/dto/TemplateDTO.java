@@ -50,35 +50,35 @@ public class TemplateDTO {
 		this.preliminaryRounds = preliminaryRounds;
 	}
 
-	private Boolean playoffs;
-	public Boolean getPlayoffs() {
+	private boolean playoffs;
+	public boolean getPlayoffs() {
 		return playoffs;
 	}
-	public void setPlayoffs(Boolean playoffs) {
+	public void setPlayoffs(boolean playoffs) {
 		this.playoffs = playoffs;
 	}
 
-	private Boolean quarterFinals;
-	public Boolean getQuarterFinals() {
+	private boolean quarterFinals;
+	public boolean getQuarterFinals() {
 		return quarterFinals;
 	}
-	public void setQuarterFinals(Boolean quarterFinals) {
+	public void setQuarterFinals(boolean quarterFinals) {
 		this.quarterFinals = quarterFinals;
 	}
 
-	private Boolean semiFinals;
-	public Boolean getSemiFinals() {
+	private boolean semiFinals;
+	public boolean getSemiFinals() {
 		return semiFinals;
 	}
-	public void setSemiFinals(Boolean semiFinals) {
+	public void setSemiFinals(boolean semiFinals) {
 		this.semiFinals = semiFinals;
 	}
 
-	private Boolean finals;
-	public Boolean getFinals() {
+	private boolean finals;
+	public boolean getFinals() {
 		return finals;
 	}
-	public void setFinals(Boolean finals) {
+	public void setFinals(boolean finals) {
 		this.finals = finals;
 	}
 }
