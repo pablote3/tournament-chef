@@ -3,6 +3,9 @@ package com.rossotti.tournament.controller;
 import com.rossotti.tournament.client.TemplateFinderService;
 import com.rossotti.tournament.dto.EventDTO;
 import com.rossotti.tournament.dto.TemplateDTO;
+import com.rossotti.tournament.enumeration.EventStatus;
+import com.rossotti.tournament.enumeration.GameRoundType;
+import com.rossotti.tournament.enumeration.Sport;
 import com.rossotti.tournament.enumeration.TemplateType;
 import com.rossotti.tournament.exception.EntityExistsException;
 import com.rossotti.tournament.exception.NoSuchEntityException;
@@ -16,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class EventController {
@@ -45,6 +49,11 @@ public class EventController {
 				ModelMapper modelMapper = new ModelMapper();
 				event = modelMapper.map(eventDTO, Event.class);
 				event.setOrganization(organization);
+				event.setTemplateType(TemplateType.valueOf(eventDTO.getTemplateType()));
+				event.setStartDate(eventDTO.getStartDate());
+				event.setEventStatus(EventStatus.Sandbox);
+				event.setEventName(eventDTO.getEventName());
+				event.setSport(Sport.valueOf(eventDTO.getSport()));
 
 				OrganizationTeam baseTeam = null;
 				for (int i = 0; i < organization.getOrganizationTeams().size(); i++) {
@@ -66,7 +75,7 @@ public class EventController {
 					if (baseLocation != null) {
 						event.setEventTeams(new ArrayList<>());
 						EventTeam eventTeam;
-						int teamCount = templateDTO.getGridGroups().intValue() * templateDTO.getGridTeams().intValue();
+						int teamCount = templateDTO.getGridGroups() * templateDTO.getGridTeams();
 						for (int i = 1; i < teamCount + 1; i++) {
 							eventTeam = new EventTeam();
 							eventTeam.setEvent(event);
@@ -79,6 +88,7 @@ public class EventController {
 						event.setGameDates(new ArrayList<>());
 						GameDate gameDate;
 						GameLocation gameLocation;
+						GameRound gameRound;
 						for (int i = 0; i < eventDTO.getEventDays(); i++) {
 							gameDate = new GameDate();
 							gameDate.setEvent(event);
@@ -91,6 +101,37 @@ public class EventController {
 								gameLocation.setStartTime(LocalTime.of(8, 0, 0));
 								baseLocation.getGameLocations().add(gameLocation);
 								gameDate.getGameLocations().add(gameLocation);
+
+
+//								List gameRoundTypes = new ArrayList<GameRoundType>();
+//								for (int k = 1; k < templateDTO.getPreliminaryRounds(); k++) {
+//									gameRoundTypes.add(GameRoundType.GroupPlay);
+//								}
+//								if (templateDTO.getQuarterFinals())
+//									gameRoundTypes.add(GameRoundType.QuarterFinal);
+//								if (templateDTO.getSemiFinals())
+//									gameRoundTypes.add(GameRoundType.SemiFinal);
+//								if (templateDTO.getFinals())
+//									gameRoundTypes.add(GameRoundType.Final);
+//
+//								if(gameRoundTypes.size() % eventDTO.getEventDays() == 0) {
+//									int roundsPerDay = gameRoundTypes.size() / eventDTO.getEventDays();
+//									for (int k = 1; k < roundsPerDay; k++) {
+//										gameRound = new GameRound();
+//										gameRound.setGameLocation(gameLocation);
+//
+//										gameLocation.getGameRounds().add();
+//									}
+//								}
+//
+//								for (int k = 1; k < templateDTO.getPreliminaryRounds(); k++) {
+//									gameRound = new GameRound();
+//									gameRound.setGameLocation(gameLocation);
+//									gameRound.setGameType(GameRoundType.GroupPlay);
+//								}
+
+
+//								if (eventDTO.)
 							}
 							event.getGameDates().add(gameDate);
 						}
@@ -110,14 +151,14 @@ public class EventController {
 			}
 			else {
 				logger.debug("createEvent - findByOrganizationNameAsOfDateTemplateType: orgName = " + eventDTO.getOrganizationName() +
-							 " startDate = " + eventDTO.getStartDate() +
-							 " templateType = " + eventDTO.getTemplateType() + " exists");
+						" startDate = " + eventDTO.getStartDate() +
+						" templateType = " + eventDTO.getTemplateType() + " exists");
 				throw new EntityExistsException(Event.class);
 			}
 		}
 		else {
 			logger.debug("createEvent - findByOrganizationNameAsOfDate: orgName = " + eventDTO.getOrganizationName() +
-						 " startDate = " + eventDTO.getStartDate() + " does not exist");
+					" startDate = " + eventDTO.getStartDate() + " does not exist");
 			throw new NoSuchEntityException(Organization.class);
 		}
 	}
