@@ -170,8 +170,8 @@ public class GameJpaServiceTest {
 
 	@Test
 	public void delete_Deleted() {
-		gameJpaService.delete(19L);
-		Assert.assertNull(gameJpaService.getById(19L));
+		gameJpaService.delete(18L);
+		Assert.assertNull(gameJpaService.getById(18L));
 	}
 
 	@Test
