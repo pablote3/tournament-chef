@@ -1,5 +1,15 @@
 [
   {
+    "templateType": "two_x_four_pp",
+    "gridGroups": "2",
+    "gridTeams": "4",
+    "preliminaryRounds": "2",
+    "playoffs": "false",
+    "quarterFinals": "false",
+    "semiFinals": "false",
+    "finals": "true"
+  },
+  {
     "templateType": "four_x_four_pp",
     "gridGroups": "4",
     "gridTeams": "4",
