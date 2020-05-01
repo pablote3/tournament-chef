@@ -133,16 +133,16 @@ insert into gameLocation (id, gameDateId, organizationLocationId, baseLocationNa
 insert into gameLocation (id, gameDateId, organizationLocationId, baseLocationName, startTime) VALUES(9, 7, 13, '', '07:30:00.0');
 insert into gameLocation (id, gameDateId, organizationLocationId, baseLocationName, startTime) VALUES(10, 8, 14, 'BaseLocation1', '07:30:00.0');
 
-insert into gameRound (id, gameLocationId, gameType, gameDuration) VALUES(1, 1, 'GroupPlay', 45);
-insert into gameRound (id, gameLocationId, gameType, gameDuration) VALUES(2, 2, 'GroupPlay', 45);
-insert into gameRound (id, gameLocationId, gameType, gameDuration) VALUES(3, 3, 'Final', 50);
-insert into gameRound (id, gameLocationId, gameType, gameDuration) VALUES(4, 4, 'Final', 50);
-insert into gameRound (id, gameLocationId, gameType, gameDuration) VALUES(5, 5, 'Final', 50);
-insert into gameRound (id, gameLocationId, gameType, gameDuration) VALUES(6, 6, 'Final', 50);
-insert into gameRound (id, gameLocationId, gameType, gameDuration) VALUES(7, 7, 'Final', 50);
-insert into gameRound (id, gameLocationId, gameType, gameDuration) VALUES(8, 8, 'Final', 35);
-insert into gameRound (id, gameLocationId, gameType, gameDuration) VALUES(9, 9, 'Final', 35);
-insert into gameRound (id, gameLocationId, gameType, gameDuration) VALUES(10, 10, 'Final', 35);
+insert into gameRound (id, gameLocationId, gameRoundType, gameDuration) VALUES(1, 1, 'GroupPlay', 45);
+insert into gameRound (id, gameLocationId, gameRoundType, gameDuration) VALUES(2, 2, 'GroupPlay', 45);
+insert into gameRound (id, gameLocationId, gameRoundType, gameDuration) VALUES(3, 3, 'Final', 50);
+insert into gameRound (id, gameLocationId, gameRoundType, gameDuration) VALUES(4, 4, 'Final', 50);
+insert into gameRound (id, gameLocationId, gameRoundType, gameDuration) VALUES(5, 5, 'Final', 50);
+insert into gameRound (id, gameLocationId, gameRoundType, gameDuration) VALUES(6, 6, 'Final', 50);
+insert into gameRound (id, gameLocationId, gameRoundType, gameDuration) VALUES(7, 7, 'Final', 50);
+insert into gameRound (id, gameLocationId, gameRoundType, gameDuration) VALUES(8, 8, 'Final', 35);
+insert into gameRound (id, gameLocationId, gameRoundType, gameDuration) VALUES(9, 9, 'Final', 35);
+insert into gameRound (id, gameLocationId, gameRoundType, gameDuration) VALUES(10, 10, 'Final', 35);
 
 insert into game (id, gameRoundId, startTime, gameStatus, createTs, lupdTs, lupdUserId) VALUES(1, 1, '08:00:00.0', 'Completed', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);
 insert into game (id, gameRoundId, startTime, gameStatus, createTs, lupdTs, lupdUserId) VALUES(2, 2, '10:00:00.0', 'Scheduled', '2020-01-16 20:00:00.0', '2020-01-19 20:00:00.0', 2);

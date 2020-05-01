@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(uniqueConstraints=@UniqueConstraint(columnNames={"gameLocationId", "gameType"}))
+@Table(uniqueConstraints=@UniqueConstraint(columnNames={"gameLocationId", "gameRoundType"}))
 public class GameRound {
 	@ManyToOne
 	@JoinColumn(name="gameLocationId", referencedColumnName="id", nullable=false)
@@ -40,28 +40,28 @@ public class GameRound {
 
 	@Enumerated(EnumType.STRING)
 	@Column(length=14, nullable=false)
-	@NotNull(message="GameType is mandatory")
-	private GameRoundType gameType;
+	@NotNull(message="GameRoundType is mandatory")
+	private GameRoundType gameRoundType;
 	public GameRoundType getGameType() {
-		return gameType;
+		return gameRoundType;
 	}
-	public void setGameType(GameRoundType gameType) {
-		this.gameType = gameType;
+	public void setGameRoundType(GameRoundType gameRoundType) {
+		this.gameRoundType = gameRoundType;
 	}
 	public Boolean isGroupPlay() {
-		return gameType == GameRoundType.GroupPlay;
+		return gameRoundType == GameRoundType.GroupPlay;
 	}
 	public Boolean isPlayoff() {
-		return gameType == GameRoundType.PlayOff;
+		return gameRoundType == GameRoundType.PlayOff;
 	}
 	public Boolean isQuarterFinal() {
-		return gameType == GameRoundType.QuarterFinal;
+		return gameRoundType == GameRoundType.QuarterFinal;
 	}
 	public Boolean isSemiFinal() {
-		return gameType == GameRoundType.SemiFinal;
+		return gameRoundType == GameRoundType.SemiFinal;
 	}
 	public Boolean isFinal() {
-		return gameType == GameRoundType.Final;
+		return gameRoundType == GameRoundType.Final;
 	}
 
 	@Column(nullable=false)

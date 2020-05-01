@@ -254,7 +254,7 @@ public class EventRepositoryTest {
 	private static GameRound createMockGameRound(GameRoundType gameType, GameLocation gameLocation) {
 		GameRound gameRound = new GameRound();
 		gameRound.setGameLocation(gameLocation);
-		gameRound.setGameType(gameType);
+		gameRound.setGameRoundType(gameType);
 		gameRound.setGameDuration((short)45);
 		gameRound.getGames().add(createMockGame(gameRound));
 		return gameRound;
