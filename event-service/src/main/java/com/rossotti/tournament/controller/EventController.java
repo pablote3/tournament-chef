@@ -17,6 +17,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -93,6 +95,18 @@ public class EventController {
 							gameDate = new GameDate();
 							gameDate.setEvent(event);
 							gameDate.setGameDate(eventDTO.getStartDate().plusDays(i));
+
+							List gameRoundTypes = new ArrayList<GameRoundType>();
+							for (int k = 1; k < templateDTO.getPreliminaryRounds(); k++) {
+								gameRoundTypes.add(GameRoundType.GroupPlay);
+							}
+							if (templateDTO.getQuarterFinals())
+								gameRoundTypes.add(GameRoundType.QuarterFinal);
+							if (templateDTO.getSemiFinals())
+								gameRoundTypes.add(GameRoundType.SemiFinal);
+							if (templateDTO.getFinals())
+								gameRoundTypes.add(GameRoundType.Final);
+
 							for (int j = 1; j < eventDTO.getEventLocations() + 1; j++) {
 								gameLocation = new GameLocation();
 								gameLocation.setGameDate(gameDate);
@@ -102,26 +116,25 @@ public class EventController {
 								baseLocation.getGameLocations().add(gameLocation);
 								gameDate.getGameLocations().add(gameLocation);
 
-								List gameRoundTypes = new ArrayList<GameRoundType>();
-								for (int k = 1; k < templateDTO.getPreliminaryRounds(); k++) {
-									gameRoundTypes.add(GameRoundType.GroupPlay);
-								}
-								if (templateDTO.getQuarterFinals())
-									gameRoundTypes.add(GameRoundType.QuarterFinal);
-								if (templateDTO.getSemiFinals())
-									gameRoundTypes.add(GameRoundType.SemiFinal);
-								if (templateDTO.getFinals())
-									gameRoundTypes.add(GameRoundType.Final);
+								if (eventDTO.getEventDays() == 1) {
 
-								if(gameRoundTypes.size() % eventDTO.getEventDays() == 0) {
-									int roundsPerDay = gameRoundTypes.size() / eventDTO.getEventDays();
-									int totalTeams = templateDTO.getGridTeams() * templateDTO.getGridGroups();
-									int gamesPerDay = roundsPerDay * (totalTeams / 2);
-									for (int k = 1; k < roundsPerDay; k++) {
-										gameRound = new GameRound();
-										gameRound.setGameLocation(gameLocation);
-										gameRound.setGameRoundType((GameRoundType)gameRoundTypes.get(k));
-										gameLocation.getGameRounds().add(gameRound);
+								}
+								else {
+									if (gameRoundTypes.size() % eventDTO.getEventDays() == 0) {
+										int roundsPerDay = gameRoundTypes.size() / eventDTO.getEventDays();
+										int totalTeams = templateDTO.getGridTeams() * templateDTO.getGridGroups();
+										int gamesPerDay = roundsPerDay * (totalTeams / 2);
+										for (int k = 1; k < roundsPerDay; k++) {
+											gameRound = new GameRound();
+											gameRound.setGameLocation(gameLocation);
+											gameRound.setGameRoundType((GameRoundType) gameRoundTypes.get(k));
+											gameRound.setGameDuration((short) 45);
+											gameLocation.getGameRounds().add(gameRound);
+										}
+									} else {
+										if (eventDTO.getStartDate().getDayOfWeek().equals(DayOfWeek.FRIDAY)) {
+
+										}
 									}
 								}
 							}
