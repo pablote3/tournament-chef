@@ -7,8 +7,6 @@ public class EventDTO {
 	private String organizationName;
 	private String templateType;
 	private LocalDate startDate;
-	private int eventDays;
-	private int eventLocations;
 	private String sport;
 
 	public String getEventName() {
@@ -37,20 +35,6 @@ public class EventDTO {
 	}
 	public void setStartDate(LocalDate startDate) {
 		this.startDate = startDate;
-	}
-
-	public int getEventDays() {
-		return eventDays;
-	}
-	public void setEventDays(int eventDays) {
-		this.eventDays = eventDays;
-	}
-
-	public int getEventLocations() {
-		return eventLocations;
-	}
-	public void setEventLocations(int eventLocations) {
-		this.eventLocations = eventLocations;
 	}
 
 	public String getSport() {

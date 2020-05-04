@@ -89,7 +89,7 @@ public class EventController {
 
 						event.setGameDates(new ArrayList<>());
 						GameDate gameDate;
-						for (int i = 0; i < eventDTO.getEventDays(); i++) {
+						for (int i = 0; i < templateDTO.getEventDays(); i++) {
 							gameDate = new GameDate();
 							gameDate.setEvent(event);
 							gameDate.setGameDate(eventDTO.getStartDate().plusDays(i));
@@ -104,13 +104,13 @@ public class EventController {
 								gameRoundTypes.add(GameRoundType.SemiFinal);
 							if (templateDTO.getFinals())
 								gameRoundTypes.add(GameRoundType.Final);
-							int roundsPerDay = gameRoundTypes.size() / eventDTO.getEventDays();
+							int roundsPerDay = gameRoundTypes.size() / templateDTO.getEventDays();
 							int totalTeams = templateDTO.getGridTeams() * templateDTO.getGridGroups();
 							int gamesPerDay = roundsPerDay * (totalTeams / 2);
 					//logging
 
 							GameLocation gameLocation;
-							for (int j = 1; j < eventDTO.getEventLocations() + 1; j++) {
+							for (int j = 1; j < templateDTO.getEventLocations() + 1; j++) {
 								gameLocation = new GameLocation();
 								gameLocation.setGameDate(gameDate);
 								gameLocation.setOrganizationLocation(baseLocation);
@@ -120,7 +120,7 @@ public class EventController {
 								baseLocation.getGameLocations().add(gameLocation);
 								gameDate.getGameLocations().add(gameLocation);
 
-								if (gameRoundTypes.size() % eventDTO.getEventDays() == 0) {
+								if (gameRoundTypes.size() % templateDTO.getEventDays() == 0) {
 									gameLocation.setGameRounds(buildGameRounds(gameLocation, gameRoundTypes, roundsPerDay));
 								}
 								else {

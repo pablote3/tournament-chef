@@ -141,8 +141,6 @@ public class EventControllerTest {
 		eventDTO.setOrganizationName("Fiesole School District");
 		eventDTO.setsTemplateType("four_x_four_pp");
 		eventDTO.setSport("WaterPolo");
-		eventDTO.setEventDays(2);
-		eventDTO.setEventLocations(2);
 		eventDTO.setStartDate(LocalDate.of(2020, 9, 29));
 		return eventDTO;
 	}
@@ -192,10 +190,13 @@ public class EventControllerTest {
 	private TemplateDTO createMockTemplateDTO() {
 		TemplateDTO templateDTO = new TemplateDTO();
 		templateDTO.setTemplateType(TemplateType.four_x_four_pp);
-		templateDTO.setGridGroups((short)4);
-		templateDTO.setGridTeams((short)4);
-		templateDTO.setPreliminaryRounds((short)4);
-		templateDTO.setPlayoffs(Boolean.FALSE);
+		templateDTO.setGridGroups(4);
+		templateDTO.setGridTeams(4);
+		templateDTO.setEventDays(2);
+		templateDTO.setEventLocations(2);
+		templateDTO.setPreliminaryRounds(4);
+		templateDTO.setPlayoffs1(Boolean.FALSE);
+		templateDTO.setPlayoffs2(Boolean.FALSE);
 		templateDTO.setQuarterFinals(Boolean.TRUE);
 		templateDTO.setSemiFinals(Boolean.TRUE);
 		templateDTO.setFinals(Boolean.TRUE);

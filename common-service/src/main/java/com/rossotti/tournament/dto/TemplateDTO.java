@@ -4,6 +4,17 @@ import com.rossotti.tournament.enumeration.TemplateType;
 
 public class TemplateDTO {
 	private TemplateType templateType;
+	private int gridGroups;
+	private int gridTeams;
+	private int eventDays;
+	private int eventLocations;
+	private int preliminaryRounds;
+	private boolean playoffs1;
+	private boolean playoffs2;
+	private boolean quarterFinals;
+	private boolean semiFinals;
+	private boolean finals;
+
 	public TemplateType getTemplateType() {
 		return templateType;
 	}
@@ -26,7 +37,6 @@ public class TemplateDTO {
 		return templateType == TemplateType.four_x_four_rr;
 	}
 
-	private int gridGroups;
 	public int getGridGroups() {
 		return gridGroups;
 	}
@@ -34,7 +44,6 @@ public class TemplateDTO {
 		this.gridGroups = gridGroups;
 	}
 
-	private int gridTeams;
 	public int getGridTeams() {
 		return gridTeams;
 	}
@@ -42,7 +51,20 @@ public class TemplateDTO {
 		this.gridTeams = gridTeams;
 	}
 
-	private int preliminaryRounds;
+	public int getEventDays() {
+		return eventDays;
+	}
+	public void setEventDays(int eventDays) {
+		this.eventDays = eventDays;
+	}
+
+	public int getEventLocations() {
+		return eventLocations;
+	}
+	public void setEventLocations(int eventLocations) {
+		this.eventLocations = eventLocations;
+	}
+
 	public int getPreliminaryRounds() {
 		return preliminaryRounds;
 	}
@@ -50,15 +72,20 @@ public class TemplateDTO {
 		this.preliminaryRounds = preliminaryRounds;
 	}
 
-	private boolean playoffs;
-	public boolean getPlayoffs() {
-		return playoffs;
+	public boolean getPlayoffs1() {
+		return playoffs1;
 	}
-	public void setPlayoffs(boolean playoffs) {
-		this.playoffs = playoffs;
+	public void setPlayoffs1(boolean playoffs1) {
+		this.playoffs1 = playoffs1;
 	}
 
-	private boolean quarterFinals;
+	public boolean getPlayoffs2() {
+		return playoffs2;
+	}
+	public void setPlayoffs2(boolean playoffs2) {
+		this.playoffs2 = playoffs2;
+	}
+
 	public boolean getQuarterFinals() {
 		return quarterFinals;
 	}
@@ -66,7 +93,6 @@ public class TemplateDTO {
 		this.quarterFinals = quarterFinals;
 	}
 
-	private boolean semiFinals;
 	public boolean getSemiFinals() {
 		return semiFinals;
 	}
@@ -74,7 +100,6 @@ public class TemplateDTO {
 		this.semiFinals = semiFinals;
 	}
 
-	private boolean finals;
 	public boolean getFinals() {
 		return finals;
 	}
