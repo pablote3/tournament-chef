@@ -89,8 +89,6 @@ public class EventController {
 
 						event.setGameDates(new ArrayList<>());
 						GameDate gameDate;
-						GameLocation gameLocation;
-						GameRound gameRound;
 						for (int i = 0; i < eventDTO.getEventDays(); i++) {
 							gameDate = new GameDate();
 							gameDate.setEvent(event);
@@ -106,35 +104,28 @@ public class EventController {
 								gameRoundTypes.add(GameRoundType.SemiFinal);
 							if (templateDTO.getFinals())
 								gameRoundTypes.add(GameRoundType.Final);
+							int roundsPerDay = gameRoundTypes.size() / eventDTO.getEventDays();
+							int totalTeams = templateDTO.getGridTeams() * templateDTO.getGridGroups();
+							int gamesPerDay = roundsPerDay * (totalTeams / 2);
+					//logging
 
+							GameLocation gameLocation;
 							for (int j = 1; j < eventDTO.getEventLocations() + 1; j++) {
 								gameLocation = new GameLocation();
 								gameLocation.setGameDate(gameDate);
 								gameLocation.setOrganizationLocation(baseLocation);
 								gameLocation.setBaseLocationName(baseLocationName + j);
 								gameLocation.setStartTime(LocalTime.of(8, 0, 0));
+								gameLocation.setGameRounds(buildGameRounds(gameLocation, gameRoundTypes, roundsPerDay));
 								baseLocation.getGameLocations().add(gameLocation);
 								gameDate.getGameLocations().add(gameLocation);
 
-								if (eventDTO.getEventDays() == 1) {
-
+								if (gameRoundTypes.size() % eventDTO.getEventDays() == 0) {
+									gameLocation.setGameRounds(buildGameRounds(gameLocation, gameRoundTypes, roundsPerDay));
 								}
 								else {
-									if (gameRoundTypes.size() % eventDTO.getEventDays() == 0) {
-										int roundsPerDay = gameRoundTypes.size() / eventDTO.getEventDays();
-										int totalTeams = templateDTO.getGridTeams() * templateDTO.getGridGroups();
-										int gamesPerDay = roundsPerDay * (totalTeams / 2);
-										for (int k = 1; k < roundsPerDay; k++) {
-											gameRound = new GameRound();
-											gameRound.setGameLocation(gameLocation);
-											gameRound.setGameRoundType((GameRoundType) gameRoundTypes.get(k));
-											gameRound.setGameDuration((short) 45);
-											gameLocation.getGameRounds().add(gameRound);
-										}
-									} else {
-										if (eventDTO.getStartDate().getDayOfWeek().equals(DayOfWeek.FRIDAY)) {
+									if (eventDTO.getStartDate().getDayOfWeek().equals(DayOfWeek.FRIDAY)) {
 
-										}
 									}
 								}
 							}
@@ -166,5 +157,18 @@ public class EventController {
 					" startDate = " + eventDTO.getStartDate() + " does not exist");
 			throw new NoSuchEntityException(Organization.class);
 		}
+	}
+
+	private List<GameRound> buildGameRounds(GameLocation gameLocation, List gameRoundTypes, int roundsPerDay) {
+		GameRound gameRound;
+		List<GameRound> gameRounds = new ArrayList<>();
+		for (int k = 1; k < roundsPerDay; k++) {
+			gameRound = new GameRound();
+			gameRound.setGameLocation(gameLocation);
+			gameRound.setGameRoundType((GameRoundType) gameRoundTypes.get(k));
+			gameRound.setGameDuration((short) 45);
+			gameLocation.getGameRounds().add(gameRound);
+		}
+		return gameRounds;
 	}
 }
