@@ -194,6 +194,7 @@ public class EventRepositoryTest {
 		event.setEventName(eventName);
 		event.setStartDate(startDate);
 		event.setEndDate(endDate);
+		event.setHalfDay(HalfDay.None);
 		event.setEventStatus(EventStatus.Sandbox);
 		event.setEventType(EventType.Tournament);
 		event.setSport(Sport.WaterPolo);

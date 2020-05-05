@@ -1,6 +1,5 @@
 package com.rossotti.tournament.dto;
 
-import com.rossotti.tournament.enumeration.HalfDay;
 import java.time.LocalDate;
 
 public class EventDTO {
@@ -8,22 +7,14 @@ public class EventDTO {
 	private String organizationName;
 	private String templateType;
 	private LocalDate startDate;
-	private HalfDay halfDay;
+	private String halfDay;
 	private String sport;
 
-	public HalfDay getHalfDay() {
+	public String getHalfDay() {
 		return halfDay;
 	}
-	public void setHalfDay(HalfDay halfDay) {
-		this.halfDay = halfDay;	}
-	public Boolean isFirst() {
-		return halfDay == HalfDay.first;
-	}
-	public Boolean isLast() {
-		return halfDay == HalfDay.last;
-	}
-	public Boolean isNone() {
-		return halfDay == HalfDay.none;
+	public void setHalfDay(String halfDay) {
+		this.halfDay = halfDay;
 	}
 
 	public String getEventName() {
@@ -43,7 +34,7 @@ public class EventDTO {
 	public String getTemplateType() {
 		return templateType;
 	}
-	public void setsTemplateType(String templateType) {
+	public void setTemplateType(String templateType) {
 		this.templateType = templateType;
 	}
 

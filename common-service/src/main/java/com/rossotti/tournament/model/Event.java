@@ -1,9 +1,6 @@
 package com.rossotti.tournament.model;
 
-import com.rossotti.tournament.enumeration.EventStatus;
-import com.rossotti.tournament.enumeration.EventType;
-import com.rossotti.tournament.enumeration.Sport;
-import com.rossotti.tournament.enumeration.TemplateType;
+import com.rossotti.tournament.enumeration.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -110,6 +107,26 @@ public class Event extends BaseEntity {
 	}
 	public Boolean isComplete() {
 		return eventStatus == EventStatus.Complete;
+	}
+
+	@Enumerated(EnumType.STRING)
+	@Column(length=5, nullable=false)
+	@NotNull(message="HalfDay is mandatory")
+	private HalfDay halfDay;
+	public HalfDay getHalfDay() {
+		return halfDay;
+	}
+	public void setHalfDay(HalfDay halfDay) {
+		this.halfDay = halfDay;
+	}
+	public Boolean isFirst() {
+		return halfDay == HalfDay.First;
+	}
+	public Boolean isLast() {
+		return halfDay == HalfDay.Last;
+	}
+	public Boolean isNone() {
+		return halfDay == HalfDay.None;
 	}
 
 	@Column(length=60, nullable=false)

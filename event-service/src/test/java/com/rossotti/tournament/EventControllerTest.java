@@ -139,7 +139,8 @@ public class EventControllerTest {
 		EventDTO eventDTO = new EventDTO();
 		eventDTO.setEventName("Algarve Soccer Cup");
 		eventDTO.setOrganizationName("Fiesole School District");
-		eventDTO.setsTemplateType("four_x_four_pp");
+		eventDTO.setTemplateType("four_x_four_pp");
+		eventDTO.setHalfDay("None");
 		eventDTO.setSport("WaterPolo");
 		eventDTO.setStartDate(LocalDate.of(2020, 9, 29));
 		return eventDTO;
