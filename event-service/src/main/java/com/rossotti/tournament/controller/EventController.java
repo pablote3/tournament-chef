@@ -94,14 +94,14 @@ public class EventController {
 							gameDate.setGameDate(eventDTO.getStartDate().plusDays(i));
 
 							List gameRoundTypes = new ArrayList<GameRoundType>();
-							for (int k = 1; k < templateDTO.getPreliminaryRounds(); k++) {
+							for (int k = 1; k < templateDTO.getRound().getPreliminary(); k++) {
 								gameRoundTypes.add(GameRoundType.GroupPlay);
 							}
-							if (templateDTO.getQuarterFinals())
+							if (templateDTO.getRound().getQuarterFinal())
 								gameRoundTypes.add(GameRoundType.QuarterFinal);
-							if (templateDTO.getSemiFinals())
+							if (templateDTO.getRound().getSemiFinal())
 								gameRoundTypes.add(GameRoundType.SemiFinal);
-							if (templateDTO.getFinals())
+							if (templateDTO.getRound().getChampionship())
 								gameRoundTypes.add(GameRoundType.Final);
 							int roundsPerDay = gameRoundTypes.size() / templateDTO.getEventDays();
 							int totalTeams = templateDTO.getGridTeams() * templateDTO.getGridGroups();

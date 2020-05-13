@@ -5,12 +5,14 @@
     "gridTeams": "4",
     "eventLocations": "1",
     "eventDays": "1",
-    "preliminaryRounds": "2",
-    "playoffs1": "false",
-    "playoffs2": "false",
-    "quarterFinals": "false",
-    "semiFinals": "false",
-    "finals": "true"
+    "round": {
+      "preliminary": "2",
+      "playoff1": "false",
+      "playoff2": "false",
+      "quarterFinal": "false",
+      "semiFinal": "false",
+      "championship": "true"
+    }
   },
   {
     "templateType": "four_x_four_pp",
@@ -18,12 +20,14 @@
     "gridTeams": "4",
     "eventLocations": "2",
     "eventDays": "1",
-    "preliminaryRounds": "2",
-    "playoffs1": "false",
-    "playoffs2": "false",
-    "quarterFinals": "false",
-    "semiFinals": "true",
-    "finals": "true"
+    "round": {
+      "preliminary": "2",
+      "playoff1": "false",
+      "playoff2": "false",
+      "quarterFinal": "false",
+      "semiFinal": "true",
+      "championship": "true"
+    }
   },
   {
     "templateType": "four_x_four_rr",
@@ -31,11 +35,13 @@
     "gridTeams": "4",
     "eventLocations": "2",
     "eventDays": "2",
-    "preliminaryRounds": "3",
-    "playoffs1": "false",
-    "playoffs2": "false",
-    "quarterFinals": "false",
-    "semiFinals": "true",
-    "finals": "true"
+    "round": {
+      "preliminary": "3",
+      "playoff1": "false",
+      "playoff2": "false",
+      "quarterFinal": "false",
+      "semiFinal": "true",
+      "championship": "true"
+    }
   }
 ]

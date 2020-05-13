@@ -8,12 +8,7 @@ public class TemplateDTO {
 	private int gridTeams;
 	private int eventDays;
 	private int eventLocations;
-	private int preliminaryRounds;
-	private boolean playoffs1;
-	private boolean playoffs2;
-	private boolean quarterFinals;
-	private boolean semiFinals;
-	private boolean finals;
+	private Round round;
 
 	public TemplateType getTemplateType() {
 		return templateType;
@@ -65,45 +60,10 @@ public class TemplateDTO {
 		this.eventLocations = eventLocations;
 	}
 
-	public int getPreliminaryRounds() {
-		return preliminaryRounds;
+	public Round getRound() {
+		return round;
 	}
-	public void setPreliminaryRounds(int preliminaryRounds) {
-		this.preliminaryRounds = preliminaryRounds;
-	}
-
-	public boolean getPlayoffs1() {
-		return playoffs1;
-	}
-	public void setPlayoffs1(boolean playoffs1) {
-		this.playoffs1 = playoffs1;
-	}
-
-	public boolean getPlayoffs2() {
-		return playoffs2;
-	}
-	public void setPlayoffs2(boolean playoffs2) {
-		this.playoffs2 = playoffs2;
-	}
-
-	public boolean getQuarterFinals() {
-		return quarterFinals;
-	}
-	public void setQuarterFinals(boolean quarterFinals) {
-		this.quarterFinals = quarterFinals;
-	}
-
-	public boolean getSemiFinals() {
-		return semiFinals;
-	}
-	public void setSemiFinals(boolean semiFinals) {
-		this.semiFinals = semiFinals;
-	}
-
-	public boolean getFinals() {
-		return finals;
-	}
-	public void setFinals(boolean finals) {
-		this.finals = finals;
+	public void setRound(Round round) {
+		this.round = round;
 	}
 }
