@@ -1,6 +1,7 @@
 package com.rossotti.tournament.client;
 
 import com.rossotti.tournament.dto.TemplateDTO;
+import com.rossotti.tournament.enumeration.TemplateType;
 import com.rossotti.tournament.exception.NoSuchEntityException;
 import org.junit.Assert;
 import org.junit.Test;
@@ -26,7 +27,7 @@ public class TemplateFinderTest {
 	public void testLocateTemplate_found() {
 		TemplateDTO template = null;
 		try {
-			template = templateFinderService.findTemplateType("four_x_four_rr");
+			template = templateFinderService.findTemplateType(TemplateType.four_x_four_rr_15D_2L.name());
 		}
 		catch (Exception e) {
 			System.out.println("failed to create templates from json file " + e.getMessage());

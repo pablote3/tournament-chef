@@ -65,6 +65,7 @@ public class Event extends BaseEntity {
 	public Boolean is4x4rr() {
 		return templateType == TemplateType.four_x_four_rr;
 	}
+	public Boolean is4x4_RR_15D_2L() { return templateType == TemplateType.four_x_four_rr_15D_2L; }
 
 	@Column(nullable=false)
 	@NotNull(message="StartDate is mandatory")

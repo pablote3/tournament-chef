@@ -1,6 +1,6 @@
 package com.rossotti.tournament.dto;
 
-public class Round {
+public class RoundDTO {
 	private int preliminary;
 	private boolean playoff1;
 	private boolean playoff2;

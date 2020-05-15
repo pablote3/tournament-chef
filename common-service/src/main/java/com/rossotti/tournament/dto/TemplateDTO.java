@@ -8,7 +8,8 @@ public class TemplateDTO {
 	private int gridTeams;
 	private int eventDays;
 	private int eventLocations;
-	private Round round;
+	private RoundDTO roundDTO;
+	private GameDTO gameDTO;
 
 	public TemplateType getTemplateType() {
 		return templateType;
@@ -16,20 +17,8 @@ public class TemplateDTO {
 	public void setTemplateType(TemplateType templateType) {
 		this.templateType = templateType;
 	}
-	public Boolean isTwoByFourPP() {
-		return templateType == TemplateType.two_x_four_pp;
-	}
-	public Boolean isTwoByFourRR() {
-		return templateType == TemplateType.two_x_four_rr;
-	}
-	public Boolean isFourByThreeRR() {
-		return templateType == TemplateType.four_x_three_rr;
-	}
-	public Boolean isFourByFourPP() {
-		return templateType == TemplateType.four_x_four_pp;
-	}
-	public Boolean isFourByFourRR() {
-		return templateType == TemplateType.four_x_four_rr;
+	public Boolean isFour_x_four_rr_15D_2L() {
+		return templateType == TemplateType.four_x_four_rr_15D_2L;
 	}
 
 	public int getGridGroups() {
@@ -60,10 +49,17 @@ public class TemplateDTO {
 		this.eventLocations = eventLocations;
 	}
 
-	public Round getRound() {
-		return round;
+	public RoundDTO getRoundDTO() {
+		return roundDTO;
 	}
-	public void setRound(Round round) {
-		this.round = round;
+	public void setRoundDTO(RoundDTO roundDTO) {
+		this.roundDTO = roundDTO;
+	}
+
+	public GameDTO getGameDTO() {
+		return gameDTO;
+	}
+	public void setGameDTO(GameDTO gameDTO) {
+		this.gameDTO = gameDTO;
 	}
 }

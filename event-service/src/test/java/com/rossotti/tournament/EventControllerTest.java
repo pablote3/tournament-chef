@@ -3,7 +3,7 @@ package com.rossotti.tournament;
 import com.rossotti.tournament.client.TemplateFinderService;
 import com.rossotti.tournament.controller.EventController;
 import com.rossotti.tournament.dto.EventDTO;
-import com.rossotti.tournament.dto.Round;
+import com.rossotti.tournament.dto.RoundDTO;
 import com.rossotti.tournament.dto.TemplateDTO;
 import com.rossotti.tournament.enumeration.TemplateType;
 import com.rossotti.tournament.exception.EntityExistsException;
@@ -196,13 +196,13 @@ public class EventControllerTest {
 		templateDTO.setGridTeams(4);
 		templateDTO.setEventDays(2);
 		templateDTO.setEventLocations(2);
-		templateDTO.setRound(new Round());
-		templateDTO.getRound().setPreliminary(4);
-		templateDTO.getRound().setPlayoff1(Boolean.FALSE);
-		templateDTO.getRound().setPlayoff2(Boolean.FALSE);
-		templateDTO.getRound().setQuarterFinal(Boolean.TRUE);
-		templateDTO.getRound().setSemiFinal(Boolean.TRUE);
-		templateDTO.getRound().setChampionship(Boolean.TRUE);
+		templateDTO.setRoundDTO(new RoundDTO());
+		templateDTO.getRoundDTO().setPreliminary(4);
+		templateDTO.getRoundDTO().setPlayoff1(Boolean.FALSE);
+		templateDTO.getRoundDTO().setPlayoff2(Boolean.FALSE);
+		templateDTO.getRoundDTO().setQuarterFinal(Boolean.TRUE);
+		templateDTO.getRoundDTO().setSemiFinal(Boolean.TRUE);
+		templateDTO.getRoundDTO().setChampionship(Boolean.TRUE);
 		return templateDTO;		
 	}
 }

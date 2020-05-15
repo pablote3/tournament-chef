@@ -1,47 +1,23 @@
 [
   {
-    "templateType": "two_x_four_pp",
-    "gridGroups": "2",
-    "gridTeams": "4",
-    "eventLocations": "1",
-    "eventDays": "1",
-    "round": {
-      "preliminary": "2",
-      "playoff1": "false",
-      "playoff2": "false",
-      "quarterFinal": "false",
-      "semiFinal": "false",
-      "championship": "true"
-    }
-  },
-  {
-    "templateType": "four_x_four_pp",
-    "gridGroups": "4",
-    "gridTeams": "4",
-    "eventLocations": "2",
-    "eventDays": "1",
-    "round": {
-      "preliminary": "2",
+    "templateType": "four_x_four_rr_15D_2L",
+    "gridGroups": 4,
+    "gridTeams": 4,
+    "eventDays": 1.5,
+    "eventLocations": 2,
+    "roundDTO": {
+      "preliminary": 3,
       "playoff1": "false",
       "playoff2": "false",
       "quarterFinal": "false",
       "semiFinal": "true",
       "championship": "true"
-    }
-  },
-  {
-    "templateType": "four_x_four_rr",
-    "gridGroups": "4",
-    "gridTeams": "4",
-    "eventLocations": "2",
-    "eventDays": "2",
-    "round": {
-      "preliminary": "3",
-      "playoff1": "false",
-      "playoff2": "false",
-      "quarterFinal": "false",
-      "semiFinal": "true",
-      "championship": "true"
+    },
+    "gameDTO": {
+      "preliminaryPerRound": 4,
+      "finalPerRound": 4,
+      "dayHalf": 4,
+      "dayFull": 12
     }
   }
 ]
