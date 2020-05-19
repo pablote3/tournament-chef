@@ -53,7 +53,7 @@ public class EventJpaServiceTest {
 		Assert.assertEquals(1, event.getGameDates().get(0).getGameLocations().get(0).getGameRounds().size());
 		Assert.assertEquals(1, event.getGameDates().get(0).getGameLocations().get(0).getGameRounds().get(0).getGames().size());
 		Assert.assertEquals(2, event.getGameDates().get(0).getGameLocations().get(0).getGameRounds().get(0).getGames().get(0).getGameTeams().size());
-		Assert.assertEquals(TemplateType.four_x_four_pp, event.getTemplateType());
+		Assert.assertEquals(TemplateType.four_x_four_pp_20D_2L, event.getTemplateType());
 	}
 
 	@Test
@@ -69,24 +69,24 @@ public class EventJpaServiceTest {
 
 	@Test
 	public void findByEventNameAsOfDateTemplateType_Found() {
-		Event event = eventJpaService.findByEventNameAsOfDateTemplateType("Lombardy Halloween Invitational", LocalDate.of(2020, 10, 24), TemplateType.four_x_four_pp);
+		Event event = eventJpaService.findByEventNameAsOfDateTemplateType("Lombardy Halloween Invitational", LocalDate.of(2020, 10, 24), TemplateType.four_x_four_pp_20D_2L);
 		Assert.assertEquals("Lombardy Halloween Invitational", event.getEventName());
 	}
 
 	@Test
 	public void findByEventNameAsOfDateTemplateType_NotFound() {
-		Assert.assertNull(eventJpaService.findByEventNameAsOfDateTemplateType("Lombardy Halloween Invitational", LocalDate.of(2020, 9, 28), TemplateType.four_x_four_pp));
+		Assert.assertNull(eventJpaService.findByEventNameAsOfDateTemplateType("Lombardy Halloween Invitational", LocalDate.of(2020, 9, 28), TemplateType.four_x_four_pp_20D_2L));
 	}
 
 	@Test
 	public void findByOrganizationNameAsOfDateTemplateType_Found() {
-		Event event = eventJpaService.findByOrganizationNameAsOfDateTemplateType("FC Juventes", LocalDate.of(2020, 9, 29), TemplateType.four_x_four_pp);
+		Event event = eventJpaService.findByOrganizationNameAsOfDateTemplateType("FC Juventes", LocalDate.of(2020, 9, 29), TemplateType.four_x_four_pp_20D_2L);
 		Assert.assertEquals("Campania Regional Frosh Soph Tournament", event.getEventName());
 	}
 
 	@Test
 	public void findByOrganizationNameAsOfDateTemplateType_NotFound() {
-		Assert.assertNull(eventJpaService.findByOrganizationNameAsOfDateTemplateType("FC Juventes", LocalDate.of(2020, 9, 28), TemplateType.four_x_four_pp));
+		Assert.assertNull(eventJpaService.findByOrganizationNameAsOfDateTemplateType("FC Juventes", LocalDate.of(2020, 9, 28), TemplateType.four_x_four_pp_20D_2L));
 	}
 
 	@Test
@@ -140,7 +140,7 @@ public class EventJpaServiceTest {
 	@Test
 	public void create_Created() {
 		eventJpaService.save(EventRepositoryTest.createMockEvent(4L, "Florence Caput Mundi", 7L, 1L, 4L, null, LocalDate.of(2020, 1, 15), LocalDate.of(2020, 1, 15)));
-		Event findEvent = eventJpaService.findByEventNameAsOfDateTemplateType("Florence Caput Mundi", LocalDate.of(2020, 1, 15), TemplateType.four_x_four_pp);
+		Event findEvent = eventJpaService.findByEventNameAsOfDateTemplateType("Florence Caput Mundi", LocalDate.of(2020, 1, 15), TemplateType.four_x_four_pp_20D_2L);
 		Assert.assertEquals(EventStatus.Sandbox, findEvent.getEventStatus());
 		Assert.assertEquals(2, findEvent.getEventTeams().size());
 		Assert.assertEquals(1, findEvent.getGameDates().size());
@@ -162,19 +162,19 @@ public class EventJpaServiceTest {
 
 	@Test
 	public void update_Updated() {
-		Event event = eventJpaService.findByEventNameAsOfDateTemplateType("Lombardy Halloween Invitational", LocalDate.of(2019, 9, 24), TemplateType.four_x_four_pp);
+		Event event = eventJpaService.findByEventNameAsOfDateTemplateType("Lombardy Halloween Invitational", LocalDate.of(2019, 9, 24), TemplateType.four_x_four_pp_20D_2L);
 		Assert.assertEquals(EventStatus.Scheduled, event.getEventStatus());
 		event.setEventStatus(EventStatus.InProgress);
 		event.setLupdUserId(3L);
 		event.setLupdTs(LocalDateTime.now());
 		eventJpaService.save(event);
-		Event findEvent = eventJpaService.findByEventNameAsOfDateTemplateType("Lombardy Halloween Invitational", LocalDate.of(2019, 9, 24), TemplateType.four_x_four_pp);
+		Event findEvent = eventJpaService.findByEventNameAsOfDateTemplateType("Lombardy Halloween Invitational", LocalDate.of(2019, 9, 24), TemplateType.four_x_four_pp_20D_2L);
 		Assert.assertEquals(EventStatus.InProgress, findEvent.getEventStatus());
 	}
 
 	@Test
 	public void update_EventTypeIsMandatory_Empty() {
-		Event event = eventJpaService.findByEventNameAsOfDateTemplateType("Lombardy Halloween Invitational", LocalDate.of(2019, 9, 24), TemplateType.four_x_four_pp);
+		Event event = eventJpaService.findByEventNameAsOfDateTemplateType("Lombardy Halloween Invitational", LocalDate.of(2019, 9, 24), TemplateType.four_x_four_pp_20D_2L);
 		event.setEventType(null);
 		TransactionSystemException exception = assertThrows(TransactionSystemException.class, () -> eventJpaService.save(event));
 		Assert.assertTrue(exception.getCause().getCause().getMessage().contains("EventType is mandatory"));

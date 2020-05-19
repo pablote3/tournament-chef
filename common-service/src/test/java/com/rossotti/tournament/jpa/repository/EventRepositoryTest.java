@@ -51,7 +51,7 @@ public class EventRepositoryTest {
 		Assert.assertEquals(1, event.getGameDates().get(0).getGameLocations().get(0).getGameRounds().size());
 		Assert.assertEquals(1, event.getGameDates().get(0).getGameLocations().get(0).getGameRounds().get(0).getGames().size());
 		Assert.assertEquals(2, event.getGameDates().get(0).getGameLocations().get(0).getGameRounds().get(0).getGames().get(0).getGameTeams().size());
-		Assert.assertEquals(TemplateType.four_x_four_pp, event.getTemplateType());
+		Assert.assertEquals(TemplateType.four_x_four_pp_20D_2L, event.getTemplateType());
 	}
 
 	@Test
@@ -117,30 +117,30 @@ public class EventRepositoryTest {
 
 	@Test
 	public void findByEventNameAsOfDateTemplateType_Found() {
-		Event event = eventRepository.findByEventNameAsOfDateTemplateType("Lombardy Halloween Invitational", LocalDate.of(2020, 10, 24), TemplateType.four_x_four_pp);
+		Event event = eventRepository.findByEventNameAsOfDateTemplateType("Lombardy Halloween Invitational", LocalDate.of(2020, 10, 24), TemplateType.four_x_four_pp_20D_2L);
 		Assert.assertEquals("Lombardy Halloween Invitational", event.getEventName());
 	}
 
 	@Test
 	public void findByEventNameAsOfDateTemplateType_NotFound() {
-		Assert.assertNull(eventRepository.findByEventNameAsOfDateTemplateType("Lombardy Halloween Invitational", LocalDate.of(2020, 9, 23), TemplateType.two_x_four_pp));
+		Assert.assertNull(eventRepository.findByEventNameAsOfDateTemplateType("Lombardy Halloween Invitational", LocalDate.of(2020, 9, 23), TemplateType.two_x_four_pp_10D_1L));
 	}
 
 	@Test
 	public void findByOrganizationNameAsOfDateTemplateType_Found() {
-		Event event = eventRepository.findByOrganizationNameAsOfDateTemplateType("FC Juventes", LocalDate.of(2019, 9, 24), TemplateType.four_x_four_pp);
+		Event event = eventRepository.findByOrganizationNameAsOfDateTemplateType("FC Juventes", LocalDate.of(2019, 9, 24), TemplateType.four_x_four_pp_20D_2L);
 		Assert.assertEquals("Lombardy Halloween Invitational", event.getEventName());
 	}
 
 	@Test
 	public void findByOrganizationNameAsOfDateTemplateType_NotFound() {
-		Assert.assertNull(eventRepository.findByOrganizationNameAsOfDateTemplateType("FC Juventes", LocalDate.of(2020, 9, 23), TemplateType.two_x_four_pp));
+		Assert.assertNull(eventRepository.findByOrganizationNameAsOfDateTemplateType("FC Juventes", LocalDate.of(2020, 9, 23), TemplateType.two_x_four_pp_10D_1L));
 	}
 
 	@Test
 	public void create() {
 		eventRepository.save(createMockEvent(7L, "Tavagnacco Fall Classic", 6L, 1L, 6L, 15L, LocalDate.of(2012, 9, 10), LocalDate.of(2012, 9, 11)));
-		Event event = eventRepository.findByEventNameAsOfDateTemplateType("Tavagnacco Fall Classic", LocalDate.of(2012, 9, 10), TemplateType.four_x_four_pp);
+		Event event = eventRepository.findByEventNameAsOfDateTemplateType("Tavagnacco Fall Classic", LocalDate.of(2012, 9, 10), TemplateType.four_x_four_pp_20D_2L);
 		Assert.assertEquals("Tavagnacco Fall Classic", event.getEventName());
 		Assert.assertEquals(2, event.getEventTeams().size());
 		Assert.assertEquals(2, event.getGameDates().size());
@@ -165,7 +165,7 @@ public class EventRepositoryTest {
 	@Test
 	public void update() {
 		eventRepository.save(updateMockEvent(LocalDate.of(2020, 10, 25), EventStatus.Complete));
-		Event event = eventRepository.findByEventNameAsOfDateTemplateType("Lombardy Halloween Invitational", LocalDate.of(2020, 10, 25), TemplateType.four_x_four_pp);
+		Event event = eventRepository.findByEventNameAsOfDateTemplateType("Lombardy Halloween Invitational", LocalDate.of(2020, 10, 25), TemplateType.four_x_four_pp_20D_2L);
 		Assert.assertEquals(EventStatus.Complete, event.getEventStatus());
 	}
 
@@ -177,20 +177,20 @@ public class EventRepositoryTest {
 
 	@Test
 	public void delete() {
-		Event event = eventRepository.findByEventNameAsOfDateTemplateType("Trentino Sections Tournament", LocalDate.of(2020, 8, 24), TemplateType.four_x_four_rr);
+		Event event = eventRepository.findByEventNameAsOfDateTemplateType("Trentino Sections Tournament", LocalDate.of(2020, 8, 24), TemplateType.four_x_four_rr_15D_2L);
 		if (event != null) {
 			eventRepository.deleteById(event.getId());
 		}
 		else {
 			Assert.fail("Unable to find record to delete");
 		}
-		Assert.assertNull(eventRepository.findByEventNameAsOfDateTemplateType("Trentino Sections Tournament", LocalDate.of(2020, 8, 24), TemplateType.four_x_four_rr));
+		Assert.assertNull(eventRepository.findByEventNameAsOfDateTemplateType("Trentino Sections Tournament", LocalDate.of(2020, 8, 24), TemplateType.four_x_four_rr_15D_2L));
 	}
 
 	public static Event createMockEvent(Long organizationId, String eventName, Long orgTeamId1, Long orgTeamId2, Long gameLocationId1, Long gameLocationId2, LocalDate startDate, LocalDate endDate) {
 		Event event = new Event();
 		event.setOrganization(createMockOrganization(organizationId));
-		event.setTemplateType(TemplateType.four_x_four_pp);
+		event.setTemplateType(TemplateType.four_x_four_pp_20D_2L);
 		event.setEventName(eventName);
 		event.setStartDate(startDate);
 		event.setEndDate(endDate);
@@ -289,7 +289,7 @@ public class EventRepositoryTest {
 	}
 
 	private Event updateMockEvent(LocalDate asOfDate, EventStatus eventStatus) {
-		Event event = eventRepository.findByEventNameAsOfDateTemplateType("Lombardy Halloween Invitational", asOfDate, TemplateType.four_x_four_pp);
+		Event event = eventRepository.findByEventNameAsOfDateTemplateType("Lombardy Halloween Invitational", asOfDate, TemplateType.four_x_four_pp_20D_2L);
 		event.setEventStatus(eventStatus);
 		return event;
 	}

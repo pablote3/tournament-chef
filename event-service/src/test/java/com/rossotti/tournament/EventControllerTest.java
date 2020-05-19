@@ -140,10 +140,10 @@ public class EventControllerTest {
 		EventDTO eventDTO = new EventDTO();
 		eventDTO.setEventName("Algarve Soccer Cup");
 		eventDTO.setOrganizationName("Fiesole School District");
-		eventDTO.setTemplateType("four_x_four_pp");
+		eventDTO.setTemplateType("four_x_four_pp_20D_2L");
+		eventDTO.setStartDate(LocalDate.of(2020, 9, 29));
 		eventDTO.setHalfDay("None");
 		eventDTO.setSport("WaterPolo");
-		eventDTO.setStartDate(LocalDate.of(2020, 9, 29));
 		return eventDTO;
 	}
 
@@ -191,7 +191,7 @@ public class EventControllerTest {
 	
 	private TemplateDTO createMockTemplateDTO() {
 		TemplateDTO templateDTO = new TemplateDTO();
-		templateDTO.setTemplateType(TemplateType.four_x_four_pp);
+		templateDTO.setTemplateType(TemplateType.four_x_four_pp_20D_2L);
 		templateDTO.setGridGroups(4);
 		templateDTO.setGridTeams(4);
 		templateDTO.setEventDays(2);
