@@ -7,6 +7,7 @@ import com.rossotti.tournament.dto.RoundDTO;
 import com.rossotti.tournament.dto.TemplateDTO;
 import com.rossotti.tournament.enumeration.TemplateType;
 import com.rossotti.tournament.exception.EntityExistsException;
+import com.rossotti.tournament.exception.InitializationException;
 import com.rossotti.tournament.exception.NoSuchEntityException;
 import com.rossotti.tournament.jpa.service.EventJpaService;
 import com.rossotti.tournament.jpa.service.OrganizationJpaService;
@@ -91,7 +92,7 @@ public class EventControllerTest {
 		when(eventJpaService.findByOrganizationNameAsOfDateTemplateType(anyString(), any(), any()))
 			.thenReturn(null);
 		when(templateFinderService.findTemplateType(anyString()))
-			.thenReturn(createMockTemplateDTO());
+			.thenReturn(createMockTemplateDTO(true));
 		assertThrows(NoSuchEntityException.class, () -> eventController.createEvent(createMockInitialEventDTO()));
 	}
 
@@ -102,8 +103,19 @@ public class EventControllerTest {
 		when(eventJpaService.findByOrganizationNameAsOfDateTemplateType(anyString(), any(), any()))
 			.thenReturn(null);
 		when(templateFinderService.findTemplateType(anyString()))
-			.thenReturn(createMockTemplateDTO());
+			.thenReturn(createMockTemplateDTO(true));
 		assertThrows(NoSuchEntityException.class, () -> eventController.createEvent(createMockInitialEventDTO()));
+	}
+
+	@Test
+	public void createEvent_GameRoundsCountZero() throws Exception {
+		when(organizationJpaService.findByOrganizationNameAsOfDate(anyString(), any()))
+			.thenReturn(createMockOrganization(true, true));
+		when(eventJpaService.findByOrganizationNameAsOfDateTemplateType(anyString(), any(), any()))
+			.thenReturn(null);
+		when(templateFinderService.findTemplateType(anyString()))
+			.thenReturn(createMockTemplateDTO(false));
+		assertThrows(InitializationException.class, () -> eventController.createEvent(createMockInitialEventDTO()));
 	}
 
 	@Test
@@ -113,7 +125,7 @@ public class EventControllerTest {
 		when(eventJpaService.findByOrganizationNameAsOfDateTemplateType(anyString(), any(), any()))
 			.thenReturn(null);
 		when(templateFinderService.findTemplateType(anyString()))
-			.thenReturn(createMockTemplateDTO());
+			.thenReturn(createMockTemplateDTO(true));
 		when(eventJpaService.save(any()))
 			.thenThrow(PersistenceException.class);
 		assertThrows(PersistenceException.class, () -> eventController.createEvent(createMockInitialEventDTO()));
@@ -126,7 +138,7 @@ public class EventControllerTest {
 		when(eventJpaService.findByOrganizationNameAsOfDateTemplateType(anyString(), any(), any()))
 			.thenReturn(null);
 		when(templateFinderService.findTemplateType(anyString()))
-			.thenReturn(createMockTemplateDTO());
+			.thenReturn(createMockTemplateDTO(true));
 		when(eventJpaService.save(any()))
 			.thenReturn(createMockEvent());
 		Event event = eventController.createEvent(createMockInitialEventDTO());
@@ -189,7 +201,7 @@ public class EventControllerTest {
 		return event;
 	}
 	
-	private TemplateDTO createMockTemplateDTO() {
+	private TemplateDTO createMockTemplateDTO(boolean isSizeGreaterThanZero) {
 		TemplateDTO templateDTO = new TemplateDTO();
 		templateDTO.setTemplateType(TemplateType.four_x_four_pp_20D_2L);
 		templateDTO.setGridGroups(4);
@@ -197,12 +209,22 @@ public class EventControllerTest {
 		templateDTO.setEventDays(2);
 		templateDTO.setEventLocations(2);
 		templateDTO.setRoundDTO(new RoundDTO());
-		templateDTO.getRoundDTO().setPreliminary(4);
-		templateDTO.getRoundDTO().setPlayoff1(Boolean.FALSE);
-		templateDTO.getRoundDTO().setPlayoff2(Boolean.FALSE);
-		templateDTO.getRoundDTO().setQuarterFinal(Boolean.TRUE);
-		templateDTO.getRoundDTO().setSemiFinal(Boolean.TRUE);
-		templateDTO.getRoundDTO().setChampionship(Boolean.TRUE);
+		if (isSizeGreaterThanZero) {
+			templateDTO.getRoundDTO().setPreliminary(4);
+			templateDTO.getRoundDTO().setPlayoff1(Boolean.FALSE);
+			templateDTO.getRoundDTO().setPlayoff2(Boolean.FALSE);
+			templateDTO.getRoundDTO().setQuarterFinal(Boolean.TRUE);
+			templateDTO.getRoundDTO().setSemiFinal(Boolean.TRUE);
+			templateDTO.getRoundDTO().setChampionship(Boolean.TRUE);
+		}
+		else {
+			templateDTO.getRoundDTO().setPreliminary(0);
+			templateDTO.getRoundDTO().setPlayoff1(Boolean.FALSE);
+			templateDTO.getRoundDTO().setPlayoff2(Boolean.FALSE);
+			templateDTO.getRoundDTO().setQuarterFinal(Boolean.FALSE);
+			templateDTO.getRoundDTO().setSemiFinal(Boolean.FALSE);
+			templateDTO.getRoundDTO().setChampionship(Boolean.FALSE);
+		}
 		return templateDTO;		
 	}
 }

@@ -5,6 +5,7 @@ import com.rossotti.tournament.dto.EventDTO;
 import com.rossotti.tournament.dto.TemplateDTO;
 import com.rossotti.tournament.enumeration.*;
 import com.rossotti.tournament.exception.EntityExistsException;
+import com.rossotti.tournament.exception.InitializationException;
 import com.rossotti.tournament.exception.NoSuchEntityException;
 import com.rossotti.tournament.jpa.service.EventJpaService;
 import com.rossotti.tournament.jpa.service.OrganizationJpaService;
@@ -56,34 +57,11 @@ public class EventController {
 				event.setEventName(eventDTO.getEventName());
 				event.setSport(Sport.valueOf(eventDTO.getSport()));
 
-				OrganizationTeam baseTeam = null;
-				for (int i = 0; i < organization.getOrganizationTeams().size(); i++) {
-					if (organization.getOrganizationTeams().get(i).getTeamName().equals(baseTeamName)) {
-						baseTeam = organization.getOrganizationTeams().get(i);
-						break;
-					}
-				}
+				OrganizationTeam baseTeam = getOrganizationTeam(organization);
+				OrganizationLocation baseLocation = getOrganizationLocation(organization);
+				List gameRounds = getGameRounds(templateDTO);
 
-				OrganizationLocation baseLocation = null;
-				for (int i = 0; i < organization.getOrganizationLocations().size(); i++) {
-					if (organization.getOrganizationLocations().get(i).getLocationName().equals(baseLocationName)) {
-						baseLocation = organization.getOrganizationLocations().get(i);
-						break;
-					}
-				}
-
-				if (baseTeam != null && baseLocation != null) {
-					List gameRounds = new ArrayList<GameRoundType>();
-					for (int k = 1; k < templateDTO.getRoundDTO().getPreliminary(); k++) {
-						gameRounds.add(GameRoundType.GroupPlay);
-					}
-					if (templateDTO.getRoundDTO().getQuarterFinal())
-						gameRounds.add(GameRoundType.QuarterFinal);
-					if (templateDTO.getRoundDTO().getSemiFinal())
-						gameRounds.add(GameRoundType.SemiFinal);
-					if (templateDTO.getRoundDTO().getChampionship())
-						gameRounds.add(GameRoundType.Final);
-
+				if (baseTeam != null && baseLocation != null && gameRounds.size() > 0) {
 					event.setEventTeams(new ArrayList<>());
 					EventTeam eventTeam;
 					int teamCount = templateDTO.getGridGroups() * templateDTO.getGridTeams();
@@ -132,11 +110,17 @@ public class EventController {
 				}
 				else {
 					if (baseTeam == null) {
-						logger.debug("buildEvent - findOrganizationTeam: baseTeam does not exist");
-					} else {
-						logger.debug("buildEvent - findOrganizationLocation: baseLocation does not exist");
+						logger.debug("createEvent - getOrganizationTeam: baseTeam does not exist");
+						throw new NoSuchEntityException(EventController.class);
 					}
-					throw new NoSuchEntityException(EventController.class);
+					else if (baseLocation == null) {
+						logger.debug("createEvent - getOrganizationLocation: baseLocation does not exist");
+						throw new NoSuchEntityException(EventController.class);
+					}
+					else if (gameRounds.size() == 0) {
+						logger.debug("createEvent - getGameRounds: no games counted for templateType = eventDTO.getTemplateType()");
+						throw new InitializationException(EventController.class);
+					}
 				}
 				logger.debug("createEvent - saveEvent: orgName = " + eventDTO.getOrganizationName() + ", eventName = " + eventDTO.getEventName());
 				eventJpaService.save(event);
@@ -144,16 +128,52 @@ public class EventController {
 			}
 			else {
 				logger.debug("createEvent - findByOrganizationNameAsOfDateTemplateType: orgName = " + eventDTO.getOrganizationName() +
-						" startDate = " + eventDTO.getStartDate() +
-						" templateType = " + eventDTO.getTemplateType() + " exists");
+						  	 " startDate = " + eventDTO.getStartDate() +
+						 	 " templateType = " + eventDTO.getTemplateType() + " exists");
 				throw new EntityExistsException(Event.class);
 			}
 		}
 		else {
 			logger.debug("createEvent - findByOrganizationNameAsOfDate: orgName = " + eventDTO.getOrganizationName() +
-					" startDate = " + eventDTO.getStartDate() + " does not exist");
+						 " startDate = " + eventDTO.getStartDate() + " does not exist");
 			throw new NoSuchEntityException(Organization.class);
 		}
+	}
+
+	private OrganizationTeam getOrganizationTeam(Organization organization) {
+		OrganizationTeam baseTeam = null;
+		for (int i = 0; i < organization.getOrganizationTeams().size(); i++) {
+			if (organization.getOrganizationTeams().get(i).getTeamName().equals(baseTeamName)) {
+				baseTeam = organization.getOrganizationTeams().get(i);
+				break;
+			}
+		}
+		return baseTeam;
+	}
+
+	private OrganizationLocation getOrganizationLocation(Organization organization) {
+		OrganizationLocation baseLocation = null;
+		for (int i = 0; i < organization.getOrganizationLocations().size(); i++) {
+			if (organization.getOrganizationLocations().get(i).getLocationName().equals(baseLocationName)) {
+				baseLocation = organization.getOrganizationLocations().get(i);
+				break;
+			}
+		}
+		return baseLocation;
+	}
+
+	private List getGameRounds(TemplateDTO templateDTO) {
+		List gameRounds = new ArrayList<GameRoundType>();
+		for (int k = 1; k < templateDTO.getRoundDTO().getPreliminary(); k++) {
+			gameRounds.add(GameRoundType.GroupPlay);
+		}
+		if (templateDTO.getRoundDTO().getQuarterFinal())
+			gameRounds.add(GameRoundType.QuarterFinal);
+		if (templateDTO.getRoundDTO().getSemiFinal())
+			gameRounds.add(GameRoundType.SemiFinal);
+		if (templateDTO.getRoundDTO().getChampionship())
+			gameRounds.add(GameRoundType.Final);
+		return gameRounds;
 	}
 
 	private List<GameRound> buildGameRounds(GameLocation gameLocation, List gameRoundTypes, int roundsPerDay) {

@@ -6,14 +6,14 @@
     "eventDays": 1.5,
     "eventLocations": 2,
     "roundDTO": {
-      "dayHalf": 2,
-      "dayFull": 3,
-      "preliminary": 3,
+      "preliminary": 2,
       "playoff1": "false",
       "playoff2": "false",
       "quarterFinal": "false",
       "semiFinal": "true",
-      "championship": "true"
+      "championship": "true",
+      "dayHalf": 1,
+      "dayFull": 3
     },
     "gameDTO": {
       "preliminaryPerRound": 4,
