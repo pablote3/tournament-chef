@@ -7,6 +7,8 @@ public class RoundDTO {
 	private boolean quarterFinal;
 	private boolean semiFinal;
 	private boolean championship;
+	private int dayHalf;
+	private int dayFull;
 
 	public int getPreliminary() {
 		return preliminary;
@@ -48,5 +50,19 @@ public class RoundDTO {
 	}
 	public void setChampionship(boolean championship) {
 		this.championship = championship;
+	}
+
+	public int getDayHalf() {
+		return dayHalf;
+	}
+	public void setDayHalf(int dayHalf) {
+		this.dayHalf = dayHalf;
+	}
+
+	public int getDayFull() {
+		return dayFull;
+	}
+	public void setDayFull(int dayFull) {
+		this.dayFull = dayFull;
 	}
 }
