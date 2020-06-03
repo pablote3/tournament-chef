@@ -1,7 +1,7 @@
 package com.rossotti.tournament;
 
 import com.rossotti.tournament.client.TemplateFinderService;
-import com.rossotti.tournament.controller.EventController;
+import com.rossotti.tournament.controller.EventControllerBean;
 import com.rossotti.tournament.dto.EventDTO;
 import com.rossotti.tournament.dto.RoundDTO;
 import com.rossotti.tournament.dto.TemplateDTO;
@@ -32,7 +32,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class EventControllerTest {
+public class EventControllerBeanTest {
 	@Mock
 	private OrganizationJpaService organizationJpaService;
 
@@ -43,7 +43,7 @@ public class EventControllerTest {
 	private TemplateFinderService templateFinderService;
 
 	@InjectMocks
-	private EventController eventController;
+	private EventControllerBean eventController;
 
 	@Test
 	public void findByOrganizationNameAsOfDate_notFound() {

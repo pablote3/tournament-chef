@@ -15,25 +15,22 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.time.DayOfWeek;
-import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class EventController {
+public class EventControllerBean {
 
 	private final EventJpaService eventJpaService;
 	private final OrganizationJpaService organizationJpaService;
 	private final TemplateFinderService templateFinderService;
-	private final Logger logger = LoggerFactory.getLogger(EventController.class);
+	private final Logger logger = LoggerFactory.getLogger(EventControllerBean.class);
 	private static final String baseTeamName = "BaseTeam";
 	private static final String baseLocationName = "BaseLocation";
 
 	@Autowired
-	public EventController(EventJpaService eventJpaService, OrganizationJpaService organizationJpaService, TemplateFinderService templateFinderService) {
+	public EventControllerBean(EventJpaService eventJpaService, OrganizationJpaService organizationJpaService, TemplateFinderService templateFinderService) {
 		this.eventJpaService = eventJpaService;
 		this.organizationJpaService = organizationJpaService;
 		this.templateFinderService = templateFinderService;
@@ -57,11 +54,11 @@ public class EventController {
 				event.setEventStatus(EventStatus.Sandbox);
 				event.setEventName(eventDTO.getEventName());
 				event.setSport(Sport.valueOf(eventDTO.getSport()));
-				event.setHalfDay(determineHalfDay(eventDTO.getStartDate(), templateDTO.getEventDays()));
+				event.setHalfDay(EventControllerUtil.determineHalfDay(eventDTO.getStartDate(), templateDTO.getEventDays()));
 
-				OrganizationTeam baseTeam = getOrganizationTeam(organization);
-				OrganizationLocation baseLocation = getOrganizationLocation(organization);
-				List<GameRoundType> gameRounds = getGameRounds(templateDTO);
+				OrganizationTeam baseTeam = EventControllerUtil.getOrganizationTeam(organization.getOrganizationTeams(), baseTeamName);
+				OrganizationLocation baseLocation = EventControllerUtil.getOrganizationLocation(organization.getOrganizationLocations(), baseLocationName);
+				List<GameRoundType> gameRounds = EventControllerUtil.getGameRounds(templateDTO);
 //				int totalTeams = templateDTO.getGridTeams() * templateDTO.getGridGroups();
 //				int eventDay = 1;
 
@@ -97,30 +94,21 @@ public class EventController {
 //							gameLocation.setGameRounds(buildGameRounds(gameLocation, gameRounds, roundsPerDay));
 							baseLocation.getGameLocations().add(gameLocation);
 							gameDate.getGameLocations().add(gameLocation);
-
-//							if (gameRounds.size() % templateDTO.getEventDays() == 0) {
-//								gameLocation.setGameRounds(buildGameRounds(gameLocation, gameRounds, roundsPerDay));
-//							}
-//							else {
-//								if (eventDTO.getStartDate().getDayOfWeek().equals(DayOfWeek.FRIDAY)) {
-//
-//								}
-//							}
 						}
 					}
 				}
 				else {
 					if (baseTeam == null) {
 						logger.debug("createEvent - getOrganizationTeam: baseTeam does not exist");
-						throw new NoSuchEntityException(EventController.class);
+						throw new NoSuchEntityException(EventControllerBean.class);
 					}
 					else if (baseLocation == null) {
 						logger.debug("createEvent - getOrganizationLocation: baseLocation does not exist");
-						throw new NoSuchEntityException(EventController.class);
+						throw new NoSuchEntityException(EventControllerBean.class);
 					}
 					else if (gameRounds.size() == 0) {
 						logger.debug("createEvent - getGameRounds: no games counted for templateType = eventDTO.getTemplateType()");
-						throw new InitializationException(EventController.class);
+						throw new InitializationException(EventControllerBean.class);
 					}
 				}
 				logger.debug("createEvent - saveEvent: orgName = " + eventDTO.getOrganizationName() + ", eventName = " + eventDTO.getEventName());
@@ -138,54 +126,6 @@ public class EventController {
 			logger.debug("createEvent - findByOrganizationNameAsOfDate: orgName = " + eventDTO.getOrganizationName() +
 						 " startDate = " + eventDTO.getStartDate() + " does not exist");
 			throw new NoSuchEntityException(Organization.class);
-		}
-	}
-
-	private OrganizationTeam getOrganizationTeam(Organization organization) {
-		OrganizationTeam baseTeam = null;
-		for (int i = 0; i < organization.getOrganizationTeams().size(); i++) {
-			if (organization.getOrganizationTeams().get(i).getTeamName().equals(baseTeamName)) {
-				baseTeam = organization.getOrganizationTeams().get(i);
-				break;
-			}
-		}
-		return baseTeam;
-	}
-
-	private OrganizationLocation getOrganizationLocation(Organization organization) {
-		OrganizationLocation baseLocation = null;
-		for (int i = 0; i < organization.getOrganizationLocations().size(); i++) {
-			if (organization.getOrganizationLocations().get(i).getLocationName().equals(baseLocationName)) {
-				baseLocation = organization.getOrganizationLocations().get(i);
-				break;
-			}
-		}
-		return baseLocation;
-	}
-
-	private List<GameRoundType> getGameRounds(TemplateDTO templateDTO) {
-		List<GameRoundType> gameRounds = new ArrayList<>();
-		for (int k = 1; k < templateDTO.getRoundDTO().getPreliminary(); k++) {
-			gameRounds.add(GameRoundType.GroupPlay);
-		}
-		if (templateDTO.getRoundDTO().getQuarterFinal())
-			gameRounds.add(GameRoundType.QuarterFinal);
-		if (templateDTO.getRoundDTO().getSemiFinal())
-			gameRounds.add(GameRoundType.SemiFinal);
-		if (templateDTO.getRoundDTO().getChampionship())
-			gameRounds.add(GameRoundType.Final);
-		return gameRounds;
-	}
-
-	private HalfDay determineHalfDay(LocalDate eventStartDate, float eventDays) {
-		if (eventDays == Math.round(eventDays)) {
-			if (eventStartDate.getDayOfWeek().equals(DayOfWeek.FRIDAY))
-				return HalfDay.First;
-			else
-				return HalfDay.Last;
-		}
-		else {
-			return HalfDay.None;
 		}
 	}
 
