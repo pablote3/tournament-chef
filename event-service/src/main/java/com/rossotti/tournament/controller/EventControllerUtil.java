@@ -70,7 +70,7 @@ public class EventControllerUtil {
 		GameRound gameRound;
 		List<GameRound> gameRounds = new ArrayList<>();
 
-		if ((halfDay.equals(HalfDay.First) && eventDay == 0) || (halfDay.equals(HalfDay.Last) && eventDay == eventDuration)) {
+		if ((halfDay.equals(HalfDay.First) && eventDay == 1) || (halfDay.equals(HalfDay.Last) && eventDay == eventDuration)) {
 			for (int i = 1; i <= roundDTO.getDayHalf(); i++) {
 				gameRound = new GameRound();
 				gameRound.setGameLocation(gameLocation);

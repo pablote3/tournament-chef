@@ -138,15 +138,20 @@ public class EventControllerUtilTest {
 	@Test
 	public void buildGameRounds_fullDay_1of1() {
 		RoundDTO roundDTO = getRoundDTO(2, false, true, true, 0, 4);
-		List<GameRound> gameRounds = EventControllerUtil.buildGameRounds(1,
-																		 1,
-																	  	 0,
-																		  HalfDay.None,
-																		  roundDTO,
-																		  EventControllerUtil.getGameRounds(roundDTO),
-																		  new GameLocation()
+		List<GameRound> gameRounds = EventControllerUtil.buildGameRounds(
+				1,
+				1,
+				0,
+				HalfDay.None,
+				roundDTO,
+				EventControllerUtil.getGameRounds(roundDTO),
+				new GameLocation()
 		);
 		Assert.assertEquals(4, gameRounds.size());
+		Assert.assertTrue(gameRounds.get(0).isGroupPlay());
+		Assert.assertTrue(gameRounds.get(1).isGroupPlay());
+		Assert.assertTrue(gameRounds.get(2).isSemiFinal());
+		Assert.assertTrue(gameRounds.get(3).isChampionship());
 	}
 
 	@Test
@@ -174,6 +179,97 @@ public class EventControllerUtilTest {
 				2,
 				2,
 				HalfDay.None,
+				roundDTO,
+				EventControllerUtil.getGameRounds(roundDTO),
+				new GameLocation()
+		);
+		Assert.assertEquals(2, gameRounds.size());
+		Assert.assertTrue(gameRounds.get(0).isSemiFinal());
+		Assert.assertTrue(gameRounds.get(1).isChampionship());
+	}
+
+	@Test
+	public void buildGameRounds_halfDayFirst_1of1() {
+		RoundDTO roundDTO = getRoundDTO(2, false, true, true, 4, 0);
+		List<GameRound> gameRounds = EventControllerUtil.buildGameRounds(
+				1,
+				1,
+				0,
+				HalfDay.First,
+				roundDTO,
+				EventControllerUtil.getGameRounds(roundDTO),
+				new GameLocation()
+		);
+		Assert.assertEquals(4, gameRounds.size());
+		Assert.assertTrue(gameRounds.get(0).isGroupPlay());
+		Assert.assertTrue(gameRounds.get(1).isGroupPlay());
+		Assert.assertTrue(gameRounds.get(2).isSemiFinal());
+		Assert.assertTrue(gameRounds.get(3).isChampionship());
+	}
+
+	@Test
+	public void buildGameRounds_halfDayFirst_1of2() {
+		RoundDTO roundDTO = getRoundDTO(4, false, true, true, 2, 4);
+		List<GameRound> gameRounds = EventControllerUtil.buildGameRounds(
+				1,
+				2,
+				0,
+				HalfDay.First,
+				roundDTO,
+				EventControllerUtil.getGameRounds(roundDTO),
+				new GameLocation()
+		);
+		Assert.assertEquals(2, gameRounds.size());
+		Assert.assertTrue(gameRounds.get(0).isGroupPlay());
+		Assert.assertTrue(gameRounds.get(1).isGroupPlay());
+	}
+
+	@Test
+	public void buildGameRounds_halfDayFirst_2of2() {
+		RoundDTO roundDTO = getRoundDTO(4, false, true, true, 2, 4);
+		List<GameRound> gameRounds = EventControllerUtil.buildGameRounds(
+				2,
+				2,
+				2,
+				HalfDay.First,
+				roundDTO,
+				EventControllerUtil.getGameRounds(roundDTO),
+				new GameLocation()
+		);
+		Assert.assertEquals(4, gameRounds.size());
+		Assert.assertTrue(gameRounds.get(0).isGroupPlay());
+		Assert.assertTrue(gameRounds.get(1).isGroupPlay());
+		Assert.assertTrue(gameRounds.get(2).isSemiFinal());
+		Assert.assertTrue(gameRounds.get(3).isChampionship());
+	}
+
+	@Test
+	public void buildGameRounds_halfDayLast_1of2() {
+		RoundDTO roundDTO = getRoundDTO(4, false, true, true, 2, 4);
+		List<GameRound> gameRounds = EventControllerUtil.buildGameRounds(
+				1,
+				2,
+				0,
+				HalfDay.Last,
+				roundDTO,
+				EventControllerUtil.getGameRounds(roundDTO),
+				new GameLocation()
+		);
+		Assert.assertEquals(4, gameRounds.size());
+		Assert.assertTrue(gameRounds.get(0).isGroupPlay());
+		Assert.assertTrue(gameRounds.get(1).isGroupPlay());
+		Assert.assertTrue(gameRounds.get(2).isGroupPlay());
+		Assert.assertTrue(gameRounds.get(3).isGroupPlay());
+	}
+
+	@Test
+	public void buildGameRounds_halfDayLast_2of2() {
+		RoundDTO roundDTO = getRoundDTO(4, false, true, true, 2, 4);
+		List<GameRound> gameRounds = EventControllerUtil.buildGameRounds(
+				2,
+				2,
+				4,
+				HalfDay.Last,
 				roundDTO,
 				EventControllerUtil.getGameRounds(roundDTO),
 				new GameLocation()
