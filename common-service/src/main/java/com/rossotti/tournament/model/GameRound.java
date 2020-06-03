@@ -60,8 +60,8 @@ public class GameRound {
 	public Boolean isSemiFinal() {
 		return gameRoundType == GameRoundType.SemiFinal;
 	}
-	public Boolean isFinal() {
-		return gameRoundType == GameRoundType.Final;
+	public Boolean isChampionship() {
+		return gameRoundType == GameRoundType.Championship;
 	}
 
 	@Column(nullable=false)

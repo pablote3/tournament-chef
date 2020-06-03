@@ -248,7 +248,7 @@ public class EventRepositoryTest {
 		gameLocation.setBaseLocationName("BaseLocation1");
 		gameLocation.setStartTime(LocalTime.of(8, 0, 0));
 		gameLocation.getGameRounds().add(createMockGameRound(GameRoundType.GroupPlay, gameLocation));
-		gameLocation.getGameRounds().add(createMockGameRound(GameRoundType.Final, gameLocation));
+		gameLocation.getGameRounds().add(createMockGameRound(GameRoundType.Championship, gameLocation));
 		return gameLocation;
 	}
 

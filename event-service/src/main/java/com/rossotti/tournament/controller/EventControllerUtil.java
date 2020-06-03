@@ -35,7 +35,7 @@ public class EventControllerUtil {
 
 	public static List<GameRoundType> getGameRounds(TemplateDTO templateDTO) {
 		List<GameRoundType> gameRounds = new ArrayList<>();
-		for (int k = 1; k < templateDTO.getRoundDTO().getPreliminary(); k++) {
+		for (int k = 1; k <= templateDTO.getRoundDTO().getPreliminary(); k++) {
 			gameRounds.add(GameRoundType.GroupPlay);
 		}
 		if (templateDTO.getRoundDTO().getQuarterFinal())
@@ -43,7 +43,7 @@ public class EventControllerUtil {
 		if (templateDTO.getRoundDTO().getSemiFinal())
 			gameRounds.add(GameRoundType.SemiFinal);
 		if (templateDTO.getRoundDTO().getChampionship())
-			gameRounds.add(GameRoundType.Final);
+			gameRounds.add(GameRoundType.Championship);
 		return gameRounds;
 	}
 
