@@ -1,6 +1,6 @@
 package com.rossotti.tournament.controller;
 
-import com.rossotti.tournament.dto.TemplateDTO;
+import com.rossotti.tournament.dto.RoundDTO;
 import com.rossotti.tournament.enumeration.GameRoundType;
 import com.rossotti.tournament.enumeration.HalfDay;
 import com.rossotti.tournament.model.*;
@@ -13,9 +13,9 @@ public class EventControllerUtil {
 
 	public static OrganizationTeam getOrganizationTeam(List<OrganizationTeam> organizationTeams, String baseTeamName) {
 		OrganizationTeam baseTeam = null;
-		for (int i = 0; i < organizationTeams.size(); i++) {
-			if (organizationTeams.get(i).getTeamName().equals(baseTeamName)) {
-				baseTeam = organizationTeams.get(i);
+		for (OrganizationTeam organizationTeam : organizationTeams) {
+			if (organizationTeam.getTeamName().equals(baseTeamName)) {
+				baseTeam = organizationTeam;
 				break;
 			}
 		}
@@ -24,25 +24,25 @@ public class EventControllerUtil {
 
 	public static OrganizationLocation getOrganizationLocation(List<OrganizationLocation> organizationLocations, String baseLocationName) {
 		OrganizationLocation baseLocation = null;
-		for (int i = 0; i < organizationLocations.size(); i++) {
-			if (organizationLocations.get(i).getLocationName().equals(baseLocationName)) {
-				baseLocation = organizationLocations.get(i);
+		for (OrganizationLocation organizationLocation : organizationLocations) {
+			if (organizationLocation.getLocationName().equals(baseLocationName)) {
+				baseLocation = organizationLocation;
 				break;
 			}
 		}
 		return baseLocation;
 	}
 
-	public static List<GameRoundType> getGameRounds(TemplateDTO templateDTO) {
+	public static List<GameRoundType> getGameRounds(RoundDTO roundDTO) {
 		List<GameRoundType> gameRounds = new ArrayList<>();
-		for (int k = 1; k <= templateDTO.getRoundDTO().getPreliminary(); k++) {
+		for (int k = 1; k <= roundDTO.getPreliminary(); k++) {
 			gameRounds.add(GameRoundType.GroupPlay);
 		}
-		if (templateDTO.getRoundDTO().getQuarterFinal())
+		if (roundDTO.getQuarterFinal())
 			gameRounds.add(GameRoundType.QuarterFinal);
-		if (templateDTO.getRoundDTO().getSemiFinal())
+		if (roundDTO.getSemiFinal())
 			gameRounds.add(GameRoundType.SemiFinal);
-		if (templateDTO.getRoundDTO().getChampionship())
+		if (roundDTO.getChampionship())
 			gameRounds.add(GameRoundType.Championship);
 		return gameRounds;
 	}
@@ -59,16 +59,37 @@ public class EventControllerUtil {
 		}
 	}
 
-//	private List<GameRound> buildGameRounds(GameLocation gameLocation, List gameRoundTypes, int roundsPerDay) {
-//		GameRound gameRound;
-//		List<GameRound> gameRounds = new ArrayList<>();
-//		for (int k = 1; k < roundsPerDay; k++) {
-//			gameRound = new GameRound();
-//			gameRound.setGameLocation(gameLocation);
-//			gameRound.setGameRoundType((GameRoundType) gameRoundTypes.get(k));
-//			gameRound.setGameDuration((short) 45);
-//			gameLocation.getGameRounds().add(gameRound);
-//		}
-//		return gameRounds;
-//	}
+	public static List<GameRound> buildGameRounds(int eventDay,
+												  int eventDuration,
+												  int gameRoundCount,
+												  HalfDay halfDay,
+												  RoundDTO roundDTO,
+												  List<GameRoundType> gameRoundTypes,
+												  GameLocation gameLocation)
+	{
+		GameRound gameRound;
+		List<GameRound> gameRounds = new ArrayList<>();
+
+		if ((halfDay.equals(HalfDay.First) && eventDay == 0) || (halfDay.equals(HalfDay.Last) && eventDay == eventDuration)) {
+			for (int i = 1; i <= roundDTO.getDayHalf(); i++) {
+				gameRound = new GameRound();
+				gameRound.setGameLocation(gameLocation);
+				gameRound.setGameRoundType(gameRoundTypes.get(gameRoundCount));
+				gameRound.setGameDuration((short) 45);
+				gameRounds.add(gameRound);
+				gameRoundCount++;
+			}
+		}
+		else {
+			for (int i = 1; i <= roundDTO.getDayFull(); i++) {
+				gameRound = new GameRound();
+				gameRound.setGameLocation(gameLocation);
+				gameRound.setGameRoundType(gameRoundTypes.get(gameRoundCount));
+				gameRound.setGameDuration((short) 45);
+				gameRounds.add(gameRound);
+				gameRoundCount++;
+			}
+		}
+		return gameRounds;
+	}
 }

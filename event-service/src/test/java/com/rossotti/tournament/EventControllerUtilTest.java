@@ -5,8 +5,7 @@ import com.rossotti.tournament.dto.RoundDTO;
 import com.rossotti.tournament.dto.TemplateDTO;
 import com.rossotti.tournament.enumeration.GameRoundType;
 import com.rossotti.tournament.enumeration.HalfDay;
-import com.rossotti.tournament.model.OrganizationLocation;
-import com.rossotti.tournament.model.OrganizationTeam;
+import com.rossotti.tournament.model.*;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -93,29 +92,29 @@ public class EventControllerUtilTest {
 
 	@Test
 	public void getGameRounds_none() {
-		TemplateDTO templateDTO = getTemplateDTO(0, false, false, false);
-		List<GameRoundType> gameRounds = EventControllerUtil.getGameRounds(templateDTO);
+		RoundDTO roundDTO = getRoundDTO(0, false, false, false, 0, 0);
+		List<GameRoundType> gameRounds = EventControllerUtil.getGameRounds(roundDTO);
 		Assert.assertNotNull(gameRounds);
 		Assert.assertEquals(0, gameRounds.size());
 	}
 
 	@Test
 	public void getGameRounds_found() {
-		TemplateDTO templateDTO = getTemplateDTO(4, false, true, true);
-		List<GameRoundType> gameRounds = EventControllerUtil.getGameRounds(templateDTO);
+		RoundDTO roundDTO = getRoundDTO(4, false, true, true, 0, 0);
+		List<GameRoundType> gameRounds = EventControllerUtil.getGameRounds(roundDTO);
 		Assert.assertNotNull(gameRounds);
 		Assert.assertEquals(6, gameRounds.size());
 	}
 
-	private TemplateDTO getTemplateDTO(int preliminary, boolean quarterFinal, boolean semiFinal, boolean championship) {
-		TemplateDTO templateDTO = new TemplateDTO();
+	private RoundDTO getRoundDTO(int preliminary, boolean quarterFinal, boolean semiFinal, boolean championship, int dayHalf, int dayFull) {
 		RoundDTO roundDTO = new RoundDTO();
 		roundDTO.setPreliminary(preliminary);
 		roundDTO.setQuarterFinal(quarterFinal);
 		roundDTO.setSemiFinal(semiFinal);
 		roundDTO.setChampionship(championship);
-		templateDTO.setRoundDTO(roundDTO);
-		return templateDTO;
+		roundDTO.setDayHalf(dayHalf);
+		roundDTO.setDayFull(dayFull);
+		return roundDTO;
 	}
 
 	@Test
@@ -134,5 +133,53 @@ public class EventControllerUtilTest {
 	public void determineHalfDay_none() {
 		HalfDay halfDay = EventControllerUtil.determineHalfDay(LocalDate.of(2020, 6, 6), 2.5f);
 		Assert.assertEquals(HalfDay.None, halfDay);
+	}
+
+	@Test
+	public void buildGameRounds_fullDay_1of1() {
+		RoundDTO roundDTO = getRoundDTO(2, false, true, true, 0, 4);
+		List<GameRound> gameRounds = EventControllerUtil.buildGameRounds(1,
+																		 1,
+																	  	 0,
+																		  HalfDay.None,
+																		  roundDTO,
+																		  EventControllerUtil.getGameRounds(roundDTO),
+																		  new GameLocation()
+		);
+		Assert.assertEquals(4, gameRounds.size());
+	}
+
+	@Test
+	public void buildGameRounds_fullDay_1of2() {
+		RoundDTO roundDTO = getRoundDTO(2, false, true, true, 0, 2);
+		List<GameRound> gameRounds = EventControllerUtil.buildGameRounds(
+				1,
+				2,
+				0,
+				HalfDay.None,
+				roundDTO,
+				EventControllerUtil.getGameRounds(roundDTO),
+				new GameLocation()
+		);
+		Assert.assertEquals(2, gameRounds.size());
+		Assert.assertTrue(gameRounds.get(0).isGroupPlay());
+		Assert.assertTrue(gameRounds.get(1).isGroupPlay());
+	}
+
+	@Test
+	public void buildGameRounds_fullDay_2of2() {
+		RoundDTO roundDTO = getRoundDTO(2, false, true, true, 0, 2);
+		List<GameRound> gameRounds = EventControllerUtil.buildGameRounds(
+				2,
+				2,
+				2,
+				HalfDay.None,
+				roundDTO,
+				EventControllerUtil.getGameRounds(roundDTO),
+				new GameLocation()
+		);
+		Assert.assertEquals(2, gameRounds.size());
+		Assert.assertTrue(gameRounds.get(0).isSemiFinal());
+		Assert.assertTrue(gameRounds.get(1).isChampionship());
 	}
 }

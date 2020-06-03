@@ -2,6 +2,7 @@ package com.rossotti.tournament.controller;
 
 import com.rossotti.tournament.client.TemplateFinderService;
 import com.rossotti.tournament.dto.EventDTO;
+import com.rossotti.tournament.dto.RoundDTO;
 import com.rossotti.tournament.dto.TemplateDTO;
 import com.rossotti.tournament.enumeration.*;
 import com.rossotti.tournament.exception.EntityExistsException;
@@ -58,9 +59,7 @@ public class EventControllerBean {
 
 				OrganizationTeam baseTeam = EventControllerUtil.getOrganizationTeam(organization.getOrganizationTeams(), baseTeamName);
 				OrganizationLocation baseLocation = EventControllerUtil.getOrganizationLocation(organization.getOrganizationLocations(), baseLocationName);
-				List<GameRoundType> gameRounds = EventControllerUtil.getGameRounds(templateDTO);
-//				int totalTeams = templateDTO.getGridTeams() * templateDTO.getGridGroups();
-//				int eventDay = 1;
+				List<GameRoundType> gameRounds = EventControllerUtil.getGameRounds(templateDTO.getRoundDTO());
 
 				if (baseTeam != null && baseLocation != null && gameRounds.size() > 0) {
 					event.setEventTeams(new ArrayList<>());
@@ -77,6 +76,7 @@ public class EventControllerBean {
 
 					event.setGameDates(new ArrayList<>());
 					GameDate gameDate;
+					int gameRoundCount = 0;
 					for (int i = 1; i <= eventDuration; i++) {
 						gameDate = new GameDate();
 						gameDate.setEvent(event);
@@ -84,16 +84,28 @@ public class EventControllerBean {
 						event.getGameDates().add(gameDate);
 
 						GameLocation gameLocation;
-
+						boolean gameLocationCountUsed = false;
 						for (int j = 1; j <= templateDTO.getEventLocations(); j++) {
 							gameLocation = new GameLocation();
 							gameLocation.setGameDate(gameDate);
 							gameLocation.setOrganizationLocation(baseLocation);
 							gameLocation.setBaseLocationName(baseLocationName + j);
 							gameLocation.setStartTime(LocalTime.of(8, 0, 0));
-//							gameLocation.setGameRounds(buildGameRounds(gameLocation, gameRounds, roundsPerDay));
+							gameLocation.setGameRounds(EventControllerUtil.buildGameRounds(
+									i,
+									eventDuration,
+									gameRoundCount,
+									event.getHalfDay(),
+									templateDTO.getRoundDTO(),
+									gameRounds,
+									gameLocation)
+							);
 							baseLocation.getGameLocations().add(gameLocation);
 							gameDate.getGameLocations().add(gameLocation);
+							if (!gameLocationCountUsed) {
+								gameRoundCount = gameRoundCount + gameLocation.getGameRounds().size();
+								gameLocationCountUsed = true;
+							}
 						}
 					}
 				}
@@ -106,7 +118,7 @@ public class EventControllerBean {
 						logger.debug("createEvent - getOrganizationLocation: baseLocation does not exist");
 						throw new NoSuchEntityException(EventControllerBean.class);
 					}
-					else if (gameRounds.size() == 0) {
+					else {
 						logger.debug("createEvent - getGameRounds: no games counted for templateType = eventDTO.getTemplateType()");
 						throw new InitializationException(EventControllerBean.class);
 					}
@@ -127,18 +139,5 @@ public class EventControllerBean {
 						 " startDate = " + eventDTO.getStartDate() + " does not exist");
 			throw new NoSuchEntityException(Organization.class);
 		}
-	}
-
-	private List<GameRound> buildGameRounds(GameLocation gameLocation, List gameRoundTypes, int roundsPerDay) {
-		GameRound gameRound;
-		List<GameRound> gameRounds = new ArrayList<>();
-		for (int k = 1; k < roundsPerDay; k++) {
-			gameRound = new GameRound();
-			gameRound.setGameLocation(gameLocation);
-			gameRound.setGameRoundType((GameRoundType) gameRoundTypes.get(k));
-			gameRound.setGameDuration((short) 45);
-			gameLocation.getGameRounds().add(gameRound);
-		}
-		return gameRounds;
 	}
 }
