@@ -6,7 +6,7 @@ public class TemplateDTO {
 	private TemplateType templateType;
 	private int gridGroups;
 	private int gridTeams;
-	private int eventDays;
+	private float eventDays;
 	private int eventLocations;
 	private RoundDTO roundDTO;
 	private GameDTO gameDTO;
@@ -35,10 +35,10 @@ public class TemplateDTO {
 		this.gridTeams = gridTeams;
 	}
 
-	public int getEventDays() {
+	public float getEventDays() {
 		return eventDays;
 	}
-	public void setEventDays(int eventDays) {
+	public void setEventDays(float eventDays) {
 		this.eventDays = eventDays;
 	}
 

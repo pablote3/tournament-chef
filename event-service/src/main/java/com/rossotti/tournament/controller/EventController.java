@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,21 +46,24 @@ public class EventController {
 			Event event = eventJpaService.findByOrganizationNameAsOfDateTemplateType(eventDTO.getOrganizationName(), eventDTO.getStartDate(), templateType);
 			if (event == null) {
 				TemplateDTO templateDTO = templateFinderService.findTemplateType(eventDTO.getTemplateType());
+				int eventDuration = Math.round(templateDTO.getEventDays());
 
 				ModelMapper modelMapper = new ModelMapper();
 				event = modelMapper.map(eventDTO, Event.class);
 				event.setOrganization(organization);
 				event.setTemplateType(templateType);
 				event.setStartDate(eventDTO.getStartDate());
-				event.setEndDate(eventDTO.getStartDate().plusDays(templateDTO.getEventDays()));
-				event.setHalfDay(HalfDay.valueOf(eventDTO.getHalfDay()));
+				event.setEndDate(eventDTO.getStartDate().plusDays(eventDuration));
 				event.setEventStatus(EventStatus.Sandbox);
 				event.setEventName(eventDTO.getEventName());
 				event.setSport(Sport.valueOf(eventDTO.getSport()));
+				event.setHalfDay(determineHalfDay(eventDTO.getStartDate(), templateDTO.getEventDays()));
 
 				OrganizationTeam baseTeam = getOrganizationTeam(organization);
 				OrganizationLocation baseLocation = getOrganizationLocation(organization);
-				List gameRounds = getGameRounds(templateDTO);
+				List<GameRoundType> gameRounds = getGameRounds(templateDTO);
+//				int totalTeams = templateDTO.getGridTeams() * templateDTO.getGridGroups();
+//				int eventDay = 1;
 
 				if (baseTeam != null && baseLocation != null && gameRounds.size() > 0) {
 					event.setEventTeams(new ArrayList<>());
@@ -76,36 +80,33 @@ public class EventController {
 
 					event.setGameDates(new ArrayList<>());
 					GameDate gameDate;
-					for (int i = 1; i < templateDTO.getEventDays(); i++) {
+					for (int i = 1; i <= eventDuration; i++) {
 						gameDate = new GameDate();
 						gameDate.setEvent(event);
 						gameDate.setGameDate(eventDTO.getStartDate().plusDays(i));
 						event.getGameDates().add(gameDate);
 
-						int totalTeams = templateDTO.getGridTeams() * templateDTO.getGridGroups();
-						int roundsPerDay = 0;
-
 						GameLocation gameLocation;
-						for (int j = 1; j < templateDTO.getEventLocations() + 1; j++) {
+
+						for (int j = 1; j <= templateDTO.getEventLocations(); j++) {
 							gameLocation = new GameLocation();
 							gameLocation.setGameDate(gameDate);
 							gameLocation.setOrganizationLocation(baseLocation);
 							gameLocation.setBaseLocationName(baseLocationName + j);
 							gameLocation.setStartTime(LocalTime.of(8, 0, 0));
-							gameLocation.setGameRounds(buildGameRounds(gameLocation, gameRounds, roundsPerDay));
+//							gameLocation.setGameRounds(buildGameRounds(gameLocation, gameRounds, roundsPerDay));
 							baseLocation.getGameLocations().add(gameLocation);
 							gameDate.getGameLocations().add(gameLocation);
 
-							if (gameRounds.size() % templateDTO.getEventDays() == 0) {
-								gameLocation.setGameRounds(buildGameRounds(gameLocation, gameRounds, roundsPerDay));
-							}
-							else {
-								if (eventDTO.getStartDate().getDayOfWeek().equals(DayOfWeek.FRIDAY)) {
-
-								}
-							}
+//							if (gameRounds.size() % templateDTO.getEventDays() == 0) {
+//								gameLocation.setGameRounds(buildGameRounds(gameLocation, gameRounds, roundsPerDay));
+//							}
+//							else {
+//								if (eventDTO.getStartDate().getDayOfWeek().equals(DayOfWeek.FRIDAY)) {
+//
+//								}
+//							}
 						}
-						event.getGameDates().add(gameDate);
 					}
 				}
 				else {
@@ -162,8 +163,8 @@ public class EventController {
 		return baseLocation;
 	}
 
-	private List getGameRounds(TemplateDTO templateDTO) {
-		List gameRounds = new ArrayList<GameRoundType>();
+	private List<GameRoundType> getGameRounds(TemplateDTO templateDTO) {
+		List<GameRoundType> gameRounds = new ArrayList<>();
 		for (int k = 1; k < templateDTO.getRoundDTO().getPreliminary(); k++) {
 			gameRounds.add(GameRoundType.GroupPlay);
 		}
@@ -174,6 +175,18 @@ public class EventController {
 		if (templateDTO.getRoundDTO().getChampionship())
 			gameRounds.add(GameRoundType.Final);
 		return gameRounds;
+	}
+
+	private HalfDay determineHalfDay(LocalDate eventStartDate, float eventDays) {
+		if (eventDays == Math.round(eventDays)) {
+			if (eventStartDate.getDayOfWeek().equals(DayOfWeek.FRIDAY))
+				return HalfDay.First;
+			else
+				return HalfDay.Last;
+		}
+		else {
+			return HalfDay.None;
+		}
 	}
 
 	private List<GameRound> buildGameRounds(GameLocation gameLocation, List gameRoundTypes, int roundsPerDay) {

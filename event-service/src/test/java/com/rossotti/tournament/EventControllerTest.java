@@ -154,7 +154,6 @@ public class EventControllerTest {
 		eventDTO.setOrganizationName("Fiesole School District");
 		eventDTO.setTemplateType("four_x_four_pp_20D_2L");
 		eventDTO.setStartDate(LocalDate.of(2020, 9, 29));
-		eventDTO.setHalfDay("None");
 		eventDTO.setSport("WaterPolo");
 		return eventDTO;
 	}

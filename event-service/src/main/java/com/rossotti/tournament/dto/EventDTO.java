@@ -7,15 +7,7 @@ public class EventDTO {
 	private String organizationName;
 	private String templateType;
 	private LocalDate startDate;
-	private String halfDay;
 	private String sport;
-
-	public String getHalfDay() {
-		return halfDay;
-	}
-	public void setHalfDay(String halfDay) {
-		this.halfDay = halfDay;
-	}
 
 	public String getEventName() {
 		return eventName;
