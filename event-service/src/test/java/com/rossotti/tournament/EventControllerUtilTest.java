@@ -2,13 +2,11 @@ package com.rossotti.tournament;
 
 import com.rossotti.tournament.controller.EventControllerUtil;
 import com.rossotti.tournament.dto.RoundDTO;
-import com.rossotti.tournament.dto.TemplateDTO;
 import com.rossotti.tournament.enumeration.GameRoundType;
 import com.rossotti.tournament.enumeration.HalfDay;
 import com.rossotti.tournament.model.*;
 import org.junit.Assert;
 import org.junit.Test;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -92,7 +90,7 @@ public class EventControllerUtilTest {
 
 	@Test
 	public void getGameRounds_none() {
-		RoundDTO roundDTO = getRoundDTO(0, false, false, false, 0, 0);
+		RoundDTO roundDTO = new RoundDTO(0, false, false, false, 0, 0);
 		List<GameRoundType> gameRounds = EventControllerUtil.getGameRounds(roundDTO);
 		Assert.assertNotNull(gameRounds);
 		Assert.assertEquals(0, gameRounds.size());
@@ -100,21 +98,10 @@ public class EventControllerUtilTest {
 
 	@Test
 	public void getGameRounds_found() {
-		RoundDTO roundDTO = getRoundDTO(4, false, true, true, 0, 0);
+		RoundDTO roundDTO =  new RoundDTO(4, false, true, true, 0, 0);
 		List<GameRoundType> gameRounds = EventControllerUtil.getGameRounds(roundDTO);
 		Assert.assertNotNull(gameRounds);
 		Assert.assertEquals(6, gameRounds.size());
-	}
-
-	private RoundDTO getRoundDTO(int preliminary, boolean quarterFinal, boolean semiFinal, boolean championship, int dayHalf, int dayFull) {
-		RoundDTO roundDTO = new RoundDTO();
-		roundDTO.setPreliminary(preliminary);
-		roundDTO.setQuarterFinal(quarterFinal);
-		roundDTO.setSemiFinal(semiFinal);
-		roundDTO.setChampionship(championship);
-		roundDTO.setDayHalf(dayHalf);
-		roundDTO.setDayFull(dayFull);
-		return roundDTO;
 	}
 
 	@Test
@@ -137,7 +124,7 @@ public class EventControllerUtilTest {
 
 	@Test
 	public void buildGameRounds_fullDay_1of1() {
-		RoundDTO roundDTO = getRoundDTO(2, false, true, true, 0, 4);
+		RoundDTO roundDTO = new RoundDTO(2, false, true, true, 0, 4);
 		List<GameRound> gameRounds = EventControllerUtil.buildGameRounds(
 				1,
 				1,
@@ -156,7 +143,7 @@ public class EventControllerUtilTest {
 
 	@Test
 	public void buildGameRounds_fullDay_1of2() {
-		RoundDTO roundDTO = getRoundDTO(2, false, true, true, 0, 2);
+		RoundDTO roundDTO = new RoundDTO(2, false, true, true, 0, 2);
 		List<GameRound> gameRounds = EventControllerUtil.buildGameRounds(
 				1,
 				2,
@@ -173,7 +160,7 @@ public class EventControllerUtilTest {
 
 	@Test
 	public void buildGameRounds_fullDay_2of2() {
-		RoundDTO roundDTO = getRoundDTO(2, false, true, true, 0, 2);
+		RoundDTO roundDTO = new RoundDTO(2, false, true, true, 0, 2);
 		List<GameRound> gameRounds = EventControllerUtil.buildGameRounds(
 				2,
 				2,
@@ -190,7 +177,7 @@ public class EventControllerUtilTest {
 
 	@Test
 	public void buildGameRounds_halfDayFirst_1of1() {
-		RoundDTO roundDTO = getRoundDTO(2, false, true, true, 4, 0);
+		RoundDTO roundDTO = new RoundDTO(2, false, true, true, 4, 0);
 		List<GameRound> gameRounds = EventControllerUtil.buildGameRounds(
 				1,
 				1,
@@ -209,7 +196,7 @@ public class EventControllerUtilTest {
 
 	@Test
 	public void buildGameRounds_halfDayFirst_1of2() {
-		RoundDTO roundDTO = getRoundDTO(4, false, true, true, 2, 4);
+		RoundDTO roundDTO = new RoundDTO(4, false, true, true, 2, 4);
 		List<GameRound> gameRounds = EventControllerUtil.buildGameRounds(
 				1,
 				2,
@@ -226,7 +213,7 @@ public class EventControllerUtilTest {
 
 	@Test
 	public void buildGameRounds_halfDayFirst_2of2() {
-		RoundDTO roundDTO = getRoundDTO(4, false, true, true, 2, 4);
+		RoundDTO roundDTO = new RoundDTO(4, false, true, true, 2, 4);
 		List<GameRound> gameRounds = EventControllerUtil.buildGameRounds(
 				2,
 				2,
@@ -245,7 +232,7 @@ public class EventControllerUtilTest {
 
 	@Test
 	public void buildGameRounds_halfDayLast_1of2() {
-		RoundDTO roundDTO = getRoundDTO(4, false, true, true, 2, 4);
+		RoundDTO roundDTO = new RoundDTO(4, false, true, true, 2, 4);
 		List<GameRound> gameRounds = EventControllerUtil.buildGameRounds(
 				1,
 				2,
@@ -264,7 +251,7 @@ public class EventControllerUtilTest {
 
 	@Test
 	public void buildGameRounds_halfDayLast_2of2() {
-		RoundDTO roundDTO = getRoundDTO(4, false, true, true, 2, 4);
+		RoundDTO roundDTO = new RoundDTO(4, false, true, true, 2, 4);
 		List<GameRound> gameRounds = EventControllerUtil.buildGameRounds(
 				2,
 				2,

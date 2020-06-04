@@ -2,7 +2,6 @@ package com.rossotti.tournament.controller;
 
 import com.rossotti.tournament.client.TemplateFinderService;
 import com.rossotti.tournament.dto.EventDTO;
-import com.rossotti.tournament.dto.RoundDTO;
 import com.rossotti.tournament.dto.TemplateDTO;
 import com.rossotti.tournament.enumeration.*;
 import com.rossotti.tournament.exception.EntityExistsException;

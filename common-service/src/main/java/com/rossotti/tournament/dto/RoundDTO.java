@@ -10,6 +10,18 @@ public class RoundDTO {
 	private int dayHalf;
 	private int dayFull;
 
+	public RoundDTO() {
+	}
+
+	public RoundDTO(int preliminary, boolean quarterFinal, boolean semiFinal, boolean championship, int dayHalf, int dayFull) {
+		this.preliminary = preliminary;
+		this.quarterFinal = quarterFinal;
+		this.semiFinal = semiFinal;
+		this.championship = championship;
+		this.dayHalf = dayHalf;
+		this.dayFull = dayFull;
+	}
+
 	public int getPreliminary() {
 		return preliminary;
 	}

@@ -119,7 +119,7 @@ public class EventControllerBeanTest {
 	}
 
 	@Test
-	public void createEvent_persistenceException() throws Exception {
+	public void createEvent_PersistenceException() throws Exception {
 		when(organizationJpaService.findByOrganizationNameAsOfDate(anyString(), any()))
 			.thenReturn(createMockOrganization(true, true));
 		when(eventJpaService.findByOrganizationNameAsOfDateTemplateType(anyString(), any(), any()))
@@ -132,7 +132,7 @@ public class EventControllerBeanTest {
 	}
 
 	@Test
-	public void createEvent_success() throws Exception {
+	public void createEvent_Success() throws Exception {
 		when(organizationJpaService.findByOrganizationNameAsOfDate(anyString(), any()))
 			.thenReturn(createMockOrganization(true, true));
 		when(eventJpaService.findByOrganizationNameAsOfDateTemplateType(anyString(), any(), any()))
@@ -207,22 +207,11 @@ public class EventControllerBeanTest {
 		templateDTO.setGridTeams(4);
 		templateDTO.setEventDays(2);
 		templateDTO.setEventLocations(2);
-		templateDTO.setRoundDTO(new RoundDTO());
 		if (isSizeGreaterThanZero) {
-			templateDTO.getRoundDTO().setPreliminary(4);
-			templateDTO.getRoundDTO().setPlayoff1(Boolean.FALSE);
-			templateDTO.getRoundDTO().setPlayoff2(Boolean.FALSE);
-			templateDTO.getRoundDTO().setQuarterFinal(Boolean.TRUE);
-			templateDTO.getRoundDTO().setSemiFinal(Boolean.TRUE);
-			templateDTO.getRoundDTO().setChampionship(Boolean.TRUE);
+			templateDTO.setRoundDTO(new RoundDTO(4, false, true, true, 0, 3));
 		}
 		else {
-			templateDTO.getRoundDTO().setPreliminary(0);
-			templateDTO.getRoundDTO().setPlayoff1(Boolean.FALSE);
-			templateDTO.getRoundDTO().setPlayoff2(Boolean.FALSE);
-			templateDTO.getRoundDTO().setQuarterFinal(Boolean.FALSE);
-			templateDTO.getRoundDTO().setSemiFinal(Boolean.FALSE);
-			templateDTO.getRoundDTO().setChampionship(Boolean.FALSE);
+			templateDTO.setRoundDTO(new RoundDTO(0, false, false, false, 0, 0));
 		}
 		return templateDTO;		
 	}
