@@ -146,6 +146,7 @@ public class EventControllerBeanTest {
 		Assert.assertEquals(16, event.getEventTeams().size());
 		Assert.assertEquals(2, event.getGameDates().size());
 		Assert.assertEquals(2, event.getGameDates().get(0).getGameLocations().size());
+		Assert.assertEquals(3, event.getGameDates().get(0).getGameLocations().get(0).getGameRounds().size());
 	}
 
 	private EventDTO createMockInitialEventDTO() {
