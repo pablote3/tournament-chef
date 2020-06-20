@@ -3,6 +3,7 @@
     "templateType": "four_x_four_rr_15D_2L",
     "gridGroups": 4,
     "gridTeams": 4,
+    "totalTeams": 16,
     "eventDays": 1.5,
     "eventLocations": 2,
     "roundDTO": {

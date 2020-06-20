@@ -206,6 +206,7 @@ public class EventControllerBeanTest {
 		templateDTO.setTemplateType(TemplateType.four_x_four_pp_20D_2L);
 		templateDTO.setGridGroups(4);
 		templateDTO.setGridTeams(4);
+		templateDTO.setTotalTeams(16);
 		templateDTO.setEventDays(2);
 		templateDTO.setEventLocations(2);
 		if (isSizeGreaterThanZero) {

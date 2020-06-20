@@ -35,6 +35,7 @@ public class TemplateFinderTest {
 		Assert.assertNotNull(template);
 		Assert.assertEquals(4, template.getGridGroups());
 		Assert.assertEquals(4, template.getGridTeams());
+		Assert.assertEquals(16, template.getTotalTeams());
 	}
 
 	@Test

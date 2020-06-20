@@ -63,8 +63,7 @@ public class EventControllerBean {
 				if (baseTeam != null && baseLocation != null && gameRounds.size() > 0) {
 					event.setEventTeams(new ArrayList<>());
 					EventTeam eventTeam;
-					int teamCount = templateDTO.getGridGroups() * templateDTO.getGridTeams();
-					for (int i = 1; i < teamCount + 1; i++) {
+					for (int i = 1; i < templateDTO.getTotalTeams() + 1; i++) {
 						eventTeam = new EventTeam();
 						eventTeam.setEvent(event);
 						eventTeam.setOrganizationTeam(baseTeam);
