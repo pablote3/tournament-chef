@@ -1,6 +1,6 @@
 package com.rossotti.tournament;
 
-import com.rossotti.tournament.controller.EventControllerUtil;
+import com.rossotti.tournament.service.EventServiceUtil;
 import com.rossotti.tournament.dto.RoundDTO;
 import com.rossotti.tournament.enumeration.GameRoundType;
 import com.rossotti.tournament.enumeration.HalfDay;
@@ -11,7 +11,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EventControllerUtilTest {
+public class EventServiceUtilTest {
 
 	private static final String baseTeamName = "BaseTeam";
 	private static final String baseLocationName = "BaseLocation";
@@ -19,7 +19,7 @@ public class EventControllerUtilTest {
 	@Test
 	public void getOrganizationTeam_notFound_emptyList() {
 		List<OrganizationTeam> organizationTeams = new ArrayList<>();
-		OrganizationTeam organizationTeam = EventControllerUtil.getOrganizationTeam(organizationTeams, baseTeamName);
+		OrganizationTeam organizationTeam = EventServiceUtil.getOrganizationTeam(organizationTeams, baseTeamName);
 		Assert.assertNull(organizationTeam);
 	}
 
@@ -30,7 +30,7 @@ public class EventControllerUtilTest {
 		organizationTeams.add(getOrganizationTeam("teambase"));
 		organizationTeams.add(getOrganizationTeam("BaseTeam2"));
 		organizationTeams.add(getOrganizationTeam("baseTeam"));
-		OrganizationTeam organizationTeam = EventControllerUtil.getOrganizationTeam(organizationTeams, baseTeamName);
+		OrganizationTeam organizationTeam = EventServiceUtil.getOrganizationTeam(organizationTeams, baseTeamName);
 		Assert.assertNull(organizationTeam);
 	}
 
@@ -41,7 +41,7 @@ public class EventControllerUtilTest {
 		organizationTeams.add(getOrganizationTeam("teambase"));
 		organizationTeams.add(getOrganizationTeam("BaseTeam"));
 		organizationTeams.add(getOrganizationTeam("baseTeam"));
-		OrganizationTeam organizationTeam = EventControllerUtil.getOrganizationTeam(organizationTeams, baseTeamName);
+		OrganizationTeam organizationTeam = EventServiceUtil.getOrganizationTeam(organizationTeams, baseTeamName);
 		Assert.assertNotNull(organizationTeam);
 		Assert.assertEquals(baseTeamName, organizationTeam.getTeamName());
 	}
@@ -55,7 +55,7 @@ public class EventControllerUtilTest {
 	@Test
 	public void getOrganizationLocation_notFound_emptyList() {
 		List<OrganizationLocation> organizationLocations = new ArrayList<>();
-		OrganizationLocation organizationLocation = EventControllerUtil.getOrganizationLocation(organizationLocations, baseLocationName);
+		OrganizationLocation organizationLocation = EventServiceUtil.getOrganizationLocation(organizationLocations, baseLocationName);
 		Assert.assertNull(organizationLocation);
 	}
 
@@ -66,7 +66,7 @@ public class EventControllerUtilTest {
 		organizationLocations.add(getOrganizationLocation("locationbase"));
 		organizationLocations.add(getOrganizationLocation("BaseLocation2"));
 		organizationLocations.add(getOrganizationLocation("baseLocation"));
-		OrganizationLocation organizationLocation = EventControllerUtil.getOrganizationLocation(organizationLocations, baseLocationName);
+		OrganizationLocation organizationLocation = EventServiceUtil.getOrganizationLocation(organizationLocations, baseLocationName);
 		Assert.assertNull(organizationLocation);
 	}
 
@@ -77,7 +77,7 @@ public class EventControllerUtilTest {
 		organizationLocations.add(getOrganizationLocation("locationbase"));
 		organizationLocations.add(getOrganizationLocation("BaseLocation"));
 		organizationLocations.add(getOrganizationLocation("baseLocation"));
-		OrganizationLocation organizationLocation = EventControllerUtil.getOrganizationLocation(organizationLocations, baseLocationName);
+		OrganizationLocation organizationLocation = EventServiceUtil.getOrganizationLocation(organizationLocations, baseLocationName);
 		Assert.assertNotNull(organizationLocation);
 		Assert.assertEquals(baseLocationName, organizationLocation.getLocationName());
 	}
@@ -91,7 +91,7 @@ public class EventControllerUtilTest {
 	@Test
 	public void getGameRounds_none() {
 		RoundDTO roundDTO = new RoundDTO(0, false, false, false, 0, 0);
-		List<GameRoundType> gameRounds = EventControllerUtil.getGameRounds(roundDTO);
+		List<GameRoundType> gameRounds = EventServiceUtil.getGameRounds(roundDTO);
 		Assert.assertNotNull(gameRounds);
 		Assert.assertEquals(0, gameRounds.size());
 	}
@@ -99,39 +99,39 @@ public class EventControllerUtilTest {
 	@Test
 	public void getGameRounds_found() {
 		RoundDTO roundDTO =  new RoundDTO(4, false, true, true, 0, 0);
-		List<GameRoundType> gameRounds = EventControllerUtil.getGameRounds(roundDTO);
+		List<GameRoundType> gameRounds = EventServiceUtil.getGameRounds(roundDTO);
 		Assert.assertNotNull(gameRounds);
 		Assert.assertEquals(6, gameRounds.size());
 	}
 
 	@Test
 	public void determineHalfDay_first() {
-		HalfDay halfDay = EventControllerUtil.determineHalfDay(LocalDate.of(2020, 6, 5), 2.0f);
+		HalfDay halfDay = EventServiceUtil.determineHalfDay(LocalDate.of(2020, 6, 5), 2.0f);
 		Assert.assertEquals(HalfDay.First, halfDay);
 	}
 
 	@Test
 	public void determineHalfDay_last() {
-		HalfDay halfDay = EventControllerUtil.determineHalfDay(LocalDate.of(2020, 6, 6), 2.0f);
+		HalfDay halfDay = EventServiceUtil.determineHalfDay(LocalDate.of(2020, 6, 6), 2.0f);
 		Assert.assertEquals(HalfDay.Last, halfDay);
 	}
 
 	@Test
 	public void determineHalfDay_none() {
-		HalfDay halfDay = EventControllerUtil.determineHalfDay(LocalDate.of(2020, 6, 6), 2.5f);
+		HalfDay halfDay = EventServiceUtil.determineHalfDay(LocalDate.of(2020, 6, 6), 2.5f);
 		Assert.assertEquals(HalfDay.None, halfDay);
 	}
 
 	@Test
 	public void buildGameRounds_fullDay_1of1() {
 		RoundDTO roundDTO = new RoundDTO(2, false, true, true, 0, 4);
-		List<GameRound> gameRounds = EventControllerUtil.buildGameRounds(
+		List<GameRound> gameRounds = EventServiceUtil.buildGameRounds(
 				1,
 				1,
 				0,
 				HalfDay.None,
 				roundDTO,
-				EventControllerUtil.getGameRounds(roundDTO),
+				EventServiceUtil.getGameRounds(roundDTO),
 				new GameLocation()
 		);
 		Assert.assertEquals(4, gameRounds.size());
@@ -144,13 +144,13 @@ public class EventControllerUtilTest {
 	@Test
 	public void buildGameRounds_fullDay_1of2() {
 		RoundDTO roundDTO = new RoundDTO(2, false, true, true, 0, 2);
-		List<GameRound> gameRounds = EventControllerUtil.buildGameRounds(
+		List<GameRound> gameRounds = EventServiceUtil.buildGameRounds(
 				1,
 				2,
 				0,
 				HalfDay.None,
 				roundDTO,
-				EventControllerUtil.getGameRounds(roundDTO),
+				EventServiceUtil.getGameRounds(roundDTO),
 				new GameLocation()
 		);
 		Assert.assertEquals(2, gameRounds.size());
@@ -161,13 +161,13 @@ public class EventControllerUtilTest {
 	@Test
 	public void buildGameRounds_fullDay_2of2() {
 		RoundDTO roundDTO = new RoundDTO(2, false, true, true, 0, 2);
-		List<GameRound> gameRounds = EventControllerUtil.buildGameRounds(
+		List<GameRound> gameRounds = EventServiceUtil.buildGameRounds(
 				2,
 				2,
 				2,
 				HalfDay.None,
 				roundDTO,
-				EventControllerUtil.getGameRounds(roundDTO),
+				EventServiceUtil.getGameRounds(roundDTO),
 				new GameLocation()
 		);
 		Assert.assertEquals(2, gameRounds.size());
@@ -178,13 +178,13 @@ public class EventControllerUtilTest {
 	@Test
 	public void buildGameRounds_halfDayFirst_1of1() {
 		RoundDTO roundDTO = new RoundDTO(2, false, true, true, 4, 0);
-		List<GameRound> gameRounds = EventControllerUtil.buildGameRounds(
+		List<GameRound> gameRounds = EventServiceUtil.buildGameRounds(
 				1,
 				1,
 				0,
 				HalfDay.First,
 				roundDTO,
-				EventControllerUtil.getGameRounds(roundDTO),
+				EventServiceUtil.getGameRounds(roundDTO),
 				new GameLocation()
 		);
 		Assert.assertEquals(4, gameRounds.size());
@@ -197,13 +197,13 @@ public class EventControllerUtilTest {
 	@Test
 	public void buildGameRounds_halfDayFirst_1of2() {
 		RoundDTO roundDTO = new RoundDTO(4, false, true, true, 2, 4);
-		List<GameRound> gameRounds = EventControllerUtil.buildGameRounds(
+		List<GameRound> gameRounds = EventServiceUtil.buildGameRounds(
 				1,
 				2,
 				0,
 				HalfDay.First,
 				roundDTO,
-				EventControllerUtil.getGameRounds(roundDTO),
+				EventServiceUtil.getGameRounds(roundDTO),
 				new GameLocation()
 		);
 		Assert.assertEquals(2, gameRounds.size());
@@ -214,13 +214,13 @@ public class EventControllerUtilTest {
 	@Test
 	public void buildGameRounds_halfDayFirst_2of2() {
 		RoundDTO roundDTO = new RoundDTO(4, false, true, true, 2, 4);
-		List<GameRound> gameRounds = EventControllerUtil.buildGameRounds(
+		List<GameRound> gameRounds = EventServiceUtil.buildGameRounds(
 				2,
 				2,
 				2,
 				HalfDay.First,
 				roundDTO,
-				EventControllerUtil.getGameRounds(roundDTO),
+				EventServiceUtil.getGameRounds(roundDTO),
 				new GameLocation()
 		);
 		Assert.assertEquals(4, gameRounds.size());
@@ -233,13 +233,13 @@ public class EventControllerUtilTest {
 	@Test
 	public void buildGameRounds_halfDayLast_1of2() {
 		RoundDTO roundDTO = new RoundDTO(4, false, true, true, 2, 4);
-		List<GameRound> gameRounds = EventControllerUtil.buildGameRounds(
+		List<GameRound> gameRounds = EventServiceUtil.buildGameRounds(
 				1,
 				2,
 				0,
 				HalfDay.Last,
 				roundDTO,
-				EventControllerUtil.getGameRounds(roundDTO),
+				EventServiceUtil.getGameRounds(roundDTO),
 				new GameLocation()
 		);
 		Assert.assertEquals(4, gameRounds.size());
@@ -252,13 +252,13 @@ public class EventControllerUtilTest {
 	@Test
 	public void buildGameRounds_halfDayLast_2of2() {
 		RoundDTO roundDTO = new RoundDTO(4, false, true, true, 2, 4);
-		List<GameRound> gameRounds = EventControllerUtil.buildGameRounds(
+		List<GameRound> gameRounds = EventServiceUtil.buildGameRounds(
 				2,
 				2,
 				4,
 				HalfDay.Last,
 				roundDTO,
-				EventControllerUtil.getGameRounds(roundDTO),
+				EventServiceUtil.getGameRounds(roundDTO),
 				new GameLocation()
 		);
 		Assert.assertEquals(2, gameRounds.size());

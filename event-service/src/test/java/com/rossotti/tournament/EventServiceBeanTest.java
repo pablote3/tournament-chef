@@ -1,7 +1,6 @@
 package com.rossotti.tournament;
 
 import com.rossotti.tournament.client.TemplateFinderService;
-import com.rossotti.tournament.controller.EventControllerBean;
 import com.rossotti.tournament.dto.EventDTO;
 import com.rossotti.tournament.dto.RoundDTO;
 import com.rossotti.tournament.dto.TemplateDTO;
@@ -15,6 +14,7 @@ import com.rossotti.tournament.model.Event;
 import com.rossotti.tournament.model.Organization;
 import com.rossotti.tournament.model.OrganizationLocation;
 import com.rossotti.tournament.model.OrganizationTeam;
+import com.rossotti.tournament.service.EventServiceBean;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,7 +32,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class EventControllerBeanTest {
+public class EventServiceBeanTest {
 	@Mock
 	private OrganizationJpaService organizationJpaService;
 
@@ -43,13 +43,13 @@ public class EventControllerBeanTest {
 	private TemplateFinderService templateFinderService;
 
 	@InjectMocks
-	private EventControllerBean eventController;
+	private EventServiceBean eventService;
 
 	@Test
 	public void findByOrganizationNameAsOfDate_notFound() {
 		when(organizationJpaService.findByOrganizationNameAsOfDate(anyString(), any()))
 			.thenReturn(null);
-		NoSuchEntityException exception = assertThrows(NoSuchEntityException.class, () -> eventController.createEvent(createMockInitialEventDTO()));
+		NoSuchEntityException exception = assertThrows(NoSuchEntityException.class, () -> eventService.createEvent(createMockInitialEventDTO()));
 		Assert.assertTrue(exception.getMessage().contains("Organization does not exist"));
 	}
 
@@ -59,7 +59,7 @@ public class EventControllerBeanTest {
 			.thenReturn(createMockOrganization(true, true));
 		when(eventJpaService.findByOrganizationNameAsOfDateTemplateType(anyString(), any(), any()))
 			.thenReturn(createMockEvent());
-		EntityExistsException exception = assertThrows(EntityExistsException.class, () -> eventController.createEvent(createMockInitialEventDTO()));
+		EntityExistsException exception = assertThrows(EntityExistsException.class, () -> eventService.createEvent(createMockInitialEventDTO()));
 		Assert.assertTrue(exception.getMessage().contains("Event already exists"));
 	}
 
@@ -71,7 +71,7 @@ public class EventControllerBeanTest {
 			.thenReturn(null);
 		when(templateFinderService.findTemplateType(anyString()))
 			.thenThrow(IOException.class);
-		assertThrows(IOException.class, () -> eventController.createEvent(createMockInitialEventDTO()));
+		assertThrows(IOException.class, () -> eventService.createEvent(createMockInitialEventDTO()));
 	}
 
 	@Test
@@ -82,7 +82,7 @@ public class EventControllerBeanTest {
 			.thenReturn(null);
 		when(templateFinderService.findTemplateType(anyString()))
 			.thenThrow(NoSuchEntityException.class);
-		assertThrows(NoSuchEntityException.class, () -> eventController.createEvent(createMockInitialEventDTO()));
+		assertThrows(NoSuchEntityException.class, () -> eventService.createEvent(createMockInitialEventDTO()));
 	}
 
 	@Test
@@ -93,7 +93,7 @@ public class EventControllerBeanTest {
 			.thenReturn(null);
 		when(templateFinderService.findTemplateType(anyString()))
 			.thenReturn(createMockTemplateDTO(true));
-		assertThrows(NoSuchEntityException.class, () -> eventController.createEvent(createMockInitialEventDTO()));
+		assertThrows(NoSuchEntityException.class, () -> eventService.createEvent(createMockInitialEventDTO()));
 	}
 
 	@Test
@@ -104,7 +104,7 @@ public class EventControllerBeanTest {
 			.thenReturn(null);
 		when(templateFinderService.findTemplateType(anyString()))
 			.thenReturn(createMockTemplateDTO(true));
-		assertThrows(NoSuchEntityException.class, () -> eventController.createEvent(createMockInitialEventDTO()));
+		assertThrows(NoSuchEntityException.class, () -> eventService.createEvent(createMockInitialEventDTO()));
 	}
 
 	@Test
@@ -115,7 +115,7 @@ public class EventControllerBeanTest {
 			.thenReturn(null);
 		when(templateFinderService.findTemplateType(anyString()))
 			.thenReturn(createMockTemplateDTO(false));
-		assertThrows(InitializationException.class, () -> eventController.createEvent(createMockInitialEventDTO()));
+		assertThrows(InitializationException.class, () -> eventService.createEvent(createMockInitialEventDTO()));
 	}
 
 	@Test
@@ -128,7 +128,7 @@ public class EventControllerBeanTest {
 			.thenReturn(createMockTemplateDTO(true));
 		when(eventJpaService.save(any()))
 			.thenThrow(PersistenceException.class);
-		assertThrows(PersistenceException.class, () -> eventController.createEvent(createMockInitialEventDTO()));
+		assertThrows(PersistenceException.class, () -> eventService.createEvent(createMockInitialEventDTO()));
 	}
 
 	@Test
@@ -141,7 +141,7 @@ public class EventControllerBeanTest {
 			.thenReturn(createMockTemplateDTO(true));
 		when(eventJpaService.save(any()))
 			.thenReturn(createMockEvent());
-		Event event = eventController.createEvent(createMockInitialEventDTO());
+		Event event = eventService.createEvent(createMockInitialEventDTO());
 		Assert.assertEquals("Algarve Soccer Cup", event.getEventName());
 		Assert.assertEquals(16, event.getEventTeams().size());
 		Assert.assertEquals(2, event.getGameDates().size());

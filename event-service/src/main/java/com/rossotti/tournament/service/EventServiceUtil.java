@@ -1,4 +1,4 @@
-package com.rossotti.tournament.controller;
+package com.rossotti.tournament.service;
 
 import com.rossotti.tournament.dto.RoundDTO;
 import com.rossotti.tournament.enumeration.GameRoundType;
@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EventControllerUtil {
+public class EventServiceUtil {
 
 	public static OrganizationTeam getOrganizationTeam(List<OrganizationTeam> organizationTeams, String baseTeamName) {
 		OrganizationTeam baseTeam = null;
@@ -91,5 +91,9 @@ public class EventControllerUtil {
 			}
 		}
 		return gameRounds;
+	}
+
+	public static void validate(Event event) {
+	//	if (event.getEventTeams().size() != )
 	}
 }
