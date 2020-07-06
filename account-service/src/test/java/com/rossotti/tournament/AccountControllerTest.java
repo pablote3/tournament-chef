@@ -4,7 +4,7 @@ import com.rossotti.tournament.controller.AccountController;
 import com.rossotti.tournament.dto.OrganizationDTO;
 import com.rossotti.tournament.dto.UserDTO;
 import com.rossotti.tournament.exception.EntityExistsException;
-import com.rossotti.tournament.exception.InactiveEntityException;
+import com.rossotti.tournament.exception.InvalidEntityException;
 import com.rossotti.tournament.exception.UnauthorizedEntityException;
 import com.rossotti.tournament.enumeration.UserStatus;
 import com.rossotti.tournament.enumeration.UserType;
@@ -41,7 +41,7 @@ public class AccountControllerTest {
 	public void findByUserEmail_foundInactive() {
 		when(userJpaService.findByEmail(anyString()))
 			.thenReturn(createMockUser(UserStatus.Inactive, UserType.Event));
-		InactiveEntityException exception = assertThrows(InactiveEntityException.class, () -> accountController.createAccount(createMockOrganizationDTO()));
+		InvalidEntityException exception = assertThrows(InvalidEntityException.class, () -> accountController.createAccount(createMockOrganizationDTO()));
 		Assert.assertTrue(exception.getMessage().contains("User is in an inactive status"));
 	}
 
@@ -71,7 +71,7 @@ public class AccountControllerTest {
 			.thenReturn(null);
 		when(organizationJpaService.findByOrganizationName(anyString()))
 			.thenReturn(createMockOrganizations());
-		InactiveEntityException exception = assertThrows(InactiveEntityException.class, () -> accountController.createAccount(createMockOrganizationDTO()));
+		InvalidEntityException exception = assertThrows(InvalidEntityException.class, () -> accountController.createAccount(createMockOrganizationDTO()));
 		Assert.assertTrue(exception.getMessage().contains("Organization is in an inactive status"));
 	}
 

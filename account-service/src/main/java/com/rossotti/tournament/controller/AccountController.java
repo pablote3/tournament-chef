@@ -2,7 +2,7 @@ package com.rossotti.tournament.controller;
 
 import com.rossotti.tournament.dto.OrganizationDTO;
 import com.rossotti.tournament.exception.EntityExistsException;
-import com.rossotti.tournament.exception.InactiveEntityException;
+import com.rossotti.tournament.exception.InvalidEntityException;
 import com.rossotti.tournament.exception.UnauthorizedEntityException;
 import com.rossotti.tournament.model.Organization;
 import com.rossotti.tournament.model.User;
@@ -48,7 +48,7 @@ public class AccountController {
 			}
 			else {
 				logger.debug("createAccount - inactiveUser " + user.getUserStatus());
-				throw new InactiveEntityException(User.class);
+				throw new InvalidEntityException(User.class);
 			}
 		}
 	}
@@ -67,7 +67,7 @@ public class AccountController {
 			}
 			else {
 				logger.debug("createOrganization - findByOrganizationName: orgName = " + organizationDTO.getOrganizationName() + " exists");
-				throw new InactiveEntityException(Organization.class);
+				throw new InvalidEntityException(Organization.class);
 			}
 		}
 		else {
