@@ -171,6 +171,43 @@ public class EventServiceBeanTest {
 		assertThrows(InvalidEntityException.class, () -> eventService.updateEvent(createMockEvent(EventStatus.Scheduled)));
 	}
 
+	@Test
+	public void updateEvent_validateRequestEvent_InvalidStatus() {
+		when(eventJpaService.findByOrganizationNameAsOfDateTemplateType(anyString(), any(), any()))
+			.thenReturn(createMockEvent(EventStatus.InProgress));
+		when(eventServiceHelperBean.validateDatabaseEvent(any()))
+			.thenReturn(true);
+		when(eventServiceHelperBean.validateRequestEvent(any()))
+			.thenReturn(false);
+		assertThrows(InvalidEntityException.class, () -> eventService.updateEvent(createMockEvent(EventStatus.Scheduled)));
+	}
+
+	@Test
+	public void updateEvent_findTemplate_fileNotFound() throws Exception {
+		when(eventJpaService.findByOrganizationNameAsOfDateTemplateType(anyString(), any(), any()))
+			.thenReturn(createMockEvent(EventStatus.InProgress));
+		when(eventServiceHelperBean.validateDatabaseEvent(any()))
+			.thenReturn(true);
+		when(eventServiceHelperBean.validateRequestEvent(any()))
+			.thenReturn(true);
+		when(templateFinderService.findTemplateType(anyString()))
+			.thenThrow(IOException.class);
+		assertThrows(IOException.class, () -> eventService.updateEvent(createMockEvent(EventStatus.Scheduled)));
+	}
+
+	@Test
+	public void updateEvent_findTemplate_TemplateTypeNotFound() throws Exception {
+		when(eventJpaService.findByOrganizationNameAsOfDateTemplateType(anyString(), any(), any()))
+			.thenReturn(createMockEvent(EventStatus.InProgress));
+		when(eventServiceHelperBean.validateDatabaseEvent(any()))
+			.thenReturn(true);
+		when(eventServiceHelperBean.validateRequestEvent(any()))
+			.thenReturn(true);
+		when(templateFinderService.findTemplateType(anyString()))
+			.thenThrow(NoSuchEntityException.class);
+		assertThrows(NoSuchEntityException.class, () -> eventService.updateEvent(createMockEvent(EventStatus.Scheduled)));
+	}
+
 	private EventDTO createMockInitialEventDTO() {
 		EventDTO eventDTO = new EventDTO();
 		eventDTO.setEventName("Algarve Soccer Cup");
@@ -222,6 +259,7 @@ public class EventServiceBeanTest {
 		event.setEventName("Cypress Cup");
 		event.setEventStatus(eventStatus);
 		event.setOrganization(createMockOrganization(true, true));
+		event.setTemplateType(TemplateType.two_x_four_pp_10D_1L);
 		return event;
 	}
 	
