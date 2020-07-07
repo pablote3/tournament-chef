@@ -3,6 +3,7 @@ package com.rossotti.tournament.model;
 import com.rossotti.tournament.enumeration.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -85,6 +86,7 @@ public class Event extends BaseEntity {
 
 	@Column(nullable=false)
 	@NotNull(message="StartDate is mandatory")
+	@FutureOrPresent(message="StartDate must be present or future")
 	private LocalDate startDate;
 	public LocalDate getStartDate() {
 		return startDate;
@@ -95,6 +97,7 @@ public class Event extends BaseEntity {
 
 	@Column(nullable=false)
 	@NotNull(message="EndDate is mandatory")
+	@FutureOrPresent(message="EndDate must be present or future")
 	private LocalDate endDate;
 	public LocalDate getEndDate() {
 		return endDate;

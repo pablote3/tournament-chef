@@ -68,7 +68,7 @@ public class EventRepositoryTest {
 	@Test
 	public void findByEventName_Found() {
 		List<Event> events = eventRepository.findByEventName("Lombardy Halloween Invitational");
-		Assert.assertEquals(2, events.size());
+		Assert.assertEquals(4, events.size());
 	}
 
 	@Test
@@ -80,7 +80,7 @@ public class EventRepositoryTest {
 	@Test
 	public void findByOrganizationName_Found() {
 		List<Event> events = eventRepository.findByOrganizationName("FC Juventes");
-		Assert.assertEquals(4, events.size());
+		Assert.assertEquals(6, events.size());
 	}
 
 	@Test
@@ -139,8 +139,8 @@ public class EventRepositoryTest {
 
 	@Test
 	public void create() {
-		eventRepository.save(createMockEvent(7L, "Tavagnacco Fall Classic", 6L, 1L, 6L, 15L, LocalDate.of(2012, 9, 10), LocalDate.of(2012, 9, 11)));
-		Event event = eventRepository.findByEventNameAsOfDateTemplateType("Tavagnacco Fall Classic", LocalDate.of(2012, 9, 10), TemplateType.four_x_four_pp_20D_2L);
+		eventRepository.save(createMockEvent(7L, "Tavagnacco Fall Classic", 6L, 1L, 6L, 15L, LocalDate.now(), LocalDate.now().plusDays(1L)));
+		Event event = eventRepository.findByEventNameAsOfDateTemplateType("Tavagnacco Fall Classic", LocalDate.now(), TemplateType.four_x_four_pp_20D_2L);
 		Assert.assertEquals("Tavagnacco Fall Classic", event.getEventName());
 		Assert.assertEquals(2, event.getEventTeams().size());
 		Assert.assertEquals(2, event.getGameDates().size());
@@ -157,6 +157,30 @@ public class EventRepositoryTest {
 	}
 
 	@Test
+	public void create_ConstraintViolation_StartDateMissing() {
+		Exception exception = assertThrows(ConstraintViolationException.class, () -> eventRepository.save(createMockEvent(1L, "Milan Holiday Tournament", 1L, 4L, 1L, 2L, null, LocalDate.of(2012, 9, 11))));
+		Assert.assertTrue(exception.getMessage().contains("StartDate is mandatory"));
+	}
+
+	@Test
+	public void create_ConstraintViolation_StartDatePast() {
+		Exception exception = assertThrows(ConstraintViolationException.class, () -> eventRepository.save(createMockEvent(1L, "Milan Holiday Tournament", 1L, 4L, 1L, 2L, LocalDate.of(2012, 9, 10), LocalDate.of(2012, 9, 11))));
+		Assert.assertTrue(exception.getMessage().contains("StartDate must be present or future"));
+	}
+
+	@Test
+	public void create_ConstraintViolation_EndDateMissing() {
+		Exception exception = assertThrows(ConstraintViolationException.class, () -> eventRepository.save(createMockEvent(1L, "Milan Holiday Tournament", 1L, 4L, 1L, 2L, LocalDate.of(2012, 9, 11), null)));
+		Assert.assertTrue(exception.getMessage().contains("EndDate is mandatory"));
+	}
+
+	@Test
+	public void create_ConstraintViolation_EndDatePast() {
+		Exception exception = assertThrows(ConstraintViolationException.class, () -> eventRepository.save(createMockEvent(1L, "Milan Holiday Tournament", 1L, 4L, 1L, 2L, LocalDate.of(2012, 9, 10), LocalDate.of(2012, 9, 11))));
+		Assert.assertTrue(exception.getMessage().contains("EndDate must be present or future"));
+	}
+
+	@Test
 	public void create_Duplicate() {
 		Exception exception = assertThrows(DataIntegrityViolationException.class, () -> eventRepository.save(createMockEvent(1L, "Lombardy Halloween Invitational", 1L, 4L, 1L, 2L, LocalDate.of(2020, 10, 24), LocalDate.of(2020, 10, 25))));
 		Assert.assertTrue(exception.getMessage().contains("could not execute statement"));
@@ -164,14 +188,14 @@ public class EventRepositoryTest {
 
 	@Test
 	public void update() {
-		eventRepository.save(updateMockEvent(LocalDate.of(2020, 10, 25), EventStatus.Complete));
-		Event event = eventRepository.findByEventNameAsOfDateTemplateType("Lombardy Halloween Invitational", LocalDate.of(2020, 10, 25), TemplateType.four_x_four_pp_20D_2L);
+		eventRepository.save(updateMockEvent(LocalDate.now(), EventStatus.Complete));
+		Event event = eventRepository.findByEventNameAsOfDateTemplateType("Lombardy Halloween Invitational", LocalDate.now(), TemplateType.four_x_four_pp_20D_2L);
 		Assert.assertEquals(EventStatus.Complete, event.getEventStatus());
 	}
 
 	@Test
 	public void update_TransactionSystemException_EventStatusMissing() {
-		Exception exception = assertThrows(TransactionSystemException.class, () -> eventRepository.save(updateMockEvent(LocalDate.of(2020, 10, 25), null)));
+		Exception exception = assertThrows(TransactionSystemException.class, () -> eventRepository.save(updateMockEvent(LocalDate.now(), null)));
 		Assert.assertTrue(exception.getCause().getCause().getMessage().contains("EventStatus is mandatory"));
 	}
 
@@ -201,7 +225,7 @@ public class EventRepositoryTest {
 		event.getEventTeams().add(createMockEventTeam(createMockOrganizationTeam(orgTeamId1), event, "BaseTeam1"));
 		event.getEventTeams().add(createMockEventTeam(createMockOrganizationTeam(orgTeamId2), event, "BaseTeam2"));
 		event.getGameDates().add(createMockGameDate(startDate, event, gameLocationId1, gameLocationId2));
-		if (Period.between(startDate, endDate).getDays() != 0) {
+		if (event.getStartDate() != null && event.getEndDate() != null && Period.between(startDate, endDate).getDays() != 0) {
 			event.getGameDates().add(createMockGameDate(endDate, event, gameLocationId1, gameLocationId2));
 		}
 		event.setCreateTs(LocalDateTime.of(2019, 10, 27, 20, 30));
