@@ -4,9 +4,11 @@ import com.rossotti.tournament.client.TemplateFinderService;
 import com.rossotti.tournament.dto.EventDTO;
 import com.rossotti.tournament.dto.RoundDTO;
 import com.rossotti.tournament.dto.TemplateDTO;
+import com.rossotti.tournament.enumeration.EventStatus;
 import com.rossotti.tournament.enumeration.TemplateType;
 import com.rossotti.tournament.exception.EntityExistsException;
 import com.rossotti.tournament.exception.InitializationException;
+import com.rossotti.tournament.exception.InvalidEntityException;
 import com.rossotti.tournament.exception.NoSuchEntityException;
 import com.rossotti.tournament.jpa.service.EventJpaService;
 import com.rossotti.tournament.jpa.service.OrganizationJpaService;
@@ -15,6 +17,7 @@ import com.rossotti.tournament.model.Organization;
 import com.rossotti.tournament.model.OrganizationLocation;
 import com.rossotti.tournament.model.OrganizationTeam;
 import com.rossotti.tournament.service.EventServiceBean;
+import com.rossotti.tournament.service.EventServiceHelperBean;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -42,11 +45,14 @@ public class EventServiceBeanTest {
 	@Mock
 	private TemplateFinderService templateFinderService;
 
+	@Mock
+	private EventServiceHelperBean eventServiceHelperBean;
+
 	@InjectMocks
 	private EventServiceBean eventService;
 
 	@Test
-	public void findByOrganizationNameAsOfDate_notFound() {
+	public void createEvent_findByOrganizationNameAsOfDate_notFound() {
 		when(organizationJpaService.findByOrganizationNameAsOfDate(anyString(), any()))
 			.thenReturn(null);
 		NoSuchEntityException exception = assertThrows(NoSuchEntityException.class, () -> eventService.createEvent(createMockInitialEventDTO()));
@@ -54,11 +60,11 @@ public class EventServiceBeanTest {
 	}
 
 	@Test
-	public void findByEventNameAsOfDateTemplateType_found() {
+	public void createEvent_findByEventNameAsOfDateTemplateType_found() {
 		when(organizationJpaService.findByOrganizationNameAsOfDate(anyString(), any()))
 			.thenReturn(createMockOrganization(true, true));
 		when(eventJpaService.findByOrganizationNameAsOfDateTemplateType(anyString(), any(), any()))
-			.thenReturn(createMockEvent());
+			.thenReturn(createMockEvent(EventStatus.Sandbox));
 		EntityExistsException exception = assertThrows(EntityExistsException.class, () -> eventService.createEvent(createMockInitialEventDTO()));
 		Assert.assertTrue(exception.getMessage().contains("Event already exists"));
 	}
@@ -140,13 +146,29 @@ public class EventServiceBeanTest {
 		when(templateFinderService.findTemplateType(anyString()))
 			.thenReturn(createMockTemplateDTO(true));
 		when(eventJpaService.save(any()))
-			.thenReturn(createMockEvent());
+			.thenReturn(createMockEvent(EventStatus.Sandbox));
 		Event event = eventService.createEvent(createMockInitialEventDTO());
 		Assert.assertEquals("Algarve Soccer Cup", event.getEventName());
 		Assert.assertEquals(16, event.getEventTeams().size());
 		Assert.assertEquals(2, event.getGameDates().size());
 		Assert.assertEquals(2, event.getGameDates().get(0).getGameLocations().size());
 		Assert.assertEquals(3, event.getGameDates().get(0).getGameLocations().get(0).getGameRounds().size());
+	}
+
+	@Test
+	public void updateEvent_findByOrganizationNameAsOfDateTemplateType_NotFound() {
+		when(eventJpaService.findByOrganizationNameAsOfDateTemplateType(anyString(), any(), any()))
+			.thenReturn(null);
+		assertThrows(NoSuchEntityException.class, () -> eventService.updateEvent(createMockEvent(EventStatus.Scheduled)));
+	}
+
+	@Test
+	public void updateEvent_validateDatabaseEvent_InvalidStatus() {
+		when(eventJpaService.findByOrganizationNameAsOfDateTemplateType(anyString(), any(), any()))
+			.thenReturn(createMockEvent(EventStatus.InProgress));
+		when(eventServiceHelperBean.validateDatabaseEvent(any()))
+			.thenReturn(false);
+		assertThrows(InvalidEntityException.class, () -> eventService.updateEvent(createMockEvent(EventStatus.Scheduled)));
 	}
 
 	private EventDTO createMockInitialEventDTO() {
@@ -195,9 +217,11 @@ public class EventServiceBeanTest {
 		return organizationLocation;
 	}
 
-	private Event createMockEvent() {
+	private Event createMockEvent(EventStatus eventStatus) {
 		Event event = new Event();
 		event.setEventName("Cypress Cup");
+		event.setEventStatus(eventStatus);
+		event.setOrganization(createMockOrganization(true, true));
 		return event;
 	}
 	

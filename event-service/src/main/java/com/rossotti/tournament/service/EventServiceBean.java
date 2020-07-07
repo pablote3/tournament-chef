@@ -9,6 +9,7 @@ import com.rossotti.tournament.enumeration.Sport;
 import com.rossotti.tournament.enumeration.TemplateType;
 import com.rossotti.tournament.exception.EntityExistsException;
 import com.rossotti.tournament.exception.InitializationException;
+import com.rossotti.tournament.exception.InvalidEntityException;
 import com.rossotti.tournament.exception.NoSuchEntityException;
 import com.rossotti.tournament.jpa.service.EventJpaService;
 import com.rossotti.tournament.jpa.service.OrganizationJpaService;
@@ -18,7 +19,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,18 +29,21 @@ public class EventServiceBean {
 	private final EventJpaService eventJpaService;
 	private final OrganizationJpaService organizationJpaService;
 	private final TemplateFinderService templateFinderService;
+	private final EventServiceHelperBean eventServiceHelperBean;
 	private final Logger logger = LoggerFactory.getLogger(EventServiceBean.class);
 	private static final String baseTeamName = "BaseTeam";
 	private static final String baseLocationName = "BaseLocation";
 
 	@Autowired
-	public EventServiceBean(EventJpaService eventJpaService, OrganizationJpaService organizationJpaService, TemplateFinderService templateFinderService) {
+	public EventServiceBean(EventJpaService eventJpaService, OrganizationJpaService organizationJpaService, TemplateFinderService templateFinderService, EventServiceHelperBean eventServiceHelperBean) {
 		this.eventJpaService = eventJpaService;
 		this.organizationJpaService = organizationJpaService;
 		this.templateFinderService = templateFinderService;
+		this.eventServiceHelperBean = eventServiceHelperBean;
 	}
 
 	public Event createEvent(EventDTO eventDTO) throws Exception {
+		logger.debug("createEvent: orgName = " + eventDTO.getOrganizationName() + ", eventName = " + eventDTO.getEventName());
 		Organization organization = organizationJpaService.findByOrganizationNameAsOfDate(eventDTO.getOrganizationName(), eventDTO.getStartDate());
 		if (organization != null) {
 			TemplateType templateType = TemplateType.valueOf(eventDTO.getTemplateType());
@@ -143,8 +146,27 @@ public class EventServiceBean {
 		}
 	}
 
-	public Event updateEvent(Event event) throws Exception {
-		EventServiceUtil.validate(event);
-		return event;
+	public Event updateEvent(Event requestEvent) throws Exception {
+		logger.debug("updateEvent: orgName = " + requestEvent.getOrganization().getOrganizationName() + ", eventName = " + requestEvent.getEventName());
+		Event dbEvent = eventJpaService.findByOrganizationNameAsOfDateTemplateType(requestEvent.getOrganization().getOrganizationName(), requestEvent.getStartDate(), requestEvent.getTemplateType());
+		if (dbEvent != null) {
+			if (eventServiceHelperBean.validateDatabaseEvent(dbEvent) && eventServiceHelperBean.validateRequestEvent(requestEvent)) {
+				TemplateDTO templateDTO = templateFinderService.findTemplateType(requestEvent.getTemplateType().name());
+				if (eventServiceHelperBean.validateTemplate(requestEvent, templateDTO)) {
+					eventJpaService.save(requestEvent);
+					return requestEvent;
+				} else {
+					logger.debug("updateEvent - validateTemplate: eventName = " + requestEvent.getEventName() + ", templateType = " + requestEvent.getTemplateType());
+					throw new InvalidEntityException(Event.class);
+				}
+			}
+			else {
+				throw new InvalidEntityException(Event.class);
+			}
+		}
+		else {
+			logger.debug("updateEvent - findByOrganizationNameAsOfDateTemplateType: event does not exist");
+			throw new NoSuchEntityException(Event.class);
+		}
 	}
 }

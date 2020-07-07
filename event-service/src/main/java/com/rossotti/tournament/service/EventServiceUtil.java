@@ -1,13 +1,9 @@
 package com.rossotti.tournament.service;
 
 import com.rossotti.tournament.dto.RoundDTO;
-import com.rossotti.tournament.dto.TemplateDTO;
-import com.rossotti.tournament.enumeration.EventStatus;
 import com.rossotti.tournament.enumeration.GameRoundType;
 import com.rossotti.tournament.enumeration.HalfDay;
 import com.rossotti.tournament.model.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -15,8 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EventServiceUtil {
-
-	private static final Logger logger = LoggerFactory.getLogger(EventServiceUtil.class);
 
 	public static OrganizationTeam getOrganizationTeam(List<OrganizationTeam> organizationTeams, String baseTeamName) {
 		OrganizationTeam baseTeam = null;
@@ -98,27 +92,5 @@ public class EventServiceUtil {
 			}
 		}
 		return gameRounds;
-	}
-
-	public static boolean validateDatabaseEvent(Event event) {
-		if (event.getEventStatus() == EventStatus.InProgress || event.getEventStatus() == EventStatus.Complete) {
-			logger.debug("validateDatabaseEvent - database event invalid status: " + event.getEventStatus());
-			return false;
-		}
-		return true;
-	}
-
-	public static boolean validateRequestEvent(Event event) {
-		if (event.getEventStatus() != EventStatus.Scheduled) {
-			logger.debug("validateRequestEvent - request event invalid status: " + event.getEventStatus());
-			return false;
-		}
-		return true;
-	}
-
-	public static boolean validateTemplate(Event event, TemplateDTO templateDTO) {
-		boolean validTemplate = true;
-	//	if (event.get)
-		return validTemplate;
 	}
 }

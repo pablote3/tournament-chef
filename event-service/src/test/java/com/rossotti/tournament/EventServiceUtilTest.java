@@ -1,11 +1,10 @@
 package com.rossotti.tournament;
 
-import com.rossotti.tournament.enumeration.EventStatus;
-import com.rossotti.tournament.service.EventServiceUtil;
 import com.rossotti.tournament.dto.RoundDTO;
 import com.rossotti.tournament.enumeration.GameRoundType;
 import com.rossotti.tournament.enumeration.HalfDay;
 import com.rossotti.tournament.model.*;
+import com.rossotti.tournament.service.EventServiceUtil;
 import org.junit.Assert;
 import org.junit.Test;
 import java.time.LocalDate;
@@ -13,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EventServiceUtilTest {
-
 	private static final String baseTeamName = "BaseTeam";
 	private static final String baseLocationName = "BaseLocation";
 
@@ -82,7 +80,7 @@ public class EventServiceUtilTest {
 		Assert.assertNotNull(organizationLocation);
 		Assert.assertEquals(baseLocationName, organizationLocation.getLocationName());
 	}
-	
+
 	private OrganizationLocation getOrganizationLocation(String locationName) {
 		OrganizationLocation organizationLocation = new OrganizationLocation();
 		organizationLocation.setLocationName(locationName);
@@ -265,33 +263,5 @@ public class EventServiceUtilTest {
 		Assert.assertEquals(2, gameRounds.size());
 		Assert.assertTrue(gameRounds.get(0).isSemiFinal());
 		Assert.assertTrue(gameRounds.get(1).isChampionship());
-	}
-
-	@Test
-	public void validateDatabaseEvent_valid() {
-		Event event = new Event();
-		event.setEventStatus(EventStatus.Sandbox);
-		Assert.assertTrue(EventServiceUtil.validateDatabaseEvent(event));
-	}
-
-	@Test
-	public void validateDatabaseEvent_invalid() {
-		Event event = new Event();
-		event.setEventStatus(EventStatus.InProgress);
-		Assert.assertFalse(EventServiceUtil.validateDatabaseEvent(event));
-	}
-
-	@Test
-	public void validateRequestEvent_valid() {
-		Event event = new Event();
-		event.setEventStatus(EventStatus.Scheduled);
-		Assert.assertTrue(EventServiceUtil.validateDatabaseEvent(event));
-	}
-
-	@Test
-	public void validateRequestEvent_invalid() {
-		Event event = new Event();
-		event.setEventStatus(EventStatus.InProgress);
-		Assert.assertFalse(EventServiceUtil.validateDatabaseEvent(event));
 	}
 }
