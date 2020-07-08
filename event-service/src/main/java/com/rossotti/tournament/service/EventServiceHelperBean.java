@@ -28,8 +28,18 @@ public class EventServiceHelperBean {
 	}
 
 	public boolean validateTemplate(Event event, TemplateDTO templateDTO) {
-		boolean validTemplate = true;
-	//	if (event.get)
-		return validTemplate;
+		if (event.getEventTeams().size() != templateDTO.getTotalTeams()) {
+			logger.debug("validateTemplate - eventTeams: " + event.getEventTeams().size() + " not equal template.totalTeams: " + templateDTO.getTotalTeams());
+			return false;
+		}
+		else if (event.getGameDates().size() != (int) Math.ceil(templateDTO.getEventDays())) {
+			logger.debug("validateTemplate - gameDates: " + event.getGameDates().size() + " not equal template.eventDays: " + (int) Math.ceil(templateDTO.getEventDays()));
+			return false;
+		}
+		else if (EventServiceUtil.validateGameLocations(event.getGameDates(), templateDTO.getEventLocations())) {
+			logger.debug("validateTemplate - gameLocations: " + event.getGameDates().get(0).getGameLocations().size() + " not equal template.eventLocations: " + templateDTO.getEventLocations());
+			return false;
+		}
+		return true;
 	}
 }
