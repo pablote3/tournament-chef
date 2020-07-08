@@ -93,4 +93,13 @@ public class EventServiceUtil {
 		}
 		return gameRounds;
 	}
+
+	public static boolean validateGameLocations(List<GameDate> gameDates, int eventLocations) {
+		for (GameDate gameDate : gameDates) {
+			if (gameDate.getGameLocations().size() != eventLocations) {
+				return false;
+			}
+		}
+		return true;
+	}
 }

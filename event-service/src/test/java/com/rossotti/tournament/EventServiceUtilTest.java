@@ -264,4 +264,59 @@ public class EventServiceUtilTest {
 		Assert.assertTrue(gameRounds.get(0).isSemiFinal());
 		Assert.assertTrue(gameRounds.get(1).isChampionship());
 	}
+
+	@Test
+	public void validateGameLocations_valid_1_game() {
+		List<GameLocation> gameLocations = new ArrayList<>();
+		GameLocation gameLocation = new GameLocation();
+		gameLocations.add(gameLocation);
+
+		List<GameDate> gameDates =  new ArrayList<>();
+		GameDate gameDate = new GameDate();
+		gameDate.setGameLocations(gameLocations);
+		gameDates.add(gameDate);
+
+		Assert.assertTrue(EventServiceUtil.validateGameLocations(gameDates, 1));
+	}
+
+	@Test
+	public void validateGameLocations_valid_3_game() {
+		List<GameLocation> gameLocations = new ArrayList<>();
+		gameLocations.add(new GameLocation());
+		gameLocations.add(new GameLocation());
+		gameLocations.add(new GameLocation());
+
+		GameDate gameDate = new GameDate();
+		gameDate.setGameLocations(gameLocations);
+		List<GameDate> gameDates =  new ArrayList<>();
+		gameDates.add(gameDate);
+
+		Assert.assertTrue(EventServiceUtil.validateGameLocations(gameDates, 3));
+	}
+
+	@Test
+	public void validateGameLocations_invalid_extra_game() {
+		List<GameLocation> gameLocations = new ArrayList<>();
+		gameLocations.add(new GameLocation());
+		gameLocations.add(new GameLocation());
+
+		List<GameDate> gameDates =  new ArrayList<>();
+		GameDate gameDate = new GameDate();
+		gameDate.setGameLocations(gameLocations);
+		gameDates.add(gameDate);
+
+		Assert.assertFalse(EventServiceUtil.validateGameLocations(gameDates, 1));
+	}
+
+	@Test
+	public void validateGameLocations_invalid_no_game_locations() {
+		List<GameLocation> gameLocations = new ArrayList<>();
+
+		List<GameDate> gameDates =  new ArrayList<>();
+		GameDate gameDate = new GameDate();
+		gameDate.setGameLocations(gameLocations);
+		gameDates.add(gameDate);
+
+		Assert.assertFalse(EventServiceUtil.validateGameLocations(gameDates, 1));
+	}
 }
