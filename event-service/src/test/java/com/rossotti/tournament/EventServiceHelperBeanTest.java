@@ -3,11 +3,15 @@ package com.rossotti.tournament;
 import com.rossotti.tournament.enumeration.EventStatus;
 import com.rossotti.tournament.service.EventServiceHelperBean;
 import com.rossotti.tournament.model.*;
+import com.rossotti.tournament.service.EventServiceUtil;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.MockitoJUnitRunner;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RunWith(MockitoJUnitRunner.class)
 public class EventServiceHelperBeanTest {
@@ -42,5 +46,83 @@ public class EventServiceHelperBeanTest {
 		Event event = new Event();
 		event.setEventStatus(EventStatus.InProgress);
 		Assert.assertFalse(eventServiceHelperBean.validateDatabaseEvent(event));
+	}
+
+	@Test
+	public void validateTeams_valid() {
+		List<EventTeam> eventTeams = new ArrayList<>();
+		EventTeam eventTeam1 = new EventTeam();
+		OrganizationTeam orgTeam1 = new OrganizationTeam();
+		orgTeam1.setTeamName("Bari");
+		eventTeam1.setOrganizationTeam(orgTeam1);
+		eventTeams.add(eventTeam1);
+		EventTeam eventTeam2 = new EventTeam();
+		OrganizationTeam orgTeam2 = new OrganizationTeam();
+		orgTeam2.setTeamName("Tavagnacco");
+		eventTeam2.setOrganizationTeam(orgTeam2);
+		eventTeams.add(eventTeam2);
+		Assert.assertTrue(eventServiceHelperBean.validateTeams(eventTeams));
+	}
+
+	@Test
+	public void validateTeams_invalid() {
+		List<EventTeam> eventTeams = new ArrayList<>();
+		EventTeam eventTeam1 = new EventTeam();
+		OrganizationTeam orgTeam1 = new OrganizationTeam();
+		orgTeam1.setTeamName("Bari");
+		eventTeam1.setOrganizationTeam(orgTeam1);
+		eventTeams.add(eventTeam1);
+		EventTeam eventTeam2 = new EventTeam();
+		OrganizationTeam orgTeam2 = new OrganizationTeam();
+		orgTeam2.setTeamName("BaseTeam");
+		eventTeam2.setOrganizationTeam(orgTeam2);
+		eventTeams.add(eventTeam2);
+		Assert.assertFalse(eventServiceHelperBean.validateTeams(eventTeams));
+	}
+
+	@Test
+	public void validateLocations_valid() {
+		List<GameDate> gameDates = new ArrayList<>();
+		GameDate gameDate = new GameDate();
+		List<GameLocation> gameLocations = new ArrayList<>();
+
+		GameLocation gameLocation1 = new GameLocation();
+		OrganizationLocation organizationLocation1 = new OrganizationLocation();
+		organizationLocation1.setLocationName("Centro Sportivo Monteboro");
+		gameLocation1.setOrganizationLocation(organizationLocation1);
+		gameLocations.add(gameLocation1);
+
+		GameLocation gameLocation2 = new GameLocation();
+		OrganizationLocation organizationLocation2 = new OrganizationLocation();
+		organizationLocation2.setLocationName("Stadio Tre Fontane");
+		gameLocation2.setOrganizationLocation(organizationLocation2);
+		gameLocations.add(gameLocation2);
+
+		gameDate.setGameLocations(gameLocations);
+		gameDates.add(gameDate);
+		Assert.assertTrue(eventServiceHelperBean.validateLocations(gameDates));
+	}
+
+	@Test
+	public void validateLocations_invalid() {
+		List<GameDate> gameDates = new ArrayList<>();
+		GameDate gameDate = new GameDate();
+		List<GameLocation> gameLocations = new ArrayList<>();
+
+		GameLocation gameLocation1 = new GameLocation();
+		OrganizationLocation organizationLocation1 = new OrganizationLocation();
+		organizationLocation1.setLocationName("Centro Sportivo Monteboro");
+		gameLocation1.setOrganizationLocation(organizationLocation1);
+		gameLocations.add(gameLocation1);
+
+		GameLocation gameLocation2 = new GameLocation();
+		OrganizationLocation organizationLocation2 = new OrganizationLocation();
+		organizationLocation2.setLocationName("BaseLocation");
+		gameLocation2.setOrganizationLocation(organizationLocation2);
+		gameLocations.add(gameLocation2);
+
+		gameDate.setGameLocations(gameLocations);
+		gameDates.add(gameDate);
+		Assert.assertFalse(eventServiceHelperBean.validateLocations(gameDates));
 	}
 }

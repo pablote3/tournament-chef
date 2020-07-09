@@ -153,6 +153,10 @@ public class EventServiceBean {
 			if (eventServiceHelperBean.validateDatabaseEvent(dbEvent) && eventServiceHelperBean.validateRequestEvent(requestEvent)) {
 				TemplateDTO templateDTO = templateFinderService.findTemplateType(requestEvent.getTemplateType().name());
 				if (eventServiceHelperBean.validateTemplate(requestEvent, templateDTO)) {
+					if (eventServiceHelperBean.validateTeams(requestEvent.getEventTeams()) &&
+							eventServiceHelperBean.validateLocations(requestEvent.getGameDates())) {
+						throw new InvalidEntityException(Event.class);
+					}
 					eventJpaService.save(requestEvent);
 					return requestEvent;
 				} else {
