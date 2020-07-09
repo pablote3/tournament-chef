@@ -4,6 +4,8 @@ import com.rossotti.tournament.dto.RoundDTO;
 import com.rossotti.tournament.enumeration.GameRoundType;
 import com.rossotti.tournament.enumeration.HalfDay;
 import com.rossotti.tournament.model.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -11,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EventServiceUtil {
+	private static final Logger logger = LoggerFactory.getLogger(EventServiceUtil.class);
 
 	public static OrganizationTeam getOrganizationTeam(List<OrganizationTeam> organizationTeams, String baseTeamName) {
 		OrganizationTeam baseTeam = null;
@@ -97,8 +100,24 @@ public class EventServiceUtil {
 	public static boolean validateGameLocations(List<GameDate> gameDates, int eventLocations) {
 		for (GameDate gameDate : gameDates) {
 			if (gameDate.getGameLocations().size() != eventLocations) {
+				logger.debug("validateGameLocations: " + gameDate.getGameLocations().size() + " not equal template.eventLocations: " + eventLocations);
 				return false;
 			}
+		}
+		return true;
+	}
+
+	public static boolean validateGameRounds(List<GameDate> gameDates, RoundDTO roundDTO) {
+		int gameRoundCount = 0;
+		for (GameDate gameDate : gameDates) {
+			for (GameLocation gameLocation: gameDate.getGameLocations()) {
+				gameRoundCount = gameRoundCount + gameLocation.getGameRounds().size();
+			}
+		}
+		int templateRoundCount = getGameRounds(roundDTO).size();
+		if (gameRoundCount != templateRoundCount) {
+			logger.debug("validateGameRounds: gameRoundCount: " + gameRoundCount + " not equal template.roundCount: " + templateRoundCount);
+			return false;
 		}
 		return true;
 	}

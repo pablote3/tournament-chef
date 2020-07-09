@@ -319,4 +319,47 @@ public class EventServiceUtilTest {
 
 		Assert.assertFalse(EventServiceUtil.validateGameLocations(gameDates, 1));
 	}
+
+	@Test
+	public void validateGameRounds_valid() {
+		List<GameLocation> gameLocations = new ArrayList<>();
+		GameLocation gameLocation = new GameLocation();
+		gameLocation.getGameRounds().add(new GameRound());
+		gameLocation.getGameRounds().add(new GameRound());
+		gameLocations.add(gameLocation);
+		gameLocations.add(gameLocation);
+
+		List<GameDate> gameDates =  new ArrayList<>();
+		GameDate gameDate = new GameDate();
+		gameDate.setGameLocations(gameLocations);
+		gameDates.add(gameDate);
+
+		RoundDTO roundDTO = new RoundDTO();
+		roundDTO.setPreliminary(2);
+		roundDTO.setQuarterFinal(false);
+		roundDTO.setSemiFinal(true);
+		roundDTO.setChampionship(true);
+		Assert.assertTrue(EventServiceUtil.validateGameRounds(gameDates, roundDTO));
+	}
+
+	@Test
+	public void validateGameRounds_invalid() {
+		List<GameLocation> gameLocations = new ArrayList<>();
+		GameLocation gameLocation = new GameLocation();
+		gameLocation.getGameRounds().add(new GameRound());
+		gameLocation.getGameRounds().add(new GameRound());
+		gameLocations.add(gameLocation);
+
+		List<GameDate> gameDates =  new ArrayList<>();
+		GameDate gameDate = new GameDate();
+		gameDate.setGameLocations(gameLocations);
+		gameDates.add(gameDate);
+
+		RoundDTO roundDTO = new RoundDTO();
+		roundDTO.setPreliminary(2);
+		roundDTO.setQuarterFinal(false);
+		roundDTO.setSemiFinal(true);
+		roundDTO.setChampionship(true);
+		Assert.assertFalse(EventServiceUtil.validateGameRounds(gameDates, roundDTO));
+	}
 }
