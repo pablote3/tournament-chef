@@ -246,7 +246,8 @@ public class OrganizationRepositoryTest {
 		OrganizationLocation organizationLocation = new OrganizationLocation();
 		organizationLocation.setOrganization(organization);
 		organizationLocation.setLocationName("Campo Sportivo CSM Soprani");
-		organizationLocation.setAddress1("Via delle Tre Fontane 5");
+		organizationLocation.setAddress1("Via delle Tre Fontane");
+		organizationLocation.setAddress2("5");
 		organizationLocation.setCity("Roma");
 		organizationLocation.setState("Lazio");
 		organizationLocation.setCountry("Italy");
