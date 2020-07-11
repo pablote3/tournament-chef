@@ -37,27 +37,6 @@ public class EventTeamRanking {
 	public void setRankingType(RankingType rankingType) {
 		this.rankingType = rankingType;
 	}
-	public Boolean isInitial() {
-		return rankingType == RankingType.Initial;
-	}
-	public Boolean isRound1() {
-		return rankingType == RankingType.Round1;
-	}
-	public Boolean isRound2() {
-		return rankingType == RankingType.Round2;
-	}
-	public Boolean isQuarterFinal() {
-		return rankingType == RankingType.QuarterFinal;
-	}
-	public Boolean isSemiFinal() {
-		return rankingType == RankingType.SemiFinal;
-	}
-	public Boolean isFinal() {
-		return rankingType == RankingType.Final;
-	}
-	public Boolean isEnd() {
-		return rankingType == RankingType.End;
-	}
 
 	@Column(nullable=false)
 	@NotNull(message="Ranking is mandatory")

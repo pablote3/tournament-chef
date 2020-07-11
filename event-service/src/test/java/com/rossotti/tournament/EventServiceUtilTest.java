@@ -134,10 +134,10 @@ public class EventServiceUtilTest {
 				new GameLocation()
 		);
 		Assert.assertEquals(4, gameRounds.size());
-		Assert.assertTrue(gameRounds.get(0).isGroupPlay());
-		Assert.assertTrue(gameRounds.get(1).isGroupPlay());
-		Assert.assertTrue(gameRounds.get(2).isSemiFinal());
-		Assert.assertTrue(gameRounds.get(3).isChampionship());
+		Assert.assertEquals(GameRoundType.GroupPlay, gameRounds.get(0).getGameType());
+		Assert.assertEquals(GameRoundType.GroupPlay, gameRounds.get(1).getGameType());
+		Assert.assertEquals(GameRoundType.SemiFinal, gameRounds.get(2).getGameType());
+		Assert.assertEquals(GameRoundType.Championship, gameRounds.get(3).getGameType());
 	}
 
 	@Test
@@ -153,8 +153,8 @@ public class EventServiceUtilTest {
 				new GameLocation()
 		);
 		Assert.assertEquals(2, gameRounds.size());
-		Assert.assertTrue(gameRounds.get(0).isGroupPlay());
-		Assert.assertTrue(gameRounds.get(1).isGroupPlay());
+		Assert.assertEquals(GameRoundType.GroupPlay, gameRounds.get(0).getGameType());
+		Assert.assertEquals(GameRoundType.GroupPlay, gameRounds.get(1).getGameType());
 	}
 
 	@Test
@@ -170,8 +170,8 @@ public class EventServiceUtilTest {
 				new GameLocation()
 		);
 		Assert.assertEquals(2, gameRounds.size());
-		Assert.assertTrue(gameRounds.get(0).isSemiFinal());
-		Assert.assertTrue(gameRounds.get(1).isChampionship());
+		Assert.assertEquals(GameRoundType.SemiFinal, gameRounds.get(0).getGameType());
+		Assert.assertEquals(GameRoundType.Championship, gameRounds.get(1).getGameType());
 	}
 
 	@Test
@@ -187,10 +187,10 @@ public class EventServiceUtilTest {
 				new GameLocation()
 		);
 		Assert.assertEquals(4, gameRounds.size());
-		Assert.assertTrue(gameRounds.get(0).isGroupPlay());
-		Assert.assertTrue(gameRounds.get(1).isGroupPlay());
-		Assert.assertTrue(gameRounds.get(2).isSemiFinal());
-		Assert.assertTrue(gameRounds.get(3).isChampionship());
+		Assert.assertEquals(GameRoundType.GroupPlay, gameRounds.get(0).getGameType());
+		Assert.assertEquals(GameRoundType.GroupPlay, gameRounds.get(1).getGameType());
+		Assert.assertEquals(GameRoundType.SemiFinal, gameRounds.get(2).getGameType());
+		Assert.assertEquals(GameRoundType.Championship, gameRounds.get(3).getGameType());
 	}
 
 	@Test
@@ -206,8 +206,8 @@ public class EventServiceUtilTest {
 				new GameLocation()
 		);
 		Assert.assertEquals(2, gameRounds.size());
-		Assert.assertTrue(gameRounds.get(0).isGroupPlay());
-		Assert.assertTrue(gameRounds.get(1).isGroupPlay());
+		Assert.assertEquals(GameRoundType.GroupPlay, gameRounds.get(0).getGameType());
+		Assert.assertEquals(GameRoundType.GroupPlay, gameRounds.get(1).getGameType());
 	}
 
 	@Test
@@ -223,10 +223,10 @@ public class EventServiceUtilTest {
 				new GameLocation()
 		);
 		Assert.assertEquals(4, gameRounds.size());
-		Assert.assertTrue(gameRounds.get(0).isGroupPlay());
-		Assert.assertTrue(gameRounds.get(1).isGroupPlay());
-		Assert.assertTrue(gameRounds.get(2).isSemiFinal());
-		Assert.assertTrue(gameRounds.get(3).isChampionship());
+		Assert.assertEquals(GameRoundType.GroupPlay, gameRounds.get(0).getGameType());
+		Assert.assertEquals(GameRoundType.GroupPlay, gameRounds.get(1).getGameType());
+		Assert.assertEquals(GameRoundType.SemiFinal, gameRounds.get(2).getGameType());
+		Assert.assertEquals(GameRoundType.Championship, gameRounds.get(3).getGameType());
 	}
 
 	@Test
@@ -242,10 +242,10 @@ public class EventServiceUtilTest {
 				new GameLocation()
 		);
 		Assert.assertEquals(4, gameRounds.size());
-		Assert.assertTrue(gameRounds.get(0).isGroupPlay());
-		Assert.assertTrue(gameRounds.get(1).isGroupPlay());
-		Assert.assertTrue(gameRounds.get(2).isGroupPlay());
-		Assert.assertTrue(gameRounds.get(3).isGroupPlay());
+		Assert.assertEquals(GameRoundType.GroupPlay, gameRounds.get(0).getGameType());
+		Assert.assertEquals(GameRoundType.GroupPlay, gameRounds.get(1).getGameType());
+		Assert.assertEquals(GameRoundType.GroupPlay, gameRounds.get(2).getGameType());
+		Assert.assertEquals(GameRoundType.GroupPlay, gameRounds.get(3).getGameType());
 	}
 
 	@Test
@@ -261,8 +261,8 @@ public class EventServiceUtilTest {
 				new GameLocation()
 		);
 		Assert.assertEquals(2, gameRounds.size());
-		Assert.assertTrue(gameRounds.get(0).isSemiFinal());
-		Assert.assertTrue(gameRounds.get(1).isChampionship());
+		Assert.assertEquals(GameRoundType.SemiFinal, gameRounds.get(0).getGameType());
+		Assert.assertEquals(GameRoundType.Championship, gameRounds.get(1).getGameType());
 	}
 
 	@Test

@@ -48,21 +48,6 @@ public class GameRound {
 	public void setGameRoundType(GameRoundType gameRoundType) {
 		this.gameRoundType = gameRoundType;
 	}
-	public Boolean isGroupPlay() {
-		return gameRoundType == GameRoundType.GroupPlay;
-	}
-	public Boolean isPlayoff() {
-		return gameRoundType == GameRoundType.PlayOff;
-	}
-	public Boolean isQuarterFinal() {
-		return gameRoundType == GameRoundType.QuarterFinal;
-	}
-	public Boolean isSemiFinal() {
-		return gameRoundType == GameRoundType.SemiFinal;
-	}
-	public Boolean isChampionship() {
-		return gameRoundType == GameRoundType.Championship;
-	}
 
 	@Column(nullable=false)
 	@NotNull(message="GameDuration is mandatory")

@@ -45,17 +45,6 @@ public class User extends BaseEntity {
 	public void setUserType(UserType userType) {
 		this.userType = userType;
 	}
-	public Boolean isAdministrator() {
-		return userType == UserType.Administrator;
-	}
-	public Boolean isOrganization() {
-		return userType == UserType.Organization;
-	}
-	public Boolean isEvent() {
-		return userType == UserType.Event;
-	}
-	public Boolean isGame() {return userType == UserType.Game;
-	}
 
 	@Enumerated(EnumType.STRING)
 	@Column(length=9, nullable=false)
@@ -66,12 +55,6 @@ public class User extends BaseEntity {
 	}
 	public void setUserStatus(UserStatus userStatus) {
 		this.userStatus = userStatus;
-	}
-	public Boolean isActive() {
-		return userStatus == UserStatus.Active;
-	}
-	public Boolean isInactive() {
-		return userStatus == UserStatus.Inactive;
 	}
 
 	@Column(length=25, nullable=false)

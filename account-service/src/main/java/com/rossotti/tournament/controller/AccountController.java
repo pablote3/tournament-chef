@@ -1,6 +1,8 @@
 package com.rossotti.tournament.controller;
 
 import com.rossotti.tournament.dto.OrganizationDTO;
+import com.rossotti.tournament.enumeration.UserStatus;
+import com.rossotti.tournament.enumeration.UserType;
 import com.rossotti.tournament.exception.EntityExistsException;
 import com.rossotti.tournament.exception.InvalidEntityException;
 import com.rossotti.tournament.exception.UnauthorizedEntityException;
@@ -36,9 +38,9 @@ public class AccountController {
 		}
 		else {
 			logger.debug("createAccount - findByUserEmail: email = " + user.getEmail() + " exists");
-			if (user.isActive()) {
+			if (user.getUserStatus() == UserStatus.Active) {
 				logger.debug("createAccount - activeUser " + user.getUserStatus());
-				if (user.isAdministrator() || user.isOrganization()) {
+				if (user.getUserType() == UserType.Administrator || user.getUserType() == UserType.Organization) {
 					return createOrganization(organizationDTO);
 				}
 				else {

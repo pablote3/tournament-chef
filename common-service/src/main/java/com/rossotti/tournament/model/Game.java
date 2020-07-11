@@ -50,16 +50,4 @@ public class Game extends BaseEntity {
 	public void setGameStatus(GameStatus gameStatus) {
 		this.gameStatus = gameStatus;
 	}
-	public Boolean isScheduled() {
-		return gameStatus == GameStatus.Scheduled;
-	}
-	public Boolean isCancelled() {
-		return gameStatus == GameStatus.Cancelled;
-	}
-	public Boolean isForfeited() {
-		return gameStatus == GameStatus.Forfeited;
-	}
-	public Boolean isCompleted() {
-		return gameStatus == GameStatus.Completed;
-	}
 }
