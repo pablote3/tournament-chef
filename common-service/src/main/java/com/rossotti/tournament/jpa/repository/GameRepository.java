@@ -1,6 +1,7 @@
 package com.rossotti.tournament.jpa.repository;
 
 import com.rossotti.tournament.enumeration.GameStatus;
+import com.rossotti.tournament.enumeration.TemplateType;
 import com.rossotti.tournament.model.Game;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
@@ -49,14 +50,18 @@ public interface GameRepository extends Repository<Game, Long> {
 	@Query(findByGameDate)
 	List<Game> findByGameDate(@Param("gameDate") LocalDate gameDate);
 
-//	String findByGameDate2 =
-//			"select gd from GameDate gd " +
-//			"inner join gd.gameLocation gl " +
-//			"inner join gl.gameRound gr " +
-//			"inner join gr.game g " +
-//			"where gd.gameDate = :gameDate";
-//	@Query(findByGameDate2)
-//	List<Game> findByGameDate2(@Param("gameDate") LocalDate gameDate);
+	String findByEventNameStartDateEndDateTemplateType =
+			"select g from Game g " +
+			"inner join g.gameRound gr " +
+			"inner join gr.gameLocation gl " +
+			"inner join gl.gameDate gd " +
+			"inner join gd.event e " +
+			"where e.eventName = :eventName " +
+			"and e.startDate <= :startDate " +
+			"and e.endDate >= :endDate " +
+			"and e.templateType = :templateType";
+	@Query(findByEventNameStartDateEndDateTemplateType)
+	List<Game> findByEventNameStartDateEndDateTemplateType(@Param("eventName") String eventName, @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate, @Param("templateType") TemplateType templateType);
 
 	String findByLocationName =
 			"select g from Game g " +
