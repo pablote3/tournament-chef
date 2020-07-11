@@ -37,11 +37,12 @@ public class GameRepositoryTest {
 		Assert.assertEquals(LocalDateTime.of(2020, 1, 19, 20, 0), game.getLupdTs());
 		Assert.assertEquals(2, game.getLupdUserId().longValue());
 		Assert.assertEquals(Boolean.TRUE, game.getGameTeams().get(0).getHomeTeam());
-		Assert.assertEquals("BaseTeam1", game.getGameTeams().get(0).getEventTeam().getOrganizationTeam().getTeamName());
+		Assert.assertEquals("BaseTeam", game.getGameTeams().get(0).getEventTeam().getOrganizationTeam().getTeamName());
+		Assert.assertEquals("BaseTeam1", game.getGameTeams().get(0).getEventTeam().getOrganizationTeam().getEventTeams().get(0).getBaseTeamName());
 		Assert.assertEquals(2, game.getGameTeams().get(0).getEventTeam().getEventTeamRankings().size());
 		Assert.assertEquals(45, game.getGameRound().getGameDuration().shortValue());
-		Assert.assertEquals("BaseLocation1", game.getGameRound().getGameLocation().getBaseLocationName());
 		Assert.assertEquals("BaseLocation", game.getGameRound().getGameLocation().getOrganizationLocation().getLocationName());
+		Assert.assertEquals("BaseLocation1", game.getGameRound().getGameLocation().getBaseLocationName());
 		Assert.assertEquals(LocalDate.of(2020, 9, 29), game.getGameRound().getGameLocation().getGameDate().getGameDate());
 		Assert.assertEquals("Campania Regional Frosh Soph Tournament", game.getGameRound().getGameLocation().getGameDate().getEvent().getEventName());
 	}
