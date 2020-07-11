@@ -138,7 +138,7 @@ public class GameRepositoryTest {
 	@Test
 	public void create() {
 		gameRepository.save(createMockGame(GameStatus.Completed, LocalTime.of(10, 0, 0)));
-		Game game = gameRepository.findByTeamNameGameDateTime("BaseTeam1", LocalDate.of(2010, 1 , 15), LocalTime.of(10, 0, 0));
+		Game game = gameRepository.findByTeamNameGameDateTime("Milan", LocalDate.of(2010, 1 , 15), LocalTime.of(10, 0, 0));
 		Assert.assertEquals(GameStatus.Completed, game.getGameStatus());
 		Assert.assertEquals(2, game.getGameTeams().size());
 	}
