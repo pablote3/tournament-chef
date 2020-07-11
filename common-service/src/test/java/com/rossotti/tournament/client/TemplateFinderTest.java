@@ -24,14 +24,8 @@ public class TemplateFinderTest {
 	}
 
 	@Test
-	public void testLocateTemplate_found() {
-		TemplateDTO template = null;
-		try {
-			template = templateFinderService.findTemplateType(TemplateType.four_x_four_rr_15D_2L.name());
-		}
-		catch (Exception e) {
-			System.out.println("failed to create templates from json file " + e.getMessage());
-		}
+	public void testLocateTemplate_found() throws Exception {
+		TemplateDTO template = templateFinderService.findTemplateType(TemplateType.four_x_four_rr_15D_2L.name());
 		Assert.assertNotNull(template);
 		Assert.assertEquals(4, template.getGridGroups());
 		Assert.assertEquals(4, template.getGridTeams());
