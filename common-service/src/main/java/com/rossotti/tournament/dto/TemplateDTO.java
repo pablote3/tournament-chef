@@ -18,9 +18,6 @@ public class TemplateDTO {
 	public void setTemplateType(TemplateType templateType) {
 		this.templateType = templateType;
 	}
-	public Boolean isFour_x_four_rr_15D_2L() {
-		return templateType == TemplateType.four_x_four_rr_15D_2L;
-	}
 
 	public int getGridGroups() {
 		return gridGroups;
