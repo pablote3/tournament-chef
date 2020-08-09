@@ -1,5 +1,93 @@
 [
   {
+    "templateType": "two_x_four_pp_10D_1L",
+    "gridGroups": 2,
+    "gridTeams": 4,
+    "totalTeams": 8,
+    "eventDays": 1.0,
+    "eventLocations": 1,
+    "roundDTO": {
+      "preliminary": 2,
+      "playoff1": "false",
+      "playoff2": "false",
+      "quarterFinal": "false",
+      "semiFinal": "false",
+      "championship": "true",
+      "dayHalf": 0,
+      "dayFull": 3
+    },
+    "gameDTO": {
+      "preliminaryPerRound": 4,
+      "finalPerRound": 4
+    }
+  },
+  {
+    "templateType": "two_x_four_pp_15D_1L",
+    "gridGroups": 2,
+    "gridTeams": 4,
+    "totalTeams": 8,
+    "eventDays": 1.5,
+    "eventLocations": 1,
+    "roundDTO": {
+      "preliminary": 2,
+      "playoff1": "false",
+      "playoff2": "false",
+      "quarterFinal": "false",
+      "semiFinal": "false",
+      "championship": "true",
+      "dayHalf": 1,
+      "dayFull": 2
+    },
+    "gameDTO": {
+      "preliminaryPerRound": 4,
+      "finalPerRound": 4
+    }
+  },
+  {
+    "templateType": "two_x_four_rr_20D_1L",
+    "gridGroups": 2,
+    "gridTeams": 4,
+    "totalTeams": 8,
+    "eventDays": 2.0,
+    "eventLocations": 1,
+    "roundDTO": {
+      "preliminary": 3,
+      "playoff1": "false",
+      "playoff2": "false",
+      "quarterFinal": "false",
+      "semiFinal": "false",
+      "championship": "true",
+      "dayHalf": 0,
+      "dayFull": 2
+    },
+    "gameDTO": {
+      "preliminaryPerRound": 4,
+      "finalPerRound": 4
+    }
+  },
+  {
+    "templateType": "two_x_four_rr_10D_2L",
+    "gridGroups": 2,
+    "gridTeams": 4,
+    "totalTeams": 8,
+    "eventDays": 1.0,
+    "eventLocations": 2,
+    "roundDTO": {
+      "preliminary": 3,
+      "playoff1": "false",
+      "playoff2": "false",
+      "quarterFinal": "false",
+      "semiFinal": "false",
+      "championship": "true",
+      "dayHalf": 0,
+      "dayFull": 1
+    },
+    "gameDTO": {
+      "preliminaryPerRound": 4,
+      "finalPerRound": 4
+    }
+  },
+  {
     "templateType": "four_x_four_rr_15D_2L",
     "gridGroups": 4,
     "gridTeams": 4,
