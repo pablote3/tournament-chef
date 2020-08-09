@@ -195,6 +195,7 @@ public class GameRepositoryTest {
 		game.setStartTime(gameTime);
 		game.setGameStatus(gameStatus);
 		game.setGameRound(createMockGameRound(game));
+		game.setDisplayGameId(4L);
 		game.getGameTeams().add(createMockGameTeam(0, game));
 		game.getGameTeams().add(createMockGameTeam(1, game));
 		game.setCreateTs(LocalDateTime.of(2019, 10, 27, 20, 30));
