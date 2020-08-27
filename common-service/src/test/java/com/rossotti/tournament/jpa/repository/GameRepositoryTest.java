@@ -139,11 +139,11 @@ public class GameRepositoryTest {
 		Assert.assertNull(gameRepository.findByTeamNameGameDateTime("Inter Circle", LocalDate.of(2020, 9, 29), LocalTime.of(8, 0, 0, 0)));
 	}
 
-//	@Test
-//	public void findByEventNameStartDateEndDateTemplateType_Found() {
-//		List<Game> games = gameRepository.findByEventNameStartDateEndDateTemplateType("Pompeii Ampitheater");
-//		Assert.assertEquals(0, games.size());
-//	}
+	@Test
+	public void findByEventNameStartDateEndDateTemplateType_Found() {
+		List<Game> games = gameRepository.findByEventNameStartDateEndDateTemplateType("Pompeii Ampitheater", LocalDate.of(2020, 9, 29), LocalDate.of(2020, 9, 30), TemplateType.four_x_four_pp_20D_2L);
+		Assert.assertEquals(0, games.size());
+	}
 
 	@Test
 	public void create() {

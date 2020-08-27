@@ -1,6 +1,7 @@
 package com.rossotti.tournament.jpa.service.impl;
 
 
+import com.rossotti.tournament.enumeration.TemplateType;
 import com.rossotti.tournament.exception.NoSuchEntityException;
 import com.rossotti.tournament.enumeration.GameStatus;
 import com.rossotti.tournament.model.Game;
@@ -45,6 +46,11 @@ public class GameJpaServiceImpl implements GameJpaService {
 
 	@Override
 	public List<Game> findByEventName(String eventName) {
+		return gameRepository.findByEventName(eventName);
+	}
+
+	@Override
+	public List<Game> findByEventNameStartDateEndDateTemplateType(String eventName, LocalDate startDate, LocalDate endDate, TemplateType templateType) {
 		return gameRepository.findByEventName(eventName);
 	}
 

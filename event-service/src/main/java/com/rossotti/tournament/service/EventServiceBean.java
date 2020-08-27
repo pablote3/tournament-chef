@@ -20,6 +20,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -156,13 +158,21 @@ public class EventServiceBean {
 			if (eventServiceHelperBean.validateDatabaseEvent(dbEvent) && eventServiceHelperBean.validateRequestEvent(requestEvent)) {
 				TemplateDTO templateDTO = templateFinderService.findTemplateType(requestEvent.getTemplateType().name());
 				if (eventServiceHelperBean.validateTemplate(requestEvent, templateDTO)) {
-					if (eventServiceHelperBean.validateTeams(requestEvent.getEventTeams()) &&
-							eventServiceHelperBean.validateLocations(requestEvent.getGameDates())) {
-		//				if (gameJpaService.findByEventName())
-						eventJpaService.save(requestEvent);
-						return requestEvent;
+					if (eventServiceHelperBean.validateTeams(requestEvent.getEventTeams())) {
+						if (eventServiceHelperBean.validateLocations(requestEvent.getGameDates())) {
+							List<Game> eventGames = gameJpaService.findByEventNameStartDateEndDateTemplateType(requestEvent.getEventName(), requestEvent.getStartDate(), requestEvent.getEndDate(), requestEvent.getTemplateType());
+//							if (eventGames.size() ) {
+//								eventJpaService.save(requestEvent);
+								return requestEvent;
+//							}
+						}
+						else {
+
+							throw new InvalidEntityException(Event.class);
+						}
 					}
 					else {
+
 						throw new InvalidEntityException(Event.class);
 					}
 				} else {
