@@ -161,10 +161,14 @@ public class EventServiceBean {
 					if (eventServiceHelperBean.validateTeams(requestEvent.getEventTeams())) {
 						if (eventServiceHelperBean.validateLocations(requestEvent.getGameDates())) {
 							List<Game> eventGames = gameJpaService.findByEventNameStartDateEndDateTemplateType(requestEvent.getEventName(), requestEvent.getStartDate(), requestEvent.getEndDate(), requestEvent.getTemplateType());
-//							if (eventGames.size() ) {
-//								eventJpaService.save(requestEvent);
+							if (eventServiceHelperBean.validateGames(eventGames)) {
+								//eventJpaService.save(requestEvent);
 								return requestEvent;
-//							}
+							}
+							else {
+
+								throw new InvalidEntityException(Event.class);
+							}
 						}
 						else {
 
@@ -172,10 +176,11 @@ public class EventServiceBean {
 						}
 					}
 					else {
-
+						logger.debug("updateEvent - validateTeams: eventName = " + requestEvent.getEventName() + ", templateType = " + requestEvent.getTemplateType());
 						throw new InvalidEntityException(Event.class);
 					}
-				} else {
+				}
+				else {
 					logger.debug("updateEvent - validateTemplate: eventName = " + requestEvent.getEventName() + ", templateType = " + requestEvent.getTemplateType());
 					throw new InvalidEntityException(Event.class);
 				}

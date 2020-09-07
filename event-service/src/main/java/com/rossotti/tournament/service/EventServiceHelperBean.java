@@ -50,6 +50,7 @@ public class EventServiceHelperBean {
 	}
 
 	public boolean validateTeams(List<EventTeam> eventTeams) {
+		//return false if any event teams are still using the baseTeamName
 		for (EventTeam eventTeam : eventTeams) {
 			if (eventTeam.getOrganizationTeam().getTeamName() == baseTeamName) {
 				logger.debug("validateTeams - baseTeam found");
@@ -60,6 +61,7 @@ public class EventServiceHelperBean {
 	}
 
 	public boolean validateLocations(List<GameDate> gameDates) {
+		//return false if any game locations are still using the baseLocationName
 		List<GameLocation> gameLocations;
 		for (GameDate gameDate : gameDates) {
 			gameLocations = gameDate.getGameLocations();
@@ -69,6 +71,14 @@ public class EventServiceHelperBean {
 					return false;
 				}
 			}
+		}
+		return true;
+	}
+
+	public boolean validateGames(List<Game> eventGames) {
+		//return false if array of displayGameId is not consecutive
+		for (Game game : eventGames) {
+			logger.debug("validateLocations - baseLocation found");
 		}
 		return true;
 	}
