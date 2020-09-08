@@ -160,7 +160,7 @@ public class EventServiceBean {
 				if (eventServiceHelperBean.validateTemplate(requestEvent, templateDTO)) {
 					if (eventServiceHelperBean.validateTeams(requestEvent.getEventTeams())) {
 						if (eventServiceHelperBean.validateLocations(requestEvent.getGameDates())) {
-							List<Game> eventGames = gameJpaService.findByEventNameStartDateEndDateTemplateType(requestEvent.getEventName(), requestEvent.getStartDate(), requestEvent.getEndDate(), requestEvent.getTemplateType());
+							List<Game> eventGames = gameJpaService.findByEventNameTemplateTypeAsOfDate(requestEvent.getEventName(), requestEvent.getTemplateType(), requestEvent.getStartDate());
 							if (eventServiceHelperBean.validateGames(eventGames)) {
 								//eventJpaService.save(requestEvent);
 								return requestEvent;

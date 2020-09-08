@@ -50,18 +50,18 @@ public interface GameRepository extends Repository<Game, Long> {
 	@Query(findByGameDate)
 	List<Game> findByGameDate(@Param("gameDate") LocalDate gameDate);
 
-	String findByEventNameStartDateEndDateTemplateType =
+	String findByEventNameTemplateTypeAsOfDate =
 			"select g from Game g " +
 			"inner join g.gameRound gr " +
 			"inner join gr.gameLocation gl " +
 			"inner join gl.gameDate gd " +
 			"inner join gd.event e " +
 			"where e.eventName = :eventName " +
-			"and e.startDate <= :startDate " +
-			"and e.endDate >= :endDate " +
+			"and e.startDate <= :asOfDate " +
+			"and e.endDate >= :asOfDate " +
 			"and e.templateType = :templateType";
-	@Query(findByEventNameStartDateEndDateTemplateType)
-	List<Game> findByEventNameStartDateEndDateTemplateType(@Param("eventName") String eventName, @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate, @Param("templateType") TemplateType templateType);
+	@Query(findByEventNameTemplateTypeAsOfDate)
+	List<Game> findByEventNameTemplateTypeAsOfDate(@Param("eventName") String eventName, @Param("templateType") TemplateType templateType, @Param("asOfDate") LocalDate asOfDate);
 
 	String findByLocationName =
 			"select g from Game g " +

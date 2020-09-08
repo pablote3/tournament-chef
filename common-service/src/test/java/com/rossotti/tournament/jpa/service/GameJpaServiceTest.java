@@ -1,5 +1,6 @@
 package com.rossotti.tournament.jpa.service;
 
+import com.rossotti.tournament.enumeration.TemplateType;
 import com.rossotti.tournament.exception.NoSuchEntityException;
 import com.rossotti.tournament.enumeration.GameStatus;
 import com.rossotti.tournament.model.Game;
@@ -129,6 +130,18 @@ public class GameJpaServiceTest {
 	@Test
 	public void findByTeamNameGameDateTime_NotFound() {
 		Assert.assertNull(gameJpaService.findByTeamNameGameDateTime("Inter Circle", LocalDate.of(2020, 9, 29), LocalTime.of(8, 0, 0)));
+	}
+
+	@Test
+	public void findByEventNameTemplateTypeAsOfDate_Found() {
+		List<Game> games = gameJpaService.findByEventNameTemplateTypeAsOfDate("Campania Regional Frosh Soph Tournament", TemplateType.four_x_four_pp_20D_2L, LocalDate.of(2020, 9, 30));
+		Assert.assertEquals(4, games.size());
+	}
+
+	@Test
+	public void findByEventNameTemplateTypeAsOfDate_NotFound() {
+		List<Game> games = gameJpaService.findByEventNameTemplateTypeAsOfDate("Campania Regional Frosh Soph Tournament", TemplateType.four_x_four_pp_20D_2L, LocalDate.of(2020, 9, 28));
+		Assert.assertEquals(0, games.size());
 	}
 
 	@Test

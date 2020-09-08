@@ -140,8 +140,14 @@ public class GameRepositoryTest {
 	}
 
 	@Test
-	public void findByEventNameStartDateEndDateTemplateType_Found() {
-		List<Game> games = gameRepository.findByEventNameStartDateEndDateTemplateType("Pompeii Ampitheater", LocalDate.of(2020, 9, 29), LocalDate.of(2020, 9, 30), TemplateType.four_x_four_pp_20D_2L);
+	public void findByEventNameTemplateTypeAsOfDate_Found() {
+		List<Game> games = gameRepository.findByEventNameTemplateTypeAsOfDate("Campania Regional Frosh Soph Tournament", TemplateType.four_x_four_pp_20D_2L, LocalDate.of(2020, 9, 30));
+		Assert.assertEquals(4, games.size());
+	}
+
+	@Test
+	public void findByEventNameTemplateTypeAsOfDate_NotFound() {
+		List<Game> games = gameRepository.findByEventNameTemplateTypeAsOfDate("Campania Regional Frosh Soph Tournament", TemplateType.four_x_four_pp_20D_2L, LocalDate.of(2020, 9, 28));
 		Assert.assertEquals(0, games.size());
 	}
 

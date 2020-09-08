@@ -50,8 +50,8 @@ public class GameJpaServiceImpl implements GameJpaService {
 	}
 
 	@Override
-	public List<Game> findByEventNameStartDateEndDateTemplateType(String eventName, LocalDate startDate, LocalDate endDate, TemplateType templateType) {
-		return gameRepository.findByEventName(eventName);
+	public List<Game> findByEventNameTemplateTypeAsOfDate(String eventName, TemplateType templateType, LocalDate asOfDate) {
+		return gameRepository.findByEventNameTemplateTypeAsOfDate(eventName, templateType, asOfDate);
 	}
 
 	@Override
