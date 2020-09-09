@@ -7,6 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -74,12 +76,30 @@ public class EventServiceHelperBean {
 		}
 		return true;
 	}
-
-	public boolean validateGames(List<Game> eventGames) {
+	public boolean validateDisplayGameIds(List<Long> displayGameIds) {
 		//return false if array of displayGameId is not consecutive
-		for (Game game : eventGames) {
-			logger.debug("validateLocations - baseLocation found");
+		Collections.sort(displayGameIds);
+		for (int i = 0; i < displayGameIds.size(); ++i) {
+			Integer comparitor = Integer.valueOf(i + 1);
+			if (displayGameIds.get(i).compareTo(Long.valueOf(comparitor)) != 0) {
+				logger.debug("validateGames - index = " + i + " displayGameId = " + displayGameIds.get(i));
+				return false;
+			}
 		}
 		return true;
+	}
+
+	public List<Long> buildDisplayGameIds(List<GameDate> gameDates) throws NullPointerException {
+		List<Long> displayGameIds = new ArrayList<>();
+		for (GameDate gameDate : gameDates) {
+			for (GameLocation gameLocation : gameDate.getGameLocations()) {
+				for (GameRound gameRound: gameLocation.getGameRounds()) {
+					for (Game game : gameRound.getGames()) {
+						displayGameIds.add(game.getDisplayGameId());
+					}
+				}
+			}
+		}
+		return displayGameIds;
 	}
 }

@@ -12,7 +12,6 @@ import com.rossotti.tournament.exception.InitializationException;
 import com.rossotti.tournament.exception.InvalidEntityException;
 import com.rossotti.tournament.exception.NoSuchEntityException;
 import com.rossotti.tournament.jpa.service.EventJpaService;
-import com.rossotti.tournament.jpa.service.GameJpaService;
 import com.rossotti.tournament.jpa.service.OrganizationJpaService;
 import com.rossotti.tournament.model.*;
 import org.modelmapper.ModelMapper;
@@ -20,8 +19,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +28,6 @@ public class EventServiceBean {
 
 	private final EventJpaService eventJpaService;
 	private final OrganizationJpaService organizationJpaService;
-	private final GameJpaService gameJpaService;
 	private final TemplateFinderService templateFinderService;
 	private final EventServiceHelperBean eventServiceHelperBean;
 	private final Logger logger = LoggerFactory.getLogger(EventServiceBean.class);
@@ -39,10 +35,9 @@ public class EventServiceBean {
 	private static final String baseLocationName = "BaseLocation";
 
 	@Autowired
-	public EventServiceBean(EventJpaService eventJpaService, OrganizationJpaService organizationJpaService, GameJpaService gameJpaService, TemplateFinderService templateFinderService, EventServiceHelperBean eventServiceHelperBean) {
+	public EventServiceBean(EventJpaService eventJpaService, OrganizationJpaService organizationJpaService, TemplateFinderService templateFinderService, EventServiceHelperBean eventServiceHelperBean) {
 		this.eventJpaService = eventJpaService;
 		this.organizationJpaService = organizationJpaService;
-		this.gameJpaService = gameJpaService;
 		this.templateFinderService = templateFinderService;
 		this.eventServiceHelperBean = eventServiceHelperBean;
 	}
@@ -160,8 +155,8 @@ public class EventServiceBean {
 				if (eventServiceHelperBean.validateTemplate(requestEvent, templateDTO)) {
 					if (eventServiceHelperBean.validateTeams(requestEvent.getEventTeams())) {
 						if (eventServiceHelperBean.validateLocations(requestEvent.getGameDates())) {
-							List<Game> eventGames = gameJpaService.findByEventNameTemplateTypeAsOfDate(requestEvent.getEventName(), requestEvent.getTemplateType(), requestEvent.getStartDate());
-							if (eventServiceHelperBean.validateGames(eventGames)) {
+							List<Long> eventGames = eventServiceHelperBean.buildDisplayGameIds(requestEvent.getGameDates());
+							if (eventServiceHelperBean.validateDisplayGameIds(eventGames)) {
 								//eventJpaService.save(requestEvent);
 								return requestEvent;
 							}
