@@ -77,13 +77,13 @@ public class EventServiceHelperBean {
 		}
 		return true;
 	}
-	public boolean validateGames(List<GameDate> gameDates) {
+	public List<Long> validateGames(List<GameDate> gameDates) {
 		List<Long> displayGameIds;
 		try {
 			displayGameIds = EventServiceUtil.buildDisplayGameIds(gameDates);
 		}
 		catch (NullPointerException e) {
-			return false;
+			return null;
 		}
 		if (displayGameIds.size() > 0) {
 			//return false if array of displayGameId is not consecutive
@@ -93,10 +93,10 @@ public class EventServiceHelperBean {
 				if (displayGameIds.get(i) != null &&
 						displayGameIds.get(i).compareTo(Long.valueOf(comparitor)) != 0) {
 					logger.debug("validateGames - index = " + i + " displayGameId = " + displayGameIds.get(i));
-					return false;
+					return null;
 				}
 			}
 		}
-		return true;
+		return displayGameIds;
 	}
 }
