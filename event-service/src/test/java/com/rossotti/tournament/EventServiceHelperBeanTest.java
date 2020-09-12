@@ -133,18 +133,18 @@ public class EventServiceHelperBeanTest {
 	@Test
 	public void buildDisplayGameIds_invalidNullValue() {
 		List<GameDate> gameDates = EventServiceUtilTest.buildGameDates(1L, 3L, 5L, null, 2L, 4L, 6L, 8L);
-		Assert.assertEquals(null, eventServiceHelperBean.validateGames(gameDates));
+		Assert.assertNull(eventServiceHelperBean.validateGames(gameDates));
 	}
 
 	@Test
 	public void buildDisplayGameIds_invalidDuplicateValue() {
 		List<GameDate> gameDates = EventServiceUtilTest.buildGameDates(1L, 3L, 5L, 5L, 2L, 4L, 6L, 8L);
-		Assert.assertEquals(null, eventServiceHelperBean.validateGames(gameDates));
+		Assert.assertNull(eventServiceHelperBean.validateGames(gameDates));
 	}
 
 	@Test
 	public void buildDisplayGameIds_invalidMissingValue() {
 		List<GameDate> gameDates = EventServiceUtilTest.buildGameDates(1L, 3L, 5L, 101L, 2L, 4L, 6L, 8L);
-		Assert.assertEquals(null, eventServiceHelperBean.validateGames(gameDates));
+		Assert.assertNull(eventServiceHelperBean.validateGames(gameDates));
 	}
 }
