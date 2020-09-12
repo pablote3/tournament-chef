@@ -155,14 +155,13 @@ public class EventServiceBean {
 				if (eventServiceHelperBean.validateTemplate(requestEvent, templateDTO)) {
 					if (eventServiceHelperBean.validateTeams(requestEvent.getEventTeams())) {
 						if (eventServiceHelperBean.validateLocations(requestEvent.getGameDates())) {
-							List<Long> eventGames = eventServiceHelperBean.buildDisplayGameIds(requestEvent.getGameDates());
-							if (eventServiceHelperBean.validateDisplayGameIds(eventGames)) {
+							if (eventServiceHelperBean.validateGames(requestEvent.getGameDates())) {
 								//eventJpaService.save(requestEvent);
 								return requestEvent;
 							}
 							else {
-
-								throw new InvalidEntityException(Event.class);
+								/// no games created yet
+								return requestEvent;
 							}
 						}
 						else {

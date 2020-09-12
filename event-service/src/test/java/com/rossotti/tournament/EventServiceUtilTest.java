@@ -362,4 +362,87 @@ public class EventServiceUtilTest {
 		roundDTO.setChampionship(true);
 		Assert.assertFalse(EventServiceUtil.validateGameRounds(gameDates, roundDTO));
 	}
+
+	@Test
+	public void validateGames_valid() {
+		List<GameDate> gameDates = buildGameDates(1L, 3L, 5L, 7L, 2L, 4L, 6L, 8L);
+		Assert.assertEquals(8, EventServiceUtil.buildDisplayGameIds(gameDates).size());
+	}
+
+	@Test (expected=NullPointerException.class)
+	public void validateGames_invalidNullValue() {
+		List<GameDate> gameDates = buildGameDates(1L, 3L, 5L, 7L, 2L, 4L, null, 8L);
+		EventServiceUtil.buildDisplayGameIds(gameDates);
+	}
+
+	@Test
+	public void validateGames_validDuplicateValue() {
+		List<GameDate> gameDates = buildGameDates(1L, 3L, 5L, 7L, 2L, 4L, 4L, 8L);
+		Assert.assertEquals(8, EventServiceUtil.buildDisplayGameIds(gameDates).size());
+	}
+
+	public static List<GameDate> buildGameDates(Long gameId1, Long gameId2, Long gameId3, Long gameId4,
+										 		Long gameId5, Long gameId6, Long gameId7, Long gameId8) {
+		List<GameDate> gameDates = new ArrayList<>();
+		List<GameLocation> gameLocations1 = new ArrayList<>();
+		List<GameRound> gameRounds1 = new ArrayList<>();
+		List<GameRound> gameRounds2 = new ArrayList<>();
+		List<Game> games1 = new ArrayList<>();
+		List<Game> games2 = new ArrayList<>();
+		List<Game> games3 = new ArrayList<>();
+		List<Game> games4 = new ArrayList<>();
+
+		GameRound gameRound1 = new GameRound();
+		gameRounds1.add(gameRound1);
+		Game game1 = new Game();
+		game1.setDisplayGameId(gameId8);
+		games1.add(game1);
+		Game game2 = new Game();
+		game2.setDisplayGameId(gameId7);
+		games1.add(game2);
+		gameRound1.setGames(games1);
+
+		GameRound gameRound2 = new GameRound();
+		gameRounds1.add(gameRound2);
+		Game game3 = new Game();
+		game3.setDisplayGameId(gameId6);
+		games2.add(game3);
+		Game game4 = new Game();
+		game4.setDisplayGameId(gameId5);
+		games2.add(game4);
+		gameRound2.setGames(games2);
+
+		GameRound gameRound3 = new GameRound();
+		gameRounds2.add(gameRound3);
+		Game game5 = new Game();
+		game5.setDisplayGameId(gameId4);
+		games3.add(game5);
+		Game game6 = new Game();
+		game6.setDisplayGameId(gameId3);
+		games3.add(game6);
+		gameRound3.setGames(games3);
+
+		GameRound gameRound4 = new GameRound();
+		gameRounds2.add(gameRound4);
+		Game game7 = new Game();
+		game7.setDisplayGameId(gameId2);
+		games4.add(game7);
+		Game game8 = new Game();
+		game8.setDisplayGameId(gameId1);
+		games4.add(game8);
+		gameRound4.setGames(games4);
+
+		GameLocation gameLocation1 = new GameLocation();
+		gameLocation1.setGameRounds(gameRounds1);
+		gameLocations1.add(gameLocation1);
+
+		GameLocation gameLocation2 = new GameLocation();
+		gameLocation2.setGameRounds(gameRounds2);
+		gameLocations1.add(gameLocation2);
+
+		GameDate gameDate = new GameDate();
+		gameDate.setGameLocations(gameLocations1);
+		gameDates.add(gameDate);
+		return gameDates;
+	}
 }

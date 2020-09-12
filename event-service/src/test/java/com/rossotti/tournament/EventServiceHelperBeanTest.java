@@ -125,173 +125,26 @@ public class EventServiceHelperBeanTest {
 	}
 
 	@Test
-	public void validateGames_valid() {
-		List<Long> gameIds = new ArrayList<>();
-		gameIds.add(5L);
-		gameIds.add(3L);
-		gameIds.add(1L);
-		gameIds.add(4L);
-		gameIds.add(2L);
-		Assert.assertTrue(eventServiceHelperBean.validateDisplayGameIds(gameIds));
+	public void buildDisplayGameIds_valid() {
+		List<GameDate> gameDates = EventServiceUtilTest.buildGameDates(1L, 3L, 5L, 7L, 2L, 4L, 6L, 8L);
+		Assert.assertTrue( eventServiceHelperBean.validateGames(gameDates));
 	}
 
 	@Test
-	public void validateGames_invalid() {
-		List<Long> gameIds = new ArrayList<>();
-		gameIds.add(6L);
-		gameIds.add(3L);
-		gameIds.add(1L);
-		gameIds.add(4L);
-		gameIds.add(2L);
-		Assert.assertFalse(eventServiceHelperBean.validateDisplayGameIds(gameIds));
+	public void buildDisplayGameIds_invalidNullValue() {
+		List<GameDate> gameDates = EventServiceUtilTest.buildGameDates(1L, 3L, 5L, null, 2L, 4L, 6L, 8L);
+		Assert.assertFalse( eventServiceHelperBean.validateGames(gameDates));
 	}
 
 	@Test
-	public void buildDisplayGameIds_valid() throws NullPointerException {
-		List<GameDate> gameDates = new ArrayList<>();
-		List<GameLocation> gameLocations1 = new ArrayList<>();
-		List<GameRound> gameRounds1 = new ArrayList<>();
-		List<GameRound> gameRounds2 = new ArrayList<>();
-		List<Game> games1 = new ArrayList<>();
-		List<Game> games2 = new ArrayList<>();
-		List<Game> games3 = new ArrayList<>();
-		List<Game> games4 = new ArrayList<>();
-
-		GameRound gameRound1 = new GameRound();
-		gameRounds1.add(gameRound1);
-		Game game1 = new Game();
-		game1.setDisplayGameId(8L);
-		games1.add(game1);
-		Game game2 = new Game();
-		game2.setDisplayGameId(7L);
-		games1.add(game2);
-		gameRound1.setGames(games1);
-
-		GameRound gameRound2 = new GameRound();
-		gameRounds1.add(gameRound2);
-		Game game3 = new Game();
-		game3.setDisplayGameId(6L);
-		games2.add(game3);
-		Game game4 = new Game();
-		game4.setDisplayGameId(5L);
-		games2.add(game4);
-		gameRound2.setGames(games2);
-
-		GameRound gameRound3 = new GameRound();
-		gameRounds2.add(gameRound3);
-		Game game5 = new Game();
-		game5.setDisplayGameId(4L);
-		games3.add(game5);
-		Game game6 = new Game();
-		game6.setDisplayGameId(3L);
-		games3.add(game6);
-		gameRound3.setGames(games3);
-
-		GameRound gameRound4 = new GameRound();
-		gameRounds2.add(gameRound4);
-		Game game7 = new Game();
-		game7.setDisplayGameId(2L);
-		games4.add(game7);
-		Game game8 = new Game();
-		game8.setDisplayGameId(1L);
-		games4.add(game8);
-		gameRound4.setGames(games4);
-
-		GameLocation gameLocation1 = new GameLocation();
-		gameLocation1.setGameRounds(gameRounds1);
-		gameLocations1.add(gameLocation1);
-
-		GameLocation gameLocation2 = new GameLocation();
-		gameLocation2.setGameRounds(gameRounds2);
-		gameLocations1.add(gameLocation2);
-
-		GameDate gameDate = new GameDate();
-		gameDate.setGameLocations(gameLocations1);
-		gameDates.add(gameDate);
-		Assert.assertEquals(8, eventServiceHelperBean.buildDisplayGameIds(gameDates).size());
+	public void buildDisplayGameIds_invalidDuplicateValue() {
+		List<GameDate> gameDates = EventServiceUtilTest.buildGameDates(1L, 3L, 5L, 5L, 2L, 4L, 6L, 8L);
+		Assert.assertFalse( eventServiceHelperBean.validateGames(gameDates));
 	}
 
 	@Test
-	public void buildDisplayGameIds_invalidNullGameDates() {
-		Assert.assertThrows(NullPointerException.class, () -> eventServiceHelperBean.buildDisplayGameIds(null));
+	public void buildDisplayGameIds_invalidMissingValue() {
+		List<GameDate> gameDates = EventServiceUtilTest.buildGameDates(1L, 3L, 5L, 101L, 2L, 4L, 6L, 8L);
+		Assert.assertFalse( eventServiceHelperBean.validateGames(gameDates));
 	}
-
-	@Test
-	public void buildDisplayGameIds_invalidNullGameDate() {
-		List<GameDate> gameDates = new ArrayList<>();
-		GameDate gameDate = new GameDate();
-		gameDates.add(gameDate);
-		gameDates.add(null);
-		Assert.assertThrows(NullPointerException.class, () -> eventServiceHelperBean.buildDisplayGameIds(gameDates));
-	}
-
-	@Test
-	public void buildDisplayGameIds_invalidNullGameLocations() {
-		List<GameDate> gameDates = new ArrayList<>();
-		GameDate gameDate = new GameDate();
-		gameDates.add(gameDate);
-		gameDate.setGameLocations(null);
-		Assert.assertThrows(NullPointerException.class, () -> eventServiceHelperBean.buildDisplayGameIds(gameDates));
-	}
-
-//	@Test
-//	public void buildDisplayGameIds_nullGameRounds() {
-//		List<GameDate> gameDates = new ArrayList<>();
-//		List<GameLocation> gameLocations1 = new ArrayList<>();
-//		List<GameRound> gameRounds1 = new ArrayList<>();
-//		List<GameRound> gameRounds2 = new ArrayList<>();
-//
-//		GameRound gameRound1 = new GameRound();
-//		gameRounds1.add(gameRound1);
-//		Game game1 = new Game();
-//		game1.setDisplayGameId(8L);
-//		games1.add(game1);
-//		Game game2 = new Game();
-//		game2.setDisplayGameId(7L);
-//		games1.add(game2);
-//		gameRound1.setGames(games1);
-//
-//		GameRound gameRound2 = new GameRound();
-//		gameRounds1.add(gameRound2);
-//		Game game3 = new Game();
-//		game3.setDisplayGameId(6L);
-//		games2.add(game3);
-//		Game game4 = new Game();
-//		game4.setDisplayGameId(5L);
-//		games2.add(game4);
-//		gameRound2.setGames(games2);
-//
-//		GameRound gameRound3 = new GameRound();
-//		gameRounds2.add(gameRound3);
-//		Game game5 = new Game();
-//		game5.setDisplayGameId(4L);
-//		games3.add(game5);
-//		Game game6 = new Game();
-//		game6.setDisplayGameId(3L);
-//		games3.add(game6);
-//		gameRound3.setGames(games3);
-//
-//		GameRound gameRound4 = new GameRound();
-//		gameRounds2.add(gameRound4);
-//		Game game7 = new Game();
-//		game7.setDisplayGameId(2L);
-//		games4.add(game7);
-//		Game game8 = new Game();
-//		game8.setDisplayGameId(1L);
-//		games4.add(game8);
-//		gameRound4.setGames(games4);
-//
-//		GameLocation gameLocation1 = new GameLocation();
-//		gameLocation1.setGameRounds(gameRounds1);
-//		gameLocations1.add(gameLocation1);
-//
-//		GameLocation gameLocation2 = new GameLocation();
-//		gameLocation2.setGameRounds(gameRounds2);
-//		gameLocations1.add(gameLocation2);
-//
-//		GameDate gameDate = new GameDate();
-//		gameDate.setGameLocations(gameLocations1);
-//		gameDates.add(gameDate);
-//		Assert.assertEquals(8, eventServiceHelperBean.buildGames(gameDates).size());
-//	}
 }
