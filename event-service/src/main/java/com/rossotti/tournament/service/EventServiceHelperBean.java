@@ -3,6 +3,7 @@ package com.rossotti.tournament.service;
 import com.rossotti.tournament.dto.TemplateDTO;
 import com.rossotti.tournament.enumeration.EventStatus;
 import com.rossotti.tournament.model.*;
+import com.rossotti.tournament.util.EventUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -40,10 +41,10 @@ public class EventServiceHelperBean {
 			logger.debug("validateTemplate - gameDates: " + event.getGameDates().size() + " not equal template.eventDays: " + (int) Math.ceil(templateDTO.getEventDays()));
 			return false;
 		}
-		if (EventServiceUtil.validateGameLocations(event.getGameDates(), templateDTO.getEventLocations())) {
+		if (EventUtil.validateGameLocations(event.getGameDates(), templateDTO.getEventLocations())) {
 			return false;
 		}
-		if (EventServiceUtil.validateGameRounds(event.getGameDates(), templateDTO.getRoundDTO())) {
+		if (EventUtil.validateGameRounds(event.getGameDates(), templateDTO.getRoundDTO())) {
 			return false;
 		}
 		return true;
@@ -77,7 +78,7 @@ public class EventServiceHelperBean {
 	public List<Long> validateGames(List<GameDate> gameDates) {
 		List<Long> displayGameIds;
 		try {
-			displayGameIds = EventServiceUtil.buildDisplayGameIds(gameDates);
+			displayGameIds = EventUtil.buildDisplayGameIds(gameDates);
 		}
 		catch (NullPointerException e) {
 			return null;
@@ -98,7 +99,7 @@ public class EventServiceHelperBean {
 	}
 
 	public Event createGames (Event event, TemplateDTO templateDTO) {
-		int gameCount = EventServiceUtil.getGameCount(event.getEventTeams());
+		int gameCount = EventUtil.getGameCount_RR(event.getEventTeams());
 		if (event.getEventTeams().size() != templateDTO.getTotalTeams()) {
 			logger.debug("validateTemplate - eventTeams: " + event.getEventTeams().size() + " not equal template.totalTeams: " + templateDTO.getTotalTeams());
 		}

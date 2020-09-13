@@ -14,6 +14,7 @@ import com.rossotti.tournament.exception.NoSuchEntityException;
 import com.rossotti.tournament.jpa.service.EventJpaService;
 import com.rossotti.tournament.jpa.service.OrganizationJpaService;
 import com.rossotti.tournament.model.*;
+import com.rossotti.tournament.util.EventUtil;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,11 +62,11 @@ public class EventServiceBean {
 				event.setEventStatus(EventStatus.Sandbox);
 				event.setEventName(eventDTO.getEventName());
 				event.setSport(Sport.valueOf(eventDTO.getSport()));
-				event.setHalfDay(EventServiceUtil.determineHalfDay(eventDTO.getStartDate(), templateDTO.getEventDays()));
+				event.setHalfDay(EventUtil.determineHalfDay(eventDTO.getStartDate(), templateDTO.getEventDays()));
 
-				OrganizationTeam baseTeam = EventServiceUtil.getOrganizationTeam(organization.getOrganizationTeams(), baseTeamName);
-				OrganizationLocation baseLocation = EventServiceUtil.getOrganizationLocation(organization.getOrganizationLocations(), baseLocationName);
-				List<GameRoundType> gameRounds = EventServiceUtil.getGameRounds(templateDTO.getRoundDTO());
+				OrganizationTeam baseTeam = EventUtil.getOrganizationTeam(organization.getOrganizationTeams(), baseTeamName);
+				OrganizationLocation baseLocation = EventUtil.getOrganizationLocation(organization.getOrganizationLocations(), baseLocationName);
+				List<GameRoundType> gameRounds = EventUtil.getGameRounds(templateDTO.getRoundDTO());
 
 				if (baseTeam != null && baseLocation != null && gameRounds.size() > 0) {
 					event.setEventTeams(new ArrayList<>());
@@ -96,7 +97,7 @@ public class EventServiceBean {
 							gameLocation.setOrganizationLocation(baseLocation);
 							gameLocation.setBaseLocationName(baseLocationName + j);
 							gameLocation.setStartTime(LocalTime.of(8, 0, 0));
-							gameLocation.setGameRounds(EventServiceUtil.buildGameRounds(
+							gameLocation.setGameRounds(EventUtil.buildGameRounds(
 									i,
 									eventDuration,
 									gameRoundCount,

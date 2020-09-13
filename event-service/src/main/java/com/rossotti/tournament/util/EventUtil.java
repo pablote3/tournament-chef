@@ -1,4 +1,4 @@
-package com.rossotti.tournament.service;
+package com.rossotti.tournament.util;
 
 import com.rossotti.tournament.dto.RoundDTO;
 import com.rossotti.tournament.enumeration.GameRoundType;
@@ -12,8 +12,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EventServiceUtil {
-	private static final Logger logger = LoggerFactory.getLogger(EventServiceUtil.class);
+public class EventUtil {
+	private static final Logger logger = LoggerFactory.getLogger(EventUtil.class);
 
 	public static OrganizationTeam getOrganizationTeam(List<OrganizationTeam> organizationTeams, String baseTeamName) {
 		OrganizationTeam baseTeam = null;
