@@ -445,4 +445,22 @@ public class EventServiceUtilTest {
 		gameDates.add(gameDate);
 		return gameDates;
 	}
+
+	@Test
+	public void getGameCount_Teams8() {
+		List<EventTeam> eventTeams = new ArrayList<>();
+		for (int i = 0; i < 8; i++) {
+			eventTeams.add(new EventTeam());
+		}
+		Assert.assertEquals(28, EventServiceUtil.getGameCount_RR(eventTeams));
+	}
+
+	@Test
+	public void getGameCount_Teams16() {
+		List<EventTeam> eventTeams = new ArrayList<>();
+		for (int i = 0; i < 16; i++) {
+			eventTeams.add(new EventTeam());
+		}
+		Assert.assertEquals(120, EventServiceUtil.getGameCount_RR(eventTeams));
+	}
 }

@@ -143,4 +143,8 @@ public class EventServiceUtil {
 		}
 		return displayGameIds;
 	}
+
+	public static int getGameCount_RR(List<EventTeam> eventTeams) {
+		return (eventTeams.size() * (eventTeams.size()-1)) / 2;
+	}
 }

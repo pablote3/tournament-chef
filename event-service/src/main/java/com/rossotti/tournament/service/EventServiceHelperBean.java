@@ -6,9 +6,6 @@ import com.rossotti.tournament.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-
-import javax.validation.constraints.Null;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -55,7 +52,7 @@ public class EventServiceHelperBean {
 	public boolean validateTeams(List<EventTeam> eventTeams) {
 		//return false if any event teams are still using the baseTeamName
 		for (EventTeam eventTeam : eventTeams) {
-			if (eventTeam.getOrganizationTeam().getTeamName() == baseTeamName) {
+			if (eventTeam.getOrganizationTeam().getTeamName().equals(baseTeamName)) {
 				logger.debug("validateTeams - baseTeam found");
 				return false;
 			}
@@ -69,7 +66,7 @@ public class EventServiceHelperBean {
 		for (GameDate gameDate : gameDates) {
 			gameLocations = gameDate.getGameLocations();
 			for (GameLocation gameLocation : gameLocations) {
-				if (gameLocation.getOrganizationLocation().getLocationName() == baseLocationName) {
+				if (gameLocation.getOrganizationLocation().getLocationName().equals(baseLocationName)) {
 					logger.debug("validateLocations - baseLocation found");
 					return false;
 				}
@@ -89,7 +86,7 @@ public class EventServiceHelperBean {
 			//return false if array of displayGameId is not consecutive
 			Collections.sort(displayGameIds);
 			for (int i = 0; i < displayGameIds.size(); ++i) {
-				Integer comparitor = Integer.valueOf(i + 1);
+				int comparitor = i + 1;
 				if (displayGameIds.get(i) != null &&
 						displayGameIds.get(i).compareTo(Long.valueOf(comparitor)) != 0) {
 					logger.debug("validateGames - index = " + i + " displayGameId = " + displayGameIds.get(i));
@@ -98,5 +95,13 @@ public class EventServiceHelperBean {
 			}
 		}
 		return displayGameIds;
+	}
+
+	public Event createGames (Event event, TemplateDTO templateDTO) {
+		int gameCount = EventServiceUtil.getGameCount(event.getEventTeams());
+		if (event.getEventTeams().size() != templateDTO.getTotalTeams()) {
+			logger.debug("validateTemplate - eventTeams: " + event.getEventTeams().size() + " not equal template.totalTeams: " + templateDTO.getTotalTeams());
+		}
+		return event;
 	}
 }

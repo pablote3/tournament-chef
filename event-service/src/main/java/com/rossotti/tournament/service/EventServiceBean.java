@@ -161,7 +161,9 @@ public class EventServiceBean {
 									eventJpaService.save(requestEvent);
 								}
 								else {
+									requestEvent.getEventTeams().get(0).getEventTeamRankings();
 									// create games
+									// requestEvent.setEventStatus(EventStatus);
 									// save requestEvent
 								}
 								return requestEvent;
