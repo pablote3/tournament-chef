@@ -1,9 +1,11 @@
 package com.rossotti.tournament.dto;
 
 import com.rossotti.tournament.enumeration.TemplateType;
+import com.rossotti.tournament.enumeration.TournamentType;
 
 public class TemplateDTO {
 	private TemplateType templateType;
+	private TournamentType tournamentType;
 	private int gridGroups;
 	private int gridTeams;
 	private int totalTeams;
@@ -17,6 +19,13 @@ public class TemplateDTO {
 	}
 	public void setTemplateType(TemplateType templateType) {
 		this.templateType = templateType;
+	}
+
+	public TournamentType getTournamentType() {
+		return tournamentType;
+	}
+	public void setTournamentType(TournamentType tournamentType) {
+		this.tournamentType = tournamentType;
 	}
 
 	public int getGridGroups() {

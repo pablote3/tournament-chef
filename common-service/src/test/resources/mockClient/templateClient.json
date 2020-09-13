@@ -1,6 +1,7 @@
 [
   {
     "templateType": "two_x_four_pp_10D_1L",
+    "tournamentType": "pool_play",
     "gridGroups": 2,
     "gridTeams": 4,
     "totalTeams": 8,
