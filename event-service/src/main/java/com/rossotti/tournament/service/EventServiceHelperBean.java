@@ -100,6 +100,21 @@ public class EventServiceHelperBean {
 	}
 
 	public Event createGames (Event event, TemplateDTO templateDTO) {
+
+		for (GameDate gameDate : event.getGameDates()) {
+			for (GameLocation gameLocation : gameDate.getGameLocations()) {
+				for (GameRound gameRound : gameLocation.getGameRounds()) {
+					for (EventTeam eventTeam : event.getEventTeams()) {
+
+					}
+				}
+			}
+		}
+		int gridGroups = templateDTO.getGridGroups();
+		int gridTeams = templateDTO.getGridTeams();
+
+		// create games
+
 		if (templateDTO.getTournamentType() == TournamentType.round_robin) {
 			int gameCount = EventUtil.getGameCount_RR(event.getEventTeams());
 		}
