@@ -290,7 +290,6 @@ public class EventRepositoryTest {
 		game.setGameRound(gameRound);
 		game.setStartTime(LocalTime.of(8, 0, 0));
 		game.setGameStatus(GameStatus.Scheduled);
-		game.setDisplayGameId(5L);
 		game.getGameTeams().add(createMockGameTeam(game));
 		game.setCreateTs(LocalDateTime.of(2019, 10, 27, 20, 30));
 		game.setLupdTs(LocalDateTime.of(2019, 10, 27, 20, 30));

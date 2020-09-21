@@ -8,6 +8,8 @@ import com.rossotti.tournament.util.EventUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -78,20 +80,10 @@ public class EventServiceHelperBean {
 		return true;
 	}
 
-	public List<Long> validateGames(List<GameDate> gameDates) {
-		List<Long> displayGameIds;
-		try {
-			displayGameIds = EventUtil.buildDisplayGameIds(gameDates);
-		} catch (NullPointerException e) {
-			return null;
-		}
-		if (displayGameIds.size() > 0) {
-			//return false if array of displayGameId is not consecutive
-			if (!EventUtil.validateConsecutive(displayGameIds)) {
-				return null;
-			}
-		}
-		return displayGameIds;
+	public boolean validateGames(List<Game> games, TemplateDTO templateDTO) {
+		//if (games.size() == templateDTO.)
+
+		return true;
 	}
 
 	public Event createGames (Event event, TemplateDTO templateDTO) {

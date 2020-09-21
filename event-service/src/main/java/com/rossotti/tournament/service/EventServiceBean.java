@@ -159,22 +159,22 @@ public class EventServiceBean {
 				if (eventServiceHelperBean.validateTemplate(requestEvent, templateDTO)) {
 					if (eventServiceHelperBean.validateTeams(requestEvent.getEventTeams())) {
 						if (eventServiceHelperBean.validateLocations(requestEvent.getGameDates())) {
-							List<Long> displayGameIds = eventServiceHelperBean.validateGames(requestEvent.getGameDates());
-							if (displayGameIds != null) {
-								if (displayGameIds.size() > 0) {
+							List<Game> totalGames = EventUtil.getTotalGames(requestEvent.getGameDates());
+							if (totalGames.size() > 0) {
+								if (eventServiceHelperBean.validateGames(totalGames, templateDTO)) {
 									eventJpaService.save(requestEvent);
+									return requestEvent;
+								} else {
+
+									throw new InvalidEntityException(Event.class);
 								}
-								else {
-									eventServiceHelperBean.createGames(requestEvent, templateDTO);
+							}
+							else {
+								eventServiceHelperBean.createGames(requestEvent, templateDTO);
 
 									// requestEvent.setEventStatus(EventStatus);
 									// save requestEvent
-								}
 								return requestEvent;
-							}
-							else {
-
-								throw new InvalidEntityException(Event.class);
 							}
 						}
 						else {

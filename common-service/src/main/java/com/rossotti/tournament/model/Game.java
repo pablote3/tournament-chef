@@ -50,14 +50,4 @@ public class Game extends BaseEntity {
 	public void setGameStatus(GameStatus gameStatus) {
 		this.gameStatus = gameStatus;
 	}
-
-	@Column(nullable=false)
-	@NotNull(message="DisplayGameId is mandatory")
-	private Long displayGameId;
-	public Long getDisplayGameId() {
-		return displayGameId;
-	}
-	public void setDisplayGameId(Long displayGameId) {
-		this.displayGameId = displayGameId;
-	}
 }

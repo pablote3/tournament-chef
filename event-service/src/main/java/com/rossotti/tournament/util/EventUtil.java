@@ -123,27 +123,20 @@ public class EventUtil {
 		return true;
 	}
 
-	public static List<Long> buildDisplayGameIds(List<GameDate> gameDates) {
-		//null pointer issues should be managed by validateTemplate
-		List<Long> displayGameIds = new ArrayList<>();
+	public static List<Game> getTotalGames(List<GameDate> gameDates) {
+		List<Game> totalGames = new ArrayList<>();
 		for (GameDate gameDate : gameDates) {
 			for (GameLocation gameLocation : gameDate.getGameLocations()) {
 				for (GameRound gameRound: gameLocation.getGameRounds()) {
 					if (gameRound.getGames() != null && gameRound.getGames().size() > 0) {
 						for (Game game : gameRound.getGames()) {
-							if (game.getDisplayGameId() != null) {
-								displayGameIds.add(game.getDisplayGameId());
-							}
-							else {
-								throw new NullPointerException();
-							}
+							totalGames.add(game);
 						}
 					}
 				}
 			}
 		}
-		Collections.sort(displayGameIds);
-		return displayGameIds;
+		return totalGames;
 	}
 
 	public static boolean validateConsecutive(List<Long> longs) {
