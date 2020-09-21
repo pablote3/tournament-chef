@@ -5,6 +5,7 @@ import com.rossotti.tournament.dto.EventDTO;
 import com.rossotti.tournament.dto.RoundDTO;
 import com.rossotti.tournament.dto.TemplateDTO;
 import com.rossotti.tournament.enumeration.EventStatus;
+import com.rossotti.tournament.enumeration.RankingType;
 import com.rossotti.tournament.enumeration.TemplateType;
 import com.rossotti.tournament.exception.EntityExistsException;
 import com.rossotti.tournament.exception.InitializationException;
@@ -150,6 +151,8 @@ public class EventServiceBeanTest {
 		Event event = eventService.createEvent(createMockInitialEventDTO());
 		Assert.assertEquals("Algarve Soccer Cup", event.getEventName());
 		Assert.assertEquals(16, event.getEventTeams().size());
+		Assert.assertEquals(RankingType.Initial, event.getEventTeams().get(0).getEventTeamRankings().get(0).getRankingType());
+		Assert.assertEquals(1, event.getEventTeams().get(0).getEventTeamRankings().get(0).getRanking().intValue());
 		Assert.assertEquals(2, event.getGameDates().size());
 		Assert.assertEquals(2, event.getGameDates().get(0).getGameLocations().size());
 		Assert.assertEquals(3, event.getGameDates().get(0).getGameLocations().get(0).getGameRounds().size());

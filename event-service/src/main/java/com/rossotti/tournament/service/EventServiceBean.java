@@ -3,10 +3,7 @@ package com.rossotti.tournament.service;
 import com.rossotti.tournament.client.TemplateFinderService;
 import com.rossotti.tournament.dto.EventDTO;
 import com.rossotti.tournament.dto.TemplateDTO;
-import com.rossotti.tournament.enumeration.EventStatus;
-import com.rossotti.tournament.enumeration.GameRoundType;
-import com.rossotti.tournament.enumeration.Sport;
-import com.rossotti.tournament.enumeration.TemplateType;
+import com.rossotti.tournament.enumeration.*;
 import com.rossotti.tournament.exception.EntityExistsException;
 import com.rossotti.tournament.exception.InitializationException;
 import com.rossotti.tournament.exception.InvalidEntityException;
@@ -71,6 +68,7 @@ public class EventServiceBean {
 				if (baseTeam != null && baseLocation != null && gameRounds.size() > 0) {
 					event.setEventTeams(new ArrayList<>());
 					EventTeam eventTeam;
+					EventTeamRanking eventTeamRanking;
 					for (int i = 1; i < templateDTO.getTotalTeams() + 1; i++) {
 						eventTeam = new EventTeam();
 						eventTeam.setEvent(event);
@@ -78,6 +76,11 @@ public class EventServiceBean {
 						eventTeam.setBaseTeamName(baseTeamName + i);
 						baseTeam.getEventTeams().add(eventTeam);
 						event.getEventTeams().add(eventTeam);
+						eventTeamRanking = new EventTeamRanking();
+						eventTeamRanking.setEventTeam(eventTeam);
+						eventTeamRanking.setRankingType(RankingType.Initial);
+						eventTeamRanking.setRanking((short)i);
+						eventTeam.getEventTeamRankings().add(eventTeamRanking);
 					}
 
 					event.setGameDates(new ArrayList<>());
