@@ -9,6 +9,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class EventUtilTest {
@@ -363,24 +364,30 @@ public class EventUtilTest {
 		Assert.assertFalse(EventUtil.validateGameRounds(gameDates, roundDTO));
 	}
 
-//	@Test
-//	public void validateGames_valid() {
-//		List<GameDate> gameDates = buildGameDates(1L, 3L, 5L, 7L, 2L, 4L, 6L, 8L);
-//		Assert.assertEquals(8, EventUtil.buildDisplayGameIds(gameDates).size());
-//	}
-//
-//	@Test (expected=NullPointerException.class)
-//	public void validateGames_invalidNullValue() {
-//		List<GameDate> gameDates = buildGameDates(1L, 3L, 5L, 7L, 2L, 4L, null, 8L);
-//		EventUtil.buildDisplayGameIds(gameDates);
-//	}
-//
-//	@Test
-//	public void validateGames_validDuplicateValue() {
-//		List<GameDate> gameDates = buildGameDates(1L, 3L, 5L, 7L, 2L, 4L, 4L, 8L);
-//		Assert.assertEquals(8, EventUtil.buildDisplayGameIds(gameDates).size());
-//	}
-//
+	@Test
+	public void validateGames_valid() {
+		List<Short> shorts = Arrays.asList((short)1, (short)3, (short)5, (short)2, (short)4, (short)6);
+		Assert.assertTrue(EventUtil.validateConsecutive(shorts));
+	}
+
+	@Test (expected=NullPointerException.class)
+	public void validateGames_invalidNullValue() {
+		List<Short> shorts = Arrays.asList((short)1, (short)3, (short)5, null, (short)4, (short)6);
+		EventUtil.validateConsecutive(shorts);
+	}
+
+	@Test
+	public void validateGames_invalidDuplicateValue() {
+		List<Short> shorts = Arrays.asList((short)1, (short)3, (short)3, (short)2, (short)4, (short)6);
+		Assert.assertFalse(EventUtil.validateConsecutive(shorts));
+	}
+
+	@Test
+	public void validateGames_invalidNotConsecutive() {
+		List<Short> shorts = Arrays.asList((short)1, (short)3, (short)7, (short)2, (short)4, (short)6);
+		Assert.assertFalse(EventUtil.validateConsecutive(shorts));
+	}
+
 //	public static List<GameDate> buildGameDates(Long gameId1, Long gameId2, Long gameId3, Long gameId4,
 //										 		Long gameId5, Long gameId6, Long gameId7, Long gameId8) {
 //		List<GameDate> gameDates = new ArrayList<>();

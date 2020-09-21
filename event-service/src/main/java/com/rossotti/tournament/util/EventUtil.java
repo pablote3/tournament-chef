@@ -139,13 +139,13 @@ public class EventUtil {
 		return totalGames;
 	}
 
-	public static boolean validateConsecutive(List<Long> longs) {
-		Collections.sort(longs);
-		for (int i = 0; i < longs.size(); ++i) {
-			int comparitor = i + 1;
-			if (longs.get(i) != null &&
-					longs.get(i).compareTo(Long.valueOf(comparitor)) != 0) {
-				logger.debug("validateConsecutive - index = " + i + " value = " + longs.get(i));
+	public static boolean validateConsecutive(List<Short> shorts) {
+		Collections.sort(shorts);
+		for (short i = 0; i < shorts.size(); ++i) {
+			short comparitor = (short)(i + 1);
+			if (shorts.get(i) != null &&
+					shorts.get(i).compareTo(Short.valueOf(comparitor)) != 0) {
+				logger.debug("validateConsecutive - comparitor = " + comparitor + " value = " + shorts.get(i));
 				return false;
 			}
 		}
