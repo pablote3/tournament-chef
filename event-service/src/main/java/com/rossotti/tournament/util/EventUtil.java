@@ -129,9 +129,7 @@ public class EventUtil {
 			for (GameLocation gameLocation : gameDate.getGameLocations()) {
 				for (GameRound gameRound: gameLocation.getGameRounds()) {
 					if (gameRound.getGames() != null && gameRound.getGames().size() > 0) {
-						for (Game game : gameRound.getGames()) {
-							totalGames.add(game);
-						}
+						totalGames.addAll(gameRound.getGames());
 					}
 				}
 			}
@@ -144,7 +142,7 @@ public class EventUtil {
 		for (short i = 0; i < shorts.size(); ++i) {
 			short comparitor = (short)(i + 1);
 			if (shorts.get(i) != null &&
-					shorts.get(i).compareTo(Short.valueOf(comparitor)) != 0) {
+					shorts.get(i).compareTo(comparitor) != 0) {
 				logger.debug("validateConsecutive - comparitor = " + comparitor + " value = " + shorts.get(i));
 				return false;
 			}
