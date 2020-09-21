@@ -52,12 +52,13 @@ public class EventServiceHelperBean {
 	}
 
 	public boolean validateTeams(List<EventTeam> eventTeams) {
-		//return false if any event teams are still using the baseTeamName
 		for (EventTeam eventTeam : eventTeams) {
 			if (eventTeam.getOrganizationTeam().getTeamName().equals(baseTeamName)) {
+				//return false if any event teams are still using the baseTeamName
 				logger.debug("validateTeams - baseTeam found");
 				return false;
 			}
+
 		}
 		return true;
 	}
@@ -76,24 +77,18 @@ public class EventServiceHelperBean {
 		}
 		return true;
 	}
+
 	public List<Long> validateGames(List<GameDate> gameDates) {
 		List<Long> displayGameIds;
 		try {
 			displayGameIds = EventUtil.buildDisplayGameIds(gameDates);
-		}
-		catch (NullPointerException e) {
+		} catch (NullPointerException e) {
 			return null;
 		}
 		if (displayGameIds.size() > 0) {
 			//return false if array of displayGameId is not consecutive
-			Collections.sort(displayGameIds);
-			for (int i = 0; i < displayGameIds.size(); ++i) {
-				int comparitor = i + 1;
-				if (displayGameIds.get(i) != null &&
-						displayGameIds.get(i).compareTo(Long.valueOf(comparitor)) != 0) {
-					logger.debug("validateGames - index = " + i + " displayGameId = " + displayGameIds.get(i));
-					return null;
-				}
+			if (!EventUtil.validateConsecutive(displayGameIds)) {
+				return null;
 			}
 		}
 		return displayGameIds;

@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class EventUtil {
@@ -141,7 +142,21 @@ public class EventUtil {
 				}
 			}
 		}
+		Collections.sort(displayGameIds);
 		return displayGameIds;
+	}
+
+	public static boolean validateConsecutive(List<Long> longs) {
+		Collections.sort(longs);
+		for (int i = 0; i < longs.size(); ++i) {
+			int comparitor = i + 1;
+			if (longs.get(i) != null &&
+					longs.get(i).compareTo(Long.valueOf(comparitor)) != 0) {
+				logger.debug("validateConsecutive - index = " + i + " value = " + longs.get(i));
+				return false;
+			}
+		}
+		return true;
 	}
 
 	public static int getGameCount_RR(List<EventTeam> eventTeams) {
