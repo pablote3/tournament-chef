@@ -157,7 +157,7 @@ public class EventServiceBean {
 			if (eventServiceHelperBean.validateDatabaseEvent(dbEvent) && eventServiceHelperBean.validateRequestEvent(requestEvent)) {
 				TemplateDTO templateDTO = templateFinderService.findTemplateType(requestEvent.getTemplateType().name());
 				if (eventServiceHelperBean.validateTemplate(requestEvent, templateDTO)) {
-					if (eventServiceHelperBean.validateTeams(requestEvent.getEventTeams())) {
+					if (eventServiceHelperBean.validateTeams(requestEvent.getEventTeams(), templateDTO, RankingType.Initial)) {
 						if (eventServiceHelperBean.validateLocations(requestEvent.getGameDates())) {
 							List<Game> totalGames = EventUtil.getTotalGames(requestEvent.getGameDates());
 							if (totalGames.size() > 0) {

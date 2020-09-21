@@ -2,15 +2,14 @@ package com.rossotti.tournament.service;
 
 import com.rossotti.tournament.dto.TemplateDTO;
 import com.rossotti.tournament.enumeration.EventStatus;
+import com.rossotti.tournament.enumeration.RankingType;
 import com.rossotti.tournament.enumeration.TournamentType;
 import com.rossotti.tournament.model.*;
 import com.rossotti.tournament.util.EventUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -53,20 +52,31 @@ public class EventServiceHelperBean {
 		return true;
 	}
 
-	public boolean validateTeams(List<EventTeam> eventTeams) {
+	public boolean validateTeams(List<EventTeam> eventTeams, TemplateDTO templateDTO, RankingType rankingType) {
+		List<Short> eventTeamRankings = new ArrayList<>();
 		for (EventTeam eventTeam : eventTeams) {
 			if (eventTeam.getOrganizationTeam().getTeamName().equals(baseTeamName)) {
-				//return false if any event teams are still using the baseTeamName
 				logger.debug("validateTeams - baseTeam found");
 				return false;
 			}
-
+			for (EventTeamRanking eventTeamRanking : eventTeam.getEventTeamRankings()) {
+				if (eventTeamRanking.getRankingType().equals(rankingType)) {
+					eventTeamRankings.add(eventTeamRanking.getRanking());
+				}
+			}
+		}
+		if (eventTeamRankings.size() != templateDTO.getGameDTO().getTotal()) {
+			logger.debug("validateTeams - count of event rankings not equal to template games total");
+			return false;
+		}
+		else if (!EventUtil.validateConsecutive(eventTeamRankings)) {
+			logger.debug("validateTeams - event rankings not in consecutive order");
+			return false;
 		}
 		return true;
 	}
 
 	public boolean validateLocations(List<GameDate> gameDates) {
-		//return false if any game locations are still using the baseLocationName
 		List<GameLocation> gameLocations;
 		for (GameDate gameDate : gameDates) {
 			gameLocations = gameDate.getGameLocations();

@@ -1,6 +1,10 @@
 package com.rossotti.tournament;
 
+import com.rossotti.tournament.dto.GameDTO;
+import com.rossotti.tournament.dto.TemplateDTO;
 import com.rossotti.tournament.enumeration.EventStatus;
+import com.rossotti.tournament.enumeration.RankingType;
+import com.rossotti.tournament.enumeration.TemplateType;
 import com.rossotti.tournament.service.EventServiceHelperBean;
 import com.rossotti.tournament.model.*;
 import org.junit.Assert;
@@ -54,28 +58,100 @@ public class EventServiceHelperBeanTest {
 		orgTeam1.setTeamName("Bari");
 		eventTeam1.setOrganizationTeam(orgTeam1);
 		eventTeams.add(eventTeam1);
+		EventTeamRanking eventTeamRanking1 = new EventTeamRanking();
+		eventTeamRanking1.setRankingType(RankingType.Initial);
+		eventTeamRanking1.setRanking((short)2);
+		eventTeam1.getEventTeamRankings().add(eventTeamRanking1);
+
 		EventTeam eventTeam2 = new EventTeam();
 		OrganizationTeam orgTeam2 = new OrganizationTeam();
 		orgTeam2.setTeamName("Tavagnacco");
 		eventTeam2.setOrganizationTeam(orgTeam2);
 		eventTeams.add(eventTeam2);
-		Assert.assertTrue(eventServiceHelperBean.validateTeams(eventTeams));
+		EventTeamRanking eventTeamRanking2 = new EventTeamRanking();
+		eventTeamRanking2.setRankingType(RankingType.Initial);
+		eventTeamRanking2.setRanking((short)1);
+		eventTeam2.getEventTeamRankings().add(eventTeamRanking2);
+
+		Assert.assertTrue(eventServiceHelperBean.validateTeams(eventTeams, createMockTemplateDTO(2), RankingType.Initial));
 	}
 
 	@Test
-	public void validateTeams_invalid() {
+	public void validateTeams_invalid_baseTeamFound() {
 		List<EventTeam> eventTeams = new ArrayList<>();
 		EventTeam eventTeam1 = new EventTeam();
 		OrganizationTeam orgTeam1 = new OrganizationTeam();
 		orgTeam1.setTeamName("Bari");
 		eventTeam1.setOrganizationTeam(orgTeam1);
 		eventTeams.add(eventTeam1);
+		EventTeamRanking eventTeamRanking1 = new EventTeamRanking();
+		eventTeamRanking1.setRankingType(RankingType.Initial);
+		eventTeamRanking1.setRanking((short)1);
+		eventTeam1.getEventTeamRankings().add(eventTeamRanking1);
+
 		EventTeam eventTeam2 = new EventTeam();
 		OrganizationTeam orgTeam2 = new OrganizationTeam();
 		orgTeam2.setTeamName("BaseTeam");
 		eventTeam2.setOrganizationTeam(orgTeam2);
 		eventTeams.add(eventTeam2);
-		Assert.assertFalse(eventServiceHelperBean.validateTeams(eventTeams));
+		EventTeamRanking eventTeamRanking2 = new EventTeamRanking();
+		eventTeamRanking2.setRankingType(RankingType.Initial);
+		eventTeamRanking2.setRanking((short)2);
+		eventTeam2.getEventTeamRankings().add(eventTeamRanking2);
+
+		Assert.assertFalse(eventServiceHelperBean.validateTeams(eventTeams, createMockTemplateDTO(2), RankingType.Initial));
+	}
+
+	@Test
+	public void validateTeams_invalid_eventTeamRankingCount() {
+		List<EventTeam> eventTeams = new ArrayList<>();
+		EventTeam eventTeam1 = new EventTeam();
+		OrganizationTeam orgTeam1 = new OrganizationTeam();
+		orgTeam1.setTeamName("Bari");
+		eventTeam1.setOrganizationTeam(orgTeam1);
+		eventTeams.add(eventTeam1);
+		EventTeamRanking eventTeamRanking1 = new EventTeamRanking();
+		eventTeamRanking1.setRankingType(RankingType.Initial);
+		eventTeamRanking1.setRanking((short)2);
+		eventTeam1.getEventTeamRankings().add(eventTeamRanking1);
+
+		EventTeam eventTeam2 = new EventTeam();
+		OrganizationTeam orgTeam2 = new OrganizationTeam();
+		orgTeam2.setTeamName("Napoli");
+		eventTeam2.setOrganizationTeam(orgTeam2);
+		eventTeams.add(eventTeam2);
+		EventTeamRanking eventTeamRanking2 = new EventTeamRanking();
+		eventTeamRanking2.setRankingType(RankingType.Initial);
+		eventTeamRanking2.setRanking((short)1);
+		eventTeam2.getEventTeamRankings().add(eventTeamRanking2);
+
+		Assert.assertFalse(eventServiceHelperBean.validateTeams(eventTeams, createMockTemplateDTO(3), RankingType.Initial));
+	}
+
+	@Test
+	public void validateTeams_invalid_eventTeamRankingConsecutive() {
+		List<EventTeam> eventTeams = new ArrayList<>();
+		EventTeam eventTeam1 = new EventTeam();
+		OrganizationTeam orgTeam1 = new OrganizationTeam();
+		orgTeam1.setTeamName("Bari");
+		eventTeam1.setOrganizationTeam(orgTeam1);
+		eventTeams.add(eventTeam1);
+		EventTeamRanking eventTeamRanking1 = new EventTeamRanking();
+		eventTeamRanking1.setRankingType(RankingType.Initial);
+		eventTeamRanking1.setRanking((short)1);
+		eventTeam1.getEventTeamRankings().add(eventTeamRanking1);
+
+		EventTeam eventTeam2 = new EventTeam();
+		OrganizationTeam orgTeam2 = new OrganizationTeam();
+		orgTeam2.setTeamName("Napoli");
+		eventTeam2.setOrganizationTeam(orgTeam2);
+		eventTeams.add(eventTeam2);
+		EventTeamRanking eventTeamRanking2 = new EventTeamRanking();
+		eventTeamRanking2.setRankingType(RankingType.Initial);
+		eventTeamRanking2.setRanking((short)1);
+		eventTeam2.getEventTeamRankings().add(eventTeamRanking2);
+
+		Assert.assertFalse(eventServiceHelperBean.validateTeams(eventTeams, createMockTemplateDTO(2), RankingType.Initial));
 	}
 
 	@Test
@@ -122,6 +198,14 @@ public class EventServiceHelperBeanTest {
 		gameDate.setGameLocations(gameLocations);
 		gameDates.add(gameDate);
 		Assert.assertFalse(eventServiceHelperBean.validateLocations(gameDates));
+	}
+
+	private TemplateDTO createMockTemplateDTO(int totalGames) {
+		TemplateDTO templateDTO = new TemplateDTO();
+		templateDTO.setTemplateType(TemplateType.four_x_four_pp_20D_2L);
+		templateDTO.setGameDTO(new GameDTO());
+		templateDTO.getGameDTO().setTotal(totalGames);
+		return templateDTO;
 	}
 
 //	@Test
