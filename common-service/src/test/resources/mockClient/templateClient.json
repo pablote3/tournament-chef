@@ -19,7 +19,8 @@
     },
     "gameDTO": {
       "preliminaryPerRound": 4,
-      "finalPerRound": 4
+      "finalPerRound": 4,
+      "total":  12
     }
   },
   {
@@ -41,7 +42,8 @@
     },
     "gameDTO": {
       "preliminaryPerRound": 4,
-      "finalPerRound": 4
+      "finalPerRound": 4,
+      "total":  12
     }
   },
   {
@@ -63,7 +65,8 @@
     },
     "gameDTO": {
       "preliminaryPerRound": 4,
-      "finalPerRound": 4
+      "finalPerRound": 4,
+      "total":  16
     }
   },
   {
@@ -85,7 +88,8 @@
     },
     "gameDTO": {
       "preliminaryPerRound": 4,
-      "finalPerRound": 4
+      "finalPerRound": 4,
+      "total":  16
     }
   },
   {
@@ -107,7 +111,8 @@
     },
     "gameDTO": {
       "preliminaryPerRound": 4,
-      "finalPerRound": 4
+      "finalPerRound": 4,
+      "total":  32
     }
   },
   {
@@ -129,7 +134,8 @@
     },
     "gameDTO": {
       "preliminaryPerRound": 4,
-      "finalPerRound": 4
+      "finalPerRound": 4,
+      "total":  32
     }
   },
   {
@@ -151,7 +157,8 @@
     },
     "gameDTO": {
       "preliminaryPerRound": 4,
-      "finalPerRound": 4
+      "finalPerRound": 4,
+      "total":  40
     }
   },
   {
@@ -173,7 +180,8 @@
     },
     "gameDTO": {
       "preliminaryPerRound": 4,
-      "finalPerRound": 4
+      "finalPerRound": 4,
+      "total":  40
     }
   },
   {
@@ -195,7 +203,8 @@
     },
     "gameDTO": {
       "preliminaryPerRound": 8,
-      "finalPerRound": 8
+      "finalPerRound": 8,
+      "total":  32
     }
   }
 ]
