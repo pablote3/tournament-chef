@@ -171,8 +171,8 @@ insert into gameLocation (id, gameDateId, organizationLocationId, baseLocationNa
 insert into gameLocation (id, gameDateId, organizationLocationId, baseLocationName, startTime) VALUES(13, 10, 16, '', '08:00:00.0');
 insert into gameLocation (id, gameDateId, organizationLocationId, baseLocationName, startTime) VALUES(14, 10, 17, '', '08:00:00.0');
 
-insert into gameRound (id, gameLocationId, gameRoundType, gameDuration) VALUES(1, 1, 'GroupPlay', 45);
-insert into gameRound (id, gameLocationId, gameRoundType, gameDuration) VALUES(2, 2, 'GroupPlay', 45);
+insert into gameRound (id, gameLocationId, gameRoundType, gameDuration) VALUES(1, 1, 'GroupPlay1', 45);
+insert into gameRound (id, gameLocationId, gameRoundType, gameDuration) VALUES(2, 2, 'GroupPlay2', 45);
 insert into gameRound (id, gameLocationId, gameRoundType, gameDuration) VALUES(3, 3, 'Championship', 50);
 insert into gameRound (id, gameLocationId, gameRoundType, gameDuration) VALUES(4, 4, 'Championship', 50);
 insert into gameRound (id, gameLocationId, gameRoundType, gameDuration) VALUES(5, 5, 'Championship', 50);
@@ -181,8 +181,8 @@ insert into gameRound (id, gameLocationId, gameRoundType, gameDuration) VALUES(7
 insert into gameRound (id, gameLocationId, gameRoundType, gameDuration) VALUES(8, 8, 'Championship', 35);
 insert into gameRound (id, gameLocationId, gameRoundType, gameDuration) VALUES(9, 9, 'Championship', 35);
 insert into gameRound (id, gameLocationId, gameRoundType, gameDuration) VALUES(10, 10, 'Championship', 35);
-insert into gameRound (id, gameLocationId, gameRoundType, gameDuration) VALUES(11, 11, 'GroupPlay', 35);
-insert into gameRound (id, gameLocationId, gameRoundType, gameDuration) VALUES(12, 12, 'GroupPlay', 35);
+insert into gameRound (id, gameLocationId, gameRoundType, gameDuration) VALUES(11, 11, 'GroupPlay1', 35);
+insert into gameRound (id, gameLocationId, gameRoundType, gameDuration) VALUES(12, 12, 'GroupPlay2', 35);
 insert into gameRound (id, gameLocationId, gameRoundType, gameDuration) VALUES(13, 13, 'SemiFinal', 35);
 insert into gameRound (id, gameLocationId, gameRoundType, gameDuration) VALUES(14, 14, 'SemiFinal', 35);
 insert into gameRound (id, gameLocationId, gameRoundType, gameDuration) VALUES(15, 13, 'Championship', 35);

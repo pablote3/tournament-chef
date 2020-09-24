@@ -1,5 +1,5 @@
 package com.rossotti.tournament.enumeration;
 
 public enum GameRoundType {
-	GroupPlay, PlayOff, QuarterFinal, SemiFinal, Championship
+	GroupPlay1, GroupPlay2, GroupPlay3, GroupPlay4, PlayOff, QuarterFinal, SemiFinal, Championship
 }

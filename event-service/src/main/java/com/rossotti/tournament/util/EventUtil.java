@@ -40,9 +40,14 @@ public class EventUtil {
 
 	public static List<GameRoundType> getGameRounds(RoundDTO roundDTO) {
 		List<GameRoundType> gameRounds = new ArrayList<>();
-		for (int k = 1; k <= roundDTO.getPreliminary(); k++) {
-			gameRounds.add(GameRoundType.GroupPlay);
-		}
+		if (roundDTO.getPreliminary() >= 1)
+			gameRounds.add(GameRoundType.GroupPlay1);
+		if (roundDTO.getPreliminary() >= 2)
+			gameRounds.add(GameRoundType.GroupPlay2);
+		if (roundDTO.getPreliminary() >= 3)
+			gameRounds.add(GameRoundType.GroupPlay3);
+		if (roundDTO.getPreliminary() >= 4)
+			gameRounds.add(GameRoundType.GroupPlay4);
 		if (roundDTO.getQuarterFinal())
 			gameRounds.add(GameRoundType.QuarterFinal);
 		if (roundDTO.getSemiFinal())
