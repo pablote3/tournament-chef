@@ -5,6 +5,9 @@ public class GameDTO {
 	private int finalPerRound;
 	private int total;
 
+	public GameDTO() {
+	}
+
 	public int getPreliminaryPerRound() {
 		return preliminaryPerRound;
 	}
