@@ -158,7 +158,7 @@ public class EventServiceBean {
 				TemplateDTO templateDTO = templateFinderService.findTemplateType(requestEvent);
 				if (eventServiceHelperBean.validateTemplate(requestEvent, templateDTO)) {
 					if (eventServiceHelperBean.validateTeams(requestEvent, templateDTO, RankingType.Initial)) {
-						if (eventServiceHelperBean.validateLocations(requestEvent.getGameDates())) {
+						if (eventServiceHelperBean.validateLocations(requestEvent)) {
 							if (eventServiceHelperBean.validateGames(requestEvent, templateDTO)) {
 								eventJpaService.save(requestEvent);
 								return requestEvent;

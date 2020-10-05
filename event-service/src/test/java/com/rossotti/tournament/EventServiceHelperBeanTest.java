@@ -186,7 +186,9 @@ public class EventServiceHelperBeanTest {
 
 		gameDate.setGameLocations(gameLocations);
 		gameDates.add(gameDate);
-		Assert.assertTrue(eventServiceHelperBean.validateLocations(gameDates));
+		Event event = new Event();
+		event.setGameDates(gameDates);
+		Assert.assertTrue(eventServiceHelperBean.validateLocations(event));
 	}
 
 	@Test
@@ -209,7 +211,9 @@ public class EventServiceHelperBeanTest {
 
 		gameDate.setGameLocations(gameLocations);
 		gameDates.add(gameDate);
-		Assert.assertFalse(eventServiceHelperBean.validateLocations(gameDates));
+		Event event = new Event();
+		event.setGameDates(gameDates);
+		Assert.assertFalse(eventServiceHelperBean.validateLocations(event));
 	}
 
 	@Test

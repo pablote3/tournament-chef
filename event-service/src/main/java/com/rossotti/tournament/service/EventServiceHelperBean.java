@@ -77,7 +77,8 @@ public class EventServiceHelperBean {
 		return true;
 	}
 
-	public boolean validateLocations(List<GameDate> gameDates) {
+	public boolean validateLocations(Event event) {
+		List<GameDate> gameDates = event.getGameDates();
 		List<GameLocation> gameLocations;
 		for (GameDate gameDate : gameDates) {
 			gameLocations = gameDate.getGameLocations();
