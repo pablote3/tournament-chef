@@ -52,7 +52,8 @@ public class EventServiceHelperBean {
 		return true;
 	}
 
-	public boolean validateTeams(List<EventTeam> eventTeams, TemplateDTO templateDTO, RankingType rankingType) {
+	public boolean validateTeams(Event event, TemplateDTO templateDTO, RankingType rankingType) {
+		List<EventTeam> eventTeams = event.getEventTeams();
 		List<Short> eventTeamRankings = new ArrayList<>();
 		for (EventTeam eventTeam : eventTeams) {
 			if (eventTeam.getOrganizationTeam().getTeamName().equals(baseTeamName)) {
@@ -90,8 +91,10 @@ public class EventServiceHelperBean {
 		return true;
 	}
 
-	public boolean validateGames(List<Game> games, TemplateDTO templateDTO) {
-		if (games.size() == templateDTO.getGameDTO().getTotal()) {
+	public boolean validateGames(Event event, TemplateDTO templateDTO) {
+		List<Game> games = EventUtil.getTotalGames(event);
+		if (games.size() > 0 &&
+			games.size() == templateDTO.getGameDTO().getTotal()) {
 			//validate gameDate/startTime vs round
 			for (int i = 0; i <= games.size(); i++) {
 				Game game = games.get(i);

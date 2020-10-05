@@ -47,7 +47,7 @@ public class EventServiceBean {
 			TemplateType templateType = TemplateType.valueOf(eventDTO.getTemplateType());
 			Event event = eventJpaService.findByOrganizationNameAsOfDateTemplateType(eventDTO.getOrganizationName(), eventDTO.getStartDate(), templateType);
 			if (event == null) {
-				TemplateDTO templateDTO = templateFinderService.findTemplateType(eventDTO.getTemplateType());
+				TemplateDTO templateDTO = templateFinderService.findTemplateType(event);
 				int eventDuration = Math.round(templateDTO.getEventDays());
 
 				ModelMapper modelMapper = new ModelMapper();
@@ -155,19 +155,13 @@ public class EventServiceBean {
 		Event dbEvent = eventJpaService.findByOrganizationNameAsOfDateTemplateType(requestEvent.getOrganization().getOrganizationName(), requestEvent.getStartDate(), requestEvent.getTemplateType());
 		if (dbEvent != null) {
 			if (eventServiceHelperBean.validateDatabaseEvent(dbEvent) && eventServiceHelperBean.validateRequestEvent(requestEvent)) {
-				TemplateDTO templateDTO = templateFinderService.findTemplateType(requestEvent.getTemplateType().name());
+				TemplateDTO templateDTO = templateFinderService.findTemplateType(requestEvent);
 				if (eventServiceHelperBean.validateTemplate(requestEvent, templateDTO)) {
-					if (eventServiceHelperBean.validateTeams(requestEvent.getEventTeams(), templateDTO, RankingType.Initial)) {
+					if (eventServiceHelperBean.validateTeams(requestEvent, templateDTO, RankingType.Initial)) {
 						if (eventServiceHelperBean.validateLocations(requestEvent.getGameDates())) {
-							List<Game> totalGames = EventUtil.getTotalGames(requestEvent.getGameDates());
-							if (totalGames.size() > 0) {
-								if (eventServiceHelperBean.validateGames(totalGames, templateDTO)) {
-									eventJpaService.save(requestEvent);
-									return requestEvent;
-								} else {
-
-									throw new InvalidEntityException(Event.class);
-								}
+							if (eventServiceHelperBean.validateGames(requestEvent, templateDTO)) {
+								eventJpaService.save(requestEvent);
+								return requestEvent;
 							}
 							else {
 								eventServiceHelperBean.createGames(requestEvent, templateDTO);

@@ -183,28 +183,5 @@
       "finalPerRound": 4,
       "total":  40
     }
-  },
-  {
-    "templateType": "eight_x_two_pp_20D_2L",
-    "gridGroups": 8,
-    "gridTeams": 2,
-    "totalTeams": 16,
-    "eventDays": 2.0,
-    "eventLocations": 2,
-    "roundDTO": {
-      "preliminary": 1,
-      "playoff1": "false",
-      "playoff2": "false",
-      "quarterFinal": "true",
-      "semiFinal": "true",
-      "championship": "true",
-      "dayHalf": 0,
-      "dayFull": 2
-    },
-    "gameDTO": {
-      "preliminaryPerRound": 8,
-      "finalPerRound": 8,
-      "total":  32
-    }
   }
 ]

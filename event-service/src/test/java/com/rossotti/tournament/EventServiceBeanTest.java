@@ -76,7 +76,7 @@ public class EventServiceBeanTest {
 			.thenReturn(createMockOrganization(true, true));
 		when(eventJpaService.findByOrganizationNameAsOfDateTemplateType(anyString(), any(), any()))
 			.thenReturn(null);
-		when(templateFinderService.findTemplateType(anyString()))
+		when(templateFinderService.findTemplateType(any()))
 			.thenThrow(IOException.class);
 		assertThrows(IOException.class, () -> eventService.createEvent(createMockInitialEventDTO()));
 	}
@@ -87,7 +87,7 @@ public class EventServiceBeanTest {
 			.thenReturn(createMockOrganization(true, true));
 		when(eventJpaService.findByOrganizationNameAsOfDateTemplateType(anyString(), any(), any()))
 			.thenReturn(null);
-		when(templateFinderService.findTemplateType(anyString()))
+		when(templateFinderService.findTemplateType(any()))
 			.thenThrow(NoSuchEntityException.class);
 		assertThrows(NoSuchEntityException.class, () -> eventService.createEvent(createMockInitialEventDTO()));
 	}
@@ -98,7 +98,7 @@ public class EventServiceBeanTest {
 			.thenReturn(createMockOrganization(false, true));
 		when(eventJpaService.findByOrganizationNameAsOfDateTemplateType(anyString(), any(), any()))
 			.thenReturn(null);
-		when(templateFinderService.findTemplateType(anyString()))
+		when(templateFinderService.findTemplateType(any()))
 			.thenReturn(createMockTemplateDTO(true));
 		assertThrows(NoSuchEntityException.class, () -> eventService.createEvent(createMockInitialEventDTO()));
 	}
@@ -109,7 +109,7 @@ public class EventServiceBeanTest {
 			.thenReturn(createMockOrganization(true, false));
 		when(eventJpaService.findByOrganizationNameAsOfDateTemplateType(anyString(), any(), any()))
 			.thenReturn(null);
-		when(templateFinderService.findTemplateType(anyString()))
+		when(templateFinderService.findTemplateType(any()))
 			.thenReturn(createMockTemplateDTO(true));
 		assertThrows(NoSuchEntityException.class, () -> eventService.createEvent(createMockInitialEventDTO()));
 	}
@@ -120,7 +120,7 @@ public class EventServiceBeanTest {
 			.thenReturn(createMockOrganization(true, true));
 		when(eventJpaService.findByOrganizationNameAsOfDateTemplateType(anyString(), any(), any()))
 			.thenReturn(null);
-		when(templateFinderService.findTemplateType(anyString()))
+		when(templateFinderService.findTemplateType(any()))
 			.thenReturn(createMockTemplateDTO(false));
 		assertThrows(InitializationException.class, () -> eventService.createEvent(createMockInitialEventDTO()));
 	}
@@ -131,7 +131,7 @@ public class EventServiceBeanTest {
 			.thenReturn(createMockOrganization(true, true));
 		when(eventJpaService.findByOrganizationNameAsOfDateTemplateType(anyString(), any(), any()))
 			.thenReturn(null);
-		when(templateFinderService.findTemplateType(anyString()))
+		when(templateFinderService.findTemplateType(any()))
 			.thenReturn(createMockTemplateDTO(true));
 		when(eventJpaService.save(any()))
 			.thenThrow(PersistenceException.class);
@@ -144,7 +144,7 @@ public class EventServiceBeanTest {
 			.thenReturn(createMockOrganization(true, true));
 		when(eventJpaService.findByOrganizationNameAsOfDateTemplateType(anyString(), any(), any()))
 			.thenReturn(null);
-		when(templateFinderService.findTemplateType(anyString()))
+		when(templateFinderService.findTemplateType(any()))
 			.thenReturn(createMockTemplateDTO(true));
 		when(eventJpaService.save(any()))
 			.thenReturn(createMockEvent(EventStatus.Sandbox));
@@ -193,7 +193,7 @@ public class EventServiceBeanTest {
 			.thenReturn(true);
 		when(eventServiceHelperBean.validateRequestEvent(any()))
 			.thenReturn(true);
-		when(templateFinderService.findTemplateType(anyString()))
+		when(templateFinderService.findTemplateType(any()))
 			.thenThrow(IOException.class);
 		assertThrows(IOException.class, () -> eventService.updateEvent(createMockEvent(EventStatus.Scheduled)));
 	}
@@ -206,7 +206,7 @@ public class EventServiceBeanTest {
 			.thenReturn(true);
 		when(eventServiceHelperBean.validateRequestEvent(any()))
 			.thenReturn(true);
-		when(templateFinderService.findTemplateType(anyString()))
+		when(templateFinderService.findTemplateType(any()))
 			.thenThrow(NoSuchEntityException.class);
 		assertThrows(NoSuchEntityException.class, () -> eventService.updateEvent(createMockEvent(EventStatus.Scheduled)));
 	}

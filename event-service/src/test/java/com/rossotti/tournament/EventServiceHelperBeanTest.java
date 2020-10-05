@@ -52,6 +52,7 @@ public class EventServiceHelperBeanTest {
 
 	@Test
 	public void validateTeams_valid() {
+		Event event = new Event();
 		List<EventTeam> eventTeams = new ArrayList<>();
 		EventTeam eventTeam1 = new EventTeam();
 		OrganizationTeam orgTeam1 = new OrganizationTeam();
@@ -62,6 +63,7 @@ public class EventServiceHelperBeanTest {
 		eventTeamRanking1.setRankingType(RankingType.Initial);
 		eventTeamRanking1.setRanking((short)2);
 		eventTeam1.getEventTeamRankings().add(eventTeamRanking1);
+		event.getEventTeams().add(eventTeam1);
 
 		EventTeam eventTeam2 = new EventTeam();
 		OrganizationTeam orgTeam2 = new OrganizationTeam();
@@ -72,12 +74,14 @@ public class EventServiceHelperBeanTest {
 		eventTeamRanking2.setRankingType(RankingType.Initial);
 		eventTeamRanking2.setRanking((short)1);
 		eventTeam2.getEventTeamRankings().add(eventTeamRanking2);
+		event.getEventTeams().add(eventTeam2);
 
-		Assert.assertTrue(eventServiceHelperBean.validateTeams(eventTeams, createMockTemplateDTO(2), RankingType.Initial));
+		Assert.assertTrue(eventServiceHelperBean.validateTeams(event, createMockTemplateDTO(2), RankingType.Initial));
 	}
 
 	@Test
 	public void validateTeams_invalid_baseTeamFound() {
+		Event event = new Event();
 		List<EventTeam> eventTeams = new ArrayList<>();
 		EventTeam eventTeam1 = new EventTeam();
 		OrganizationTeam orgTeam1 = new OrganizationTeam();
@@ -88,6 +92,7 @@ public class EventServiceHelperBeanTest {
 		eventTeamRanking1.setRankingType(RankingType.Initial);
 		eventTeamRanking1.setRanking((short)1);
 		eventTeam1.getEventTeamRankings().add(eventTeamRanking1);
+		event.getEventTeams().add(eventTeam1);
 
 		EventTeam eventTeam2 = new EventTeam();
 		OrganizationTeam orgTeam2 = new OrganizationTeam();
@@ -98,12 +103,14 @@ public class EventServiceHelperBeanTest {
 		eventTeamRanking2.setRankingType(RankingType.Initial);
 		eventTeamRanking2.setRanking((short)2);
 		eventTeam2.getEventTeamRankings().add(eventTeamRanking2);
+		event.getEventTeams().add(eventTeam2);
 
-		Assert.assertFalse(eventServiceHelperBean.validateTeams(eventTeams, createMockTemplateDTO(2), RankingType.Initial));
+		Assert.assertFalse(eventServiceHelperBean.validateTeams(event, createMockTemplateDTO(2), RankingType.Initial));
 	}
 
 	@Test
 	public void validateTeams_invalid_eventTeamRankingCount() {
+		Event event = new Event();
 		List<EventTeam> eventTeams = new ArrayList<>();
 		EventTeam eventTeam1 = new EventTeam();
 		OrganizationTeam orgTeam1 = new OrganizationTeam();
@@ -114,6 +121,7 @@ public class EventServiceHelperBeanTest {
 		eventTeamRanking1.setRankingType(RankingType.Initial);
 		eventTeamRanking1.setRanking((short)2);
 		eventTeam1.getEventTeamRankings().add(eventTeamRanking1);
+		event.getEventTeams().add(eventTeam1);
 
 		EventTeam eventTeam2 = new EventTeam();
 		OrganizationTeam orgTeam2 = new OrganizationTeam();
@@ -124,12 +132,14 @@ public class EventServiceHelperBeanTest {
 		eventTeamRanking2.setRankingType(RankingType.Initial);
 		eventTeamRanking2.setRanking((short)1);
 		eventTeam2.getEventTeamRankings().add(eventTeamRanking2);
+		event.getEventTeams().add(eventTeam2);
 
-		Assert.assertFalse(eventServiceHelperBean.validateTeams(eventTeams, createMockTemplateDTO(3), RankingType.Initial));
+		Assert.assertFalse(eventServiceHelperBean.validateTeams(event, createMockTemplateDTO(3), RankingType.Initial));
 	}
 
 	@Test
 	public void validateTeams_invalid_eventTeamRankingConsecutive() {
+		Event event = new Event();
 		List<EventTeam> eventTeams = new ArrayList<>();
 		EventTeam eventTeam1 = new EventTeam();
 		OrganizationTeam orgTeam1 = new OrganizationTeam();
@@ -140,6 +150,7 @@ public class EventServiceHelperBeanTest {
 		eventTeamRanking1.setRankingType(RankingType.Initial);
 		eventTeamRanking1.setRanking((short)1);
 		eventTeam1.getEventTeamRankings().add(eventTeamRanking1);
+		event.getEventTeams().add(eventTeam1);
 
 		EventTeam eventTeam2 = new EventTeam();
 		OrganizationTeam orgTeam2 = new OrganizationTeam();
@@ -150,8 +161,9 @@ public class EventServiceHelperBeanTest {
 		eventTeamRanking2.setRankingType(RankingType.Initial);
 		eventTeamRanking2.setRanking((short)1);
 		eventTeam2.getEventTeamRankings().add(eventTeamRanking2);
+		event.getEventTeams().add(eventTeam2);
 
-		Assert.assertFalse(eventServiceHelperBean.validateTeams(eventTeams, createMockTemplateDTO(2), RankingType.Initial));
+		Assert.assertFalse(eventServiceHelperBean.validateTeams(event, createMockTemplateDTO(2), RankingType.Initial));
 	}
 
 	@Test
@@ -200,6 +212,29 @@ public class EventServiceHelperBeanTest {
 		Assert.assertFalse(eventServiceHelperBean.validateLocations(gameDates));
 	}
 
+	@Test
+	public void validateGames_valid() {
+		Event event = new Event();
+		GameDate gameDate = new GameDate();
+		List<GameLocation> gameLocations = new ArrayList<>();
+
+		GameLocation gameLocation1 = new GameLocation();
+		OrganizationLocation organizationLocation1 = new OrganizationLocation();
+		organizationLocation1.setLocationName("Centro Sportivo Monteboro");
+		gameLocation1.setOrganizationLocation(organizationLocation1);
+		gameLocations.add(gameLocation1);
+
+		GameLocation gameLocation2 = new GameLocation();
+		OrganizationLocation organizationLocation2 = new OrganizationLocation();
+		organizationLocation2.setLocationName("Stadio Tre Fontane");
+		gameLocation2.setOrganizationLocation(organizationLocation2);
+		gameLocations.add(gameLocation2);
+
+		gameDate.setGameLocations(gameLocations);
+		event.getGameDates().add(gameDate);
+		Assert.assertTrue(eventServiceHelperBean.validateGames(event, createMockTemplateDTO(2)));
+	}
+
 	private TemplateDTO createMockTemplateDTO(int totalGames) {
 		TemplateDTO templateDTO = new TemplateDTO();
 		templateDTO.setTemplateType(TemplateType.four_x_four_pp_20D_2L);
@@ -207,28 +242,4 @@ public class EventServiceHelperBeanTest {
 		templateDTO.getGameDTO().setTotal(totalGames);
 		return templateDTO;
 	}
-
-//	@Test
-//	public void buildDisplayGameIds_valid() {
-//		List<GameDate> gameDates = EventUtilTest.buildGameDates(1L, 3L, 5L, 7L, 2L, 4L, 6L, 8L);
-//		Assert.assertEquals(8, eventServiceHelperBean.validateGames(gameDates).size());
-//	}
-//
-//	@Test
-//	public void buildDisplayGameIds_invalidNullValue() {
-//		List<GameDate> gameDates = EventUtilTest.buildGameDates(1L, 3L, 5L, null, 2L, 4L, 6L, 8L);
-//		Assert.assertNull(eventServiceHelperBean.validateGames(gameDates));
-//	}
-//
-//	@Test
-//	public void buildDisplayGameIds_invalidDuplicateValue() {
-//		List<GameDate> gameDates = EventUtilTest.buildGameDates(1L, 3L, 5L, 5L, 2L, 4L, 6L, 8L);
-//		Assert.assertNull(eventServiceHelperBean.validateGames(gameDates));
-//	}
-//
-//	@Test
-//	public void buildDisplayGameIds_invalidMissingValue() {
-//		List<GameDate> gameDates = EventUtilTest.buildGameDates(1L, 3L, 5L, 101L, 2L, 4L, 6L, 8L);
-//		Assert.assertNull(eventServiceHelperBean.validateGames(gameDates));
-//	}
 }

@@ -2,6 +2,7 @@ package com.rossotti.tournament.client;
 
 import com.rossotti.tournament.dto.TemplateDTO;
 import com.rossotti.tournament.exception.NoSuchEntityException;
+import com.rossotti.tournament.model.Event;
 import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,7 +14,8 @@ public class TemplateFinderService {
 
 	private static Map<String, Object> templates = null;
 
-	public TemplateDTO findTemplateType(String templateType) throws Exception {
+	public TemplateDTO findTemplateType(Event event) throws Exception {
+		String templateType = event.getTemplateType().name();
 		if (templates == null) {
 			initializeTemplates();
 		}

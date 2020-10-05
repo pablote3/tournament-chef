@@ -128,9 +128,9 @@ public class EventUtil {
 		return true;
 	}
 
-	public static List<Game> getTotalGames(List<GameDate> gameDates) {
+	public static List<Game> getTotalGames(Event event) {
 		List<Game> totalGames = new ArrayList<>();
-		for (GameDate gameDate : gameDates) {
+		for (GameDate gameDate : event.getGameDates()) {
 			for (GameLocation gameLocation : gameDate.getGameLocations()) {
 				for (GameRound gameRound: gameLocation.getGameRounds()) {
 					if (gameRound.getGames() != null && gameRound.getGames().size() > 0) {
