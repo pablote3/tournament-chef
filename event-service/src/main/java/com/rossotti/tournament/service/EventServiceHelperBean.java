@@ -93,7 +93,7 @@ public class EventServiceHelperBean {
 	}
 
 	public boolean validateGames(Event event, TemplateDTO templateDTO) {
-		List<Game> games = EventUtil.getTotalGames(event);
+		List<Game> games = EventUtil.extractGames(event);
 		if (games.size() > 0 &&
 			games.size() == templateDTO.getGameDTO().getTotal()) {
 			//validate gameDate/startTime vs round

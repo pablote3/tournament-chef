@@ -128,7 +128,7 @@ public class EventUtil {
 		return true;
 	}
 
-	public static List<Game> getTotalGames(Event event) {
+	public static List<Game> extractGames(Event event) {
 		List<Game> totalGames = new ArrayList<>();
 		for (GameDate gameDate : event.getGameDates()) {
 			for (GameLocation gameLocation : gameDate.getGameLocations()) {
