@@ -42,7 +42,7 @@ public class GameRound {
 	@Column(length=14, nullable=false)
 	@NotNull(message="GameRoundType is mandatory")
 	private GameRoundType gameRoundType;
-	public GameRoundType getGameType() {
+	public GameRoundType getGameRoundType() {
 		return gameRoundType;
 	}
 	public void setGameRoundType(GameRoundType gameRoundType) {

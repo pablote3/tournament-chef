@@ -135,10 +135,10 @@ public class EventUtilTest {
 				new GameLocation()
 		);
 		Assert.assertEquals(4, gameRounds.size());
-		Assert.assertEquals(GameRoundType.GroupPlay1, gameRounds.get(0).getGameType());
-		Assert.assertEquals(GameRoundType.GroupPlay2, gameRounds.get(1).getGameType());
-		Assert.assertEquals(GameRoundType.SemiFinal, gameRounds.get(2).getGameType());
-		Assert.assertEquals(GameRoundType.Championship, gameRounds.get(3).getGameType());
+		Assert.assertEquals(GameRoundType.GroupPlay1, gameRounds.get(0).getGameRoundType());
+		Assert.assertEquals(GameRoundType.GroupPlay2, gameRounds.get(1).getGameRoundType());
+		Assert.assertEquals(GameRoundType.SemiFinal, gameRounds.get(2).getGameRoundType());
+		Assert.assertEquals(GameRoundType.Championship, gameRounds.get(3).getGameRoundType());
 	}
 
 	@Test
@@ -154,8 +154,8 @@ public class EventUtilTest {
 				new GameLocation()
 		);
 		Assert.assertEquals(2, gameRounds.size());
-		Assert.assertEquals(GameRoundType.GroupPlay1, gameRounds.get(0).getGameType());
-		Assert.assertEquals(GameRoundType.GroupPlay2, gameRounds.get(1).getGameType());
+		Assert.assertEquals(GameRoundType.GroupPlay1, gameRounds.get(0).getGameRoundType());
+		Assert.assertEquals(GameRoundType.GroupPlay2, gameRounds.get(1).getGameRoundType());
 	}
 
 	@Test
@@ -171,8 +171,8 @@ public class EventUtilTest {
 				new GameLocation()
 		);
 		Assert.assertEquals(2, gameRounds.size());
-		Assert.assertEquals(GameRoundType.SemiFinal, gameRounds.get(0).getGameType());
-		Assert.assertEquals(GameRoundType.Championship, gameRounds.get(1).getGameType());
+		Assert.assertEquals(GameRoundType.SemiFinal, gameRounds.get(0).getGameRoundType());
+		Assert.assertEquals(GameRoundType.Championship, gameRounds.get(1).getGameRoundType());
 	}
 
 	@Test
@@ -188,10 +188,10 @@ public class EventUtilTest {
 				new GameLocation()
 		);
 		Assert.assertEquals(4, gameRounds.size());
-		Assert.assertEquals(GameRoundType.GroupPlay1, gameRounds.get(0).getGameType());
-		Assert.assertEquals(GameRoundType.GroupPlay2, gameRounds.get(1).getGameType());
-		Assert.assertEquals(GameRoundType.SemiFinal, gameRounds.get(2).getGameType());
-		Assert.assertEquals(GameRoundType.Championship, gameRounds.get(3).getGameType());
+		Assert.assertEquals(GameRoundType.GroupPlay1, gameRounds.get(0).getGameRoundType());
+		Assert.assertEquals(GameRoundType.GroupPlay2, gameRounds.get(1).getGameRoundType());
+		Assert.assertEquals(GameRoundType.SemiFinal, gameRounds.get(2).getGameRoundType());
+		Assert.assertEquals(GameRoundType.Championship, gameRounds.get(3).getGameRoundType());
 	}
 
 	@Test
@@ -207,8 +207,8 @@ public class EventUtilTest {
 				new GameLocation()
 		);
 		Assert.assertEquals(2, gameRounds.size());
-		Assert.assertEquals(GameRoundType.GroupPlay1, gameRounds.get(0).getGameType());
-		Assert.assertEquals(GameRoundType.GroupPlay2, gameRounds.get(1).getGameType());
+		Assert.assertEquals(GameRoundType.GroupPlay1, gameRounds.get(0).getGameRoundType());
+		Assert.assertEquals(GameRoundType.GroupPlay2, gameRounds.get(1).getGameRoundType());
 	}
 
 	@Test
@@ -224,10 +224,10 @@ public class EventUtilTest {
 				new GameLocation()
 		);
 		Assert.assertEquals(4, gameRounds.size());
-		Assert.assertEquals(GameRoundType.GroupPlay3, gameRounds.get(0).getGameType());
-		Assert.assertEquals(GameRoundType.GroupPlay4, gameRounds.get(1).getGameType());
-		Assert.assertEquals(GameRoundType.SemiFinal, gameRounds.get(2).getGameType());
-		Assert.assertEquals(GameRoundType.Championship, gameRounds.get(3).getGameType());
+		Assert.assertEquals(GameRoundType.GroupPlay3, gameRounds.get(0).getGameRoundType());
+		Assert.assertEquals(GameRoundType.GroupPlay4, gameRounds.get(1).getGameRoundType());
+		Assert.assertEquals(GameRoundType.SemiFinal, gameRounds.get(2).getGameRoundType());
+		Assert.assertEquals(GameRoundType.Championship, gameRounds.get(3).getGameRoundType());
 	}
 
 	@Test
@@ -243,10 +243,10 @@ public class EventUtilTest {
 				new GameLocation()
 		);
 		Assert.assertEquals(4, gameRounds.size());
-		Assert.assertEquals(GameRoundType.GroupPlay1, gameRounds.get(0).getGameType());
-		Assert.assertEquals(GameRoundType.GroupPlay2, gameRounds.get(1).getGameType());
-		Assert.assertEquals(GameRoundType.GroupPlay3, gameRounds.get(2).getGameType());
-		Assert.assertEquals(GameRoundType.GroupPlay4, gameRounds.get(3).getGameType());
+		Assert.assertEquals(GameRoundType.GroupPlay1, gameRounds.get(0).getGameRoundType());
+		Assert.assertEquals(GameRoundType.GroupPlay2, gameRounds.get(1).getGameRoundType());
+		Assert.assertEquals(GameRoundType.GroupPlay3, gameRounds.get(2).getGameRoundType());
+		Assert.assertEquals(GameRoundType.GroupPlay4, gameRounds.get(3).getGameRoundType());
 	}
 
 	@Test
@@ -262,8 +262,8 @@ public class EventUtilTest {
 				new GameLocation()
 		);
 		Assert.assertEquals(2, gameRounds.size());
-		Assert.assertEquals(GameRoundType.SemiFinal, gameRounds.get(0).getGameType());
-		Assert.assertEquals(GameRoundType.Championship, gameRounds.get(1).getGameType());
+		Assert.assertEquals(GameRoundType.SemiFinal, gameRounds.get(0).getGameRoundType());
+		Assert.assertEquals(GameRoundType.Championship, gameRounds.get(1).getGameRoundType());
 	}
 
 	@Test
