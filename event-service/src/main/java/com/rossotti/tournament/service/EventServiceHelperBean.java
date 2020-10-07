@@ -2,6 +2,7 @@ package com.rossotti.tournament.service;
 
 import com.rossotti.tournament.dto.TemplateDTO;
 import com.rossotti.tournament.enumeration.EventStatus;
+import com.rossotti.tournament.enumeration.GameRoundType;
 import com.rossotti.tournament.enumeration.RankingType;
 import com.rossotti.tournament.enumeration.TournamentType;
 import com.rossotti.tournament.model.*;
@@ -94,15 +95,21 @@ public class EventServiceHelperBean {
 
 	public boolean validateGames(Event event, TemplateDTO templateDTO) {
 		List<Game> games = EventUtil.extractGames(event);
-		if (games.size() > 0 &&
-			games.size() == templateDTO.getGameDTO().getTotal()) {
-			//validate gameDate/startTime vs round
-			for (int i = 0; i <= games.size(); i++) {
-				Game game = games.get(i);
-			//	if (game.getGameRound().)
-			}
-
+		if (games.size() > 0 && games.size() == templateDTO.getGameDTO().getTotal()) {
 			//validate games per day/location/round
+			//validate startTime vs round
+			for (GameDate gameDate : event.getGameDates()) {
+				for (GameLocation gameLocation : gameDate.getGameLocations()) {
+					for (GameRound gameRound : gameLocation.getGameRounds()) {
+						if (gameRound.getGames() != null && gameRound.getGames().size() > 0) {
+							if (gameRound.getGameRoundType().equals(GameRoundType.GroupPlay1) ||
+								gameRound.getGameRoundType().equals(GameRoundType.GroupPlay2) ||
+								gameRound.getGameRoundType().equals(GameRoundType.GroupPlay3) ||
+								gameRound.getGameRoundType().equals(GameRoundType.GroupPlay4));
+						}
+					}
+				}
+			}
 			//validate gameTeams per round
 			//validate pointsScored/gameStatus
 		}
