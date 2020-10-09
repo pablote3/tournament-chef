@@ -78,12 +78,34 @@ public class EventServiceHelperBean {
 		return true;
 	}
 
+	public boolean validateGameRounds(Event event, TemplateDTO templateDTO) {
+		for (GameDate gameDate : event.getGameDates()) {
+			for (GameLocation gameLocation : gameDate.getGameLocations()) {
+				for (GameRound gameRound : gameLocation.getGameRounds()) {
+					for (GameRoundType gameRoundType : EventUtil.getGameRounds(templateDTO.getRoundDTO()))
+						if (gameRound.getGameRoundType().equals(gameRoundType)) {
+
+							continue;
+						}
+
+//					if (gameRound.getGameRoundType() = preliminaryRounds) {
+//						logger.debug("validateTeams - count of event rankings not equal to template games total");
+//						return false;
+//					}
+					logger.debug("validateLocations - baseLocation found");
+					return false;
+				}
+
+
+			}
+		}
+		return true;
+	}
+
 	public boolean validateLocations(Event event) {
 		List<GameDate> gameDates = event.getGameDates();
-		List<GameLocation> gameLocations;
 		for (GameDate gameDate : gameDates) {
-			gameLocations = gameDate.getGameLocations();
-			for (GameLocation gameLocation : gameLocations) {
+			for (GameLocation gameLocation : gameDate.getGameLocations()) {
 				if (gameLocation.getOrganizationLocation().getLocationName().equals(baseLocationName)) {
 					logger.debug("validateLocations - baseLocation found");
 					return false;

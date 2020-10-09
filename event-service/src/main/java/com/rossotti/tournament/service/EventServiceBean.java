@@ -159,17 +159,20 @@ public class EventServiceBean {
 				if (eventServiceHelperBean.validateTemplate(requestEvent, templateDTO)) {
 					if (eventServiceHelperBean.validateTeams(requestEvent, templateDTO, RankingType.Initial)) {
 						if (eventServiceHelperBean.validateLocations(requestEvent)) {
-							if (eventServiceHelperBean.validateGames(requestEvent, templateDTO)) {
-								eventJpaService.save(requestEvent);
-								return requestEvent;
-							}
-							else {
-								eventServiceHelperBean.createGames(requestEvent, templateDTO);
+							if (eventServiceHelperBean.validateGameRounds(requestEvent, templateDTO)) {
+								if (eventServiceHelperBean.validateGames(requestEvent, templateDTO)) {
+									eventJpaService.save(requestEvent);
+									return requestEvent;
+								}
+								else {
+									eventServiceHelperBean.createGames(requestEvent, templateDTO);
 
 									// requestEvent.setEventStatus(EventStatus);
 									// save requestEvent
-								return requestEvent;
+									return requestEvent;
+								}
 							}
+							return requestEvent;
 						}
 						else {
 
