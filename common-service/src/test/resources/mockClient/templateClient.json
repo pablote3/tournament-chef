@@ -169,7 +169,7 @@
     "eventDays": 1.5,
     "eventLocations": 2,
     "roundDTO": {
-      "preliminary": 2,
+      "preliminary": 3,
       "playoff1": "false",
       "playoff2": "false",
       "quarterFinal": "false",
